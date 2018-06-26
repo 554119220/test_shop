@@ -1,0 +1,30 @@
+<div class="bor">
+    <span>退款类型</span>
+    <a class="tog" id="create-type-actions">退货退款</a>
+    <input type="hidden" name="type" id="type" value="2">
+    <input type="hidden" name="is_ship" id="orders_refund_is_ship" value="{$data.data.orders_refund_is_ship}">
+</div>
+<div class="textarea_set bg_white rpd10 m5px text_77 rfs14">
+    <span style="color: red">注：申请为退货退款时请务必填写退货数量且需要邮寄商品给商家！</span>
+</div>
+{gt name="data.data.refundApply.goods_refund_num" value="0"}
+<div class="refund-num-box" data-num="{$data.data.refundApply.goods_refund_num}">
+    <div class="bg_white rpd10 rfs14 text_over">
+        <span class="vertical_red"></span>
+        <span class="text_77">退款数量 (本次最多可退 {$data.data.refundApply.goods_refund_num} 件)</span>
+    </div>
+    <div class="textarea_set bg_white rpd10 m5px">
+        <input data-max="{$data.data.refundApply.goods_refund_num}" data-min="0" placeholder="请输入退款数量" type="number" class="main100 form-control bor_none change-num" name="num" value="{$data.data.refundApply.goods_refund_num}">
+    </div>
+</div>
+{else /}
+    <input type="hidden" name="num" value="0">
+{/gt}
+<div class="bg_white rpd10 rfs14 text_over">
+    <span class="vertical_red"></span>
+    <span class="text_77">退款金额 (本次最多可退 {$data.data.refundApply.goods_refund_amount} 元)</span>
+</div>
+<div class="textarea_set bg_white rpd10 m5px">
+    <span class="form-control bor_none main100">{$data.data.refundApply.goods_refund_amount}</span>
+    <input type="number" data-max="{$data.data.refundApply.goods_refund_amount}" data-min="{:$data.data.refundApply.orders_goods_single_amount >= $data.data.refundApply.goods_refund_amount ? $data.data.refundApply.goods_refund_amount : $data.data.refundApply.orders_goods_single_amount}" class="form-control bor_none main100 hide" name="amount" value="{$data.data.refundApply.goods_refund_amount}">
+</div>

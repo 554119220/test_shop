@@ -1,0 +1,104 @@
+<div class="bg-white p20">
+    <div class="row">
+        <div class="col-xs-3">
+            <h4>订单信息</h4><hr />
+            <dl class="dl-horizontal">
+                <dt>订单号：</dt> <dd>{$data.orders_shop_no}</dd>
+                <dt>父单号：</dt> <dd>{$data.orders_no}</dd>
+                <dt>创建时间：</dt> <dd>{$data.orders_shop_create_time}</dd>
+                <dt>关闭时间：</dt> <dd>{$data.orders_shop_close_time|default='-'}</dd>
+                <dt>收货时间：</dt> <dd>{$data.orders_shop_receive_time|default='-'}</dd>
+                <dt>付款时间：</dt> <dd>{$data.orders_shop_pay_time|default='-'}</dd>
+                <dt>评价状态：</dt> <dd>{$data.orders_shop_comment_time|default='-'}</dd>
+                <dt>商品款式：</dt> <dd>{$data.goods_style_num}</dd>
+                <dt>商品数量：</dt> <dd>{$data.goods_count_num}</dd>
+                <dt>商品总重：</dt> <dd>{$data.goods_weight} KG</dd>
+                <dt>订单备注：</dt> <dd>{$data.orders_shop_remark|default='-'}</dd>
+            </dl>
+        </div>
+        <div class="col-xs-3">
+            <h4>商家/买家</h4><hr />
+            <dl class="dl-horizontal">
+                <dt>店铺名称：</dt> <dd>{$data.shop.shop_name}</dd>
+                <dt>卖家名称：</dt> <dd>{$data.seller.user_username}</dd>
+                <dt>商家logo：</dt> <dd>{:imgwh2($data['shop']['shop_logo'], 60)}</dd>
+                <dt>买家昵称：</dt> <dd>{$data.user.user_username}</dd>
+            </dl>
+        </div>
+        <div class="col-xs-3">
+            <h4>付款/金额</h4><hr />
+            <dl class="dl-horizontal">
+                <dt>订单原始金额：</dt> <dd>{$data.orders_shop_amount}</dd>
+                <dt>订单修改金额：</dt> <dd>{$data.orders_shop_edit_amount}</dd>
+                <dt>商品原始金额：</dt> <dd>{$data.orders_shop_goods_amount}</dd>
+                <dt>商品修改金额：</dt> <dd>{$data.orders_shop_goods_edit_amount}</dd>
+                <dt>快递原始金额：</dt> <dd>{$data.orders_shop_express_amount}</dd>
+                <dt>快递修改金额：</dt> <dd>{$data.orders_shop_express_edit_amount}</dd>
+                <dt>订单优惠金额：</dt> <dd>{$data.orders_shop_discount_amount}</dd>
+                <dt>订单奖励积分：</dt> <dd>{$data.orders_shop_score}</dd>
+                <dt>订单可退金额：</dt> <dd>{$data.orders_refund_amount}</dd>
+                <dt>订单可退积分：</dt> <dd>{$data.orders_refund_score}</dd>
+                <dt>订单可退运费：</dt> <dd>{$data.orders_refund_express_amount}</dd>
+                <dt>可使用购物积分：</dt> <dd>{$data.orders_shop_can_use_shopping_score}</dd>
+                <dt>是否已付款：</dt> <dd>{:$data.orders_shop_is_pay == 1 ? '已支付' : '未支付'}</dd>
+                <dt>付款类型：</dt> <dd>{$data.orders_shop_pay_type_name|default='-'}</dd>
+                <dt>付款金额：</dt> <dd>{$data.orders_shop_pay_amount}</dd>
+                <dt>余额支付：</dt> <dd>{$data.orders_shop_pay_cash}</dd>
+                <dt>购物积分支付：</dt> <dd>{$data.orders_shop_pay_shopping_score}</dd>
+                <dt>第三方交易号：</dt> <dd>{$data.orders_shop_trade_no|default='-'}</dd>
+            </dl>
+        </div>
+        <div class="col-xs-3">
+            <h4>收货信息</h4><hr />
+            <dl class="dl-horizontal">
+                <dt>联系人姓名：</dt> <dd>{$data.ordersAddress.orders_address_name}</dd>
+                <dt>联系方式：</dt> <dd>{$data.ordersAddress.orders_address_connect}</dd>
+                <dt>联系地址：</dt> <dd>{$data.ordersAddress.orders_address}</dd>
+                <dt>发货时间：</dt> <dd>{$data.orders_shop_express_time|default='-'}</dd>
+                <dt>快递公司：</dt> <dd>{$data.orders_shop_express_company_name|default='-'}</dd>
+                <dt>物流单号：</dt> <dd>{$data.orders_shop_express_no|default='-'}</dd>
+                <dt>发货备注：</dt> <dd>{$data.orders_shop_express_remark|default='-'}</dd>
+            </dl>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <h4>商品信息</h4><hr />
+            <table class="table table-bordered table-hover valign-middle">
+                <thead>
+                    <tr>
+                        <th style="width: 80px;" class="text-center">商品主图</th>
+                        <th style="width: 300px;">商品名称</th>
+                        <th class="text-center">库存名称</th>
+                        <th class="text-center">商品单价</th>
+                        <th class="text-center">商品总价</th>
+                        <th class="text-center">商品数量</th>
+                        <th class="text-center">积分倍数</th>
+                        <th class="text-center">奖励积分</th>
+                        <th class="text-center">单件重量</th>
+                        <th class="text-center">商品总重</th>
+                        <th class="text-center">购物积分</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {volist name="data.goods" id="vo"}
+                        <tr>
+                            <td class="text-center">{:imgwh2($vo['goods_images'], 60)}</td>
+                            <td>{$vo.goods_name}</td>
+                            <td class="text-center">{$vo.goods_sku_name}</td>
+                            <td class="text-center">{$vo.orders_goods_single_amount}</td>
+                            <td class="text-center">{$vo.orders_goods_amount}</td>
+                            <td class="text-center">{$vo.orders_goods_num}</td>
+                            <td class="text-center">{$vo.goods_score_multi}</td>
+                            <td class="text-center">{$vo.goods_score}</td>
+                            <td class="text-center">{$vo.goods_single_weight}</td>
+                            <td class="text-center">{$vo.goods_weight}</td>
+                            <td class="text-center">{$vo.goods_shopping_score_multi}</td>
+                        </tr>
+                    {/volist}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

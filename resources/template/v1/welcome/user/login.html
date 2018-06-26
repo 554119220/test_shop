@@ -1,0 +1,86 @@
+{extend name="public:base" /}
+{block name="page"}
+<!--登录end-->
+<!-- 页面内容 -->
+<div class="content_page" style="background:#fff url(/static/web/images/shop/icon_sjrz_zc.png) no-repeat left; min-height: 720px;    background-position-y: -50px;">
+    <div class="container clearfix" style="padding-bottom:50px; ">
+        <div class="login-main w400 mt110" style="min-height:520px;">
+            <div class="reg_title">
+                <!-- <a href="javascript:void(0)" class="reg_title1" style="width:100%">帐号登录</a> -->
+                <!-- <a href="javascript:void(0)">二维码登录</a> -->
+            </div>
+            <!--个人注册-->
+            <div class="content pt60 pl20 pr20">
+                <form>
+                    <!--<div class="r h56">-->
+                        <!--<input name="user_username" id="user_username" class="user main100 line40 h40" placeholder="请输入用户名">-->
+                        <!--<img src="/static/web/images/icon/login_dui.png" class="i_dui">-->
+                    <!--</div>-->
+                    <!--<div class="r h56">-->
+                        <!--<input name="user_password" id="user_password" class="mima main100 line40 h40" type="password" placeholder="请输入密码">-->
+                        <!--<img src="/static/web/images/icon/login1.png" class="mi_">-->
+                    <!--</div>-->
+                    <!-- <div class="r h40">
+                        <input id='yan' class="fr main100 h40" placeholder="请输入验证码">
+                        <img class="yzm" src="/static/web/images/login2.jpg">
+                    </div> -->
+                    <!-- <div class="mar0 line50 h50 color-red1">每日密码错误 5 次，请尝试次日登录或联系客服</div> -->
+                    <div style="text-align: center; margin-bottom: 50px">
+                        <img src="/static/wap/images/reg/logo.png">
+                    </div>
+                    <div class="line45 h160 over">
+                        <input type="button" class="login_btn" id="login_btn" value="使用百望富通账号登录">
+                        <!-- <a href="/user/forgot" class="login_wang">忘记密码</a> -->
+                        <a href="/user/register" class="login_reg">立即注册</a>
+                    </div>
+                </form>
+            </div>
+            <!-- <div class="content pt60 pl20 pr20">
+                <form>
+                    <img class="db mb30 mt50 w210 auto" src="/static/web/images/ersda.png">
+                    <div class="color666 fs16 h25 main100 text-center line25">
+                        请使用百望平台APP端扫码登录
+                    </div>
+                </form>
+            </div> -->
+        </div>
+    </div>
+</div>
+{/block}
+{block name="script"}
+
+<script type="text/javascript">
+    $('#login_btn').on('click',function(){
+        window.location.href = '/user/oauth';
+        return ;
+        apiPost({
+            data:{
+                user_username:$('#user_username').val(),
+                user_password:$('#user_password').val(),
+            },
+            header:getHeader('headers0'),
+            log:true,
+            success:function(ret){
+                if ( ret.code == 20000 ) {
+                    success('登陆成功');
+                    window.location.href = "/";
+                } else {
+                    error(ret.msg);
+                }
+            },
+        });
+    });
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+{/block}

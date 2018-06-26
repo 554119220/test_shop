@@ -1,0 +1,46 @@
+{extend name="public:base" /}
+{block name="nav"}
+{include file="public:nav2" /}
+{/block}
+{block name="content"}
+<style>
+    table,tr,td{
+        border: 1px solid #2f353b;
+    }
+</style>
+<!-- 页面主体内容 -->
+<div class="tab_row mb10">
+    <div class="tab_col pt10">
+        <div class="pl25 line40 bg-white mb10">
+            <i class="redicon mar0" ></i>
+            <span class="fs14 color333 pl5">入驻要求</span>
+        </div>
+
+        <div class="main100 over">
+            <div class="over pd25 bg_white fl mb10 main100" >
+                <div class="main100 over">
+                    <a class="btn text_white bg-red1 radius4px pd7 pl30 pr30  fl  fs12 mb20" href="{:url('choice/index')}">申请入驻</a>
+                </div>
+                <div class="bor-f5 over radius4px pd15">
+                    <div class="main100 fs14 color-red1 mb5">{$business_notice.data.shop_article_title}</div>
+                    <div class="over main100 color666 line20">
+                        {:html_entity_decode($business_notice['data']['shop_article_content'])}
+                    </div>
+                </div>
+            </div>
+            <!---->
+            <div class="pl25 line40 mb10 over bg_white">
+                <i class="redicon mar0" ></i>
+                <span class="fs14 color333 pl5">{$business_notice2.data.shop_article_title}</span>
+            </div>
+
+
+            <div class="pd25 main100 over bg_white center" >
+                {:html_entity_decode($business_notice2['data']['shop_article_content'])}
+            </div>
+
+        </div>
+
+    </div>
+</div><!-- 页面主体内容结束 -->
+{/block}

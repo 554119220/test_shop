@@ -1,0 +1,123 @@
+{extend name="public:base" /}
+{block name="page"}
+<div class="contain">
+    <div class="header">
+        {include file="public:nav" /}
+    </div>
+    <div class="content">
+        <div class="side on-choose">
+            {include file="wiki:side" /}
+        </div>
+        <div class="main">
+            <h4>调试表单</h4>
+            <form class="layui-form">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">路由</label>
+                    <div class="layui-input-block">
+                        <!--<input type="hidden" name="router">-->
+                        <input type="text" disabled name="router" lay-verify="router" autocomplete="off" placeholder="请在左边选择路由" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">APP ID</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="app_id" lay-verify="app_id" autocomplete="off" placeholder="请输入app id" value="4" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">APP KEY</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="app_key" lay-verify="app_key" autocomplete="off" placeholder="请输入app key" value="AB51812DD5D11CB58873B34EF67405248F767E9A36CF14FD9535C3BCDBAE04FF" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">openid</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="openid" lay-verify="openid" autocomplete="off" placeholder="请输入openid" value="d47091a4952558b3e236deec2ef30ede" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">access token</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="access_token" lay-verify="access_token" autocomplete="off" placeholder="请输入access token" value="{$token}" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">提交内容</label>
+                    <div class="layui-input-block">
+                        <textarea name="body" placeholder="请输入提交内容，json格式" class="layui-textarea"></textarea>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" lay-submit="" lay-filter="btn-submit">立即提交</button>
+                    </div>
+                </div>
+            </form>
+
+            <div class="response">
+                <h4>响应数据</h4>
+                <pre class="layui-code layui-box layui-code-view layui-code-notepad response-json"></pre>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+
+{block name="script"}
+<script>
+    layui.use(['form', 'layedit', 'laydate'], function(){
+        var form = layui.form
+            ,layer = layui.layer
+            ,layedit = layui.layedit
+            ,laydate = layui.laydate;
+
+//        layui.code();
+        //日期
+        laydate.render({
+            elem: '#date'
+        });
+        laydate.render({
+            elem: '#date1'
+        });
+
+        //创建一个编辑器
+        var editIndex = layedit.build('LAY_demo_editor');
+
+        //自定义验证规则
+        form.verify({
+            router: function(value){
+                if(value === ''){
+                    return '请在左侧选择路由';
+                }
+            },
+            app_id:[/(\d+)/, 'app id 不正确'],
+            app_key:function (value) {
+                if (value.length != 64) {
+                    return 'app key不正确';
+                }
+            },
+            openid:function (value) {
+                if (value.length != 32 && value != '') {
+                    return 'app key不正确';
+                }
+            },
+            access_token:function (value) {
+                if (value.length != 64) {
+                    return 'access token不正确';
+                }
+            }
+        });
+        //监听提交
+        form.on('submit(btn-submit)', function(data){
+            $.post('/tools/post', data.field, function (ret) {
+                $(".response pre").html(JSON.stringify(ret));
+            }, 'json');
+//            layer.alert(JSON.stringify(data.field), {
+//                title: '最终的提交信息'
+//            });
+            return false;
+        });
+    });
+</script>
+{/block}

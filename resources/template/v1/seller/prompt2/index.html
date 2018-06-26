@@ -1,0 +1,74 @@
+{extend name="public:base" /}
+{block name="side"}{/block}
+{block name="page"}
+<!-- 页面主体内容 -->
+<div class="tab_row mb10">
+    <div class="tab_col pt10">
+        <div class="container-fluid line40 bg-white mb10">
+            <i class="redicon mar0" ></i>
+            <span class="fs14 color333 pl5">错误提示</span>
+        </div>
+        <div class="main100 bg_white pd25 minh595 over">
+            <div class="main100 bg_white">
+                <div class="alert alert-danger alert-dismissable">
+                    <button type="button" class="close" data-dismiss="alert"
+                            aria-hidden="true">
+                        &times;
+                    </button>
+                    {eq name="Think.session.shop.is_again" value="2"}审核中{else/}
+                    【{present name="ret.data.0.is_pass"}
+                    {switch name="ret.data.0.is_pass"}
+                        {case value="0"}已删除{/case}
+                        {case value="1"}正常{/case}
+                        {case value="2"}已冻结{/case}
+                        {case value="3"}已关闭{/case}
+                        {case value="4"}强制关闭{/case}
+                        {case value="5"}需要二次审核{/case}
+                    {/switch}{/present}】{$ret.data.0.content ?? '----'}
+                    {/eq}
+                </div>
+            </div>
+            <div class="w580 over mt120">
+                <div class="fl mr15"><img src="/static/web//images/shop/icon-dong.png"></div>
+                <div class="fl mt70 ml5">
+                    <div class="color333 fs20 mb20">可能是以下原因您的店铺需要二次审核</div>
+                    <div class="color666  mb20">资料不对应</div>
+                    <div class="color666  mb20">被多用户投诉举报</div>
+                    <div class="color666  mb20">如有疑问请联系客服电话：{:config('site.site')['tel']}</div>
+                    <div class="color666  mb20 color-red1">{eq name="Think.session.shop.is_again" value="1"}<a class="color-red1" href="/shopupdate/qualifications">立即填写</a>{/eq}</div>
+                    <div class="color666  mb20 color-red1" id="timer"></div>
+                </div>
+            </div>
+        </div>
+    </div><!-- 右边内容结束 -->
+</div><!-- 页面主体内容结束 -->
+{/block}
+{block name="script"}
+<script language="javascript" type="text/javascript">
+    $(document).ready(function(){
+        //leftTimer("{:date('Y',$ret.data.0.end_time)}","{:date('m',$ret.data.0.end_time)}","{:date('d',$ret.data.0.end_time)}","{:date('H',$ret.data.0.end_time)}","{:date('i',$ret.data.0.end_time)}","{:date('s',$ret.data.0.end_time)}");
+    });
+
+    function leftTimer(year,month,day,hour,minute,second){
+        var leftTime = (new Date(year,month-1,day,hour,minute,second)) - (new Date()); //计算剩余的毫秒数
+        var days = parseInt(leftTime / 1000 / 60 / 60 / 24 , 10); //计算剩余的天数
+        var hours = parseInt(leftTime / 1000 / 60 / 60 % 24 , 10); //计算剩余的小时
+        var minutes = parseInt(leftTime / 1000 / 60 % 60, 10);//计算剩余的分钟
+        var seconds = parseInt(leftTime / 1000 % 60, 10);//计算剩余的秒数
+        days = checkTime(days);
+        hours = checkTime(hours);
+        minutes = checkTime(minutes);
+        seconds = checkTime(seconds);
+        setInterval('leftTimer("{:date(\'Y\',$ret.data.0.end_time)}","{:date(\'m\',$ret.data.0.end_time)}","{:date(\'d\',$ret.data.0.end_time)}","{:date(\'H\',$ret.data.0.end_time)}","{:date(\'i\',$ret.data.0.end_time)}","{:date(\'s\',$ret.data.0.end_time)}")',1000);
+        document.getElementById("timer").innerHTML = days+"天" + hours+"小时" + minutes+"分"+seconds+"秒";
+    }
+    function checkTime(i){ //将0-9的数字前面加上0，例1变为01
+        if(i<10)
+        {
+            i = "0" + i;
+        }
+        return i;
+    }
+
+</script>
+{/block}

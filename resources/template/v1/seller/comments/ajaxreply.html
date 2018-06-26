@@ -1,0 +1,28 @@
+<!-- stackable -->
+<!--<div id="stack1" class="modal fade" tabindex="-1" data-focus-on="input:first">-->
+<link href="/static/web/assets/global/plugins/bootstrap-modal/css/bootstrap-modal-bs3patch.css" rel="stylesheet" type="text/css" />
+<link href="/static/web/assets/global/plugins/bootstrap-modal/css/bootstrap-modal.css" rel="stylesheet" type="text/css" />
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+        <h4 class="modal-title">回复评价</h4>
+    </div>
+    <div class="modal-body">
+        {notempty name="detail"}
+        <form data-header="headers0" data-refresh="true">
+            <input type="hidden" name="goods_comment_id" value="{:input('goods_comment_id')}">
+            <p style="padding-bottom: 10px"> 评价内容：{$detail.goods_comment_content.goods_comment_content} </p>
+            <div class="form-group">
+                <textarea class="form-control" name="goods_comment_reply_content" placeholder="回复内容..."></textarea>
+            </div>
+            <a class="btn blue btn-submit">提交评价</a>
+        </form>
+        {else/}
+        评价不存在！
+        {/notempty}
+    </div>
+    <script src="/static/web/js/public.js"></script>
+    <!--<div class="modal-footer">-->
+        <!--&lt;!&ndash;<button type="button" data-dismiss="modal" class="btn btn-outline dark">Close</button>&ndash;&gt;-->
+        <!--<button type="button" data-dismiss="modal" class="btn green">关闭模态框</button>-->
+    <!--</div>-->
+<!--</div>-->

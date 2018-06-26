@@ -1,0 +1,145 @@
+{extend name="public:base" /}
+{block name="page"}
+<div class="tab_col pd10 pb0">
+	<div class="container-fluid line55 bg-white radius4px">
+		<p><i class="redicon"></i>
+		<span class="fs14 color333">运费模版</span></p>
+		<a href="/express/create" class="btn text_white bg-red-thunderbird radius4px pd8 pl35 pr35 mt8 fl mb20">创建运费模版</a>
+	</div>
+	<div class="main100  bg-white radius4px pl15 pr15 minh595">
+		<div class="main100 line55 bg-white radius4px">
+		</div>
+		<div class="main100 radius4px over">
+            {notempty name="Express"}
+    			<table class="table solid_all  table_dashed tr12">
+                    <thead class=" bg-f5">
+                        <tr>
+                            <th class="small_xs fs14">编号</th>
+                            <th class="small_xs fs14">模板名称</th>
+                            <th class="small_xs fs14">是否包邮</th>
+                            <th class="small_xs fs14">创建时间</th>
+                            <th class="small_xs fs14">计费方式</th>
+                            <th class="small_xs fs14">发货城市</th>
+                            <th class="small_xs fs14">首件|首重 价格</th>
+                            <th class="small_xs fs14">续件|续重 价格</th>
+                            <th class="small_xs fs14">备注</th>
+                            <th class="small_xs fs14">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {foreach name="Express" item="value"}
+                            <tr>
+                                <td><b>{$value.express_id}</b></td>
+                                <td>{$value.express_name}</td>
+                                <td>{php}echo $FreeArray[$value['express_is_free']] ?? '';{/php}</td>
+                                <td>{$value.express_create_time}</td>
+                                <td>{$value.express_type_name}</td>
+                                <td>{$value.ship_address}</td>
+                                <td>{$value.express_first_price}</td>
+                                <td>{$value.express_continue_price}</td>
+                                <td>{$value.express_remark}</td>
+                                <td>
+                                    <a href="javascript:;" data-id="{$value.express_id}" class="color-blue see-tpl">查看快递和EMS设置</a>
+                                    <a href="/express/edit/express_id/{$value.express_id}" class="color-blue ml20 mr5">编辑</a>
+                                    <a href="javascript:;" data-id="{$value.express_id}" class="text_red ml20 del-tpl">删除</a>
+                                </td>
+                            </tr>
+                            <tr class="see-content see-content-{$value.express_id} hide">
+                                <td colspan="9"><!-- 设置快递和EMS -->
+                                    <div class="main100 bg_white radius4px">
+                                        <div class="main100 h32 line32 bor-bot-f5">
+                                            <span class="fl pl15 pr15 set-normal-ems lei-action">快递</span>
+                                            <span class="fl pl15 pr15 set-normal-ems ">EMS</span>
+                                        </div>
+                                        <div class="main100 over color666 mt10 mb30 set-normal-ems-item-list">
+                                            <!--  -->
+                                            <div class="pd10 main100 set-normal-ems-item">
+                                                {notempty name="value.express_content.0"}
+                                                    {foreach name="value.express_content.0" key="ko" item="vo"}
+                                                        <div class="main100 mt20 radius4px bor_img" style="word-wrap:break-word;word-break:break-all;">
+                                                            <div class="main100 mt5 ml5 mb5">
+                                                                <p class="fl mt10 mb10 w210">首件|首重 价格:<span class="ml10 color-red1">{$vo.express_first_price}</span></p>
+                                                                <p class="fl mt10 mb10 w210 ml5">续件|续重 价格:<span class="ml10 color-red1">{$vo.express_continue_price}</span></p>
+                                                            </div>
+                                                            <hr class="main100">
+                                                            <p class="mg0 mt10 ml20 mb5 mr10"><span>{$vo.express_city_name|implode=",",###}</span></p>
+                                                        </div>
+                                                    {/foreach}
+                                                {else/}
+                                                    <h5>未设置快递。</h5>
+                                                {/notempty}
+                                            </div>
+                                            <!--  -->
+                                            <div class="pd10 main100 set-normal-ems-item hide">
+                                                {notempty name="value.express_content.1"}
+                                                    {foreach name="value.express_content.1" key="ko" item="vo"}
+                                                        <div class="main100 mt20 radius4px bor_img" style="word-wrap:break-word;word-break:break-all;">
+                                                            <div class="main100 mt5 ml5 mb5">
+                                                                <p class="fl mt10 mb10 w210">首件|首重 价格:<span class="ml10 color-red1">{$vo.express_first_price}</span></p>
+                                                                <p class="fl mt10 mb10 w210 ml5">续件|续重 价格:<span class="ml10 color-red1">{$vo.express_continue_price}</span></p>
+                                                            </div>
+                                                        <hr class="main100">
+                                                        <p class="mg0 mt10 ml20 mb5 mr10"><span>{$vo.express_city_name|implode=",",###}</span></p>
+                                                        </div>
+                                                    {/foreach}
+                                                {else/}
+                                                    <h5>未设置EMS。</h5>
+                                                {/notempty}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        {/foreach}
+                    </tbody>
+                </table>
+            {else/}
+                <h3>没有找到运费模板。</h3>
+            {/notempty}
+		</div>
+	</div>
+</div>
+{/block}
+{block name="script"}
+<script type="text/javascript">
+    // tab
+    $(document).on('click','.set-normal-ems',function(){
+        var index = $(this).index();
+        // alert(index);
+        $(this).addClass('lei-action').siblings().removeClass('lei-action');
+        $(this).parent().siblings('.set-normal-ems-item-list').find('.set-normal-ems-item').eq(index).removeClass('hide').siblings().addClass('hide');
+    });
+    $('.del-tpl').on('click',function(){
+        if ( confirm('确定删除吗？') ) {
+            var id = $(this).data('id');
+            apiPost({
+                data:{
+                    express_id:id,
+                },
+                header:getHeader('headers0'),
+                log:true,
+                success:function(ret){
+                    if ( ret.code == 20000 ) {
+                        success('删除成功');
+                        setTimeout(function(){
+                            window.location.href = '/express';
+                        },1000);
+                    } else {
+                        error(ret.msg);
+                    }
+                },
+            });
+        }
+    });
+    $('.see-tpl').on('click',function(){
+        var ele = '.see-content-' + $(this).data('id');
+        var is = $(ele).hasClass('hide');
+        $('.see-content').addClass('hide');
+        if ( is ) {
+            $(ele).removeClass('hide');
+        } else {
+            $(ele).addClass('hide');
+        }
+    });
+</script>
+{/block}

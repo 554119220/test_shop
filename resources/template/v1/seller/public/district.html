@@ -1,0 +1,54 @@
+<div class="main100 mb10 fs12 ">选择地区<span class="color-red1">*</span></div>
+<div class="main100  mb10 clear-after">
+    <select class="form-control fl fs12 mr15 select-radius w25-20 change-district district-level-1" data-level="1" name="province_id">
+        <option>--请选择--</option>
+        {eq name="province.code" value="20000"}
+        {volist name="province.data" id="vo"}
+            <option {notempty name="params.province"}
+                    {eq name="params.province" value="$vo.id" }selected{/eq}
+                    {/notempty} value="{$vo.id}">
+                {$vo.a_name}
+            </option>
+        {/volist}
+        {/eq}
+    </select>
+    <select class="form-control  fl fs12 mr15 select-radius w25-20 change-district district-level-2" data-level="2" name="city_id" >
+        {notempty name="city.data"}
+            {volist name="city.data" id="vo"}
+                <option {notempty name="params.city"}
+                        {eq name="params.city" value="$vo.id" }selected{/eq}
+                        {/notempty} value="{$vo.id}">
+                    {$vo.a_name}
+                </option>
+            {/volist}
+        {else/}
+            <option>--请选择--</option>
+        {/notempty}
+    </select>
+    <select class="form-control  fl fs12 mr15 select-radius w25-20 change-district district-level-3" data-level="3" name="district_id" >
+        {notempty name="district.data"}
+            {volist name="district.data" id="vo"}
+                <option {notempty name="params.district"}
+                        {eq name="params.district" value="$vo.id" }selected{/eq}
+                        {/notempty} value="{$vo.id}">
+                    {$vo.a_name}
+                </option>
+            {/volist}
+        {else/}
+            <option>--请选择--</option>
+        {/notempty}
+    </select>
+    <select class="form-control  fl fs12 mr15 select-radius w25-20 change-district district-level-4" data-level="4" name="town_id" >
+        {notempty name="town.data"}
+            {volist name="town.data" id="vo"}
+                <option {notempty name="params.town"}
+                        {eq name="params.town" value="$vo.id" }selected{/eq}
+                        {/notempty} value="{$vo.id}">
+                    {$vo.a_name}
+                </option>
+            {/volist}
+        {else/}
+            <option>--请选择--</option>
+        {/notempty}
+    </select>
+</div>

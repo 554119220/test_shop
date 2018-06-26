@@ -1,0 +1,63 @@
+{extend name="public:base" /}
+{block name="nav"}
+{include file="public:nav2" /}
+{/block}
+{block name="content"}
+<!-- 页面主体内容 -->
+<div class="tab_row mb10">
+    <div class="tab_col pt10">
+        <div class="main100 bg_white pd25 minh595 over pt110" style="background:#fff url(/static/web/images/shop/bgdt.png) center no-repeat;">
+            <div class="over re minh595 auto" style="width:1150px;background: url(/static/web/images/shop/bg-nav.png) top no-repeat;">
+                <a href="{:url('choice/index')}"  title="编辑">
+                <div class="ab center" style="background: url(/static/web/images/shop/bg-red.png) center no-repeat; width: 104px; height:104px;left: 100px;top: 85px;">
+                    <span class="main100 text_white h40 fs18 line40 mb10">1</span>
+                    <strong class="fs14" style="color: #e71b20;">开店须知<br></strong>
+                    <img src="/static/web/images/icon/nono.png" style="width:14px; position: absolute;bottom: 7px;right: 7px;">
+                </div>
+                </a>
+
+                <a href="{:url('choice/choiceshoptype')}"  title="编辑">
+                    <div class="ab center" style="background: url(/static/web/images/shop/bg-red.png) center no-repeat; width: 104px; height:104px;left: 270px;top: 153px;">
+                        <span class="main100 text_white h40 fs18 line40 mb10">2</span>
+                        <strong class="fs14" style="color: #e71b20;">选择开店<br>类型</strong>
+                        <img src="/static/web/images/icon/nono.png" style="width:14px; position: absolute;bottom: 7px;right: 7px;">
+                    </div>
+                </a>
+
+
+                <a href="{:url('choice/choicegoods')}"  title="编辑">
+                    <div class="ab center" style="background: url(/static/web/images/shop/bg-red.png) center no-repeat; width: 104px; height:104px;left: 438px;top: 85px;">
+                        <span class="main100 text_white h40 fs18 line40 mb10">3</span>
+                        <strong class="fs14" style="color: #e71b20;">选择经营<br>类型</strong>
+                        <img src="/static/web/images/icon/nono.png" style="width:14px; position: absolute;bottom: 7px;right: 7px;">
+                    </div>
+                </a>
+
+                <a href="{:url('choice/qualifications')}" title="编辑">
+                    <div class="ab center" style="background: url(/static/web/images/shop/bg-red.png) center no-repeat; width: 104px; height:104px;left: 608px;top: 152px;">
+                        <span class="main100 text_white h40 fs18 line40 mb10">4</span>
+                        <strong class="fs14" style="color: #e71b20;">填写品牌<br>资料</strong>
+                        <img src="/static/web/images/icon/nono.png" style="width:14px; position: absolute;bottom: 7px;right: 7px;">
+                    </div>
+                </a>
+
+                <a href="{:url('choice/industryqualification')}" title="编辑">
+                    <div class="ab center" style="background: url(/static/web/images/shop/bg-red.png) center no-repeat; width: 104px; height:104px;left:777px;top: 85px;">
+                        <span class="main100 text_white h40 fs18 line40 mb10">5</span>
+                        <strong class="fs14" style="color: #e71b20;">上传行业<br>资质</strong>
+                        <img src="/static/web/images/icon/nono.png" style="width:14px; position: absolute;bottom: 7px;right: 7px;">
+                    </div>
+                </a>
+
+                <a href="{:url('choice/setshop')}" title="编辑">
+                    <div class="ab center" style="background: url(/static/web/images/shop/bg-red.png) center no-repeat; width: 104px; height:104px;left:946px;top: 153px;">
+                        <span class="main100 text_white h40 fs18 line40 mb10">6</span>
+                        <strong class="fs14" style="color: #e71b20;">填写店铺<br>详情</strong>
+                        <img src="/static/web/images/icon/nono.png" style="width:14px; position: absolute;bottom: 7px;right: 7px;">
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div><!-- 右边内容结束 -->
+</div><!-- 页面主体内容结束 -->
+{/block}

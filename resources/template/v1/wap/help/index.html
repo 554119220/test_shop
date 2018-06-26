@@ -1,0 +1,56 @@
+{extend name="public:base" /}
+
+{block name="page"}
+<!-- 标题栏 -->
+<header class="bar bar-nav bbai">
+    <a class="l_return back"><img class="main100" src="/static/wap/images/reg/l_return1.png"></a>
+    <h1 class="title">帮助中心</h1>
+</header>
+
+<!-- 这里是页面内容区 -->
+<div class="content t22 qiye ">
+    <div class="main100 bbai mb10">
+        <div class="main100 re over">
+            <a href="#" class="ab" style="left:0.75rem;top:1.22rem;color:#d82128;width:180px;font-size:16px;">{:config('site.site')['tel']}</a>
+            <a class="ab " style="left:0.75rem;top:2.3rem;color:#666; text-align: right; width:180px;font-size:14px;">客服时间：09：00 - 12：00</a>
+            <div class="ab " style="left:0.75rem;top:3.3rem;color:#666;width:180px;font-size:14px;">
+                <div style="text-align: right;">13：30 - 18：00</div>
+                <div>如需帮助，联系在线客服</div>
+            </div>
+            <img src="/static/wap/images/icon/banner_bzzx.png" class="main100">
+            <div style="height:2rem;overflow: scroll;width:calc(100% - 15px);">
+                <div style="width: 2520px;" class="help-btn">
+                    {php}$helpI = 0;{/php}
+                    {foreach name="categoryList" item="value" key="key"}
+                        {if condition="$helpI gt 0"}
+                            <span data-page="1" data-maxPage="0" data-i="{$helpI++}" data-cid="{$value.article_category_id}" class="help-list fl f65 h666">{$value.article_category_name}</span>
+                        {else/}
+                            <span data-page="1" data-maxPage="0" data-i="{$helpI++}" data-cid="{$value.article_category_id}" class="help-list fl f65 h666 active">{$value.article_category_name}</span>
+                        {/if}
+                    {/foreach}
+                </div>
+            </div>
+        </div>
+    </div>
+    {php}$helpI = 0;{/php}
+    {foreach name="categoryList" item="value" key="key"}
+        {if condition="$helpI++ gt 0"}
+            <ul class="help-item list2rem mt10 bbai infinite-scroll hide">
+                <!-- <li><a href="#" class="fl h666 f7 pad075 text-left" >用户注册1</a></li> -->
+                <!-- 加载提示符 -->
+                <div class="infinite-scroll-preloader">
+                    <div class="preloader"></div>
+                </div>
+            </ul>
+        {else/}
+            <ul class="help-item list2rem mt10 bbai infinite-scroll">
+                <!-- <li><a href="#" class="fl h666 f7 pad075 text-left" >用户注册21</a></li> -->
+                <!-- 加载提示符 -->
+                <div class="infinite-scroll-preloader">
+                    <div class="preloader"></div>
+                </div>
+            </ul>
+        {/if}
+    {/foreach}
+</div>
+{/block}

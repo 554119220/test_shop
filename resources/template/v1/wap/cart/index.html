@@ -1,0 +1,125 @@
+{extend name="public:base" /}
+{block name="page"}
+<!-- 这里是页面内容区 -->
+<!-- 标题栏 -->
+<header class="bar bar-nav bbai find bor_none">
+    <a class="icon icon_common pull-left r12 icon_back back" style="margin-top:.6rem"></a>
+    <h1 class="title">购物车</h1>
+    <span class="icon icon-edit pull-right btn-batch-edit"></span>
+    <!--<span class="rright s1">完成</span>-->
+</header>
+<div class="content cart_main pull-to-refresh-content infinite-scroll infinite-scroll-bottom" data-ptr-distance="50">
+    {include file="public:refresh" /}
+    <!--购物车内容-->
+    <div class="main100" style=" padding-bottom: 2rem;">
+        <div style="text-align: right; padding: 0.5rem;" class="hide batch-tools-box">
+            <a href="javascript:;" class="button btn-batch-delete" style="display: inline-block; color: red; border-color:red;">删除</a>
+        </div>
+        <form method="post" action="/cart/confirm">
+            <input type="hidden" id="cart_ids" name="cart_ids" value="">
+            <!--购物车产品-->
+            <div class="cart_cp">
+                {neq name="data.code" value="20000"}
+                <!--购物车空空-->
+                <div class="cart_cp1">
+                    <p class="p">
+                        购物车空空如也，<br>
+                        尽情的去购物吧…
+                        <br />
+                        <a href="/search/goods" class="logina" style="margin-top: 0.5rem">立即去购物</a>
+                    </p>
+                    <!--<a href="/user/login" class="logina">立即登录</a>-->
+                </div>
+                {else /}
+
+                {volist name="data.data" id="vo"}
+                    <div class="main100 m5px shop-box" style="margin-top: 5px">
+                        <!--产品标题-->
+                        <div class="main100 bbai list2m cart_title m5px">
+                            <span class="lleft dui btn-choose-shop"></span>
+                            <a href="/shop?id={$vo.shop.shop_id}">
+                                <img class="shop-logo1" src="{$vo.shop.shop_logo|thumb=40}">
+                                <span class="shop-title f7 h333" style="text-align: left" >{$vo.shop.shop_name}</span>
+                            </a>
+                        </div>
+                        <!--产品列表-->
+                        <ul class="cart_newcp">
+                            {volist name="vo.goods" id="goods"}
+                                <li data-id="{$goods.cart_id}">
+                                    <div class="li_main cart-goods-box modal-overlay-visible" {eq name="goods.can_buy" value="0"}style="background: #f8f8f8"{/eq}>
+                                        <span class="radio-box-false dui {gt name="goods.can_buy" value="0"}btn-choose-goods{/gt}"></span>
+                                        <a href="/goods?id={$goods.goods_sku_id}"><img class="img" src="{$goods.goods_images|thumb=176}"></a>
+                                        <div class="cart_cpx">
+                                            <p class="title_ text_line_2">
+                                                <a style="color: #999" href="/goods?id={$goods.goods_sku_id}">{$goods.goods_name}</a>
+                                            </p>
+                                            <div class="rmb">￥<span class="rmb1 goods-single-price" data-price="{$goods.goods_single_price}">{$goods.goods_price}</span></div>
+                                            <div class="color">
+                                                <div class=" lleft">
+                                                    {$goods.goods_sku_name}
+                                                </div>
+                                                <span class="pl5 lleft">x</span>
+                                                <i class="cp-s lleft goods-num">{$goods.goods_num}</i>
+                                                {switch name="goods.can_buy"}
+                                                    {case value="0"}
+                                                        <span class="pl15" style="color: red">库存不足</span>
+                                                    {/case}
+                                                    {case value="-1"}
+                                                        <span class="pl15" style="color: red">商品已下架</span>
+                                                    {/case}
+                                                {/switch}
+                                            </div>
+                                            <strong></strong>
+                                        </div>
+                                        <div class="delbtn">
+                                            <div class="jisuan">
+                                                <div class="bor bb11">
+                                                    <span class="jian btn-less-num"></span>
+                                                    <span class="shu">{$goods.goods_num}</span>
+                                                    <span class="jia btn-plus-num"></span>
+                                                </div>
+                                                <div class="bor btn-delete-goods" style="text-align: center; font-size: 0.5rem; line-height: 1.10rem;">
+                                                    删除
+                                                </div>
+                                                <!--<div class="bor">-->
+                                                    <!--<span class="names">-->
+                                                        <!--{$goods.goods_sku_name}-->
+                                                    <!--</span>-->
+                                                    <!--<span class="bot"></span>-->
+                                                <!--</div>-->
+                                            </div>
+                                            <i class=''></i>
+                                            <span class="go" style="margin-left: 0.5rem">完成</span>
+                                        </div>
+                                        <!--产品信息属性-->
+                                        <!--modal-overlay-visible-->
+                                        <!--产品信息end-->
+                                    </div>
+                                </li>
+                            {/volist}
+                        </ul>
+                    </div>
+                {/volist}
+                <!--产品容器end-->
+                {/neq}
+                <!--产品容器end-->
+            </div>
+            <!--看你喜欢-->
+
+            {:widget('like/index')}
+        </form>
+    </div>
+    <!--购物车内容end-->
+
+
+    <!---->
+</div>
+<!--全选-->
+<div class="quan" style="table-layout: fixed;bottom: 2.5rem; position: absolute;z-index:10">
+    <span class="quanx btn-choose-all">全选</span>
+    <a class="btns btn-submit" href="javascript:;">结算( <span class="box-choose-num">0</span> )</a>
+    <!-- <a class="btns" style="background:#14a86a;border-color: #14a86a;" href="javascript:;">商家备货中( <span class="box-choose-num">0</span> )</a> -->
+    <span class="rright cart_hot">总计：<span class="cred cart_hot1 box-count-choose-amount">0</span>元</span>
+</div>
+<!-- 这里是页面内容区end -->
+{/block}

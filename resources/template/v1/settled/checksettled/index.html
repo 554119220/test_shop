@@ -1,0 +1,31 @@
+{extend name="public:base" /}
+{block name="nav"}
+{include file="public:nav2" /}
+{/block}
+{block name="content"}
+<!-- 页面主体内容 -->
+<!-- 页面主体内容 -->
+<div class="tab_row mb10">
+    <div class="tab_col pt10">
+        <div class="container-fluid line40 bg-white mb10">
+            <i class="redicon mar0" ></i>
+            <span class="fs14 color333 pl5">错误提示</span>
+        </div>
+        <div class="main100 bg_white pd25 minh595 over">
+            <div class="w580 over mt120">
+                <div class="fl mr15"><img src="/static/web/images/shop/icon_weimanzhu.png"></div>
+                <div class="fl">
+                    <div class="color333 fs20 mb20">可能是以下原因无法申请商家入驻</div>
+                    <div class="color666  mb20">您还未进行店铺或个人认证</div>
+                    <div class="color666  mb20">您还未升级为银卡会员或金卡会员</div>
+                    <div class="color666  mb20"><a class="color-red1" target="_blank" href="{$erp_user_url}">去认证/升级</a></div>
+                    <div class="color666  mb20">如有疑问请联系客服电话：{:config('cfg.site')['tel']}</div>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div><!-- 右边内容结束 -->
+</div><!-- 页面主体内容结束 -->
+{/block}

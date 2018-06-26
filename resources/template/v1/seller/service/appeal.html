@@ -1,0 +1,28 @@
+{extend name="public:base" /}
+{block name="page"}
+<div class="tab_col pd10 pb0">
+    <div class="container-fluid line55 bg-white radius4px mb10">
+        <i class="redicon"></i>
+        <span class="fs14 color333">发起申诉</span>
+    </div>
+    <div class="alert mt10 mb10 bg-red2 color-red1 pl30">你正在操作发起申诉，请如实填写申诉信息！！！</div>
+    {include file="service:info" /}
+    <form data-redirect="/service/detail?service_no={$data.data.orders_service_no}" data-header="appeal">
+        <input type="hidden" name="service_no" value="{$data.data.orders_service_no}">
+        <div class="main100  bg-white radius4px pd15"  style="min-height: 200px;">
+            <!--<div class="main100 mb10 fs12 mt10">安全密码<span class="color-red1">*</span></div>-->
+            <!--<div class="main100">-->
+                <!--<input type="password" name="pay_password" placeholder="请输入安全密码..." class="main100 radius4px container-fluid line32 bor_img mb10">-->
+            <!--</div>-->
+            <div class="main100 mb10 fs12 ">申诉原因<span class="color-red1">*</span></div>
+            <textarea class="main100 bor_img radius4px pd10 h70 mb15" name="remark" placeholder="请输入申诉原因..."></textarea>
+            <div class="main100 mb30 fs12 color-red1 ">选填，不得超过200个字</div>
+            {include file="public:upload" /}
+            <input type="hidden" name="images" id="images" value="" />
+            <div class="text-center main100  mb30">
+                <a class="btn text_white bg-red-thunderbird radius4px pd8 pl35 pr35 btn-submit">提交申诉</a>
+            </div>
+        </div>
+    </form>
+</div><!-- 右边内容结束 -->
+{/block}

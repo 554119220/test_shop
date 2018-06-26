@@ -1,0 +1,51 @@
+{extend name="public:base" /}
+
+{block name="page"}
+<!-- 标题栏 -->
+    <header class="bar bar-nav bbai">
+        <a class="l_return back"><img class="main100" src="/static/wap/images/reg/l_return1.png"></a>
+        <h1 class="title">设置</h1>
+    </header>
+    <!-- 这里是页面内容区 -->
+    <div class="content qiye">
+        <ul class="main100 bbai qiye_ul m5px">
+            <li>
+                <a href="javascript:;">
+                <span class="lleft rem3">个人头像</span>
+                <img class="rright user_logo" height="100%" src="{$Think.session.user.user_avatar}?imageMogr2/thumbnail/40x40!">
+                </a>
+            </li>
+        </ul>
+        <ul class="main100 bbai qiye_ul m5px">
+            <li>
+                <span class="lleft">账号</span>
+                <span class="rright">{$Think.session.user.user_username}</span>
+            </li>
+            <li>
+                <span class="lleft">昵称</span>
+                <span class="rright">{$Think.session.user.user_nick}</span>
+            </li>
+            <li>
+                <span class="lleft">用户等级</span>
+                <span class="rright">{php} echo session('user.erpUser')['level_name'] ?? '未知';{/php}</span>
+            </li>
+            <li>
+                <span class="lleft">电话号码</span>
+                <span class="rright">{$Think.session.user.hide_mobile}</span>
+            </li>
+            <li>
+                <a class="main100 external" href="/member/extend">
+                    <span class="pull-left">扩展信息设置</span>
+                    <span class="icon icon-right pull-right"></span>
+                </a>
+            </li>
+            <li>
+                <a class="main100 external" href="/member/baby">
+                    <span class="pull-left">宝宝信息设置</span>
+                    <span class="icon icon-right pull-right"></span>
+                </a>
+            </li>
+        </ul>
+        <a class="main100 red-b tt25" href="/member/update_user">编辑资料</a>
+    </div>
+{/block}

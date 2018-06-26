@@ -1,0 +1,50 @@
+{extend name="public:base" /}
+{block name="page"}
+<!-- 标题栏 -->
+<header class="bar bar-nav bbai">
+    <a class="l_return back"><img class="main100" src="/static/wap/images/reg/l_return1.png"></a>
+    <h1 class="title">新建地址</h1>
+</header>
+<!-- 这里是页面内容区 -->
+<div class="content bj">
+    <form>
+        <div class="main100 bbai m5px">
+            <div class="bor">
+                <span>收货人</span>
+                <input type="text" name="name" placeholder="请输入收货人姓名">
+            </div>
+            <div class="bor">
+                <span>手机号码</span>
+                <input type="text" name="mobile" placeholder="请输入收货人手机号码">
+            </div>
+            <div class="bor">
+                <span>省市区</span>
+                <a class="tog" id="city-picker">请选择</a>
+                <input type="hidden" name="province_id" id="province_id" value="">
+                <input type="hidden" name="city_id" id="city_id" value="">
+                <input type="hidden" name="district_id" id="district_id" value="">
+            </div>
+            <div class="bor">
+                <span>街道</span>
+                <a class="tog" id="town-picker">请选择</a>
+                <input type="hidden" name="town_id" id="town_id" value="">
+            </div>
+            <div class="bor">
+                <span>邮政编码</span>
+                <input type="text" name="postal_code" placeholder="请输入邮政编码">
+            </div>
+
+            <textarea class="dz" name="street" placeholder="请填写详细地址..."></textarea>
+            <div class="dizhi">
+                <span class="is_default">设为默认收货地址</span>
+                <input type="hidden" name="is_default" id="is_default" value="">
+            </div>
+        </div>
+        <!--保存-->
+        <div class="qiye tt35">
+            <a class="main100 red-b tt25 btn-submit" href="javascript:;">提交地址</a>
+        </div>
+
+    </form>
+</div>
+{/block}

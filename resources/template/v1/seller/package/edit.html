@@ -1,0 +1,52 @@
+{extend name="public:base" /}
+{block name="page"}
+<div class="tab_col pd10 pb0 ">
+	<div class="main100 over bg_white">
+		<div class="container-fluid line55 bg-white radius4px mb20">
+			<i class="redicon"></i>
+			<span class="fs14 color333 pl5">包装模板 - 修改</span>
+			<!-- <a href="/package/create" class="btn text_white bg-red1 radius4px pd7 pl20 pr20 mt13 fr ml15 fs12">创建模版</a> -->
+		</div>
+		{notempty name="Package"}
+		<form id="form-tpl">
+			<input type="hidden" name="package_id" value="{$Package.package_id}">
+			<div class="main100  bg-white radius4px pl15 pr15 ">
+				<div class="main100 mb10 fs12 pt15">模板名称<span class="color-red1">*</span></div>
+				<div class="main100">
+					<input value="{$Package.package_name}" name="package_name" placeholder="请输入模板名称" class="main100 radius4px container-fluid line32 bor_img mb10" />
+				</div>
+				<div class="main100 mb10 fs12 pt15">模板介绍<span class="color-red1">*</span></div>
+				<div class="main100">
+					<textarea name="package_intro" class="main100 bor_img radius4px pd10 h70 mb15" placeholder="模板介绍">{$Package.package_intro}</textarea>
+				</div>
+			</div>
+		</form>
+		<a class="btn text_white bg-red-thunderbird radius4px pd8 pl35 pr35 mb100 ml15" id="edit-tpl">创建模板</a>
+		{else/}
+			<h4 class="ml20 mb20">未找到模板。</h4>
+		{/notempty}
+		
+	</div>
+</div>
+{/block}
+{block name="script"}
+<script type="text/javascript">
+	$('#edit-tpl').on('click',function(){
+		apiPost({
+			data:getFormJson('#form-tpl'),
+			header:getHeader('headers0'),
+			log:true,
+			success:function(ret){
+				if ( ret.code == 20000 ) {
+					success('修改成功成功');
+					setTimeout(function(){
+						window.location.href = '/package';
+					},1000);
+				} else {
+					error(ret.msg);
+				}
+			},
+		});
+	});
+</script>
+{/block}

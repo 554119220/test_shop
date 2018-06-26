@@ -1,0 +1,167 @@
+<!-- 底部工具栏 -->
+<!-- <nav class="bar bar-tab bg_white">
+    <a class="tab-item external_set {eq name="Request.controller" value="Index"}active{/eq}" href="/">
+        <span class="icon icon_common icon_01 r12"></span>
+        <span class="tab-label">首页</span>
+    </a>
+    <a class="tab-item external_set {eq name="Request.controller" value="Category"}active{/eq}" href="/category">
+        <span class="icon icon_common icon_02 r12"></span>
+        <span class="tab-label">分类</span>
+    </a>
+    <a class="tab-item external_set {eq name="Request.controller" value="Find"}active{/eq}" href="/find">
+        <span class="icon icon_common icon_03 r12"></span>
+        <span class="tab-label">发现</span>
+    </a>
+    <a class="tab-item external_set {eq name="Request.controller" value="Cart"}active{/eq}" href="/cart" data-no-cache="true">
+        <span class="icon icon_common icon_04 r12"></span>
+        <span class="tab-label">购物车</span>
+    </a>
+    <a class="tab-item external_set {eq name="Request.controller" value="Member"}active{/eq}" href="/member">
+        <span class="icon icon_common icon_05 r12"></span>
+        <span class="tab-label">我的</span>
+    </a>
+</nav> -->
+<!-- 底部工具栏 -->
+
+
+<!-- <nav class="bar bar-tab bg_white">
+    <a data-no-cache="true" class="tab-item external_set {eq name="Request.controller" value="Index"}active{/eq}" href="/">
+        <span class="icon icon_common icon_01 r12"></span>
+        <span class="tab-label text_77">首页</span>
+    </a>
+    <a data-no-cache="true" class="tab-item external_set {eq name="Request.controller" value="Category"}active{/eq}" href="/category">
+        <span class="icon icon_common icon_02 r12"></span>
+        <span class="tab-label text_77">分类</span>
+    </a>
+    <a data-no-cache="true" class="tab-item external_set {eq name="Request.controller" value="Cart"}active{/eq}" href="/cart">
+        <span class="icon icon_common icon_04 r12"></span>
+        <span class="tab-label text_77">购物车</span>
+    </a>
+    <a data-no-cache="true" class="tab-item external_set {eq name="Request.controller" value="Member"}active{/eq}" href="/member">
+        <span class="icon icon_common icon_05 r12"></span>
+        <span class="tab-label text_77">我的</span>
+    </a>
+</nav> -->
+
+<ul class="bottomMenu">
+    <li>
+        <a class="rfs12" href="/">
+        {eq name="Request.controller" value="Index"}<img src="/static/lwjz/Images/icon/icon_1.png" alt="" width="26" /><br /><span class="text_red">首页</span>{else /}
+        <img src="/static/lwjz/Images/icon/icon_01.png" alt="" width="26" /><br />首页{/eq}
+        </a>
+    </li>
+    <li>
+        <a class="rfs12" href="/category">
+        {eq name="Request.controller" value="Category"}<img src="/static/lwjz/Images/icon/icon_2.png" alt="" width="26" height="26" /><br /><span class="text_red">类目</span>{else /}
+        <img src="/static/lwjz/Images/icon/icon_02.png" alt="" width="26" /><br />类目{/eq}        
+        </a>
+    </li>
+    <li>
+        <a class="rfs12" href="/member/account">
+        {if condition="$Request.controller == 'Member' && $Request.action == 'account'"}<img src="/static/lwjz/Images/icon/icon_3.png" alt="" width="26" height="26" /><br /><span class="text_red">财富</span>{else /}
+        <img src="/static/lwjz/Images/icon/icon_03.png" alt="" width="26" height="26" /><br />财富{/if}
+        </a>
+    </li>
+    <li>
+        <a class="rfs12" href="/cart">
+        {eq name="Request.controller" value="Cart"}<img src="/static/lwjz/Images/icon/icon_4.png" alt="" width="26" height="26" /><br /><span class="text_red">购物车</span>{else /}
+        <img src="/static/lwjz/Images/icon/icon_04.png" alt="" width="26" height="26" /><br />购物车{/eq}
+        </a>
+    </li>
+    <li>
+        <a class="rfs12" href="/member">
+        {if condition="$Request.controller == 'Member' && $Request.action != 'account'"}<img src="/static/lwjz/Images/icon/icon_5.png" alt="" width="26" height="26" /><br /><span class="text_red">我的</span>{else /}
+        <img src="/static/lwjz/Images/icon/icon_05.png" alt="" width="26" height="26" /><br />我的{/if}
+        <span class="hasnew"><img src="/static/lwjz/Images/dot_red.png" width="10px" /></span>
+        </a>
+    </li>
+</ul>
+
+
+<style>
+.page .bottomMenu {
+	background-color: #FFF;
+	position: fixed;
+	bottom: 0px;
+	width: 100%;
+	border-top-width: 1px;
+	border-top-style: solid;
+	border-top-color: #F4F4F4;
+	height: 48px;
+	padding-top: 2px;
+	z-index:11;
+}
+.page .bottomMenu li {
+	width: 20%;
+	float: left;
+	text-align: center;
+	position:relative;
+	line-height:15px;
+}
+.page .bottomTip {
+	text-align: center;
+	font-size: 14px;
+	color: #CCC;
+	line-height: 40px;
+	padding-bottom: 50px;
+}
+.page .bottomMenu li a {
+	display: inline-block;
+	height: 100%;
+	width: 100%;
+	color: #999;
+	
+}
+
+.page .bottomMenu .find {
+	position: relative;
+	height: 48px;
+	background-image: none;
+}
+.page .bottomMenu .find .findSub {
+	position: absolute;
+	left: 0px;
+	z-index: 11;
+	bottom: 0px;
+    width: 100%;
+}
+.page .bottomMenu .find .findSub img {
+    width: 3rem;
+}
+.page .moreservices {
+	position: fixed;
+	bottom:65px;
+	width: 100%;
+	min-width: 360px;
+	padding-top: 2px;
+	overflow: hidden;
+	display: none;
+	z-index:9;
+}
+.page .moreservices li {
+	width: 33%;
+	float: left;
+	text-align: center;
+	margin-bottom:8px;
+}
+.page .moreservices li a {
+	display: inline-block;
+	height: 100%;
+	width: 100%;
+	color: #999;
+}
+.page .moreservices .servLi {
+	width: 80%;
+	margin-right: auto;
+	margin-left: auto;
+	background-color: #FFF;
+	padding: 10px;
+	overflow: hidden;
+	border-width: 1px;
+	border-style: solid;
+	border-color: #F4F4F4;
+	border-radius: 8px;
+}
+.page .bottomMenu .hasnew{ position:absolute; top:5px; right:20px;}
+.bottomMenu~.content{bottom:48px}
+</style>

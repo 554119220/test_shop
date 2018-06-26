@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>404 - 百望商城</title>
+	<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+	<link rel="stylesheet" href="../static/wap/css/sm.min.css" />	
+	<link rel="stylesheet" href="../static/wap/css/common.css" />
+
+    <link rel="stylesheet" href="../static/wap/css/style.css" />
+    <link rel="stylesheet" href="../static/wap/css/css.css" />
+</head>
+<body >
+	<!-- page集合的容器，里面放多个平行的.page，其他.page作为内联页面由路由控制展示 -->
+    <div class="page-group">
+        <!-- 单个page ,第一个.page默认被展示-->
+        <div class="page">
+            <!-- 标题栏 -->
+            <header class="bar bar-nav bbai">
+                <a class="l_return back" ><img class="main100" src="../static/wap/images/reg/l_return1.png"></a>
+                <h1 class="title">404</h1>
+            </header>
+            <!-- 这里是页面内容区 -->
+            <div class="content">
+      			<div class="a404 main100  m5px">
+      				<div class="main100 img404">
+      					<img class="img" src="../static/wap/images/404/404.png">
+      					<span>404</span>
+      				</div>
+      				<span class="main100 h999">~呀，不小心就出错啦~</span>
+      				<span class="main100 h999">您可以
+      					<a class="back cred" >返回上级</a>
+      					页面或
+      					<a href="/" class="cred">返回首页</a>
+      				</span>
+      			</div>
+            </div>
+        </div>
+
+        <!-- 其他的单个page内联页（如果有） -->
+        <div class="page">...</div>
+    </div>
+    <!-- 默认必须要执行$.init(),实际业务里一般不会在HTML文档里执行，通常是在业务页面代码的最后执行 -->
+</body>
+<script src="../static/wap/js/jquery-1.8.3.min.js"></script>	
+<script src="../static/wap/js/zepto.js"></script>
+<script src="../static/wap/js/sm.min.js"></script>	
+</html>

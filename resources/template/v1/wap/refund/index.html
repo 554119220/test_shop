@@ -1,0 +1,85 @@
+{extend name="public:base" /}
+{block name="page"}
+<!-- 标题栏 -->
+<header class="bar bar-nav bbai bor_none">
+    <a class="l_return back"><img class="main100" src="/static/wap/images/reg/l_return1.png"></a>
+    <span class="pull-right rfs14 text_77 icon icon-menu open-panel shop-category-list" data-panel=".panel_set"></span>
+    <h1 class="title">退款管理</h1>
+</header>
+
+<!-- 这里是页面内容区 -->
+<div class="content cart_main pull-to-refresh-content infinite-scroll infinite-scroll-bottom" data-ptr-distance="50">
+    {include file="public:refresh" /}
+    <!--购物车内容-->
+    <div class="main100">
+        <!--购物车产品-->
+        <div class="cart_cp">
+            <div class="buttons-tab">
+                <a href="#tab1" data-state="" class="tab-link button active">全部</a>
+                <a href="#tab2" data-state="buyer" class="tab-link button">买家操作</a>
+                <a href="#tab3" data-state="seller" class="tab-link button">商家操作</a>
+                <a href="#tab4" data-state="20" class="tab-link button">已取消</a>
+                <a href="#tab5" data-state="100" class="tab-link button">已完成</a>
+            </div>
+            <div class="main100 cart_newcp">
+                <div class="tabs">
+                    <!--列表1-->
+                    <div id="tab1" class="tab active" data-page="1" data-request="1">
+                        <refund-list></refund-list>
+                        <!--产品end-->
+                        <!-- 加载提示符 -->
+                        <div class="infinite-scroll-preloader">
+                            <div class="preloader"></div>
+                        </div>
+                    </div>
+                    <!--列表2 待付款-->
+                    <div id="tab2" class="tab" data-page="1" data-request="1">
+                        <refund-list></refund-list>
+                        <!--产品end-->
+                        <!-- 加载提示符 -->
+                        <div class="infinite-scroll-preloader">
+                            <div class="preloader"></div>
+                        </div>
+                    </div>
+                    <!--列表3 待发货-->
+                    <div id="tab3" class="tab" data-page="1" data-request="1">
+                        <refund-list></refund-list>
+                        <!--产品end-->
+                        <!-- 加载提示符 -->
+                        <div class="infinite-scroll-preloader">
+                            <div class="preloader"></div>
+                        </div>
+                    </div>
+                    <!--列表3 待发货-->
+                    <div id="tab4" class="tab" data-page="1" data-request="1">
+                        <refund-list></refund-list>
+                        <!--产品end-->
+                        <!-- 加载提示符 -->
+                        <div class="infinite-scroll-preloader">
+                            <div class="preloader"></div>
+                        </div>
+                    </div>
+                    <!--列表3 待发货-->
+                    <div id="tab5" class="tab" data-page="1" data-request="1">
+                        <refund-list></refund-list>
+                        <!--产品end-->
+                        <!-- 加载提示符 -->
+                        <div class="infinite-scroll-preloader">
+                            <div class="preloader"></div>
+                        </div>
+                    </div>
+                </div>
+                <!---->
+            </div>
+            <!--暂无商品-->
+            <!--<div class="main100 c-none">-->
+                <!--<img class="img" src="/static/wap/images/shop_no.png">-->
+                <!--<div class="text h999">您暂无待发货商品~~</div>-->
+            <!--</div>-->
+        </div>
+
+    </div>
+    <!--购物车内容end-->
+</div>
+<!-- 这里是页面内容区end -->
+{/block}

@@ -1,0 +1,25 @@
+{extend name="public:base" /}
+{block name="page"}
+<div class="tab_col pd10 pb0">
+    {eq name="data.code" value="20000"}
+        <div class="container-fluid line55 bg-white radius4px">
+            <i class="redicon"></i>
+            <span class="fs14 color333 pl5">关闭订单</span>
+        </div>
+        <div class="alert mt10 mb10 bg-red2 color-red1">温馨提示，您当前正在操作关闭订单，关闭后该条订单数据将被清除……</div>
+
+        {include file="orders:info" /}
+
+        <form data-header="close" data-redirect="/orders/detail?shop_no={$data.data.orders_shop_no}">
+            <input type="hidden" name="shop_no" value="{$data.data.orders_shop_no}">
+            <div class="main100  bg-white radius4px pd15"  style="min-height: 200px;">
+                <div class="main100 mb10 fs12 mt4">关闭理由<span class="color-red1">*</span></div>
+                <div class="main100">
+                    <textarea class="main100 bor_img radius4px pd10 h70 mb15" name="remark" placeholder="请输入关闭理由..."></textarea>
+                </div>
+                <a class="btn text_white bg-red-thunderbird radius4px pd8 pl35 pr35 btn-submit">确认关闭</a>
+            </div>
+        </form>
+    {/eq}
+</div><!-- 右边内容结束 -->
+{/block}

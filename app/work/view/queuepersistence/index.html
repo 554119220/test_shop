@@ -1,0 +1,104 @@
+{extend name="public:base" /}
+<!--导航-->
+{block name="nav"}{include file="queuepersistence:nav" /}{/block}
+{block name="search"}{include file="queuepersistence:search" /}{/block}
+<!--主体内容-->
+{block name="content"}
+<div style="margin-bottom: 20px; font-weight: bold; font-size: 16px; color: red;">
+	注意：移除持久化不会进行出列操作，移除队列不会进行移除持久化操作，再次入列不会剔除之前入列数据且会移除当前持久化。
+</div>
+{notempty name="list"}
+<form class="form-list" id="form-list" onsubmit="return false">
+	<table class="table table-bordered table-hover valign-middle">
+		<thead>
+			<th width="160" class="text-center">创建时间</th>
+			<th width="80" class="text-center">所属管道</th>
+			<th width="120" class="text-center">job id</th>
+			<th width="120" class="text-center">redis key</th>
+			<th class="text-center" style="width:50px;">操作</th>
+		</thead>
+		<tbody>
+			{volist name="list" id="vo"}
+			<tr>
+				<td class="text-center">{$vo.create_time}</td>
+				<td class="text-center">{$vo.tube}</td>
+				<td class="text-center">{$vo.job_id}</td>
+				<td><textarea row="3" class="form-control queue-key">{$vo.key}</textarea></td>
+				<td class="text-center" style="width:50px;">
+					<a data-id="{$vo.job_id}" data-tube="{$vo.tube}" class="btn blue btn-outline btn-block md10 btn-remove-persistence" href="javascript:;" data-url="/queuepersistence/removePersistence">移除持久化</a>
+					<a data-id="{$vo.job_id}" data-tube="{$vo.tube}" class="btn red btn-outline btn-block md10 btn-remove-queue" href="javascript:;" data-url="/queuepersistence/removeQueue">移除队列</a>
+					<a data-id="{$vo.job_id}" data-tube="{$vo.tube}" class="btn green btn-outline btn-block md10 btn-add-queue" href="javascript:;" data-url="/queuepersistence/addQueue">再次入列</a>
+				</td>
+			</tr>		
+			{/volist}
+		</tbody>
+	</table>
+</form>
+{else /}
+	<div class="text-center nors">
+		<h3>找不到记录！</h3>
+	</div>
+{/notempty}
+	<div class="page-box">
+		{:page_html_not_count($pageinfo)}
+	</div>
+                     
+{/block}
+
+<!--脚本-->
+{block name="javascript"}
+<script>
+$(function () {
+	$(".btn-remove-persistence").click(function () {
+	    var d	= $(this).data();
+	    d.key	= $(this).closest('tr').find('.queue-key').val();
+	    var params	= {
+			url : d.url,
+			data : {
+			    job_id : d.id,
+				key : d.key,
+				tube : d.tube,
+			},
+			success : function (ret) {
+                toast(ret);
+            }
+		};
+        ajax_post(params);
+    });
+
+	$(".btn-remove-queue").click(function () {
+        var d	= $(this).data();
+        d.key	= $(this).closest('tr').find('.queue-key').val();
+        var params	= {
+            url : d.url,
+            data : {
+                job_id : d.id,
+                key : d.key,
+                tube : d.tube,
+            },
+            success : function (ret) {
+                toast(ret);
+            }
+        };
+        ajax_post(params);
+    });
+
+	$(".btn-add-queue").click(function () {
+        var d	= $(this).data();
+        d.key	= $(this).closest('tr').find('.queue-key').val();
+        var params	= {
+            url : d.url,
+            data : {
+                job_id : d.id,
+                key : d.key,
+                tube : d.tube,
+            },
+            success : function (ret) {
+                toast(ret);
+            }
+        };
+        ajax_post(params);
+    });
+});
+</script>
+{/block}

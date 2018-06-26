@@ -1,0 +1,18 @@
+<!-- 左边 -->
+<div class="tab_col bg_white help_left" style="width:240px; min-width: 240px;">
+	<div class="fs18 h50 bor-bot-f5 color333 pl10 h70 line70 mt10" style="font-weight: bold;"><a href="/">新闻中心</a></div>
+	<ul class="nav-ul">
+		{foreach name="cList" item="value" key="key"}
+	    	<li>
+	        	<h3 class="two-level">{$value.article_category_name}<i class=""></i></h3>
+	            <div class="nav">
+	            	{notempty name="value.child"}
+		            	{foreach name="value.child" item="vo" key="ko"}
+			            	<a class="list-item {if condition="$vo['article_category_id'] eq input('cid') or $vo['article_category_id'] eq ($detail['article_category_id'] ?? '')"}color-red1{/if}" href="/index/index/cid/{$vo.article_category_id}"><b></b>{$vo.article_category_name}</a>
+		                {/foreach}
+	                {/notempty}
+	            </div>
+	        </li>
+        {/foreach}
+    </ul>
+</div>

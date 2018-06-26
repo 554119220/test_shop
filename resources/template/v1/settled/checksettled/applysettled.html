@@ -1,0 +1,186 @@
+{extend name="public:base" /}
+{block name="nav"}
+{include file="public:nav2" /}
+{/block}
+{block name="content"}
+<!-- 页面主体内容 -->
+<div class="tab_row mb10">
+    <div class="tab_col pt10">
+        <div class="pl25 line40 bg-white mb10">
+            <i class="redicon mar0" ></i>
+            <span class="fs14 color333 pl5">入驻要求</span>
+        </div>
+
+        <div class="main100 over">
+            <div class="over pd25 bg_white fl mb10 main100" >
+                <div class="main100 over">
+                    <a class="btn text_white bg-red1 radius4px pd7 pl30 pr30  fl  fs12 mb20" href="{:url('choice/index')}">申请入驻</a>
+                </div>
+                <div class="bor-f5 over radius4px pd15">
+                    <div class="main100 fs14 color-red1 mb5">{$business_notice.data.shop_article_title}</div>
+                    <div class="over main100 color666 line20">
+                        {:html_entity_decode($business_notice['data']['shop_article_content'])}
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="over pl25 pr25 pt15  bg_white fl mb10 main100">
+                <div class="color-red1 fs14 mb10">个人资质</div>
+                <table class="table solid_all  table_dashed tr12 table12  table-center mb0  " >
+                    <thead class=" bg-f5 ">
+                    <tr>
+                        <th class="small_xs ">条件</th>
+                        <th class="small_xs ">状态</th>
+                        <th class="small_xs ">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody class="td-pd14">
+                    <tr>
+                        <td class="color666">实名认证</td>
+                        <td class="color666">{present name="user.erpUser.is_valid_credentials"}{eq name="user.erpUser.is_valid_credentials" value="1"}您已通过实名认证{else/}未认证{/eq}{else/}--{/present}</td>
+                        <td class="color666"><a target="_blank" href="{$erp_user_url}" class="color-blue">查看</a></td>
+                    </tr>
+                    {present name="user.erpUser.is_enterprise"}
+                    {eq name="user.erpUser.is_enterprise" value="1"}
+                    <tr>
+                        <td class="color666">店铺用户</td>
+                        <td class="color666">{eq name="user.erpUser.is_valid_credentials" value="1"}您已经认证店铺会员{else/}未认证{/eq}</td>
+                        <td class="color666"><a target="_blank" href="{$erp_user_url}" class="color-blue">查看</a></td>
+                    </tr>
+                    {/eq}
+                    {/present}
+                    <tr>
+                        <td class="color666">银卡会员/金卡会员</td>
+                        <td class="color666">{present name="user.erpUser.level_id"}{gt name="user.erpUser.level_id" value="1"}{$user.erpUser.level_name}(满足条件){else/}您还不是银卡会员{/gt}{else/}--{/present}</td>
+                        <td class="color666"><a target="_blank" href="{$erp_user_url}" class="color-blue">{present name="user.erpUser.level_id"}{gt name="user.erpUser.level_id" value="1"}查看{else/}申请成为银卡会员{/gt}{else/}查看{/present}</a></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="main100 line42 color666 mb5">{present name="user.erpUser.is_enterprise"}{eq name="user.erpUser.is_enterprise" value="1"}您目前是店铺用户，可以经营，自营店、旗舰店、专卖店！！{else/}您目前是个人用户，只能经营个人店铺，去<a class="text-danger" href="{$erp_user_url}" target="_blank">升级店铺会员</a>用户吧？{/eq}{/present}</div>
+            </div>
+            <div class="main100 line55 over bg_white mb10 shop-btn">
+                {foreach name="shoptype.data" item="val"}
+                <a class="color666 fs14 ml15 mr15 {eq name="$key" value="0"}cp-active {/eq}">{$val.shop_type_suffix}</a>
+                {/foreach}
+            </div>
+            {foreach name="shoptype.data" item="val"}
+                <div class="pd25 main100 over bg_white shop-text" style="{eq name="$key" value="0"}display: block;{else/}display: none;{/eq}">
+                    <div class="main100 radius4px over mb25">
+                        <table class="table solid_all   tr12 table12  mb0 bor-f5 " >
+                            <tbody class="td-pd14">
+                            <tr>
+                                <td colspan="3" ><span class="color-red1 fs14">用户资质</span></td>
+                            </tr>
+                            {notempty name="val.user.data"}
+                            {foreach name="val.user.data" item="v"}
+                            <tr>
+                                <td class="color666" style="width:24%">{$v.shop_qualifications_name}</td>
+                                <td class="color666" style="width:70%">{:html_entity_decode($v['shop_qualifications_describe'])}
+                                    {notempty name="v.shop_qualifications_images"}
+                                    <a href="{:getImagesDomain($v['shop_qualifications_images'])}" class="image-zoom">（样图）</a>
+                                    {/notempty}
+                                </td>
+                                <td class="color666 text-center"><a>{eq name="v.is_must" value="1"}必须{else/}选填{/eq}</a></td>
+                            </tr>
+                            {/foreach}
+                            {else/}
+                            <tr>
+                                <td colspan="3" ><span class="color666 fs14">无</span></td>
+                            </tr>
+                            {/notempty}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="main100 radius4px over mb25">
+                        <table class="table solid_all   tr12 table12  mb0 bor-f5 " >
+                            <tbody class="td-pd14">
+                            <tr>
+                                <td colspan="3" ><span class="color-red1 fs14">品牌资质(自有)</span></td>
+                            </tr>
+                            {notempty name="val.brand1.data"}
+                            {foreach name="val.brand1.data" item="v"}
+                            <tr>
+                                <td class="color666 " style="width:24%">{$v.shop_qualifications_name}</td>
+                                <td class="color666" style="width:70%">{:html_entity_decode($v['shop_qualifications_describe'])}
+                                    {notempty name="v.shop_qualifications_images"}<a href="{:getImagesDomain($v['shop_qualifications_images'])}" class="image-zoom">（样图）</a>{/notempty}
+                                </td>
+                                <td class="color666 text-center"><a>{eq name="v.is_must" value="1"}必须{else/}选填{/eq}</a></td>
+                            </tr>
+                            {/foreach}
+                            {else/}
+                            <tr>
+                                <td colspan="3" ><span class="color666 fs14">无</span></td>
+                            </tr>
+                            {/notempty}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="main100 radius4px over mb25">
+                        <table class="table solid_all   tr12 table12  mb0 bor-f5 " >
+                            <tbody class="td-pd14">
+                            <tr>
+                                <td colspan="3" ><span class="color-red1 fs14">品牌资质(代理)</span></td>
+                            </tr>
+                            {notempty name="val.brand2.data"}
+                            {foreach name="val.brand2.data" item="v"}
+                            <tr>
+                                <td class="color666 " style="width:24%">{$v.shop_qualifications_name}</td>
+                                <td class="color666" style="width:70%">{:html_entity_decode($v['shop_qualifications_describe'])}
+                                    {notempty name="v.shop_qualifications_images"}<a href="{:getImagesDomain($v['shop_qualifications_images'])}" class="image-zoom">（样图）</a>{/notempty}
+                                </td>
+                                <td class="color666 text-center"><a>{eq name="v.is_must" value="1"}必须{else/}选填{/eq}</a></td>
+                            </tr>
+                            {/foreach}
+                            {else/}
+                            <tr>
+                                <td colspan="3" ><span class="color666 fs14">无</span></td>
+                            </tr>
+                            {/notempty}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="main100 radius4px over mb25">
+                        <table class="table solid_all   tr12 table12  mb0 bor-f5 " >
+                            <tbody class="td-pd14">
+                            <tr>
+                                <td colspan="3" ><span class="color-red1 fs14">行业资质</span></td>
+                            </tr>
+                            {notempty name="val.industry.data"}
+                            {foreach name="val.industry.data" item="v"}
+                            <tr>
+                                <td class="color666 " style="width:24%">{$v.shop_qualifications_name}</td>
+                                <td class="color666" style="width:70%">{:html_entity_decode($v['shop_qualifications_describe'])}
+                                    {notempty name="v.shop_qualifications_images"}
+                                    <a href="{:getImagesDomain($v['shop_qualifications_images'])}" class="image-zoom">（样图）</a>
+                                    {/notempty}
+                                </td>
+                                <td class="color666 text-center"><a>{eq name="v.is_must" value="1"}必须{else/}选填{/eq}</a></td>
+                            </tr>
+                            {/foreach}
+                            {else/}
+                            <tr>
+                                <td colspan="3" ><span class="color666 fs14">无</span></td>
+                            </tr>
+                            {/notempty}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            {/foreach}
+        </div>
+
+    </div>
+</div><!-- 页面主体内容结束 -->
+{/block}
+{block name="js"}
+<script>
+    $(document).on('click','.shop-btn a',function(){
+        $('.shop-btn a').removeClass('cp-active');
+        $(this).addClass('cp-active')
+        var n=$('.shop-btn a').index(this);
+        $('.shop-text').hide().eq(n).show()
+    })
+    image_zoom();
+</script>
+{/block}

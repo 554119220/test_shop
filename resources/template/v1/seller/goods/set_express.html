@@ -1,0 +1,23 @@
+{empty name="list"}
+	<h3>您尚未添加运费模板。</h3>
+{else/}
+	<!-- <div class="main100 mb10">店铺分类</div> -->
+	<div class="main100 over pt10 mt20 color666 fs14">
+		<form id="form-goods-set-category">
+			<div class="form-group">
+		        <label><b>选择一个运费模板</b></label>
+				<div class="mt-checkbox-inline">
+					{foreach name="list" key="ko" item="vo"}
+						<label class="square fl ml10">
+			                <input name="express_id" type="radio" value="{$vo.express_id}" ><em class="fl"></em>
+			                <span >{$vo.express_name}</span>
+			            </label>
+					{/foreach}
+				</div>
+		    </div>
+		</form>
+	</div>
+	<div class="main100 pt10 mt30 over">
+		<span class="fs14">只可选择一个模板 <a class="color-red1 active ml5"  href="/express" >管理运费模板</a></span>
+	</div>
+{/empty}

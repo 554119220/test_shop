@@ -1,0 +1,42 @@
+{extend name="public:base" /}
+{block name="page"}
+<!-- 顶部标题栏 -->
+<header class="bar bar-nav bg_white">
+    <a class="icon icon_common pull-left r12 icon_back back" style="margin-top:.6rem"></a>
+    <h1 class="title">追加评价</h1>
+</header>
+<div class="content">
+    {eq name="data.code" value="20000"}
+    <form>
+        <input type="hidden" name="id" value="{$data.data.goods_comment_id}">
+        <div class="shop_line clearfix bg_white">
+            <a data-no-cache="true" href="/goods?id={$data.data.goods_sku_id}"><img src="{$data.data.orders_goods.goods_images|thumb=176}"></a>
+            <div class="pull-left" style="border:none">
+                <div class="text_over rfs14 rmt20 rpt5">
+                    <span class="text_red rmr10">{$data.data.goods_comment_evaluation_name}</span>
+                    <a class="text_77" href="/goods?id={$data.data.goods_sku_id}">{$data.data.orders_goods.goods_name}</a>
+                </div>
+            </div>
+        </div>
+        <div class="bg_white rpd10">
+            <p class="mg0 rfs14 text_77">{$data.data.goods_comment_content.goods_comment_content}</p>
+            <span class="text_99 rfs12">{$data.data.goods_comment_create_time}</span>
+        </div>
+        <div class="textarea_set bg_white rpd10 rmb10">
+            <textarea class="form-control" name="content" rows="4" placeholder="已经使用过一段时间了，有更多使用心得？分享给想买的他们吧……"></textarea>
+            <div class="clearfix mg5 box-images">
+                <div class="camera_input pingz">
+                    <input class="upload-file" data-input="images" type="file" onchange="uploadImages(this);">
+                </div>
+            </div>
+        </div>
+        <input type="hidden" id="images" name="images" value="">
+        <div class="rpd10">
+            <a href="javascript:;" class="button button_strong button-fill button-danger btn-submit">发表追评</a>
+        </div>
+    </form>
+    {else /}
+    {/eq}
+</div>
+<!-- 页面内容区到此为止 -->
+{/block}

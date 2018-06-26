@@ -1,0 +1,33 @@
+{extend name="public:base" /}
+
+{block name="page"}
+<!-- 标题栏 -->
+    <header class="bar bar-nav bbai">
+        <a class="l_return back"><img class="main100" src="/static/wap/images/reg/l_return1.png"></a>
+        <h1 class="title">设置</h1>
+    </header>
+    <input type="hidden" value={$headers0} id="headers0">
+    <!-- 这里是页面内容区 -->
+    <div class="content qiye">
+        <ul class="main100 bbai qiye_ul m5px">
+            <li>
+				
+                <a href="javascript:;" class="main100">
+                    <span class="lleft rem3">个人头像</span>
+					
+                    <img id="select-images"  class="rright user_logo" height="100%" src="{$Think.session.user.user_avatar}?imageMogr2/thumbnail/40x40!">
+					<input type="file" id="upload-images-base" class="right" style="opacity:0;width: 100%;height: 100%;position:absolute;" onchange="uploadImagesBase('#user_avatar','#select-images');"/>
+                </a>
+            </li>
+            <li>
+                <span class="lleft">昵称</span>
+                <input type="text" maxlength="20" name="user_nick" value="{$Think.session.user.user_nick}" placeholder="请输入昵称" />
+            </li>
+        </ul>
+		<!--
+        <input class="upload-file delbtn" id="upload-images-base" type="file" onchange="uploadImagesBase('#user_avatar','#select-images');">
+		-->
+        <input type="hidden" id="user_avatar" name="user_avatar" value="{$Think.session.user.user_avatar_key}">
+        <a class="main100 red-b tt25 update-user" href="javascript:;">确认修改</a>
+    </div>
+{/block}

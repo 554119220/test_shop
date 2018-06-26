@@ -1,0 +1,141 @@
+{extend name="public:base" /}
+{block name="page"}
+<div class="tab_col pd10 pb0">
+    <div class="main100 bg-white radius4px mb10">
+        <div class="main100 line55 row-tabs" data-tab="{$Think.get.state}">
+            <a class="color666 fs14 ml15 mr15 di a-tab" data-tab="" href="/refund">所有退款</a>
+            <a class="color666 fs14 ml15 mr15 di a-tab" data-tab="seller" href="/refund?state=seller">卖家操作</a>
+            <a class="color666 fs14 ml15 mr15 di a-tab" data-tab="buyer" href="/refund?state=buyer">买家操作 </a>
+            <a class="color666 fs14 ml15 mr15 di a-tab" data-tab="appeal" href="/refund?state=appeal">等待仲裁 </a>
+            <a class="color666 fs14 ml15 mr15 di a-tab" data-tab="20" href="/refund?state=20">已取消</a>
+            <a class="color666 fs14 ml15 mr15 di a-tab" data-tab="100" href="/refund?state=100">已完成</a>
+            <form action="" method="get" class="fr">
+                <div class=" border-red over radius4px fl mr15 mt10">
+                    <input name="refund_no" class="main70 line30 bor_no pl10 fl" placeholder="输入退款单号搜索">
+                    <button class="btn text_white bg-red1  fl  main30 text-center">搜索</button>
+                </div>
+                <div class="fl mr15 bg-red1 text_white pt3 pb3 radius4px  mt10 line30" id="search-btn">高级搜索</div>
+            </form>
+        </div>
+        <!--高级搜索-->
+        <div class="mt1 plr15 pt25 pb25 main100 bg_white h85 radius4px hide" id="search-main">
+            <form action="" method="get" class="fl">
+                <div class=" border-red over radius4px fl mr15">
+                    <input name="shop_no" class="w220 line30 bor_no pl10 fl" placeholder="输入订单号搜索">
+                </div>
+                <!--<div class=" border-red over radius4px fl mr15">-->
+                    <!--<input class="w170 line30 bor_no pl10 fl" placeholder="请输入买家昵称">-->
+                <!--</div>-->
+                <!--<div class="fl mr15 border-red h34 over time-s">-->
+                    <!--<div class="input-group  date date-picker over" style="width:150px"-->
+                          <!--data-date-format="dd-mm-yyyy" data-date-viewmode="years">-->
+                        <!--<input name="sday" placeholder="申请开始时间" type="text" class="bor_no bg-white  form-control" readonly="">-->
+                        <!--<span class="input-group-btn">-->
+                            <!--<button class="btn default" type="button">-->
+                                <!--<i class="fa fa-calendar"></i>-->
+                            <!--</button>-->
+                        <!--</span>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="fl mr15 border-red h34 over time-s">-->
+                    <!--<div class="input-group  date date-picker over" style="width:150px"-->
+                          <!--data-date-format="dd-mm-yyyy" data-date-viewmode="years">-->
+                        <!--<input name="eday" placeholder="申请结束时间" type="text" class="bor_no bg-white  form-control" readonly="">-->
+                        <!--<span class="input-group-btn">-->
+                            <!--<button class="btn default" type="button">-->
+                                <!--<i class="fa fa-calendar"></i>-->
+                            <!--</button>-->
+                        <!--</span>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <div class="fl mr15 border-red h34 over time-s">
+                    <div class="datep">
+                        <input class="datainp bor_no bg-white color999 w110 pl10" name="sday" id="sday" type="text" placeholder="申请开始时间"  readonly>
+                        <button class="btn default" type="button" onClick="jeDate({dateCell:'#sday',isTime:true,format:'YYYY-MM-DD'})" >
+                            <i class="fa fa-calendar"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="fl mr15 border-red h34 over time-s">
+                    <div class="datep">
+                        <input class="datainp bor_no bg-white color999 w110 pl10" name="eday" id="eday" type="text" placeholder="申请结束时间"  readonly>
+                        <button class="btn default" type="button" onClick="jeDate({dateCell:'#eday',isTime:true,format:'YYYY-MM-DD'})" >
+                            <i class="fa fa-calendar"></i>
+                        </button>
+                    </div>
+                </div>
+                <input class="fl plr15 pt7 pb7 border-red  bg-red1 text_white" value="搜索订单" type="submit" />
+            </form>
+        </div>
+    </div>
+
+    <div class="main100  bg-white radius4px pl15 pr15 minh595 over">
+        {eq name="data.code" value="20000"}
+        <div class="main100 line55 radius4px mb15 mt5 over">
+            <!--<a class="btn text_white bg-red-thunderbird radius4px pd7 pl25 pr25 mt13  fl mr15 fs12">导出</a>-->
+        </div>
+        <div class="main100 radius4px over">
+            <table class="table solid_all  table_dashed tr12 table12  table-center" >
+                <thead class=" bg-f5 ">
+                <tr>
+                    <th class="small_xs">商品信息</th>
+                    <th class="small_xs">用户</th>
+                    <th class="small_xs">类型</th>
+                    <th class="small_xs">数量</th>
+                    <th class="small_xs">申请时间</th>
+                    <th class="small_xs" style="width: 10%">状态</th>
+                    <th class="small_xs" style="width: 10%">操作</th>
+                </tr>
+                </thead>
+                <tbody >
+                {volist name="data.data.data" id="vo"}
+                    <tr>
+                        <td colspan="7">
+                            <div class="main100 line20">
+                                <label class="square mr15 fl mb0 mt2">
+                                    <input class="btn-active" type="checkbox"><em class="fl"></em>
+                                </label>
+                                <div class="fl color333 mr50">
+                                    退款单号：<span>{$vo.orders_refund_no}</span>
+                                </div>
+                                <div class="fl color333">
+                                    订单编号：<span>{$vo.orders_shop_no}</span>
+                                </div>
+
+                                <div class="fr color333 mr40">
+                                    总额：<span>￥ {:$vo.orders_refund_amount + $vo.orders_refund_express_amount} 元</span>
+                                </div>
+
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a class="image-zoom" href="{$vo.OrdersGoods.goods_images}">
+                                <img class="fl radius4px mr8" style="height:72px;width:72px;" src="{:thumb($vo['OrdersGoods']['goods_images'], 150)}">
+                                <div class="fl pr70" style="width: calc(100% - 90px);">
+                                    <div class="line20 mt4 mb6 color666 ">{$vo.OrdersGoods.goods_name}</div>
+                                    <div class="color999"><span>{$vo.OrdersGoods.goods_sku_name}</span></div>
+                                </div>
+                            </a>
+                        </td>
+                        <td>{$vo.user.user_username}</td>
+                        <td>{$vo.orders_refund_type_name}</td>
+                        <td>{$vo.orders_refund_num}</td>
+                        <td>{$vo.orders_refund_create_time}</td>
+                        <td>{$vo.orders_refund_state_name}</td>
+                        <td>
+                            {include file="refund:state" /}
+                            <div><a  class=" color-blue" href="/refund/detail?refund_no={$vo.orders_refund_no}">详情</a></div>
+                        </td>
+                    </tr>
+                {/volist}
+                </tbody>
+            </table>
+        </div>
+        <!--页按钮-->
+        <div class="text-center">{$data.data.page|default=""}</div>
+        {/eq}
+    </div>
+</div><!-- 右边内容结束 -->
+{/block}

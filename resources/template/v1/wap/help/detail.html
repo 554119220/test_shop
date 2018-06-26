@@ -1,0 +1,20 @@
+{extend name="public:base" /}
+
+{block name="page"}
+<!-- 标题栏 -->
+<header class="bar bar-nav bbai">
+    <a class="l_return back"><img class="main100" src="/static/wap/images/reg/l_return1.png"></a>
+    <h1 class="title">帮助详情</h1>
+</header>
+
+<!-- 这里是页面内容区 -->
+<div class="content t22 qiye">
+    <div class="main100 bbai pb20">
+        <div class="shou_title">{$detail.article_title|default="未找到改帮助"}</div>
+        <div class="main100 img100 pl15 pr15 over " style="word-break: break-all;">
+            {$detail.article_content.article_content|default="未找到帮助内容。"}
+        </div>
+    </div>
+
+</div>
+{/block}

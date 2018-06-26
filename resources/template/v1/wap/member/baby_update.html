@@ -1,0 +1,84 @@
+{extend name="public:base" /}
+
+{block name="page"}
+<!-- 标题栏 -->
+    <header class="bar bar-nav bbai">
+        <a class="l_return" href="javascript:history.back(-1);"><img class="main100" src="/static/wap/images/reg/l_return1.png"></a>
+        <h1 class="title">更新宝宝信息</h1>
+    </header>
+    <!-- 这里是页面内容区 -->
+    <div class="content">
+        {empty name="detail"}
+            <div class="list-block text-center">
+                <span class="">无法找到宝宝信息。</span class="center">
+            </div>
+        {else/}
+            <div class="list-block">
+                <form id="user_baby">
+                    <input type="hidden" value={$headers0} id="headers0">
+                    <input type="hidden" name="id" value="{$detail.user_baby_id}">
+                    <ul>
+                        <!-- 生日 -->
+                        <li>
+                            <div class="item-content">
+                              <div class="item-media"><i class="icon icon-form-calendar"></i></div>
+                                <div class="item-inner">
+                                    <div class="item-title label">生日</div>
+                                    <div class="item-input">
+                                        <input id="birthday" name="user_baby_birthday" type="text" placeholder="选择生日" value="{$detail.user_baby_birthday|default=""}">
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <!-- 性别 -->
+                        <li>
+                            <div class="item-content">
+                                <div class="item-media"><i class="icon icon-form-gender"></i></div>
+                                <div class="item-inner">
+                                    <div class="item-title label">性别</div>
+                                    <div class="item-input">
+                                        <select name="user_baby_sex">
+                                            {foreach name="userSex" item="value" key="key"}
+                                                <option value="{$key}" {if condition="$key eq ($detail['user_baby_sex'] ?? '')"}selected{/if}>{$value}</option>
+                                            {/foreach}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <!-- 姓名 -->
+                        <li>
+                            <div class="item-content">
+                                <div class="item-media"><i class="icon icon-form-name"></i></div>
+                                <div class="item-inner">
+                                    <div class="item-title label">姓名</div>
+                                    <div class="item-input">
+                                        <input name="user_baby_name" value="{$detail.user_baby_name}" type="text" placeholder="输入宝宝姓名">
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <!-- 昵称 -->
+                        <li>
+                            <div class="item-content">
+                                <div class="item-media"><i class="icon icon-form-name"></i></div>
+                                <div class="item-inner">
+                                    <div class="item-title label">昵称</div>
+                                    <div class="item-input">
+                                        <input name="user_baby_nick" value="{$detail.user_baby_nick}" type="text" placeholder="输入宝宝昵称">
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </form>
+            </div>
+        <div class="content-block">
+            <div class="row">
+                <div class="col-100"><a href="#" id="save_baby" class="button button-big button-fill button-danger">保存</a></div>
+            </div>
+        </div>
+        {/empty}
+    </div>
+    
+{/block}

@@ -1,0 +1,84 @@
+{extend name="public:base" /}
+{block name="nav"}
+{include file="public:nav2" /}
+{/block}
+{block name="content"}
+<!-- 页面主体内容 -->
+<div class="tab_row mb10">
+    <div class="tab_col pt10">
+        <div class="container-fluid line40 bg-white mb10">
+            <i class="redicon mar0" ></i>
+            <span class="fs14 color333 pl5">我要开店</span>
+        </div>
+        <div class=" pd15 bg-red2 color-red1 mt10 mb10">一个身份证只能开一个商家店铺，开店后店铺无法注销，申请开通审核预计需1~7个工作日，了解更多请看开店规则！</div>
+        <div class="main100 over">
+            <div class="fl pr12 pl12 pt20 pb70 bg_white w140  minh595" >
+                <img src="/static/web/images/shop/icon_dianpu.png" class="main100 fl">
+                <div class="fl h115 main100 bg-f5 color666 pd5 pl12 pr12 line20 mb1">1、<br><strong>阅读开店须知</strong><br>确认自己符合店铺类型的相关规定</div>
+                <div class="fl h115 main100 bg-red1 text_white pd5 pl12 pr12 line20 mb1">2、<br><strong >申请开店认证</strong><br>需提供认证相关资料，等待审核通过</div>
+                <div class="fl h115 main100 bg-f5 color666 pd5 pl12 pr12 line20 mb1">3、<br><strong class="color333">选择开店类型</strong><br>个人店铺<br>企业店铺</div>
+            </div>
+            <div class="over pd16 pt0 bg_white fl ml10 minh595" style="width:calc(100% - 150px)">
+                <div class="main100 color333 fs14 mb12">认证资质</div>
+                <div class="main90 mb10 line60 over radius4px bg-f5   ">
+                    <span class="fl color333 fs14 main33 pl20">手机认证</span>
+                    <div class="fl"><img class="fl" style="margin-top: 17px;" src="/static/web/images/shop/icon_sjyrz.png"><span class="fl pl15">您已通过认证</span></div>
+                    <a href="#" class="fr color-blue pr20 w80">查看</a>
+                </div>
+                {eq name="enterprise" value="1"}
+                <div class="main90 mb10 line60 over radius4px bg-f5   ">
+                    <span class="fl color333 fs14 main33 pl20">店铺会员认证</span>
+                    <div class="fl"><img class="fl" style="margin-top: 17px;" src="/static/web/images/shop/icon_enterprise{$enterprise}.png">
+                        <span class="fl pl15">{eq name="user_is_auth" value="1"}店铺会员已经认证{else/}您未进行认证{/eq}</span>
+                    </div>
+                    {eq name="user_is_auth" value="1"}
+                        <a href="#" class="fr color-blue pr20 w80">查看</a>
+                    {else/}
+                        <a href="#" class="fr color-blue pr20 w80">立即认证</a>
+                    {/eq}
+                </div>
+                {else/}
+                <div class="main90 mb10 line60 over radius4px bg-f5   ">
+                    <span class="fl color333 fs14 main33 pl20">个人认证</span>
+                    <div class="fl"><img class="fl" style="margin-top: 17px;" src="/static/web/images/shop/icon_enterprise{$enterprise}.png">
+                        <span class="fl pl15">{eq name="user_is_auth" value="1"}个人已经认证{else/}您未进行认证{/eq}</span>
+                    </div>
+                    {eq name="user_is_auth" value="1"}
+                        <a href="#" class="fr color-blue pr20 w80">查看</a>
+                    {else/}
+                        <a href="#" class="fr color-blue pr20 w80">立即认证</a>
+                    {/eq}
+                </div>
+                {/eq}
+                <div class="main90 mb10 line60 over radius4px bg-f5   ">
+                    <span class="fl color333 fs14 main33 pl20">银行卡绑定</span>
+                    <div class="fl"><img class="fl" style="margin-top: 17px;" src="/static/web/images/shop/icon_bankcard{$bankcard}.png">
+                        <span class="fl pl15">{eq name="bankcard" value="1"}银行卡已经绑定{else/}您未绑定银行卡{/eq}</span></span>
+                    </div>
+                    {eq name="bankcard" value="1"}
+                        <a href="#" class="fr color-blue pr20 w80">查看</a>
+                    {else/}
+                        <a href="#" class="fr color-blue pr20 w80">立即绑定</a>
+                    {/eq}
+                </div>
+                <div class="main90 mb10 line60 over radius4px bg-f5   ">
+                    <span class="fl color333 fs14 main33 pl20">{$user_level_name}</span>
+                    <div class="fl"><img class="fl" style="margin-top: 17px;" src="/static/web/images/shop/icon_level{$user_level}.png">
+                        <span class="fl pl15">{gt name="user_level" value="0"}已经升级为银卡会员或者银卡会员以上{else/}您未升级为银卡会员{/gt}</span>
+                    </div>
+                    {gt name="user_level" value="0"}
+                        <a href="#" class="fr color-blue pr20 w80">查看</a>
+                    {else/}
+                        <a href="#" class="fr color-blue pr20 w80">立即升级</a>
+                    {/gt}
+                </div>
+                <div class="main100 over mb50 mt20">
+                    <a class="btn color666 bg-f5 radius4px pd7 pl20 pr20  fl mr15 fs12 red-action" href="{:url('/')}">上一步</a>
+                    <a class="btn color666 bg-f5 radius4px pd7 pl20 pr20  fl mr15 fs12 red-action" href="{:url('choice/choiceshoptype')}">下一步</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div><!-- 页面主体内容结束 -->
+{/block}

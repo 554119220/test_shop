@@ -1,0 +1,26 @@
+<div class="bg_white swiper-index—nav" data-space-between='10' style="padding-bottom:1rem;overflow: hidden;position: relative;">
+    <div class="swiper-wrapper">
+        {php}$count = count($data['data']['GoodsCategory']);{/php}
+        {volist name="data.data.GoodsCategory" id="vo"}
+            {if condition="$i == 1"}
+                <div class="swiper-slide">
+                <div class="row rpd10">
+            {/if}
+            <a data-cate="{$vo.category_id}" data-i="{$i}" class="col-25 text-center rpt15 category-tab-a" href="javascript:;">
+                <img class="" src="{:thumb(getImagesDomain($vo['category_images']), 150)}">
+                <p class="mg0 rfs12 text_55">{$vo.category_name}</p>
+            </a>
+            {if condition="!($i % 8) && ($i / 8) > 0"}
+                {gt name="count" value="$i"}
+                    </div>
+                    </div>
+                    <div class="swiper-slide">
+                    <div class="row rpd10">
+                {/gt}
+            {/if}
+        {/volist}
+            </div>
+        </div>
+    </div>
+    <div class="swiper-pagination2 swiper-pagination"></div>
+</div>

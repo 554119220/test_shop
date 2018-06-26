@@ -1,0 +1,251 @@
+{extend name="public:base" /}
+{block name="nav"}
+{include file="public:nav2" /}
+{/block}
+{block name="content"}
+<!-- 页面主体内容 -->
+<div class="tab_row mb10">
+    <input class="upload-file" style="display: none;" id="upload-images-base" type="file" onchange="uploadImagesBase();">
+    <input class="upload-file" style="display: none;" id="upload-images-base-new" type="file" onchange="uploadImagesBaseNew();">
+    <div class="tab_col pt10">
+        <form role="form" action="{:url('choice/qualifications')}" onsubmit="return false;" method="post">
+        <div class="container-fluid line40 bg-white mb10">
+            <i class="redicon mar0" ></i>
+            <span class="fs14 color333 pl5">填写品牌资料</span>
+        </div>
+        <div class="main100 bg_white pd25">
+
+            <div class="tab-container">
+                <ul class="nav nav-tabs">
+                    {foreach name="shop.shop_settled_content.brand" item="val" key="key"}
+                    <li {eq name="$key" value="0" }class="active" {/eq}><a href="#fgfggf{$key}" data-toggle="tab">{$val.name}</a></li>
+                    {/foreach}
+                </ul>
+                <div class="tab-content pd15">
+                    {foreach name="shop.shop_settled_content.brand" item="val" key="key"}
+                    <div class="tab-pane {eq name="$key" value="0" }active{/eq}" id="fgfggf{$key}">
+                        <div class="main100 radius4px over">
+                            <div class="main100 mb10 over bg_white mb10 pr25 pt20 pb20">
+                                <div class="main100  line36  over mb15">
+                                    <div class="w150 fl  fs12 ">品牌名称<span class="color-red1">*</span></div>
+                                    <div class=" radius4px over fl re" style="width: calc(100% - 150px);">
+                                        <input placeholder="请输入品牌名称" readonly name="brand[{$key}][name]" value="{$val.name}" class="fl radius4px main100 pl10 line32 h34 bor_img">
+                                    </div>
+                                </div>
+                                <div class="main100  line36  over mb15">
+                                    <div class="w150 fl  fs12 ">商标证号/受理书编号<span class="color-red1">*</span></div>
+                                    <div class=" radius4px over fl re" style="width: calc(100% - 150px);">
+                                        <input placeholder="请输入商标证号/受理书编号" name="brand[{$key}][number]" value="{notempty name="val.number"}{$val.number}{/notempty}" class="fl radius4px main100 pl10 line32 h34 bor_img">
+                                    </div>
+                                </div>
+                                <div class="main100  line36  over mb14">
+                                    <div class="over">
+                                        <div class="w150 fl  fs12 ">商标logo<span class="color-red1">*</span></div>
+                                        <a class="btn text_white bg-red1 radius4px pd7 pl20 pr20  fl  fs12" onclick="triggerUploadImagesNew({imgEle:'.img{$key}',valueEle:'.logo{$key}',zoomEle:'.img{$key}-href'})">上传图片</a>
+                                    </div>
+
+                                    <div class="main100 over mt14">
+                                        <input type="hidden" name="brand[{$key}][barnd_logo]" class="logo{$key}" value="{notempty name="val.barnd_logo"}{$val.barnd_logo}{/notempty}">
+                                        <a href="{notempty name="val.barnd_logo"}{php}echo \app\common\traits\F::getImages($val['barnd_logo']);{/php}{else}/static/web/images/123.jpg{/notempty}" class="image-zoom img{$key}-href"><img src="{notempty name="val.barnd_logo"}{php}echo \app\common\traits\F::getImages($val['barnd_logo']);{/php}{else}/static/web/images/123.jpg{/notempty}" class="w80 h80 ml150 fl radius4px img{$key}"></a>
+                                    </div>
+                                </div>
+                                <div class="main100 mb10 line36  over">
+                                    <div class="w150 h36 fl  fs12 "></div>
+                                    <span class="color-red1">建议尺寸为200x200px以上的JPG、GIF、PNG图片</span>
+                                </div>
+                                <div class="main100   over">
+                                    <div class="w150 fl  fs12 ">是否代理<span class="color-red1">*</span></div>
+                                    <label class="radius mr30">
+                                        <input type="radio" onclick="iqehuan(this,'{$key}',1);" {present name="val.is_brand"}{eq name="val.is_brand" value="1"} checked {/eq}{else/}checked{/present} name="brand[{$key}][is_brand]" data-t="{$key}" class="" value="1"><em class="fl"></em>
+                                        <span class="small_xs ml10">自有品牌</span>
+                                    </label>
+                                    <label class="radius">
+                                        <input type="radio" onclick="iqehuan(this,'{$key}',2);" {present name="val.is_brand"}{eq name="val.is_brand" value="2"} checked {/eq}{/present} name="brand[{$key}][is_brand]" data-t="{$key}" value="2"><em class="fl"></em>
+                                        <span class="small_xs ml10">代理品牌</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <table class="table solid_all  table_dashed tr12 table12  table-center mb0 is_brand1_{$key}" {present name="val.is_brand"}{eq name="val.is_brand" value="2"} style="display: none;" {/eq}{/present}>
+                                <thead class=" bg-f5 ">
+                                <tr>
+                                    <th class="small_xs ">资质名称</th>
+                                    <th class="small_xs ">描述</th>
+                                    <th class="small_xs ">资质图片</th>
+                                    <th class="small_xs ">操作</th>
+                                </tr>
+                                </thead>
+                                <tbody class="td-pd14">
+                                {foreach name="val.images1" key="k" item="v1"}
+
+                                        <tr>
+                                            <td class="solid_all">{eq name="v1.is_must" value="1"}<span class="color-red1 fs14"><strong>*</strong></span>{/eq}{$v1.shop_qualifications_name}</td>
+                                            <td class="solid_all">
+                                                <p class="pl20 pr20 text-left">
+                                                    {:html_entity_decode($v1['shop_qualifications_describe'])}<a href="{:getImagesDomain($v1['shop_qualifications_images'])}" class="image-zoom">(样图)</a>
+                                                </p>
+                                            </td>
+                                            <td class="solid_all 44">
+                                                {php}
+                                                    if(isset($v1['images']) && !empty($v1['images'])){
+                                                {/php}
+
+                                                <a class="img{$k}-{$key}-{$v1.shop_brand_type}-href image-zoom" href="{:getImagesDomain($v1['images'])}">
+                                                <img class=" radius4px mr8 img{$k}-{$key}-{$v1.shop_brand_type}" style="height:72px;width:72px;" src="{:getImagesDomain($v1['images'])}">
+                                                </a>
+                                                {php}
+                                                }else{
+                                                {/php}
+                                                <a class="img{$k}-{$key}-{$v1.shop_brand_type}-href image-zoom" href="/static/web/images/123.jpg">
+                                                <img class=" radius4px mr8 img{$k}-{$key}-{$v1.shop_brand_type}" style="height:72px;width:72px;" src="/static/web/images/123.jpg">
+                                                {php}
+                                                    }
+                                                {/php}
+                                            </td>
+                                            <td class="re ss">
+                                                {php}
+                                                if(isset($v1['images']) && !empty($v1['images'])){
+                                                {/php}
+                                                    <input type="hidden" name="brand[{$key}][images1][{$k}][id]" value="{$v1.shop_qualifications_id}">
+                                                    <input type="hidden" name="brand[{$key}][images1][{$k}][images_name]" value="{$v1.shop_qualifications_name}">
+                                                    <input type="hidden" name="brand[{$key}][images1][{$k}][images]" value="{$v1.images}" class="img{$k}-{$key}-{$v1.shop_brand_type}-input">
+                                                    <a href="javascript:;" class="color-blue" onclick="triggerUploadImages('.img{$k}-{$key}-{$v1.shop_brand_type}-input','.img{$k}-{$key}-{$v1.shop_brand_type}',false,{uploadImagesBaseZoomEle:'.img{$k}-{$key}-{$v1.shop_brand_type}-href'})">上传图片</a>
+                                                {php}
+
+                                                }else{
+
+                                                {/php}
+                                                    <input type="hidden" name="brand[{$key}][images1][{$k}][id]" value="{$v1.shop_qualifications_id}">
+                                                    <input type="hidden" name="brand[{$key}][images1][{$k}][images_name]" value="{$v1.shop_qualifications_name}">
+                                                    <input type="hidden" name="brand[{$key}][images1][{$k}][images]" value="" class="img{$k}-{$key}-{$v1.shop_brand_type}-input">
+                                                    <a href="javascript:;" class="color-blue" onclick="triggerUploadImages('.img{$k}-{$key}-{$v1.shop_brand_type}-input','.img{$k}-{$key}-{$v1.shop_brand_type}',false,{uploadImagesBaseZoomEle:'.img{$k}-{$key}-{$v1.shop_brand_type}-href'})">上传图片</a>
+
+                                                {php}
+                                                    }
+                                                {/php}
+
+                                            </td>
+                                        </tr>
+
+                                {/foreach}
+                                </tbody>
+                            </table>
+
+                            <table class="table solid_all  table_dashed tr12 table12  table-center mb0 is_brand2_{$key}" {present name="val.is_brand"}{eq name="val.is_brand" value="1"} style="display: none;" {/eq}{else/}style="display: none;"{/present}>
+                                <thead class=" bg-f5 ">
+                                <tr>
+                                    <th class="small_xs ">资质名称</th>
+                                    <th class="small_xs ">描述</th>
+                                    <th class="small_xs ">资质图片</th>
+                                    <th class="small_xs ">操作</th>
+                                </tr>
+                                </thead>
+                                <tbody class="td-pd14">
+                                {foreach name="val.images2" key="k2" item="v"}
+
+                                        <tr>
+                                            <td class="solid_all">{eq name="v.is_must" value="1"}<span class="color-red1 fs14"><strong>*</strong></span>{/eq}{$v.shop_qualifications_name}</td>
+                                            <td class="solid_all">
+                                                <p class="pl20 pr20 text-left">
+                                                    {:html_entity_decode($v['shop_qualifications_describe'])}<a href="{:getImagesDomain($v['shop_qualifications_images'])}" class="image-zoom">(样图)</a>
+                                                </p>
+                                            </td>
+                                            <td class="solid_all 55">
+                                                {php}
+                                                if(isset($v['images']) && !empty($v['images'])){
+                                                {/php}
+                                                <a class="img{$k2}-{$key}-{$v.shop_brand_type}-href image-zoom" href="{:getImagesDomain($v['images'])}">
+                                                    <img class=" radius4px mr8 img{$k2}-{$key}-{$v.shop_brand_type}" style="height:72px;width:72px;" src="{:getImagesDomain($v['images'])}">
+                                                </a>
+                                                {php}
+                                                }else{
+                                                {/php}
+                                                <a class="img{$k2}-{$key}-{$v.shop_brand_type}-href image-zoom" href="/static/web/images/123.jpg">
+                                                <img class=" radius4px mr8 img{$k2}-{$key}-{$v.shop_brand_type}" style="height:72px;width:72px;" src="/static/web/images/123.jpg">
+                                                </a>
+                                                {php}
+                                                    }
+                                                {/php}
+
+
+                                            </td>
+                                            <td class="re dd">
+                                                {php}
+                                                if(isset($v['images']) && !empty($v['images'])){
+                                                {/php}
+                                                <input type="hidden" name="brand[{$key}][images2][{$k2}][id]" value="{$v.shop_qualifications_id}">
+                                                <input type="hidden" name="brand[{$key}][images2][{$k2}][images_name]" value="{$v.shop_qualifications_name}">
+                                                <input type="hidden" name="brand[{$key}][images2][{$k2}][images]" value="{$v.images}" class="img{$k2}-{$key}-{$v.shop_brand_type}-input">
+                                                <a href="javascript:;" class="color-blue" onclick="triggerUploadImages('.img{$k2}-{$key}-{$v.shop_brand_type}-input','.img{$k2}-{$key}-{$v.shop_brand_type}',false,{uploadImagesBaseZoomEle:'.img{$k2}-{$key}-{$v.shop_brand_type}-href'})">上传图片</a>
+
+                                                {php}
+                                                }else{
+
+                                                {/php}
+                                                <input type="hidden" name="brand[{$key}][images2][{$k2}][id]" value="{$v.shop_qualifications_id}">
+                                                <input type="hidden" name="brand[{$key}][images2][{$k2}][images_name]" value="{$v.shop_qualifications_name}">
+                                                <input type="hidden" name="brand[{$key}][images2][{$k2}][images]" value="" class="img{$k2}-{$key}-{$v.shop_brand_type}-input">
+                                                <a href="javascript:;" class="color-blue" onclick="triggerUploadImages('.img{$k2}-{$key}-{$v.shop_brand_type}-input','.img{$k2}-{$key}-{$v.shop_brand_type}',false,{uploadImagesBaseZoomEle:'.img{$k2}-{$key}-{$v.shop_brand_type}-href'})">上传图片</a>
+
+                                                {php}
+                                                }
+                                                {/php}
+
+                                            </td>
+                                        </tr>
+
+                                {/foreach}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    {/foreach}
+                </div>
+            </div>
+            <div class="main100 over mb20 mt20">
+                <a class="btn color666 bg-f5 radius4px pd7 pl20 pr20  fl mr15 fs12 red-action" href="{:url('choice/choicegoods')}">上一步</a>
+                <input type="hidden" name="step" value="step_shopbrandinfo">
+                <input type="hidden" name="user_id" value="{$Think.session.user.user_id}">
+                <button type="submit" class="btn color666 bg-f5 radius4px pd7 pl20 pr20  fl  fs12 red-action text_white btn-submit3">下一步</button>
+            </div>
+        </form>
+        </div>
+    </div><!-- 右边内容结束 -->
+</div><!-- 页面主体内容结束 -->
+{/block}
+{block name="js"}
+<script>
+    $(document).ready(function(){
+        $(".btn-submit3").click(function () {
+            var parent  = $(this).closest('form');
+            var data    = parent.data();
+            if (data.confirm !== undefined) {
+                if (confirm(data.confirm) === false) return;
+            }
+            var params  = {
+                header : getHeader('record_step'),
+                data : getForm(parent),
+                success : function (ret) {
+                    if (ret.code === 20000) {
+                        success(ret.msg);
+                        //  执行跳转
+                        window.location.href = '/choice/industryqualification';
+                    } else {
+                        error(ret.msg);
+                    }
+                }
+            };
+            apiPost(params);
+        });
+        image_zoom();
+    });
+    function iqehuan(obj,key,type) {
+        if(type == 1){
+            $('.is_brand1_'+key).show();
+            $('.is_brand2_'+key).hide();
+        }else if(type == 2){
+            $('.is_brand2_'+key).show();
+            $('.is_brand1_'+key).hide();
+        }
+    }
+</script>
+{/block}

@@ -1,0 +1,195 @@
+{extend name="public:base"/}
+{block name="content"}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                表前缀：{:config('database.prefix')}
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <form id="form" role="form" method="post" action="/Generate/validatesave">
+                        	<input type="hidden" name="table" value="{$table}">
+                        	{empty name="tables"}
+                        		<h3 class="text-danger">没有找到数据表，请先查看数据库配置是否正确。</h3>
+                        	{else/}
+                        		<hr>
+                        		{foreach name="tables" item="value"}
+		                    		{if condition="$value eq input('table')"}
+		                    			<button type="button" class="btn btn-warning" style="margin:10px;"><a href="/Generate/create_validate/table/{$value}">{$value}</a></button>
+		                    		{else /}
+		                    			<button type="button" class="btn btn-default" style="margin:10px;"><a href="/Generate/create_validate/table/{$value}">{$value}</a></button>
+		                    		{/if}
+		                    	{/foreach}
+		                    	
+		                    	{empty name="tableInfo"}
+		                    		<h3 class="text-danger">没有获取到字段信息，请先选择一个表来操作。</h3>
+		                    	{/empty}
+		                    	<hr>
+                        	{/empty}
+                        	{notempty name="tableInfo"}
+                        		<!--  -->
+                        		<h2 class="text-danger">基础设置</h2>
+                        		<div class="form-group">
+	                                <label>设置validate文件命名空间</label>
+	                                <input class="form-control" name="namespace" value="" placeholder="例：app\common\validate">
+	                            </div>
+                        		<hr>
+
+                        		<h2 class="text-danger">规则设置</h2>
+	                            <div class="form-group">
+	                                <div class="row">
+	                                	
+	                                	<div class="col-lg-3">
+	                                		<button type="button" class="btn btn-default add_validate_btn">添加规则</button>
+	                                	</div>
+	                                </div>
+	                            </div>
+	                            <hr class="add_validate_end">
+
+	                            <h2 class="text-danger">场景设置</h2>
+	                            <div class="form-group">
+	                                <div class="row">
+	                                	<div class="col-lg-3">
+	                                		<button type="button" class="btn btn-default add_validate_scene_btn">添加场景</button>
+	                                	</div>
+	                                </div>
+	                            </div>
+	                            <hr>
+	                            <hr class="add_validate_scene_end">
+
+	                            <button type="button" class="btn btn-default submit-form">点击生成validate文件</button>
+	                            <br>
+	                            <br>
+	                            <br>
+	                            <br>
+	                            <br>
+                        	{/notempty}
+
+                            
+                            
+                            
+                            
+                        </form>
+                    </div>
+                    
+                </div>
+                <!-- /.row (nested) -->
+            </div>
+            <!-- /.panel-body -->
+        </div>
+        <!-- /.panel -->
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+
+{/block}
+{block name="js"}
+{notempty name="tableInfo"}
+<script type="text/javascript">
+	var i = 0;
+	var j = 0;
+	$('.add_validate_btn').on('click',function(){
+		
+		var html = '';
+		html += '<div class="form-group add_validate">';
+
+		html += '<div class="row">';
+
+		html += '<div class="col-lg-4">';
+		html += '<select class="form-control" name="validate[' + i + '][field]">';
+		html += '<option value="">选择一个字段</option>';
+		{foreach name="tableInfo.fields" key="key" item="value"}
+		html += '<option value="{$value}">{$value}(<?php echo $tableInfo['Comment'][$key]; ?>)</option>';
+		{/foreach}
+		html += '</select>';
+		html += '</div>';
+
+		html += '<div class="col-lg-2">';
+		html += '<select class="form-control" name="validate[' + i + '][rule]">';
+		html += '<option value="">选择规则</option>';
+		{foreach name="vList" key="key" item="value"}
+		html += '<option value="{$value}">{$value}</option>';
+		{/foreach}
+		html += '</select>';
+		html += '</div>';
+
+		html += '<div class="col-lg-3">';
+		html += '<input class="form-control" name="validate[' + i + '][value]" value="" placeholder="规则的值，没有就不填。">';
+		html += '</div>';
+
+		html += '<div class="col-lg-2">';
+		html += '<input class="form-control" name="validate[' + i + '][message]" placeholder="错误提示信息。">';
+		html += '</div>';
+
+		html += '<div class="col-lg-1">';
+		html += '<button type="button" class="btn btn-danger" onclick="if(confirm(\'确定删除规则吗？\')){$(this).parent().parent().parent().remove();}">删除规则</button>';
+		html += '</div>';
+
+		html += '</div>';
+		html += '</div>';
+		i++;
+		$('.add_validate_end').before(html);
+	});
+	$('.add_validate_scene_btn').on('click',function(){
+		var html = '';
+		html += '<div class="form-group add_validate_scene">';
+
+		html += '<div class="row">';
+
+		html += '<div class="col-lg-2">';
+		html += '<input type="text" class="form-control scene" name="scene[' + j + '][name]" value="" placeholder="场景名称，留空不生成">';
+		html += '</div>';
+
+		html += '<div class="col-lg-1">';
+		html += '<label>选择字段：</label>';
+		html += '</div>';
+
+		html += '<div class="col-lg-8">';
+		{foreach name="tableInfo.fields" key="key" item="value"}
+		html += '<label class="checkbox-inline" style="width:auto; margin-bottom:10px;" title="{$value}">';
+		html += '<input type="checkbox" name="scene[' + j + '][value][]" value="{$value}">{$value}(<?php echo $tableInfo['Comment'][$key]; ?>)';
+		html += '</label><br>';
+		{/foreach}
+
+		html += '</div>';
+
+		html += '<div class="col-lg-1">';
+		html += '<button type="button" class="btn btn-danger" onclick="if(confirm(\'确定删除场景吗？\')){$(this).parent().parent().parent().remove();}">删除场景</button>';
+		html += '</div>';
+
+		html += '</div>';
+		html += '<hr>';
+		html += '</div>';
+		
+		j++;
+		$('.add_validate_scene_end').before(html);
+	});
+	$('.submit-form').on('click', function(){
+		if($('input[name="namespace"]').val() == ''){
+			alert('命名空间不能为空！');
+			return false;
+		}
+		var r = true;
+		$('.add_validate select').each(function(k,v){
+			if($(this).val() == ''){
+				r = false;
+			}
+		});
+		var b = true
+		$('.add_validate_scene').each(function(k,v){
+			if($(this).find('.scene').eq(0).val() == ''){
+				b = false;
+			}
+		});
+		// alert(b);
+		if(r && b){
+			$('#form').submit();
+		}else{
+			alert('规则和场景没有设置完！');
+		}
+	});
+</script>
+{/notempty}
+{/block}

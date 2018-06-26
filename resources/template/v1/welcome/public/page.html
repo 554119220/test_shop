@@ -1,0 +1,28 @@
+<div class="ye_main">
+    <a href="javascript:;" style="margin:0 10px; padding: 0 5px; float: right; height: 32px; line-height: 32px; border: 1px solid #c8c8c8;">共 {$data.total} 条 / {$data.last_page - 1} 页</a>
+    <a href="javascript:;" data-current="{$data.current_page}" style="margin-right: 10px;" data-href="{:url($data['path_info'], array_merge($data['get'], ['p' => 'page_num']))}" class="go btn-redirect-page">GO</a>
+    <div class="ye">
+        跳转至:
+        <input type="text" name="redirect_page" id="redirect-page" value="{$data.current_page}" max="{$data.last_page - 1}" maxlength="3" />
+        页
+    </div>
+    {gt name="data.next" value=""0}
+        <a href="{:url($data['path_info'], array_merge($data['get'], ['p' => $data['next']]))}" class="ye_right"></a>
+    {else/}
+        <a href="javascript:;" class="ye_right"></a>
+    {/gt}
+    <div class="ye_">
+        {for start="1" end="$data.last_page"}
+            {eq name="data.current_page" value="$i"}
+                <a href="javascript:;" class="ye_btn">{$i}</a>
+            {else/}
+                <a href="{:url($data['path_info'], array_merge($data['get'], ['p' => $i]))}">{$i}</a>
+            {/eq}
+        {/for}
+    </div>
+    {gt name="data.prev" value=""0}
+        <a href="{:url($data['path_info'], array_merge($data['get'], ['p' => $data['prev']]))}" class="ye_left"></a>
+    {else/}
+        <a href="javascript:;" class="ye_left"></a>
+    {/gt}
+</div>

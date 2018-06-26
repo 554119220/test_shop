@@ -1,0 +1,98 @@
+<form method="get">
+    <table class="table no-border">
+        <tbody><tr>
+            <td>
+                <table class="table no-border table-hover valign-middle md0">
+                    <tbody>
+                    <tr>
+                        <td>
+                            <input type="text" name="orders_shop_no" id="orders_shop_no" class="form-control" placeholder="请填写订单号" value="{:$_GET['orders_shop_no'] ?? ''}">
+                        </td>
+                        <td>
+                            <input type="text" name="orders_no" id="orders_no" class="form-control" placeholder="请填写父订单号" value="{:$_GET['orders_no'] ?? ''}">
+                        </td>
+                        <td>
+                            <input type="text" name="shop_id" id="shop_id" class="form-control" placeholder="请填写店铺" value="{:$_GET['shop_id'] ?? ''}">
+                        </td>
+                        <td>
+                            <input type="text" name="seller_user_id" id="seller_user_id" class="form-control" placeholder="请填写卖家" value="{:$_GET['seller_user_id'] ?? ''}">
+                        </td>
+                        <td>
+                            <input type="text" name="buyer_user_id" id="buyer_user_id" class="form-control" placeholder="请填写买家" value="{:$_GET['buyer_user_id'] ?? ''}">
+                        </td>
+                        <td>
+                            <select name="orders_shop_is_pay" id="orders_shop_is_pay" class="form-control" placeholder="请填写付款状态" data-value="">
+                                <option value="">请选择付款状态</option>
+                                <option value="0">未付款</option>
+                                <option value="1">已付款</option>
+                            </select>
+                        </td>
+                    </tr><tr>							<td>
+                        <select name="orders_shop_pay_type" id="orders_shop_pay_type" class="form-control" placeholder="请填写支付类型" data-value="">
+                            <option value="">请选择支付类型</option>
+                            <option value="5">百望</option>
+                            <option value="9">支付宝</option>
+                            <option value="12">微信</option>
+                        </select>
+                    </td>
+                        <td>
+                            <select name="orders_shop_is_freeze" id="orders_shop_is_freeze" class="form-control" placeholder="请填写冻结状态" data-value="">
+                                <option value="">请选择冻结状态</option>
+                                <option value="0">未冻结</option>
+                                <option value="1">已冻结</option>
+                            </select>
+                        </td>
+                        <td>
+                            <input type="text" name="orders_shop_pay_amount" id="orders_shop_pay_amount" class="form-control" placeholder="请填写付款金额" value="{:$_GET['orders_shop_pay_amount'] ?? ''}">
+                        </td>
+                        <td>
+                            <input type="text" name="orders_shop_trade_no" id="orders_shop_trade_no" class="form-control" placeholder="请填写第三方交易号" value="{:$_GET['orders_shop_trade_no'] ?? ''}">
+                        </td>
+                        <td>
+                            <input type="text" name="orders_shop_express_company" id="orders_shop_express_company" class="form-control" placeholder="请填写快递公司" value="{:$_GET['orders_shop_express_company'] ?? ''}">
+                        </td>
+                        <td>
+                            <input type="text" name="orders_shop_express_no" id="orders_shop_express_no" class="form-control" placeholder="请填写快递单号" value="{:$_GET['orders_shop_express_no'] ?? ''}">
+                        </td>
+                    </tr><tr>							<td>
+                        <select name="orders_shop_state" id="orders_shop_state" class="form-control" placeholder="请填写订单状态" data-value="">
+                            <option value="">请选择订单状态</option>
+                            <option value="0">已删除</option>
+                            <option value="1">未付款</option>
+                            <option value="2">已付款</option>
+                            <option value="3">已发货</option>
+                            <option value="4">已收货</option>
+                            <option value="5">已评价</option>
+                            <option value="6">已归档</option>
+                            <option value="41">退款并关闭</option>
+                            <option value="51">正常关闭</option></select>
+                    </td>
+                        <td>
+                            <select name="custom_between_day" id="custom_between_day" class="form-control" placeholder="请填写时间搜索" data-value="">
+                                <option value="">请选择时间搜索</option>
+                                <option value="orders_shop_create_time">下单时间</option>
+                                <option value="orders_shop_pay_time">付款时间</option>
+                                <option value="orders_shop_express_time">发货时间</option>
+                                <option value="orders_shop_receive_time">收货时间</option>
+                                <option value="orders_shop_comment_time">评价时间</option>
+                                <option value="orders_shop_close_time">关闭时间</option>
+                            </select>
+                        </td>
+                        <td>
+                            <input type="text" name="custom_sday" id="custom_sday" class="form-control date-picker" placeholder="请填写时间从" value="{$sday}">
+                        </td>
+                        <td>
+                            <input type="text" name="custom_eday" id="custom_eday" class="form-control date-picker" placeholder="请填写时间至" value="{$eday}">
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </td>
+            <td width="100">
+                <button type="submit" class="btn blue btn-outline btn-block" style="margin-top: 9px;"><i class="fa fa-search"></i> 搜索</button>
+                <a class="btn blue btn-outline btn-block btn-export" style="margin-top: 9px;"><i class="fa fa-search"></i> 导出</a>
+            </td>
+        </tr>
+        </tbody></table>
+
+</form>

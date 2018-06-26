@@ -1,0 +1,43 @@
+{extend name="public:base" /}
+
+{block name="page"}
+
+<!-- 标题栏 -->
+<header class="bar bar-nav login_head">
+    <a class="icon icon-left pull-left text_white back"></a>
+    <h1 class="title">登录</h1>
+</header>
+<!-- 这里是页面内容区 -->
+<div class="content qiye">
+    <div class="content-block">
+        <div class="main100">
+            <img class="llogo" src="/static/wap/images/reg/mall_logo.png">
+        </div>
+        <form>
+            <!-- <div class="main100 l_bor">
+                <input class="main100 luser" type="text" name="user_username" placeholder="请输入会员名或手机号">
+                <a class="lbot"></a>
+                
+                <div class="lji">
+                    <div class="main100">
+                        <span>asdljasjsla</span><i></i>
+                    </div>
+                    <div class="main100">
+                        <span>记录的帐号</span><i></i>
+                    </div>
+                </div>
+            </div>
+            <div class="main100 l_bor">
+                <input class="main100 lmi" type="password" name="user_password" placeholder="请输入用户密码">
+                <a class="lkai"></a>
+            </div> -->
+            <div class="login_go">
+                <a data-no-cache="true" type="button" href="/user/oauth" class="button button-big button-fill button-danger external">使用百望富通账号登录</a>
+                <!-- <a class="main100 red-b tt25" href="/member/update_user">编辑资料</a> -->
+                <!-- <a href="#" class="l_wang">忘记密码？</a> -->
+                <a data-no-cache="true" href="/user/register" class="no_user rmt15">还没有帐号,<span>立即注册</span></a>
+            </div>
+        </form>
+    </div>
+</div>
+{/block}

@@ -1,0 +1,100 @@
+cart_cpx{extend name="public:base" /}
+{block name="page"}
+<!-- 顶部标题栏 -->
+<header class="bar bar-nav bg_white">
+    <a class="icon icon_common pull-left r12 icon_back back" style="margin-top:.6rem"></a>
+    <h1 class="title">邮寄商品</h1>
+</header>
+<!-- 这里是页面内容区 -->
+<div class="content ">
+    {eq name="data.code" value="20000"}
+    <div class="cart_cp">
+        <div class="main100 cart_newcp">
+            <div class="tabs">
+                <!--列表1-->
+                <div class="tab active">
+                    <!--产品-->
+                    <div class="main100 bor5px">
+                        <div class="shou_title">退款单号：{$data.data.orders_refund_no}</div>
+                        <div class="li_main">
+                            <img class="img" src="{$data.data.OrdersGoods.goods_images}">
+                            <div class="cart_cpx">
+                                <p class="title_ text_line_2">{$data.data.OrdersGoods.goods_name}</p>
+                                <span class="rmb">￥ {$data.data.OrdersGoods.orders_goods_amount}</span>
+                                <div class="color">
+                                    {$data.data.OrdersGoods.goods_sku_name}
+                                    <span>x {$data.data.OrdersGoods.orders_goods_num}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!---->
+                        <div class="main100 bbai order_hot list2m">
+                            <span class="lleft f7 h666">申请日期</span>
+                            <span class="rright f65 h666">{$data.data.orders_refund_create_time}</span>
+                        </div>
+
+                    </div>
+                    <!--产品end-->
+                </div>
+            </div>
+            <!---->
+        </div>
+    </div>
+    <div class="main100 bbai m5px bj">
+        <form>
+            <input type="hidden" name="refund_no" value="{$data.data.orders_refund_no}">
+            <!--<div class="main100 tishi">请填写寄回商品信息…</div>-->
+            <div class="bg_white rpd10 rfs14 text_over">
+                <span class="vertical_red"></span>
+                <span class="text_77">收货地址</span>
+            </div>
+            <div class="textarea_set bg_white rpd10 rmb10 text_77" style="font-size: 0.7rem">
+                {notempty name="data.data.OrdersRefundAddress"}
+                <div>姓名：{$data.data.OrdersRefundAddress.orders_refund_name}</div>
+                <div>地址：{$data.data.OrdersRefundAddress.orders_refund_address}</div>
+                <div style="word-break: break-all;">电话：{$data.data.OrdersRefundAddress.orders_refund_connect}</div>
+                {/notempty}
+            </div>
+
+            <div class="bor">
+                <span>快递公司</span>
+                <a class="tog" id="express-company-picker">请选择</a>
+                <input type="hidden" name="company_id" id="company_id" value="">
+            </div>
+
+            <div class="bg_white rpd10 rfs14 text_over">
+                <span class="vertical_red"></span>
+                <span class="text_77">快递单号</span>
+            </div>
+            <div class="textarea_set bg_white rpd10 m5px bor">
+                <input placeholder="请输入快递单号" type="text" class="form-control bor_none main100" name="express_no" value="">
+            </div>
+            <div class="bg_white rpd10 rfs14 text_over">
+                <span class="vertical_red"></span>
+                <span class="text_77">备注信息</span>
+            </div>
+            <div class="textarea_set bg_white rpd10 rmb10">
+                <textarea name="remark" class="form-control" rows="3" placeholder="请填写您要备注的信息..."></textarea>
+            </div>
+            <!--上传凭证-->
+            <div class="bg_white rpd10 rfs14 text_over" style="border-bottom: 1px solid #f8f8f8;">
+                <span class="vertical_red"></span>
+                <span class="text_77" >上传凭证</span>
+            </div>
+            <div class="bg_white rpd10 bb12">
+                <div class="clearfix mg5 box-images">
+                    <div class="camera_input pingz">
+                        <input class="upload-file" data-input="images" type="file" onchange="uploadImages(this);">
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" id="images" name="images" value="">
+            <div class="rpd10">
+                <a href="javascript:;" class="button button_strong button-fill button-danger btn-submit">邮寄商品</a>
+            </div>
+        </form>
+    </div>
+    {/eq}
+</div>
+<!-- 页面内容区到此为止 -->
+{/block}

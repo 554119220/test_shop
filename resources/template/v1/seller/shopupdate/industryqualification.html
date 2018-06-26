@@ -1,0 +1,143 @@
+{extend name="public2:base" /}
+{block name="nav"}
+{include file="public2:nav2" /}
+{/block}
+{block name="content"}
+<!-- 页面主体内容 -->
+<div class="tab_row mb10">
+
+    <div class="tab_col pt10">
+        <div class="container-fluid line40 bg-white mb10">
+            <i class="redicon mar0" ></i>
+            <span class="fs14 color333 pl5">上传行业资质</span>
+        </div>
+        <div class="main100 bg_white pd25">
+            <form role="form" onsubmit="return false;" method="post">
+                <input class="upload-file" style="display: none;" id="upload-images-base" type="file" onchange="uploadImagesBase();">
+            <div class="main100 radius4px over">
+                <table class="table solid_all  table_dashed tr12 table12  table-center mb0" >
+                    <thead class=" bg-f5 ">
+                    <tr>
+                        <th class="small_xs ">资质名称</th>
+                        <th class="small_xs ">描述</th>
+                        <th class="small_xs ">资质图片</th>
+                        <th class="small_xs ">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody class="td-pd14" >
+                    {foreach name="category" item="val" key="key"}
+                    <tr>
+                        <td class="solid_all">{$val.category_name}{eq name="val.category_qualifications_require" value="1"}(资料合格证){/eq}</td>
+                        <td class="solid_all">
+                            <p class="pl20 pr20 text-left">
+                                <input type="hidden" name="category_images[{$key}][name]"  value="{$val.category_name}">
+                                <input type="hidden" name="category_images[{$key}][id]"  value="{$val.category_id}">
+                                <input type="hidden" name="category_images[{$key}][category_qualifications_require]"  value="{$val.category_qualifications_require}">
+                                <input  type="hidden" name="category_images[{$key}][category_images]" value="{php}echo $shop['shop_settled_content']['category_images'][$key]['category_images'] ?? ''{/php}" class="categoryimage{$key}">
+                                类目：{$val.category_name}<br>{eq name="val.category_qualifications_require" value="1"}
+                                {$val.category_qualifications}<br>
+                                <a href="{:getImagesDomain($val['category_images'])}" class="image-zoom">(样图)</a>
+                                {/eq}
+                            </p>
+                        </td>
+                        <td class="solid_all">
+                            {eq name="val.category_qualifications_require" value="1"}
+                            {php}
+                            if (isset($val['images'])) {
+                            {/php}
+
+
+                            <a href="{:getImagesDomain($val['images'])}" class="image-zoom category_img{$key}-href"><img class=" radius4px mr8 category_img{$key}" style="height:72px;width:72px;" src="{:getImagesDomain($val['images'])}"></a>
+
+                            {php}
+                            }else{
+                            {/php}
+                            <a href="/static/web/images/123.jpg" class="image-zoom category_img{$key}-href"><img class=" radius4px mr8 category_img{$key}" style="height:72px;width:72px;" src="/static/web/images/123.jpg"></a>
+                            {php}
+                            }
+                            {/php}
+                            {/eq}
+
+                        </td>
+                        <td class="re">
+                            {eq name="val.category_qualifications_require" value="1"}
+                            <a href="javascript:;" class="color-blue"  onclick="triggerUploadImages('.categoryimage{$key}','.category_img{$key}',false,{uploadImagesBaseZoomEle:'.category_img{$key}-href'})">上传图片</a>
+                            {/eq}
+                        </td>
+                    </tr>
+                    {/foreach}
+                    {present name="industry"}
+                    {foreach name="industry" item="v" key="k"}
+                    <tr>
+                        <td class="solid_all">{$v.shop_qualifications_name}</td>
+                        <td class="solid_all">
+                            <p class="pl20 pr20 text-left">
+                                {$v.shop_qualifications_describe}<br>{notempty  name="v.shop_qualifications_describe"}<a class="image-zoom" href="{:getImagesDomain($v['shop_qualifications_images'])}">（样图）</a>{/notempty}
+                            </p>
+                        </td>
+                        <td class="solid_all">
+                            {php}
+                                if (isset($v['images']) && !empty($v['images'])) {
+                            {/php}
+
+                            <a href="{:getImagesDomain($v['images'])}" class="image-zoom industry{$k}-img-href"><img class=" radius4px mr8 industry{$k}-img" style="height:72px;width:72px;" src="{:getImagesDomain($v['images'])}"></a>
+                            {php}
+                                }else{
+                            {/php}
+                            <a href="/static/web/images/123.jpg" class="image-zoom industry{$k}-img-href"><img class=" radius4px mr8 industry{$k}-img" style="height:72px;width:72px;" src="/static/web/images/123.jpg"></a>
+                            {php}
+                                }
+                            {/php}
+
+                        </td>
+                        <td class="re">
+                            <input type="hidden" name="industry[{$k}][name]"  value="{$v.shop_qualifications_name}">
+                            <input type="hidden" name="industry[{$k}][id]"  value="{$v.shop_qualifications_id}">
+                            <input type="hidden" name="industry[{$k}][industry_images]" class="industry{$k}" value="{$v.images ?? ''}">
+                            <a href="javascript:;" class="color-blue"  onclick="triggerUploadImages('.industry{$k}','.industry{$k}-img',false,{uploadImagesBaseZoomEle:'.industry{$k}-img-href'})">上传图片</a>
+                        </td>
+                    </tr>
+                    {/foreach}
+                    {/present}
+                    </tbody>
+                </table>
+            </div>
+            <div class="main100 over mb20 mt20">
+                <a class="btn color666 bg-f5 radius4px pd7 pl20 pr20  fl mr15 fs12 red-action" href="{eq name="is_brand" value="1"}{:url('shopupdate/qualifications')}{else/}{:url('shopupdate/choicegoods')}{/eq}">上一步</a>
+                <input type="hidden" name="step" value="step_shop_qualification">
+                <input type="hidden" name="user_id" value="{$Think.session.user.user_id}">
+                <button type="submit" class="btn color666 bg-f5 radius4px pd7 pl20 pr20  fl  fs12 red-action text_white btn-submit3">下一步</button>
+            </div>
+            </form>
+        </div>
+    </div><!-- 右边内容结束 -->
+</div><!-- 页面主体内容结束 -->
+{/block}
+{block name="js"}
+<script>
+    $(document).ready(function() {
+        $(".btn-submit3").click(function () {
+            var parent = $(this).closest('form');
+            var data = parent.data();
+            if (data.confirm !== undefined) {
+                if (confirm(data.confirm) === false) return;
+            }
+            var params = {
+                header: getHeader('record_step'),
+                data: getForm(parent),
+                success: function (ret) {
+                    if (ret.code === 20000) {
+                        success(ret.msg);
+                        //  执行跳转
+                        window.location.href = '/prompt2';
+                    } else {
+                        error(ret.msg);
+                    }
+                }
+            };
+            apiPost(params);
+        });
+        image_zoom();
+    });
+</script>
+{/block}

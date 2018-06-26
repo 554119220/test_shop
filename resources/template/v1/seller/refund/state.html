@@ -1,0 +1,26 @@
+{switch name="vo.orders_refund_state"}
+    {case value="1"}
+        <div><a class="color-blue" href="/refund/agree?refund_no={$vo.orders_refund_no}">同意退款</a></div>
+        {eq name="vo.orders_refund_is_ship" value="1"}
+        <div><a class="color-blue" href="/refund/refuse?refund_no={$vo.orders_refund_no}">拒绝退款</a></div>
+        {/eq}
+    {/case}
+    {case value="2"}
+
+    {/case}
+    {case value="3"}
+        <div><a  class=" color-blue" href="/refund/receive?refund_no={$vo.orders_refund_no}">确认收货</a></div>
+    {/case}
+    {case value="31"}
+
+    {/case}
+    {case value="41"}
+
+    {/case}
+    {case value="20"}
+
+    {/case}
+    {case value="100"}
+
+    {/case}
+{/switch}

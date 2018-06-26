@@ -1,0 +1,98 @@
+{extend name="public:base" /}
+
+{block name="page"}
+<!-- 标题栏 -->
+<header class="bar bar-nav bbai bor_none">
+    <a class="l_return back">
+        <img class="main100" src="/static/wap/images/reg/l_return1.png">
+    </a>
+    <span class="pull-right rfs14 text_77 icon icon-menu open-panel shop-category-list" data-panel=".panel_set"></span>
+    <h1 class="title">我的订单</h1>
+</header>
+
+<!-- 这里是页面内容区 -->
+<div class="content pull-to-refresh-content infinite-scroll infinite-scroll-bottom" data-ptr-distance="50">
+    <!-- 默认的下拉刷新层 -->
+    {include file="public:refresh" /}
+    <!--购物车内容-->
+    <div class="main100">
+        <!--购物车产品-->
+        <div class="cart_cp">
+            <div class="buttons-tab">
+                <a href="#tab1" data-state="" class="tab-link button active">全部</a>
+                <a href="#tab2" data-state="1" class="tab-link button">待付款</a>
+                <a href="#tab3" data-state="2" class="tab-link button">待发货</a>
+                <a href="#tab4" data-state="3" class="tab-link button">待收货</a>
+                <a href="#tab5" data-state="4" class="tab-link button">待评价</a>
+                <!--<a href="{:url('/orders')}" data-state="" class="button active">全部</a>-->
+                <!--<a href="{:url('/orders')}?state=1" data-state="1" class="button">待付款</a>-->
+                <!--<a href="{:url('/orders')}?state=2" data-state="2" class="button">待发货</a>-->
+                <!--<a href="{:url('/orders')}?state=3" data-state="3" class="button">待收货</a>-->
+                <!--<a href="{:url('/orders')}?state=4" data-state="4" class="button">待评价</a>-->
+            </div>
+            <div class="main100 cart_newcp">
+                <div class="tabs">
+                    <!--列表1-->
+                    <div id="tab1" class="tab active" data-page="1" data-request="1">
+                        <!--产品-->
+                        <orders-list></orders-list>
+                        <!--产品end-->
+                        <!-- 加载提示符 -->
+                        <div class="infinite-scroll-preloader">
+                            <div class="preloader"></div>
+                        </div>
+                    </div>
+                    <!--列表2 待付款-->
+                    <div id="tab2" class="tab" data-page="1" data-request="1">
+                        <!--产品-->
+                        <orders-list></orders-list>
+                        <!--产品end-->
+                        <!-- 加载提示符 -->
+                        <div class="infinite-scroll-preloader">
+                            <div class="preloader"></div>
+                        </div>
+                    </div>
+                    <!--列表3 待发货-->
+                    <div id="tab3" class="tab" data-page="1" data-request="1">
+                        <!--产品-->
+                        <orders-list></orders-list>
+                        <!--产品end-->
+                        <!-- 加载提示符 -->
+                        <div class="infinite-scroll-preloader">
+                            <div class="preloader"></div>
+                        </div>
+                    </div>
+                    <!--列表4 待收货-->
+                    <div id="tab4" class="tab" data-page="1" data-request="1">
+                        <!--产品-->
+                        <orders-list></orders-list>
+                        <!--产品end-->
+                        <!-- 加载提示符 -->
+                        <div class="infinite-scroll-preloader">
+                            <div class="preloader"></div>
+                        </div>
+                    </div>
+                    <!--列表4 待收货-->
+                    <div id="tab5" class="tab" data-page="1" data-request="1">
+                        <!--产品-->
+                        <orders-list></orders-list>
+                        <!--产品end-->
+                        <!-- 加载提示符 -->
+                        <div class="infinite-scroll-preloader">
+                            <div class="preloader"></div>
+                        </div>
+                    </div>
+                </div>
+                <!---->
+            </div>
+        </div>
+
+        <!--看你喜欢-->
+
+        {//:widget('like/index')}
+
+    </div>
+    <!--购物车内容end-->
+    <!-- 加载提示符 -->
+</div>
+{/block}

@@ -1,0 +1,75 @@
+{extend name="public:base" /}
+{block name="nav"}
+{include file="public:nav2" /}
+{/block}
+{block name="content"}
+<!-- 页面主体内容 -->
+<div class="tab_row mb10">
+    <div class="tab_col pt10">
+        <div class="container-fluid line40 bg-white mb10">
+            <i class="redicon mar0" ></i>
+            <span class="fs14 color333 pl5">我要开店</span>
+        </div>
+        <div class=" pd15 bg-red2 color-red1 mt10 mb10">一个身份证只能开一个商家店铺，开店后店铺无法注销，申请开通审核预计需1~7个工作日，了解更多请看开店规则！</div>
+        <div class="main100 over">
+            <div class="fl pr12 pl12 pt20 pb70 bg_white  w140  minh595" >
+                <img src="/static/web/images/shop/icon_dianpu.png" class="main100 fl">
+                <div class="fl h115 main100 bg-f5 color666 pd5 pl12 pr12 line20 mb1">1、<br><strong class="color333">阅读开店须知</strong><br>确认自己符合店铺类型的相关规定</div>
+                <div class="fl h115 main100 bg-f5 color666 pd5 pl12 pr12 line20 mb1">2、<br><strong class="color333">申请开店认证</strong><br>需提供认证相关资料，等待审核通过</div>
+                <div class="fl h115 main100 bg-red1 text_white pd5 pl12 pr12 line20 mb1">3、<br><strong>选择开店类型</strong><br>个人店铺<br>企业店铺</div>
+            </div>
+            <div class="over pt25 pl25 bg_white fl ml10 minh595 text-center" style="width:calc(100% - 150px)">
+                {volist name="shoptype" id="val"}
+                    {if condition="(($enterprise == $val['shop_user_type']) OR ($val['shop_user_type'] == 2))"}
+                        {if condition="($level_id >= $val['is_user_level'])"}
+                        <div class="w25-20 bor-f5 h370 pt50 fl mr20">
+                            <img src="/thumb/?src={$val.shop_type_icon}&w=100" class="db mb20 auto">
+                            <div class="color666 fs18 mb10">{$val.shop_type_suffix}</div>
+                            <div class="mb20">您当前处于{$val.shop_type_suffix}</div>
+                            <form role="form" action="{:url('choice/choicegoods')}" onsubmit="return false;" method="post">
+                                <input type="hidden" name="shop_type" value="{$val.shop_type_id}">
+                                <input type="hidden" name="step" value="step_shop_type">
+                                <button type="submit" class="btn w120 db btn-submit10 h35 line35 auto radius4px bg-red1 text_white">创建店铺</button>
+                            </form>
+                        </div>
+                        {/if}
+                    {/if}
+                {/volist}
+            </div>
+        </div>
+
+    </div>
+</div><!-- 页面主体内容结束 -->
+{/block}
+{block name="js"}
+<script>
+    $(document).ready(function(){
+            $(".btn-submit10").click(function () {
+                var parent  = $(this).closest('form');
+                var data    = parent.data();
+                if (data.confirm !== undefined) {
+                    if (confirm(data.confirm) === false) return;
+                }
+                var params  = {
+                    header : getHeader('record_step'),
+                    data : getForm(parent),
+                    success : function (ret) {
+                        if (ret.code === 20000) {
+                            success(ret.msg);
+                            //  执行跳转
+                            window.location.href = '/choice/choicegoods';
+                            //  执行刷新
+                            if (data.refresh !== undefined) {
+                                window.location.reload();
+                            }
+                        } else {
+                            error(ret.msg);
+                        }
+                    }
+                };
+                apiPost(params);
+            });
+    });
+
+</script>
+{/block}

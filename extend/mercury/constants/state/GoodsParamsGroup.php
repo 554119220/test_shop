@@ -1,0 +1,32 @@
+<?php
+namespace mercury\constants\state;
+
+interface GoodsParamsGroup
+{
+    
+    const GOODS_PARAMS_GROUP_TYPE_INPUT 	= 1;
+	const GOODS_PARAMS_GROUP_TYPE_SELECT 	= 2;
+	const GOODS_PARAMS_GROUP_TYPE_CHECKBOX 	= 3;
+	const GOODS_PARAMS_GROUP_TYPE_TEXTAREA 	= 4;
+	
+	const GOODS_PARAMS_GROUP_TYPE_ARRAYS = [
+		self::GOODS_PARAMS_GROUP_TYPE_INPUT 	=> 'input',
+		self::GOODS_PARAMS_GROUP_TYPE_SELECT 	=> 'select',
+		self::GOODS_PARAMS_GROUP_TYPE_CHECKBOX 	=> 'checkbox',
+		self::GOODS_PARAMS_GROUP_TYPE_TEXTAREA 	=> 'textarea',
+	];
+	
+	const GOODS_PARAMS_GROUP_TYPE_ARRAYS_NEW = [
+		self::GOODS_PARAMS_GROUP_TYPE_INPUT 	=> '文本框',
+		self::GOODS_PARAMS_GROUP_TYPE_SELECT 	=> '下拉选择',
+		self::GOODS_PARAMS_GROUP_TYPE_CHECKBOX 	=> '多选',
+		self::GOODS_PARAMS_GROUP_TYPE_TEXTAREA 	=> '多行文本',
+	];
+
+	const GOODS_PARAMS_GROUP_TYPE_ARRAYS_ADMIN = [
+		[self::GOODS_PARAMS_GROUP_TYPE_INPUT, '文本框'],
+		[self::GOODS_PARAMS_GROUP_TYPE_SELECT, '下拉选择'],
+		[self::GOODS_PARAMS_GROUP_TYPE_CHECKBOX, '多选'],
+		[self::GOODS_PARAMS_GROUP_TYPE_TEXTAREA, '多行文本'],
+	];
+}

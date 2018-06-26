@@ -1,0 +1,129 @@
+{extend name="public:base" /}
+{block name="page"}
+    <!-- 顶部标题栏 -->
+    <header class="bar bar-nav bg_transparent">
+        <!-- <a class="icon icon-me pull-left open-panel"></a> -->
+        <a href="/category" class="icon icon_common pull-left r12 icon_more" style="margin-top:.6rem"></a>
+        <h1 class="title home_title">
+            <div class="search-input">
+                <label class="icon icon-search" for="search"></label>
+                <input type="search" id='search' placeholder='输入关键字搜索产品'/>
+            </div>
+        </h1>
+        <!--<a class="icon icon_common pull-right r12 icon_msg" href="#routers-index-inner-1" style="margin-top:.6rem"></a>-->
+    </header>
+
+    <!-- 这里是页面内容区 -->
+    <div class="content bg_f8" style="top:0">
+        <div class="bg_white swiper-container" style="padding-bottom:.5rem" data-space-between='10'>
+            <div class="swiper-wrapper">
+                <div class="swiper-slide"><img class="img_max" src="/static/wap/images/bg_home_banner.png"></div>
+                <div class="swiper-slide"><img class="img_max" src="/static/wap/images/bg_home_banner.png"></div>
+                <div class="swiper-slide"><img class="img_max" src="/static/wap/images/bg_home_banner.png"></div>
+            </div>
+        </div>
+
+        <div class="bg_white rmb10">
+            <div class="clearfix icon_class">
+                <a href="/search/goods?self=1" class="col_5 text-center rmb10">
+                    <img style="width:2rem" src="/static/wap/images/icon/ic_01.png">
+                    <p class="mg0 mt-5 rfs12 text_55">热门官推</p>
+                </a>
+                <a class="col_5 text-center rmb10" href="/search/goods?cate=35">
+                    <img style="width:2rem" src="/static/wap/images/icon/ic_02.png">
+                    <p class="mg0 mt-5 rfs12 text_55">美颜护理</p>
+                </a>
+                <a class="col_5 text-center rmb10">
+                    <img style="width:2rem" src="/static/wap/images/icon/ic_03.png">
+                    <p class="mg0 mt-5 rfs12 text_55">男女服装</p>
+                </a>
+                <a class="col_5 text-center rmb10">
+                    <img style="width:2rem" src="/static/wap/images/icon/ic_04.png">
+                    <p class="mg0 mt-5 rfs12 text_55">手机数码</p>
+                </a>
+                <a class="col_5 text-center rmb10">
+                    <img style="width:2rem" src="/static/wap/images/icon/ic_05.png">
+                    <p class="mg0 mt-5 rfs12 text_55">食品保健</p>
+                </a>
+                <a class="col_5 text-center rmb10">
+                    <img style="width:2rem" src="/static/wap/images/icon/ic_06.png">
+                    <p class="mg0 mt-5 rfs12 text_55">话费充值</p>
+                </a>
+                <a class="col_5 text-center rmb10">
+                    <img style="width:2rem" src="/static/wap/images/icon/ic_07.png">
+                    <p class="mg0 mt-5 rfs12 text_55">珠宝配饰</p>
+                </a>
+                <a class="col_5 text-center rmb10">
+                    <img style="width:2rem" src="/static/wap/images/icon/ic_08.png">
+                    <p class="mg0 mt-5 rfs12 text_55">家居家纺</p>
+                </a>
+                <a class="col_5 text-center rmb10">
+                    <img style="width:2rem" src="/static/wap/images/icon/ic_09.png">
+                    <p class="mg0 mt-5 rfs12 text_55">鞋靴箱包</p>
+                </a>
+                <a class="col_5 text-center rmb10">
+                    <img style="width:2rem" src="/static/wap/images/icon/ic_10.png">
+                    <p class="mg0 mt-5 rfs12 text_55">母婴童装</p>
+                </a>
+            </div>
+        </div>
+
+        <div class="bg_white rmb10 rpd10 bg_bottom_custom">
+            <p class="mg0">
+                <img class="pull-left rmr5 rw15 rmt4" src="/static/wap/images/icon/hot.png">
+                <span class="rfs14 text_77 ">主题精选</span>
+            </p>
+            <div class="clearfix icon_class rmt10 rmb10">
+                <a href="/lists" class="col_4 text-center">
+                    <img style="width:2rem" src="/static/wap/images/icon/ic_11.png">
+                    <p class="mg0 mt-5 rfs12 text_55">常买清单</p>
+                </a>
+                <a href="/promotions" class="col_4 text-center">
+                    <img style="width:2rem" src="/static/wap/images/icon/ic_12.png">
+                    <p class="mg0 mt-5 rfs12 text_55">促销大全</p>
+                </a>
+                <a href="/coupon" class="col_4 text-center">
+                    <img style="width:2rem" src="/static/wap/images/icon/ic_13.png">
+                    <p class="mg0 mt-5 rfs12 text_55">红包和券</p>
+                </a>
+                <a href="/recharge" class="col_4 text-center">
+                    <img style="width:2rem" src="/static/wap/images/icon/ic_14.png">
+                    <p class="mg0 mt-5 rfs12 text_55">充值中心</p>
+                </a>
+            </div>
+
+        </div>
+
+        <div class="bg_white rmb10 rpd10">
+            <p class="mg0">
+                <img class="pull-left rmr5 rw15 rmt4" src="/static/wap/images/icon/hot.png">
+                <span class="rfs14 text_77 ">精品推荐</span>
+                <a href="/search/goods?featured=1" class="pull-right text_99 rfs12 rmt5">更多
+                    <img class="pull-right rw10 rmt3 ml5"  src="/static/wap/images/icon/icon_more_right.png">
+                </a>
+            </p>
+        </div>
+
+        <div class="over">
+            <div class="swiper-container-1">
+                <div class="swiper-wrapper">
+                    {eq name="like.code" value="20000"}
+                        {volist name="like.data.data" id="vo"}
+                            <a class="swiper-slide bg_white" href="/goods?id={$vo.sku_id}">
+                                <img class="img_max" src="{$vo.goods_images}?imageMogr2/thumbnail/265x265!">
+                                <div class="rpd4">
+                                    <div class="rtext_line_2 rfs10 rmb3 text_99">{$vo.goods_name}</div>
+                                    <p class="rfs12 text_55 mg0">
+                                        {volist name="vo.goods_labels" id="label"}
+                                        <small class="text_promotion rfs10 bg_red">{$label}</small>
+                                        {/volist}
+                                        <span class="text_red">￥ {$vo.goods_min_price}</span></p>
+                                </div>
+                            </a>
+                        {/volist}
+                    {/eq}
+                </div>
+            </div>
+        </div>
+    </div>
+{/block}

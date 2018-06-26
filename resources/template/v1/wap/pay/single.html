@@ -1,0 +1,73 @@
+{extend name="public:base" /}
+
+{block name="page"}
+<header class="bar bar-nav bbai">
+    <a class="l_return back"><img class="main100" src="/static/wap/images/reg/l_return1.png"></a>
+    <h1 class="title">订单付款</h1>
+</header>
+<!-- 这里是页面内容区 -->
+<div class="content pull-to-refresh-content infinite-scroll infinite-scroll-bottom" data-ptr-distance="50">
+    <!-- 默认的下拉刷新层 -->
+    {include file="public:refresh" /}
+    {eq name="data.code" value="20000"}
+    <div class="main100 bbai">
+        <!--订单详情-->
+        <div class="shou_xq">
+            <div class="shou_title">订单详情</div>
+            <div class="shou_xx">
+                <span class="lleft">订单编号</span>
+                <span class="text">{$data.data.orders_shop_no}</span>
+            </div>
+            <div class="shou_xx">
+                <span class="lleft">收款方</span>
+                <span class="text">[百望商城商家]</span>
+            </div>
+            <div class="shou_xx">
+                <span class="lleft names">支付金额</span>
+                <span class="text cred">￥ {$data.data.orders_shop_edit_amount} 元</span>
+            </div>
+        </div>
+        <!--支付方式-->
+        {eq name="pay_type.code" value="20000"}
+        <div class="shou_fs">
+            <div class="shou_title">支付方式</div>
+            <ul class="main100">
+                {volist name="pay_type.data" id="vo"}
+                <li data-id="{$vo.pay_type_id}" {eq name="key" value="0"}class="shou_dui"{/eq}>
+                <img src="{$vo.pay_type_icon|thumb=50}" style="width:1.25rem;margin-top: 0.6rem;margin-right: 0.4rem;" class="fl">
+                    <span class="f7 fl" style="background-size: 1.25rem; line-height: 2.5rem; height: 2.5rem;">{$vo.pay_type_name}</span>
+                </li>
+                {/volist}
+
+                <!--<li ><span class="shou_yin">银宝</span></li>-->
+                <!--<li ><span class="shou_wei">微信支付</span></li>-->
+                <!--<li ><span class="shou_zhi">支付宝支付</span></li>-->
+                <!--<li ><span class="shou_yinl">银联支付</span></li>-->
+            </ul>
+        </div>
+        <form id="single-pay-form">
+            <input name="pay_type" value="{$pay_type.data.0.pay_type_id}" type="hidden">
+            <input name="shop_no" value="{$data.data.orders_shop_no}" type="hidden">
+            <input name="trade_no" value="{$data.data.orders_shop_no}" type="hidden">
+            <input name="pay_amount" value="{$data.data.orders_shop_amount}" type="hidden">
+        </form>
+        {/eq}
+    </div>
+    <!--付款底部-->
+    <div class="fu_bot">
+        <div class="">
+            需要支付：<span class="cred">￥ {$data.data.orders_shop_amount} </span>元
+        </div>
+        <span class="btn btnh" id="single-pay-submit">支付</span>
+    </div>
+    {else /}
+    {:widget('Content/no', ['text' => $data['msg']])}
+    {/eq}
+</div>
+<!-- About Popup -->
+<div class="popup popup-pay">
+    <div class="content-block" style="padding: 0; margin: 0">
+
+    </div>
+</div>
+{/block}

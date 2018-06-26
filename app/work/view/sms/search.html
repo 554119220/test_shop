@@ -1,0 +1,39 @@
+<form method="get">
+	<table class="table no-border">
+		<tr>
+			<td>
+				<table class="table no-border table-hover valign-middle md0">
+					<tbody>
+						<tr>
+							<td>
+								<select name="table" id="table" class="form-control" placeholder="日志表" data-value=" ">
+									<option value="{:date('Ym')}">请选择日志表</option>
+									<option value="{:date('Ym')}" >{:date('Y-m')}</option>
+									<option value="{:date('Ym',time()-86400*30)}" >{:date('Y-m',time()-86400*30)}</option>
+									<option value="{:date('Ym',time()-86400*60)}" >{:date('Y-m',time()-86400*60)}</option>
+								</select>				
+							</td>
+							<td>
+								<select name="flag" id="发送状态" class="form-control" placeholder="日志表" data-value=" ">
+									<option value="">请选择状态</option>
+									<option value="1" >成功</option>
+									<option value="0" >失败</option>
+								</select>
+							</td>
+							<td>
+								<input type="text" name="mobile" id="mobile"   class="form-control" placeholder="请填写手机号码" value="">
+							</td>
+							<td>
+								<input type="text" name="content" id="content"   class="form-control" placeholder="请填写发送内容" value="">
+							</td>
+						</tr>
+					</tbody>
+				</table>			
+			</td>
+			<td width="100 ">
+				<button type="submit " class="btn blue btn-outline btn-block " style="margin-top: 9px; "><i class="fa fa-search "></i> 搜索</button>
+			</td>
+		</tr>
+	</table>
+		
+</form>

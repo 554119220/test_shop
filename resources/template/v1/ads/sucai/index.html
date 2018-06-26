@@ -1,0 +1,202 @@
+{extend name="public:base"}{/extend}
+{block name="content"}
+<div class="container-fluid bg_white pd15 pb0 ">
+
+    <div class="container">
+        <form action="{:request()->url()}" class="form-horizontal">
+        <div class="main100 mb10 clearfix">
+            <div class="main25 border-red over radius4px fl mr15" style="width:20%!important">
+                <a class="btn text_white bg-red1  fl  main30 text-center">关键词</a>
+                <input  class="main70 line30 bor_no pl10 h34" name="k" placeholder="请输入素材标题" value="{$where.k ?? ''}">
+            </div>
+            <div class="border-red radius4px fl mr15 w200">
+                <a class="btn text_white bg-red1  fl  main40 text-center">素材宽高</a>
+                <select name="wh" class="bs-select form-control main60" tabindex="-98">
+                    <option value="">全部</option>
+                    <?php foreach (\mercury\constants\State::ADS_POSITION_SIZE as $value) { ?>
+                    <?php if ( $value[0] . 'x' . $value[1] == input('wh') ){ ?>
+                    <option value="{$value.0}x{$value.1}" selected="selected">{$value.0}x{$value.1}</option>
+                    <?php }else{ ?>
+                    <option value="{$value.0}x{$value.1}">{$value.0}x{$value.1}</option>
+                    <?php } ?>
+                    <?php } ?>
+                </select>
+            </div>
+
+            <div class="container-fluid pd0">
+                <button type="submit" class="btn bg-red1 text_white radius4px pd7 pl15 pr15">搜索</button>
+                <a class="btn bg-red1 text_white radius4px pd7 pl15 pr15"  href="/sucai/index" >重置</a>
+            </div>
+
+        </div>
+
+        <div class="main100 line55 over">
+            <a class="color666 fs14 ml15 mr15 {eq name='where.sate' value=''} cp-active {/eq} " href="/sucai/index?k={$where.k ?? ''}&wh={$where.wh ?? ''}">全部 </a>
+            <a class="color666 fs14 ml15 mr15 {eq name='where.sate' value='0'} cp-active {/eq} " href="/sucai/index?sate=0&k={$where.k ?? ''}&wh={$where.wh ?? ''}">审核中 </a>
+            <a class="color666 fs14 ml15 mr15 {eq name='where.sate' value='1'} cp-active {/eq}" href="/sucai/index?sate=1&k={$where.k ?? ''}&wh={$where.wh ?? ''}">通过 </a>
+            <a class="color666 fs14 ml15 mr15 {eq name='where.sate' value='2'} cp-active {/eq}" href="/sucai/index?sate=2&k={$where.k ?? ''}&wh={$where.wh ?? ''}">拒绝</a>
+        </div>
+        </form>
+    </div>
+
+
+</div>
+
+<div class="container-fluid bg_white">
+    <div class="container pd0">
+        <div class="main100  bg-white radius4px pl15 pr15 minh595 over">
+            <div class="main100 line55 radius4px mb15 mt5 over">
+                <a class="btn text_white bg-red-thunderbird radius4px pd7 pl25 pr25 mt13 fl mr15 fs12" id="goods-delete">批量删除</a>
+                <a class="btn text_white bg-red-thunderbird radius4px pd7 pl25 pr25 mt13 fl mr15 fs12 fr"  href="/sucai/create" >创建素材</a>
+            </div>
+
+            <div class="main100 radius4px over">
+                <table class="table solid_all  table_dashed tr12 table12">
+                    <thead class=" bg-f5">
+                    <tr>
+                        <th class="small_xs text-center">
+                            <label class="square mar0 fr">
+                                <input  id="click-goods-active" type="checkbox"><em class="fl"></em>
+                            </label>
+                        </th>
+                        <th class="small_xs ">素材标题</th>
+                        <th class="small_xs ">素材缩列图</th>
+                        <th class="small_xs ">素材宽度</th>
+                        <th class="small_xs ">素材高度</th>
+                        <th class="small_xs ">更新时间</th>
+                        <th class="small_xs ">创建时间</th>
+                        <th class="small_xs ">状态</th>
+                        <th class="small_xs ">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody class="goods-list">
+                    {volist name="list" id="val"}
+                    <tr>
+                        <td class="text-center">
+                            <label class="square mar0 fr">
+                                <input  data-goods_id="{$val.ads_sucai_id}" type="checkbox" class="goods-item-checkbox"><em class="fl"></em>
+                            </label>
+                        </td>
+                        <td>{$val.ads_sucai_name}</td>
+                        <td><a class="image-zoom" href="{$val.ads_sucai_images}"><img class=" radius4px" style="height:42px;width:42px;" src="{$val.ads_sucai_images}"></a></td>
+                        <td>{$val.ads_sucai_width}</td>
+                        <td>{$val.ads_sucai_height}</td>
+                        <td>{$val.ads_sucai_update_time}</td>
+                        <td>{$val.ads_sucai_create_time}</td>
+                        <td>
+                            {switch name="val.ads_sucai_state"}
+                            {case value="1"}通过{/case}
+                            {case value="0"}待审核{/case}
+                            {case value="2"}拒绝{/case}
+                            {default /}其他
+                            {/switch}
+                        </td>
+                        <td>
+                            <a class="color-blue mr5" href="/sucai/update/id/{$val.ads_sucai_id}">查看</a>
+                            <a class="color-blue mr5" href="/adsposition/index?wh={$val.ads_sucai_width}x{$val.ads_sucai_height}">可投放广告位</a>
+                        </td>
+                    </tr>
+                    {/volist}
+                    </tbody>
+                </table>
+
+            </div>
+            <!--页按钮-->
+            {$page}
+        </div>
+    </div>
+
+</div>
+{/block}
+
+{block name="js"}
+<script>
+    $(document).ready(function(){
+        image_zoom();
+        //全选
+        $(document).on('click','#click-goods-active', function(){
+            var n = $(".goods-list .goods-item-checkbox");
+            if( $("#click-goods-active").is(":checked") ){
+                for (var i = 0;i < n.length;i++) {
+                    n.get(i).checked = 'checked';
+                }
+            } else {
+                for(var i = 0;i < n.length;i++){
+                    n.get(i).checked = false;
+                }
+            }
+        });
+        // 批量删除
+        $('#goods-delete').on('click',function(){
+            if ( goodsIsChecked() == false ) {
+                return ;
+            }
+            if ( confirm('确定要删除吗？') ) {
+                apiPost({
+                    data:{
+                        ads_sucai_id:goodsCheckedValue(),
+                    },
+                    header:getHeader('AdsSucaiDel'),
+                    log:true,
+                    success:function(ret){
+                        if ( ret.code == 20000 ) {
+                            success('删除成功');
+                            setTimeout(function(){
+                                window.location.reload();
+                            },1000);
+                        } else {
+                            error(ret.msg);
+                        }
+                    },
+                });
+            }
+        });
+    });
+
+    function goodsIsChecked(){
+        var is = false;
+        $(".goods-list .goods-item-checkbox").each(function(k,v){
+            if ( $(this).prop('checked') == true ) {
+                is = true;
+            }
+        });
+        if ( is == 0 ) {
+            error('请选择一个素材');
+        }
+        return is;
+    }
+
+    function goodsCheckedValue(){
+        var arr = [];
+        $(".goods-list .goods-item-checkbox").each(function(k,v){
+            if ( $(this).prop('checked') == true ) {
+                arr.push(parseInt($(this).data('goods_id')));
+            }
+        });
+        return arr.join();
+    }
+
+
+    function image_zoom(param){
+        var tag=$('body');
+        if(param && param.obj) var tag=param.obj;
+        else if(param && param.tag) var tag=$(param.tag);
+        //console.log(tag);
+        if(tag.find('.image-zoom').size()>0){
+            tag.find('.image-zoom').magnificPopup({
+                type: 'image',
+                mainClass: 'mfp-with-zoom', // this class is for CSS animation below
+                callbacks: {
+                    elementParse: function (item) {
+                        // Function will fire for each target element
+                        // "item.el" is a target DOM element (if present)
+                        // "item.src" is a source that you may modify
+
+                        console.log(item); // Do whatever you want with "item" object
+                    }
+                }
+            });
+        }
+    }
+</script>
+{/block}

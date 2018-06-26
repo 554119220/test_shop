@@ -1,0 +1,62 @@
+{extend name="public:base" /}
+
+{block name="page"}
+<!-- 标题栏 -->
+<header class="bar bar-nav bbai">
+    <a class="l_return back"><img class="main100" src="/static/wap/images/reg/l_return1.png"></a>
+    <h1 class="title">我的账户</h1>
+    <a class="head_right" style="display: none;">明细</a>
+</header>
+<!-- 这里是页面内容区 -->
+<div class="content">
+    {eq name="data.code" value="20000"}
+        <div class="main100 bbai m5px user_xx">
+            <img class="img" src="/static/wap/images/user/icon_fz.png">
+            <span class="cred main100" style="font-size: 0.7rem;padding-bottom: 10px">提现或充值请前往ERP</span>
+            <span class="h666 main100">（￥ <strong class="text_red">{$data.data.cash}</strong> 元）</span>
+            <div class="main100">
+                <!---->
+                <a href="#" class="red-b mr18 mb18"  style="display: none;">充值</a>
+                <!--<a href="#" class="red-b mb20">提现</a>-->
+            </div>
+        </div>
+        <!--积分 银宝-->
+        <div class="main100 user_jifen m5px" style="">
+            <div class="lleft bbai">
+                <div class="h666 s">金积分</div>
+                <h3>{$data.data.lurpak}</h3>
+                <!--<a  class="a" >查看明细</a>-->
+            </div>
+            <div class="rright bbai">
+                <div class="h666 s1">购物积分</div>
+                <h3>{$data.data.consume}</h3>
+                <!--<a class="a" href="#">查看明细</a>-->
+            </div>
+        </div>
+        <!--安全设置-->
+        <div class="main100 bbai" style="display: none;">
+            <div class="shou_title">安全设置</div>
+            <ul class="main100 user_ul">
+                <li class="main100 dui">
+                    <span class="lleft s">店铺会员实名认证</span>
+                </li>
+                <li class="main100">
+                    <span class="lleft s1">店铺会员实名认证</span>
+                    <span class="rright h999">普通会员</span>
+                </li>
+            </ul>
+        </div>
+    {else/}
+        <div class="main100 bbai m5px user_xx">
+            <img class="img" src="/static/wap/images/user/icon_fz.png">
+            <span class="cred main100" style="font-size: 0.7rem;padding-bottom: 10px">获取账户信息失败，请前往ERP查看。</span>
+            <!--<span class="h666 main100">（￥ <strong class="text_red">{$data.data.cash}</strong> 元）</span>-->
+            <div class="main100">
+                <!---->
+                <a href="#" class="red-b mr18 mb18"  style="display: none;">充值</a>
+                <!--<a href="#" class="red-b mb20">提现</a>-->
+            </div>
+        </div>
+    {/eq}
+</div>
+{/block}

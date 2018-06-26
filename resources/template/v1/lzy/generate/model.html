@@ -1,0 +1,309 @@
+{extend name="public:base"/}
+{block name="content"}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                表前缀：{:config('database.prefix')}
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <form id="form" role="form" method="post" action="/Generate/modelsave">
+                        	<input type="hidden" name="table" value="{$table}">
+                        	{empty name="tables"}
+                        		<h3 class="text-danger">没有找到数据表，请先查看数据库配置是否正确。</h3>
+                        	{else/}
+                        		<hr>
+                        		{foreach name="tables" item="value"}
+		                    		{if condition="$value eq input('table')"}
+		                    			<button type="button" class="btn btn-warning" style="margin:10px;"><a href="/Generate/create_model/table/{$value}">{$value}</a></button>
+		                    		{else /}
+		                    			<button type="button" class="btn btn-default" style="margin:10px;"><a href="/Generate/create_model/table/{$value}">{$value}</a></button>
+		                    		{/if}
+		                    	{/foreach}
+		                    	
+		                    	{empty name="tableInfo"}
+		                    		<h3 class="text-danger">没有获取到字段信息，请先选择一个表来操作。</h3>
+		                    	{/empty}
+		                    	<hr>
+                        	{/empty}
+                        	{notempty name="tableInfo"}
+                        		<!--  -->
+                        		<h2 class="text-danger">基础设置</h2>
+                        		<div class="form-group">
+	                                <label>设置model文件命名空间</label>
+	                                <input class="form-control" name="namespace" value="" placeholder="例：app\common\model">
+	                            </div>
+                        		<!-- model 属性 -->
+                        		<h2 class="text-danger">设置Model属性。</h2>
+                        		<div class="form-group">
+	                                <label>是否开启$autoWriteTimestamp设置</label>
+	                                <label class="radio-inline">
+	                                    <input type="radio" name="autoWriteTimestamp" value="true" checked>true
+	                                </label>
+	                                <label class="radio-inline">
+	                                    <input type="radio" name="autoWriteTimestamp" value="false">false
+	                                </label>
+	                                <label class="radio-inline">
+	                                    <input type="radio" name="autoWriteTimestamp" value="int">int
+	                                </label>
+	                                <label class="radio-inline">
+	                                    <input type="radio" name="autoWriteTimestamp" value="datetime">datetime
+	                                </label>
+	                                <label class="radio-inline">
+	                                    <input type="radio" name="autoWriteTimestamp" value="timestamp">timestamp
+	                                </label>
+	                            </div>
+								<div class="form-group">
+	                                <label>设置主键$pk</label>
+	                                <input class="form-control" readonly="true" name="pk" value="{$tableInfo.pk|default=""}" placeholder="未设置主键。">
+	                            </div>
+	                            <div class="form-group">
+	                                <label>设置$createTime字段</label>
+	                                <select name="createTime" class="form-control">
+	                                	<option value="">请选择</option>
+	                                    {foreach name="tableInfo.fields" key="key" item="value"}
+	                                    	<option value="{$value}">{$value}(<?php echo $tableInfo['Comment'][$key]; ?>)</option>
+	                                    {/foreach}
+	                                </select>
+	                            </div>
+	                            <div class="form-group">
+	                                <label>设置$updateTime字段</label>
+	                                <select name="updateTime" class="form-control">
+	                                	<option value="">请选择</option>
+	                                    {foreach name="tableInfo.fields" key="key" item="value"}
+	                                    	<option value="{$value}">{$value}(<?php echo $tableInfo['Comment'][$key]; ?>)</option>
+	                                    {/foreach}
+	                                </select>
+	                            </div>
+	                            <div class="form-group">
+	                                <label>时间字段取出后的默认时间格式($createTime&$updateTime有效)</label>
+	                                <input class="form-control" name="dateFormat" value="Y-m-d H:i:s" placeholder="例：Y-m-d H:i:s">
+	                            </div>
+	                            <!-- 设置新增更新自动完成。 -->
+	                            <h2 class="text-danger">设置 修改器 - insert&update 和 自动完成</h2>
+	                            <h3 style="color:red">修改器是在赋值数据的时候回触发。若设置了自动完成，操作数据库的时候还会触发一次。</h3>
+	                            {foreach name="tableInfo.fields" key="key" item="value"}
+	                            	<div class="form-group">
+		                                <label style="width:400px;">{$value}(<?php echo $tableInfo['Comment'][$key] ?>)</label>
+		                                <label class="radio-inline">
+		                                    <input type="radio" name="set[{$value}][sure]" onclick="$(this).parent().parent().next().hide().next().hide();" value="" checked>无操作
+		                                </label>
+		                                <label class="radio-inline">
+		                                    <input type="radio" name="set[{$value}][sure]" onclick="$(this).parent().parent().next().show().next().show();" value="edit">修改器
+		                                </label>
+		                                <label class="radio-inline">
+		                                    <input type="radio" name="set[{$value}][sure]" onclick="$(this).parent().parent().next().show().next().show();" value="auto">修改器 & <span style="color:red">auto</span>
+		                                </label>
+		                                <label class="radio-inline">
+		                                    <input type="radio" name="set[{$value}][sure]" onclick="$(this).parent().parent().next().show().next().show();" value="insert">修改器 & <span style="color:red">insert</span>
+		                                </label>
+		                                <label class="radio-inline">
+		                                    <input type="radio" name="set[{$value}][sure]" onclick="$(this).parent().parent().next().show().next().show();" value="update">修改器 & <span style="color:red">update</span>
+		                                </label>
+		                            </div>
+		                            <div class="form-group" style="display: none;width: 200px;">
+		                                <label></label>
+		                                <select class="form-control" onchange="$(this).parent().next().find('textarea').html($('#moren-' + $(this).val()).html())">
+		                                    <option value="0">使用默认处理代码</option>
+		                                    <option value="1">返回time()</option>
+		                                    <option value="2">返回date('Y-m-d H:i:s')</option>
+		                                    <option value="3">返回date('Y-m-d H:i:s',$value)</option>
+		                                    <option value="4">返回ip(0.0.0.0)</option>
+		                                    <option value="5">返回ip(整形)</option>
+		                                    <option value="6">返回long2ip($value)</option>
+		                                </select>
+		                            </div>
+		                            <div class="form-group" style="display: none;">
+			                            <label>处理代码</label>
+			                            <textarea name="set[{$value}][value]" class="form-control" rows="3">return $value;</textarea>
+			                        </div>
+	                            {/foreach}
+	                            
+	                            <hr>
+	                            <!-- 设置获取自动完成。 -->
+	                            <h2 class="text-danger">设置 获取器 - select&find 自动处理</h2>
+	                            <h3 style="color:red">获取器是在取数据之后对数据处理。</h3>
+	                            {foreach name="tableInfo.fields" key="key" item="value"}
+	                            	<div class="form-group">
+		                                <label style="width:400px;">{$value}(<?php echo $tableInfo['Comment'][$key] ?>)</label>
+		                                <label class="radio-inline">
+		                                    <input type="radio" name="get[{$value}][sure]" value="0" onclick="$(this).parent().parent().next().hide().next().hide();" checked>无操作
+		                                </label>
+		                                <label class="radio-inline">
+		                                    <input type="radio" name="get[{$value}][sure]" value="1" onclick="$(this).parent().parent().next().show().next().show();">获取器
+		                                </label>
+		                            </div>
+		                            <div class="form-group" style="display: none;width: 200px;">
+		                                <label></label>
+		                                <select class="form-control" onchange="$(this).parent().next().find('textarea').html($('#moren-' + $(this).val()).html())">
+		                                    <option value="0">使用默认处理代码</option>
+		                                    <option value="1">返回time()</option>
+		                                    <option value="2">返回date('Y-m-d H:i:s')</option>
+		                                    <option value="3">返回date('Y-m-d H:i:s',$value)</option>
+		                                    <option value="4">返回ip(0.0.0.0)</option>
+		                                    <option value="5">返回ip(整形)</option>
+		                                    <option value="6">返回long2ip($value)</option>
+		                                </select>
+		                            </div>
+		                            <div class="form-group" style="display: none;">
+			                            <label>处理代码</label>
+			                            <textarea name="get[{$value}][value]" class="form-control" rows="3">return $value;</textarea>
+			                        </div>
+	                            {/foreach}
+	                            
+	                            <hr>
+	                            <!-- 关联方法 -->
+	                            <h2 class="text-danger">设置关联方法</h2>
+	                            <button type="button" class="btn btn-default create_hasOne"data-type="hasOne"><a href="javascript:;">添加一对一hasOne关联</a></button>
+	                            <button type="button" class="btn btn-default create_hasMany"data-type="hasMany"><a href="javascript:;">添加一对多hasMany关联</a></button>
+	                            <hr>
+	                            <div class="relation-list">
+	                            	
+	                            	<hr class="add_relation" style="display:none;">
+	                            </div>
+
+	                            <button type="button" class="btn btn-default submit-form">点击生成model文件</button>
+	                            <br>
+	                            <br>
+	                            <br>
+	                            <br>
+	                            <br>
+                        	{/notempty}
+
+                            
+                            
+                            
+                            
+                        </form>
+                    </div>
+                    
+                </div>
+                <!-- /.row (nested) -->
+            </div>
+            <!-- /.panel-body -->
+        </div>
+        <!-- /.panel -->
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+<div style="display: none;">
+	<div id="moren-0">return $value;</div>
+	<div id="moren-1">return time();</div>
+	<div id="moren-2">return date('Y-m-d H:i:s');</div>
+	<div id="moren-3">return date('Y-m-d H:i:s', $value);</div>
+	<div id="moren-4">return request()->ip();</div>
+	<div id="moren-5">return request()->ip(1);</div>
+	<div id="moren-6">return long2ip($value);</div>
+</div>
+{/block}
+{block name="js"}
+{notempty name="tableInfo"}
+<script type="text/javascript">
+	var i = 0;
+	var j = 0;
+	$('.create_hasOne,.create_hasMany').on('click',function(){
+		var r_type = $(this).data('type');
+		var html = '';
+
+		html += '<div class="add_relation_item">';
+		html += '<h4>定义' + r_type + '模型</h4>';
+
+		html += '<div class="form-group">';
+		html += '<select name="relation[' + r_type + '][' + i + '][table]" class="form-control form-inline" onchange="select_table($(this),this.value);">';
+		html += '<option value="">选择一个关联表</option>';
+		{foreach name="tables" key="key" item="value"}
+		html += '<option value="{$value}">表名：{$value}&nbsp;&nbsp;&nbsp;&nbsp;{php} echo $Comments[$key]; {/php}</option>';
+		{/foreach}
+		html += '</select>';
+		html += '</div>';
+
+		html += '<div class="form-group">';
+		html += '<select name="relation[' + r_type + '][' + i + '][foreignKey]" class="form-control form-inline">';
+		html += '<option value="">选择foreignKey</option>';
+		html += '</select>';
+		html += '</div>';
+		
+		html += '<div class="form-group">';
+		html += '<select name="relation[' + r_type + '][' + i + '][localKey]" class="form-control form-inline">';
+		html += '<option value="">选择localKey</option>';
+		{foreach name="tableInfo.fields" key="key" item="value"}
+		html += '<option value="{$value}">localKey：{$value} (<?php echo $tableInfo['Comment'][$key] ?>)</option>';
+		{/foreach}
+		html += '</select>';
+
+
+
+		html += '</div>';
+
+		
+
+		html += '<button type="button" class="btn btn-danger" onclick="$(this).parent().remove();">删除此关联</button>';
+		html += '<hr>';
+
+		html += '</div>';
+		i++;
+		$('.add_relation').before(html);
+
+	});
+	function select_table(obj,value){
+		var html = '<option value="">选择foreignKey</option>';
+		if(value == ''){
+			obj.parent().parent().find('select').eq(2).html(html);
+			return ;
+		}
+		$.ajax({
+			type:'post',
+			url:'/Generate/getTableInfo',
+			data:{
+				table:value,
+			},
+			dataType:'json',
+			success:function(ret){
+				console.log(ret);
+				$.each(ret.fields,function(k,v){
+					html += '<option value="' + v + '">foreignKey：' + v + '(' + ret.Comment[k] + ')</option>'; 
+				});
+				console.log(html);
+				obj.parent().parent().find('select').eq(1).html(html);
+			},
+		});
+	}
+	$('.submit-form').on('click', function(){
+		if($('input[name="namespace"]').val() == ''){
+			alert('命名空间不能为空！');
+			return false;
+		}
+		if ( $('input[name="autoWriteTimestamp"]:checked').val() != 'false' ) {
+			// alert($('input[name="autoWriteTimestamp"]:checked').val());
+			if($('select[name="createTime"]').val() == ''){
+				alert('createTime不能为空！');
+				return false;
+			}
+			if($('select[name="updateTime"]').val() == ''){
+				alert('updateTime不能为空！');
+				return false;
+			}
+			if($('input[name="dateFormat"]').val() == ''){
+				alert('dateFormat不能为空！');
+				return false;
+			}
+		}
+		
+		var r = true;
+		$('.relation-list select').each(function(k,v){
+			if($(this).val() == ''){
+				r = false;
+			}
+		});
+		if(r){
+			$('#form').submit();
+		}else{
+			alert('关联方法没有设置完！');
+		}
+	});
+
+</script>
+{/notempty}
+{/block}

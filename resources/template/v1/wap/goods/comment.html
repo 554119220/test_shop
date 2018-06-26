@@ -1,0 +1,68 @@
+{extend name="public:base" /}
+{block name="page"}
+<input type="hidden" id="goods_id" value="{$goods_id}">
+<!-- 顶部标题栏 -->
+<header class="bar bar-nav bg_white">
+    <a class="icon icon_common pull-left r12 icon_back back" style="margin-top:.6rem"></a>
+	<h1 class="title title_tab">  
+        <div class="buttons-tab tab_set_red s" id="tab_set_red">
+            
+            <a class="tab-link rfs12 button">商品评论</a>
+            
+        </div>
+    </h1>
+</header>
+
+<div class="content bg_f8  infinite-scroll infinite-scroll-bottom" data-distance="50">
+    <div class="bg_white">
+        <!-- 当这里没数据是 将下组div显示 -->
+    </div>
+    <div class="tab_set">
+        <div class="clearfix page_comment rpd10" id="comment-tabs">
+            <a href="#comment-tab1" data-state="" class="search_fast tab-link active">全部(<span class="comment-all">0</span>)</a>
+            <a href="#comment-tab2" data-state="images" class="search_fast tab-link">有图(<span class="comment-images">0</span>)</a>
+            <a href="#comment-tab3" data-state="good" class="search_fast tab-link">好评(<span class="comment-good">0</span>)</a>
+            <a href="#comment-tab4" data-state="middle" class="search_fast tab-link">中评(<span class="comment-middle">0</span>)</a>
+            <a href="#comment-tab5" data-state="poor" class="search_fast tab-link">差评(<span class="comment-poor">0</span>)</a>
+        </div>
+        <div class="tabs">
+            <div class="tab bg_white active" id="comment-tab1" data-page="1" data-request="1">
+                <comments-list></comments-list>
+                <!-- 加载提示符 -->
+                <div class="infinite-scroll-preloader">
+                    <div class="preloader"></div>
+                </div>
+            </div>
+            <div class="tab bg_white" id="comment-tab2" data-page="1" data-request="1">
+                <comments-list></comments-list>
+                <!-- 加载提示符 -->
+                <div class="infinite-scroll-preloader">
+                    <div class="preloader"></div>
+                </div>
+            </div>
+            <div class="tab bg_white" id="comment-tab3" data-page="1" data-request="1">
+                <comments-list></comments-list>
+                <!-- 加载提示符 -->
+                <div class="infinite-scroll-preloader">
+                    <div class="preloader"></div>
+                </div>
+            </div>
+            <div class="tab bg_white" id="comment-tab4" data-page="1" data-request="1">
+                <comments-list></comments-list>
+                <!-- 加载提示符 -->
+                <div class="infinite-scroll-preloader">
+                    <div class="preloader"></div>
+                </div>
+            </div>
+            <div class="tab bg_white" id="comment-tab5" data-page="1" data-request="1">
+                <comments-list></comments-list>
+                <!-- 加载提示符 -->
+                <div class="infinite-scroll-preloader">
+                    <div class="preloader"></div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>
+{/block}

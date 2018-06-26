@@ -1,0 +1,145 @@
+{extend name="public:base" /}
+<!--导航-->
+{block name="nav"}{include file="shop:nav" title="修改" /}{/block}
+
+<!--主体内容-->
+{block name="content"}
+<form class="form-horizontal" id="form-edit" action="/{$Request.controller}/edit_save" onsubmit="return sendForm()">
+	<ul class="nav nav-tabs">
+		{volist name="group" id="gl"}
+		<li class="{$i==1?'active':''}">
+			<a href="#tabs_{$i}" data-toggle="tab" aria-expanded="true"> {$gl.group_name} </a>
+		</li>
+		{/volist}
+		
+	</ul>
+	<div class="tab-content">
+		{volist name="group" id="gl"}
+		<div class="tab-pane fade in {$i==1?'active':''}" id="tabs_{$i}">
+		{notempty name="gl.remark"}
+			<div class="note note-info">
+				<p>提示：{$gl.remark}</p>
+			</div>			
+		{/notempty}			
+		{:buildform(array(
+			'field'		=>$gl.fields,
+		),$res)}			
+		</div><!--/end pane-->
+		{/volist}
+	</div>
+	{foreach name="goods_category_level1" item="val" key="k"}
+	<div class="form-group leimu">
+		<label class="control-label col-xs-3">类目</label>
+		<div class="col-xs-3">
+			<select name="goods_category_one[]"  data-type="one" class="form-control" id="one{$k}" onchange="reportFieldsSave2(this,'{$k}');" >
+				{volist name="category" id="v"}
+					<option value="{$v.category_id}" {eq name="val" value="$v.category_id"} selected {/eq}>{$v.category_name}</option>
+				{/volist}
+			</select>
+		</div>
+		<div class="col-xs-3">
+			<select name="goods_category_two[]"  data-type="two" class="form-control two{$k}" id="two{$k}" onchange="reportFieldsSave(this,'{$k}');"  >
+				{php}foreach($two[$k]['info'] as $key=>$value){{/php}
+					<option value="{php}echo $value['category_id'];{/php}" {php} if($goods_category_ids[$k] == $value['category_id']){{/php} selected {php}}{/php}>{php}echo $value['category_name'];{/php}</option>
+				{php}}{/php}
+			</select>
+		</div>
+		<button type="button" class="btn btn-danger del" onclick="del(this);">删除</button>
+	</div>
+	{/foreach}
+	<div class="m20 text-center">
+		<button type="button" class="btn btn-info btn-200px" onclick="addListfield()">添加类目</button>
+	</div>
+	{:buildform(array(
+		'field'		=>array(
+			array(
+				'formtype'		=>'hidden',
+				'name'			=>$primary_key,
+				'value'			=>$res[$primary_key],
+			),
+			array(
+				'formtype'		=>'button',
+				'btns'			=>[['提交','btn btn-danger btn-150px','submit']],
+			),
+		),
+	))}
+</form>
+{/block}
+
+<!--脚本-->
+{block name="javascript"}
+<script>
+	function del(obj) {
+	    if($('.leimu').length <= 1){
+	        alert('类目必须要留一个！');
+	        return false;
+		}
+        $(obj).parent().remove();
+        category_list();
+    }
+	function sendForm(){
+		submitForm({
+			formid:'#form-edit',
+			success:function(ret){
+				toast(ret);
+				if(ret.code == 1){
+					setTimeout(function(){
+						history.back();
+					},1000);
+				}
+			}
+		});
+		
+		return false;
+	}
+    //添加报表字段
+    function addListfield(){
+	    var html = '<div class="form-group leimu"><label class="control-label col-xs-3">类目</label><div class="col-xs-3"><select name="goods_category_one[]"  data-type="one" class="form-control" onchange="reportFieldsSave2(this);" >';
+	    html += $('.leimu select').eq(0).html();
+	    html += '</select></div>';
+        html += '<div class="col-xs-3"><select name="goods_category[]" onchange="reportFieldsSave(this);"  data-type="two" class="form-control two" ><option>请选择类目</option></select></div>';
+        html += ' <button type="button" class="btn btn-danger del" onclick="del(this);">删除</button></div>';
+        $('.tab-content').append(html);
+    }
+    //获取当前分类的手机
+    function reportFieldsSave2(obj,key){
+        var id = $(obj).val();
+        ajax_post({
+            url:'/Goodscategory2/goodsCategory',
+            data:{category_id:id},
+            success:function(ret){
+                if(ret.code == 1){
+                    	var html = '<option value="0">请选择</option>';
+                    $(ret.data).each(function(index,element){
+						html += '<option value="'+element.category_id+'">'+element.category_name+'</option>';
+                    });
+                    $(obj).parent().next().children('select').html(html);
+				}else{
+                    toast(ret);
+				}
+
+            }
+        });
+        category_list();
+        return false;
+    }
+    //获取当前分类的手机
+    function reportFieldsSave(obj){
+        category_list();
+    }
+
+    function category_list() {
+        var count = Number($('.leimu').length);
+        var one_name = '';
+        var two_name = '';
+        for(var i = 0; i < count; i++){
+            one_name += ','+$('.leimu').eq(i).children('.col-xs-3').eq(1).children('.form-control').val();
+            two_name += ','+$('.leimu').eq(i).children('.col-xs-3').eq(2).children('.form-control').val();
+        }
+        one_name=one_name.substr(1);
+        two_name=two_name.substr(1);
+        $('input[name=goods_category_level1]').val(one_name);
+        $('input[name=goods_category_ids]').val(two_name);
+    }
+</script>
+{/block}

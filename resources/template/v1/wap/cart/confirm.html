@@ -1,0 +1,122 @@
+{extend name="public:base" /}
+{block name="page"}
+<!-- 标题栏 -->
+<!-- 标题栏 -->
+<header class="bar bar-nav bbai">
+    <a class="l_return" data-no-cache="true" href="/cart">
+        <img class="main100" src="/static/wap/images/reg/l_return1.png">
+    </a>
+    <span class="pull-right rfs14 text_77 icon icon-menu open-panel shop-category-list" data-panel=".panel_set"></span>
+    <h1 class="title">确认订单</h1>
+</header>
+<!-- 这里是页面内容区 -->
+<div class="content fuk">
+    <form>
+        <div class="main100 bbai">
+            <div class="dizhi pad5-75">
+                {notempty name="address"}
+                <input type="hidden" name="address_id" value="{$address.address_id}">
+                    <a href="/address?ret=cart" >
+                        <span class="lleft h999">选择收货地址 ：</span>
+                        <div class="lleft main70">
+                            <span >
+                                {$address.province_name}
+                                {$address.city_name}
+                                {$address.district_name}
+                                {$address.town_name}
+                                {$address.address_street}
+                            </span>
+                            （{$address.address_name},{$address.address_mobile}）
+                        </div>
+                    </a>
+                {else/}
+                    <a href="/address?ret=cart" >
+                        <span class="lleft h999">选择收货地址 ：</span>
+                        <div class="lleft main70">
+                            <span>您还没有收货地址，立即添加地址</span>
+                        </div>
+                    </a>
+                {/notempty}
+            </div>
+            {eq name="data.code" value="20000"}
+                <ul class="cart_newcp">
+                    {volist name="data.data.shop" id="vo" key="i"}
+                        <li>
+                            <div class="fu_title">
+                                <a href="/shop?id={$vo.shop.shop_id}">
+                                    <img class="shop-logo1" src="{$vo.shop.shop_logo|thumb=40}">
+                                    <span class="shop-title f7 h333" style="text-align: left" >{$vo.shop.shop_name}</span>
+                                </a>
+                                <span class="rright">&nbsp;<a href="tel:">联系商家</a></span>
+                            </div>
+                            <!---->
+                            {volist name="vo.goods" id="goods" key="k"}
+                                <div class="li_main">
+                                    <a href="/goods?id={$goods.goods_sku_id}"><img class="img" src="{$goods.goods_images|thumb=176}"></a>
+                                    <div class="cart_cpx">
+                                        <p class="title_ text_line_2"><a style="color: #999" href="/goods?id={$goods.goods_sku_id}">{$goods.goods_name}</a></p>
+                                        <span class="rmb">￥ {$goods.goods_price}</span>
+                                        <div class="color">{$goods.goods_sku_name}<span> x {$goods.goods_num}</span></div>
+                                    </div>
+                                </div>
+                            {/volist}
+                            <!--备注留言-->
+                            <div class="beizhu">
+                                <span>备注</span>
+                                <textarea name="data[{$i-1}][remark]" rows="" cols="" placeholder="请填写留言或备注，不超过100字……" maxlength="100"></textarea>
+                            </div>
+                            <div class="fu_xx">
+                                <span class="lleft">商品金额</span>
+                                <span class="rright">￥ <span class="shop-goods-amount">{:number_format($vo.shop.goods_amount, '2', '.', '')}</span></span>
+                            </div>
+                            <div class="fu_xx">
+                                <span class="lleft">运费</span>
+                                <span class="rright">￥ <span class="shop-express-amount">{:number_format($vo.shop.express_amount, '2', '.', '')}</span></span>
+                            </div>
+                            <!--备注留言end-->
+                            <div class="main100 fu_rmb">
+                                <div class="s">小计：<span class="cred">￥ <span class="shop-amount">{:number_format($vo.shop.amount, '2', '.', '')}</span></span></div>
+                                <span class="s_text">共 {$vo.shop.goods_num} 件商品</span>
+                                <div class="main100">
+                                    <span class="rright">购物积分抵扣比例 <a class="cred"> {$vo.shop.shopping_score_multi}%</a>，即最多使用 <a class="cred"> {$vo.shop.shopping_score} </a> 购物积分</span>
+                                </div>
+                                <div class="main100">
+                                    <span class="icon icon-message pull-right ml10 rfs18 text_blue" date-msg="1、使用购物积分抵扣部分无积分赠送。<br />2、运费无积分赠送。"></span>
+                                    <span class="rright">最多可赠送 <a class="cred"> {$vo.shop.score} </a> 银积分</span>
+                                </div>
+                            </div>
+                            <!---->
+                            <!--优惠卷-->
+                            <div class="main100 fuk_nav">
+                                <span class="lleft">优惠券</span>
+                                <span class="rright">无可用优惠券</span>
+                                <input type="hidden" name="data[{$i-1}][coupon]" value="">
+                            </div>
+                            <div class="main100 fuk_nav">
+                                <span class="lleft">发货方式</span>
+                                <span data-ems="{$vo.shop.express_ems_amount ? : 0}" data-express="{$vo.shop.express_amount ? : 0}" class="rright btn-choose-express-type">快递</span>
+                                <input class="btn-choose-express-type-input" type="hidden" name="data[{$i-1}][express_type]" value="1">
+                                <input type="hidden" name="data[{$i-1}][express_id]" value="1">
+                            </div>
+                            <input type="hidden" name="data[{$i-1}][shop_id]" value="{$vo.shop.shop_id}">
+                            <input type="hidden" name="data[{$i-1}][seller_user_id]" value="{$vo.shop.seller_user_id}">
+                            <input type="hidden" name="data[{$i-1}][cart_ids]" value="{$vo.shop.cart_ids}">
+                        </li>
+                    {/volist}
+                </ul>
+            {/eq}
+        </div>
+    </form>
+</div>
+<!--付款底部-->
+{eq name="data.code" value="20000"}
+<div class="fu_bot">
+    <div class="">
+        共<span class="cred">{$data.data.goods_style_num}</span>款商品,
+        合计<span class="cred total-amount">{:number_format($data.data.amount, '2', '.', '')}</span>元,
+        赠送积分<span class="cred">{$data.data.score}</span>分
+    </div>
+    <span class="btn btn-submit">确认订单</span>
+</div>
+{/eq}
+{/block}

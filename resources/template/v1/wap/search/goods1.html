@@ -1,0 +1,116 @@
+{extend name="public:base" /}
+
+{block name="page"}
+<!-- 顶部标题栏 -->
+<header class="bar bar-nav bg_white">
+    <a class="icon icon_common pull-left r12 icon_back back" style="margin-top:.6rem"></a>
+    <h1 class="title home_title">
+        <div class="search-input">
+            <label class="icon icon-search" for="search"></label>
+            <input class="bg_f8" type="search" id='search' placeholder='输入关键字搜索产品'/>
+            <a href="javascript:;" class="icon icon_common pull-right r10 icon_fork"></a>
+        </div>
+    </h1>
+     <a class="pull-right rfs14 text_55 btn-search" style="margin-top:.5rem">搜索</a>
+    <!--<a class="icon icon-cart pull-right text_77"></a>-->
+</header>
+
+
+<!-- 这里是页面内容区 -->
+<div class="content bg_f8 pull-to-refresh-content infinite-scroll infinite-scroll-bottom" data-ptr-distance="50">
+    {include file="public:refresh" /}
+    <input type="hidden" name="pathinfo" id="pathinfo" value="{$pathinfo}">
+    <div class="clearfix search_top_ic order-box">
+        <!--search_ic_1-->
+        <div data-url="{$order['default']}" class="col_4 rfs14 order-tab {$active['default']}">
+            综合
+            <div class="mask_page_smg dn" style="display: none">
+                <div class="solid_b rpd10 rfs14 active">综合</div>
+                <div class="solid_b rpd10 rfs14">最新</div>
+            </div>
+        </div>
+        <!--search_ic_1-->
+        <div class="col_4 rfs14 order-tab {$active['sales']}" data-url="{$order['sales']}">
+            销量
+            <div class="mask_page_smg dn" style="display: none">
+                <div class="solid_b rpd10 rfs14 active">全部促销</div>
+                <div class="solid_b rpd10 rfs14">限时促销</div>
+                <div class="solid_b rpd10 rfs14">满减</div>
+                <div class="solid_b rpd10 rfs14">满赠</div>
+            </div>
+        </div>
+        <div class="col_4 rfs14 order-tab {$active['price']}" data-url="{$order['price']}">价格</div>
+        <div class="col_4 search_ic_2 open-panel" data-panel=".panel-right1">筛选</div>
+    </div>
+    <div class="clearfix search_memory rmb10" style="display: none">
+        <a class="pull-left rmb5" href="javascript:;">清风</a>
+        <a class="pull-left rmb5" href="javascript:;">花弄影</a>
+        <a class="pull-left rmb5" href="javascript:;">好家风</a>
+        <a class="pull-left rmb5" href="javascript:;">其他</a>
+    </div>
+    <!-- 列表 -->
+    <div class="bg_white" id="search-goods-list" data-page="1" data-request="1">
+        <goods-list></goods-list>
+        <!--产品end-->
+        <!-- 加载提示符 -->
+        <div class="infinite-scroll-preloader">
+            <div class="preloader"></div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- 页面内容区到此为止 -->
+</div>
+
+<div class="panel panel-right panel-right1 panel-cover panel_set">
+    <form data-url="{$url}">
+    <div class="solid_b rpd10" style="display: none;">
+        <span class="rfs14 text_77">品牌</span>
+        <div class="clearfix rmt10">
+            <a class="search_fast active">清风</a>
+            <a class="search_fast">vinda维达</a>
+            <a class="search_fast">好家风</a>
+            <a class="search_fast">花弄影</a>
+            <a class="search_fast">其他</a>
+        </div>
+    </div>
+    <div class="solid_b rpd10" style="display: none;">
+        <span class="rfs14 text_77">类目</span>
+        <div class="clearfix rmt10">
+            <a class="search_fast">清风</a>
+            <a class="search_fast">vinda维达</a>
+            <a class="search_fast">好家风</a>
+            <a class="search_fast">花弄影</a>
+            <a class="search_fast">其他</a>
+        </div>
+    </div>
+    <div class="solid_b rpd10" style="display: none;">
+        <span class="rfs14 text_77">优惠信息</span>
+        <div class="clearfix rmt10">
+            <a class="search_fast">清风</a>
+            <a class="search_fast">vinda维达</a>
+            <a class="search_fast">好家风</a>
+            <a class="search_fast">花弄影</a>
+            <a class="search_fast">其他</a>
+        </div>
+    </div>
+    <div class="solid_b rpd10">
+        <span class="rfs14 text_77">价格区间</span>
+        <div class="clearfix rmt10">
+            <input class="search_input" name="price_min" type="number" value="" placeholder="最低价">
+            <span class="fl text_77 text-center db" style="width:1.5rem">-</span>
+            <input class="search_input" name="price_max" type="number" placeholder="最高价">
+        </div>
+    </div>
+
+    <div class="rpd10 search_b_b">
+        <div class="row">
+            <div class="col-50"><a href="javascript:;" class="button button-danger close-panel btn-reset-filter">重置</a></div>
+            <div class="col-50"><a href="javascript:;" class="button btn-filter button-fill button-danger close-panel">确定</a></div>
+        </div>
+    </div>
+    </form>
+</div>
+{/block}

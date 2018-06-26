@@ -1,0 +1,173 @@
+{extend name="public:base" /}
+
+<!--主体内容-->
+{block name="content"}
+<form class="form-horizontal" id="form-add" action="/{$Request.controller}/add_save" onsubmit="return sendForm()">
+	<div class="tab-content">
+		<div class="note note-info">
+			<!-- 申请信息 -->
+			<div class="form-group">
+			<h4 style="color:red;">申请信息</h4>
+			<p style="margin:15px 5px;max-width:100%;word-wrap:break-word;word-break:break-all;"><b>购物积分比例：</b><a target="_blank" href="{$info.goods_apply_recommend1_content.score_multi|default=""}">{$info.goods_apply_recommend1_content.score_multi|default=""}</a></p>
+			<p style="margin:15px 5px;max-width:100%;word-wrap:break-word;word-break:break-all;"><b>天猫参考链接：</b><a target="_blank" href="{$info.goods_apply_recommend1_content.tmall_link|default=""}">{$info.goods_apply_recommend1_content.tmall_link|default=""}</a></p>
+			<p style="margin:15px 5px;max-width:100%;word-wrap:break-word;word-break:break-all;"><b>京东参考链接：</b><a target="_blank" href="{$info.goods_apply_recommend1_content.jd_link|default=""}">{$info.goods_apply_recommend1_content.jd_link|default=""}</a></p>
+			<p style="margin:15px 5px;max-width:100%;word-wrap:break-word;word-break:break-all;">
+				<b>报名精选理由：</b>
+				{$info.goods_apply_recommend1_content.reason|default=""}
+			</p>
+			<hr>
+			</div>
+			<!-- 商品资质信息 -->
+			<h4 style="color:red;">资质信息</h4>
+			<table class="table table-bordered table-hover valign-middle">
+				<thead>
+					<tr>
+						<th nowrap="">需要的资质</th>
+						<th nowrap="">资质类型</th>
+						<th nowrap="">商品的资质</th>
+					</tr>
+				</thead>
+				<tbody>
+					{foreach name="GoodsQualificationsGroup" key="key" item="value"}
+						<tr>
+							<td >{$value.goods_qualifications_group_name}</td>
+							<td ><?php echo \mercury\constants\State::GOODS_QUALIFICATIONS_GROUP_TYPE_ARRAYS_NEW[$value['goods_qualifications_group_form_type']] ?? ''; ?></td>
+							<td style="word-wrap:break-word;word-break:break-all;">
+								<?php
+
+								$qualifications_id = $value['goods_qualifications_group_id'];
+								if ( isset($GoodsQualifications[$qualifications_id]) ) {
+									$qualifications = $GoodsQualifications[$qualifications_id]['qualifications_value'];
+									switch ($value['goods_qualifications_group_form_type']) {
+										case \mercury\constants\State::GOODS_QUALIFICATIONS_GROUP_TYPE_INPUT:
+											echo (string)array_shift($qualifications);
+											break;
+										case \mercury\constants\State::GOODS_QUALIFICATIONS_GROUP_TYPE_SELECT:
+											while($qualifications){
+												echo (string)array_shift($qualifications);
+											}
+											break;
+										case \mercury\constants\State::GOODS_QUALIFICATIONS_GROUP_TYPE_CHECKBOX:
+											while($qualifications){
+												echo (string)array_shift($qualifications) . '<br>';
+											}
+											break;
+										case \mercury\constants\State::GOODS_QUALIFICATIONS_GROUP_TYPE_TEXTAREA:
+											echo str_replace(PHP_EOL, '<br>', (string)array_shift($qualifications));
+											break;
+										case \mercury\constants\State::GOODS_QUALIFICATIONS_GROUP_TYPE_UPLOAD_IMG:
+											echo '<a class="image-zoom" href="' . \app\common\traits\F::getImages($qualifications[0] ?? '') . '">';
+											echo '<img style="max-height:100px;max-width:100px;" src="' . \app\common\traits\F::getImages($qualifications[0] ?? '') . '">';
+											echo '</a>';
+											break;
+										default:
+											echo '';
+											break;
+									}
+								}
+								?>
+							</td>
+						</tr>
+					{/foreach}
+				</tbody>
+			</table>
+			<p></p>
+			<?php if($info['goods_apply_recommend1_is_audit'] == 0){ ?>
+			<h4 style="color:red;">审核操作</h4>
+		   	<?php
+		   		buildform(array(
+					'field'		=>array(
+						array(
+							'formtype'		=> 'radio',
+							'label'			=> '是否通过',
+							'name'			=> 'goods_apply_recommend1_audit_pass',
+							'field'			=> [0,1],
+							'data'			=> [[0,'不通过'],[1,'通过']],
+							'value'			=> 0,
+						),
+						array(
+							'formtype'		=> 'textarea',
+							'label'			=> '审核备注',
+							'name'			=> 'goods_apply_recommend1_audit_content',
+						),
+						array(
+							'formtype'		=> 'hidden',
+							'name'			=> 'goods_apply_recommend1_id',
+							'value'			=> $info['goods_apply_recommend1_id'] ?? 0,
+						),
+						array(
+							'formtype'		=> 'button',
+							'btns'			=> [['提交','btn btn-danger btn-150px audit','button']],
+						),
+					),
+				));
+		   	?>
+		   	<?php } ?>
+			<!-- 审核记录 -->
+			<h4 style="color:red;">审核记录</h4>
+			<table class="table table-bordered table-hover valign-middle">
+				<thead>
+					<tr>
+						<th nowrap="">审核时间</th>
+						<th nowrap="">是否通过</th>
+						<th nowrap="">审核备注</th>
+					</tr>
+				</thead>
+				<tbody>
+					{foreach name="list" key="key" item="value"}
+						<tr>
+							<td>{$value.goods_apply_recommend1_audit_create_time}</td>
+							<td>{$value.goods_apply_recommend1_audit_pass ? '<span style="color: blue">是</span>' : '<span style="color: red">否</span>'}</td>
+							<td style="word-wrap:break-word;word-break:break-all;">
+								{php}echo str_replace(PHP_EOL, '<br>', $value['goods_apply_recommend1_audit_content']);{/php}
+							</td>
+						</tr>
+					{/foreach}
+				</tbody>
+			</table>
+		</div>
+	</div>
+	
+	
+</form>
+{/block}
+
+<!--脚本-->
+{block name="javascript"}
+<script>
+	// 复制链接
+	// $(function(){
+	// 	var clipboard = new Clipboard('.copy-href');
+	// 	clipboard.on('success', function(e) {
+	// 	    toast({code:1,msg:'复制成功'});
+	// 	    e.clearSelection();
+	// 	});
+	// 	clipboard.on('error', function(e) {
+	// 	    toast({msg:'复制失败，换浏览器试试'});
+	// 	});
+	// });
+	$(document).on('click', '.form-list .audit', function(){
+		// alert(1);
+		var form = $(this).closest('form');
+		var data = getFormJson(form);
+		if (data.goods_apply_recommend1_audit_pass == 0 && data.goods_apply_recommend1_audit_content == '' ) {
+			toast({msg:'审核备注不能为空！'});
+			return;
+		}
+		$.ajax({
+			type:'post',
+			url:'/Goodsapplyrecommend1/indexItemAuditSave',
+			data:data,
+			success:function(ret){
+				toast(ret);
+				if ( ret.code == 1 ) {
+					window.location.reload();
+				}
+			},
+			error:function(ret){
+				toast({msg:'请求出错'});
+			},
+		});
+	});
+</script>
+{/block}

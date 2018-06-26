@@ -1,0 +1,46 @@
+{extend name="public:base" /}
+
+{block name="page"}
+<input type="hidden" value={$headers0} id="headers0">
+<input type="hidden" value={$headers1} id="headers1">
+<!-- 标题栏 -->
+<header class="bar bar-nav wang">
+    <a class="l_return back"><img class="main100" src="/static/wap/images/reg/l_return1.png"></a>
+    <h1 class="title">个人注册</h1>
+</header>
+<!-- 这里是页面内容区 -->
+<div class="content">
+	<form action="" method="post">
+    <div class="wbor">
+		<span class="wborl">用户名</span>
+    	<input name="user_username" placeholder="6个字符以上中英文或数字组合">
+    </div>
+    <div class="wbor">
+        <span class="wborl">手机号码</span>
+        <input name="user_mobile" placeholder="请输入您的手机号码">
+        <a class="wbtn yan" data-space_time="{:config('register.code_space_time')}">获取验证码</a>
+    </div>
+    <div class="wbor">
+        <span class="wborl">验证码</span>
+        <input name="sms_code" placeholder="请输入手机短信验证码" maxlength="20">
+    </div>
+    <div class="wbor">
+		<span class="wborl">设置密码</span>
+    	<input name="user_password" type="password" placeholder="8 至20位英文数字或中文字符组合" maxlength="20">
+    </div>
+    <div class="wbor">
+		<span class="wborl">确认密码</span>
+    	<input name="re_user_password" type="password" placeholder="8 至20位英文数字或中文字符组合" maxlength="20">
+    </div>
+	<div class="wang_go">
+		<span class="xieyi dui">
+			阅读并接受<a href=":javascript:;" class="cred">《百望平台用户注册协议》</a>
+		</span>
+		<input type="button" id="register-btn" value="立即注册">
+		<!-- <a href="/user/registerCompany" class="g_ru">店铺会员注册入口</a> -->
+	</div>
+    </form>
+</div>
+<!-- 默认必须要执行$.init(),实际业务里一般不会在HTML文档里执行，通常是在业务页面代码的最后执行 -->
+{/block}
+

@@ -1,0 +1,117 @@
+{extend name="public:base" /}
+{block name="page"}
+<!-- 标题栏 -->
+<header class="bar bar-nav bbai ">
+    <a class="l_return back"><img class="main100" src="/static/wap/images/reg/l_return1.png"></a>
+    <h1 class="title">售后详情</h1>
+</header>
+
+<!-- 这里是页面内容区 -->
+<div class="content cart_main pull-to-refresh-content" data-ptr-distance="55">
+    {eq name="data.code" value="20000"}
+    {include file="public:refresh" /}
+    <!--购物车内容-->
+    <div class="main100">
+        <!--购物车产品-->
+        <div class="cart_cp">
+            {notempty name="$data.data.orders_service_next_run_time"}
+            <div class="tishi">{$data.data.orders_service_next_run_time}</div>
+            {/notempty}
+            <!---->
+            <div class="main100 cart_newcp">
+                <div class="tabs">
+                    <!--列表1-->
+                    <div class="tab active">
+                        <!--产品-->
+                        <div class="main100 bor5px">
+                            <div class="shou_title">售后单号：{$data.data.orders_service_no}</div>
+                            <div class="li_main">
+                                <a data-no-cache="true" href="/goods?id={$data.data.OrdersGoods.goods_sku_id}">
+                                    <img class="img" src="{$data.data.OrdersGoods.goods_images}">
+                                </a>
+                                <div class="cart_cpx">
+                                    <p class="title_ text_line_2">
+                                        <a data-no-cache="true" style="color: #999;" href="/goods?id={$data.data.OrdersGoods.goods_sku_id}">
+                                            {$data.data.OrdersGoods.goods_name}
+                                        </a>
+                                    </p>
+                                    <span class="rmb">￥ {$data.data.OrdersGoods.orders_goods_amount}</span>
+                                    <div class="color">
+                                        {$data.data.OrdersGoods.goods_sku_name}
+                                        <span>x {$data.data.OrdersGoods.orders_goods_num}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--商品总金额2-->
+                            <ul class="main100 order_rmb2">
+                                <li class="main100">
+                                    <span class="lleft h999">申请售后数量：</span>
+                                    <span class="rright h999">{$data.data.orders_service_num}</span>
+                                </li>
+                            </ul>
+                            <!---->
+                            <div class="main100 bbai order_hot list2m">
+                                <span class="lleft f7 h666">当前状态</span>
+                                <span class="rright f65 h666">{$data.data.orders_service_state_name}</span>
+                            </div>
+                            <div class="main100 bbai order_hot list2m">
+                                <span class="lleft f7 h666">申请日期</span>
+                                <span class="rright f65 h666">{$data.data.orders_service_create_time}</span>
+                            </div>
+                        </div>
+                        <!--产品end-->
+                    </div>
+                </div>
+                <!---->
+            </div>
+        </div>
+        <!--联系商家-->
+        {include file="service:stateDetail" /}
+        {notempty name="data.data.OrdersServiceAddress"}
+            <div class="order_shop main100  bbai m5px ">
+                <span class="lleft" style="background: none">&nbsp;</span>
+                {volist name="data.data.OrdersServiceAddress" id="vo"}
+                        {eq name="key" value="0"}
+                            {gt name="vo.express_company_id" value="0"}
+                                <a data-no-cache="true" href="/service/logistics?service_no={$data.data.orders_service_no}&type=buyer" class="rright h999">买家物流信息</a>
+                            {else /}
+                                <span class="rright h999">未发货</span>
+                            {/gt}
+                        {else /}
+                            {gt name="vo.express_company_id" value="0"}
+                                    <a data-no-cache="true" href="/service/logistics?service_no={$data.data.orders_service_no}&type=seller" class="rright h999">商家物流信息</a>
+                            {else /}
+                                <span class="rright h999">未发货</span>
+                            {/gt}
+                        {/eq}
+                {/volist}
+            </div>
+        {/notempty}
+        <!--退款日志-->
+        <div class="order_hot s bbai h666 list2m">售后日志</div>
+        <ul class="main100 bbai rizhi">
+            {volist name="data.data.OrdersServiceLogs" id="vo"}
+            <li class="pad75">
+                <div class="main100 m5px">
+                    <span class="lleft f65 h666">{$vo.service_logs_title}</span>
+                    <span class="rright f6 h999">{$vo.service_logs_create_time}</span>
+                </div>
+                <div class="main100 h999 f6">{$vo.service_logs_remark}</div>
+                {notempty name='vo.service_logs_images'}
+                <div class="bg_white">
+                    <div class="clearfix mg5">
+                        {volist name='vo.service_logs_images' id='images'}
+                        <div class="camera_img amg"><img src="{$images}"></div>
+                        {/volist}
+                    </div>
+                </div>
+                {/notempty}
+            </li>
+            {/volist}
+        </ul>
+    </div>
+    {/eq}
+    <!--购物车内容end-->
+</div>
+<!-- 这里是页面内容区end -->
+{/block}

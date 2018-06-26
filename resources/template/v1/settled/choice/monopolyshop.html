@@ -1,0 +1,136 @@
+<table class="table solid_all  table_dashed tr12 table12  table-center mb0 is_brand1_{$key}" {present name="val.is_brand"}{eq name="val.is_brand" value="2"} style="display: none;" {/eq}{/present}>
+    <thead class=" bg-f5 ">
+    <tr>
+        <th class="small_xs ">资质名称</th>
+        <th class="small_xs ">描述</th>
+        <th class="small_xs ">资质图片</th>
+        <th class="small_xs ">操作</th>
+    </tr>
+    </thead>
+    <tbody class="td-pd14">
+
+    <tr>
+        <td class="solid_all">{$trademark_article.data.shop_article_title}</td>
+        <td class="solid_all">
+            <p class="pl20 pr20 text-left">
+                {$trademark_article.data.shop_article_content}<a href="{$trademark_article.data.shop_article_images}" class="image-zoom">(样图)</a>
+            </p>
+        </td>
+        <td class="solid_all">
+            <a class="trademark_img{$key}-href image-zoom" href="{notempty name="val.trademark"}{$image_domain}{$val.trademark}{else}/static/web/images/123.jpg{/notempty}">
+            <img class=" radius4px mr8 trademark_img{$key}" style="height:72px;width:72px;" src="{notempty name="val.trademark"}{$image_domain}{$val.trademark}{else}/static/web/images/123.jpg{/notempty}">
+            </a>
+        </td>
+        <td class="re">
+            <input type="hidden" name="brand[{$key}][trademark]" value="{notempty name="val.trademark"}{$val.trademark}{else}/static/web/images/123.jpg{/notempty}" class="trademark{$key}">
+            <a href="javascript:;" class="color-blue" onclick="triggerUploadImages('.trademark{$key}','.trademark_img{$key}',false,{uploadImagesBaseZoomEle:'.trademark_img{$key}-href'})">上传图片</a>
+        </td>
+    </tr>
+    <tr>
+        <td class="solid_all">{$private_authorization_article.data.shop_article_title}</td>
+        <td class="solid_all">
+            <p class="pl20 pr20 text-left">
+                {$private_authorization_article.data.shop_article_content}
+                <a href="{$private_authorization_article.data.shop_article_images}" class="image-zoom">(样图)</a>
+                <br>
+                点此下载：
+                <a href="#" class="color-blue">中文版独占授权书模板。</a><br>点此下载：
+                <a href="#" class="color-blue">英文版独占授权书模板</a><br>
+            </p>
+        </td>
+        <td class="solid_all">
+            <a class="private_authorization_img{$key}-href image-zoom" href="{notempty name="val.private_authorization"}{$image_domain}{$val.private_authorization}{else}/static/web/images/123.jpg{/notempty}">
+            <img class=" radius4px mr8 private_authorization_img{$key}" style="height:72px;width:72px;" src="{notempty name="val.private_authorization"}{$image_domain}{$val.private_authorization}{else}/static/web/images/123.jpg{/notempty}">
+            </a>
+        </td>
+        <td class="re">
+            <input type="hidden" name="brand[{$key}][private_authorization]" value="{notempty name="val.private_authorization"}{$val.private_authorization}{else}{/notempty}" class="private_authorization{$key}">
+            <a href="javascript:;" class="color-blue" onclick="triggerUploadImages('.private_authorization{$key}','.private_authorization_img{$key}',false,{uploadImagesBaseZoomEle:'.private_authorization_img{$key}-href'})">上传图片</a>
+        </td>
+    </tr>
+    <tr>
+        <td class="solid_all">{$authorization_article.data.shop_article_title}</td>
+        <td class="solid_all">
+            <p class="pl20 pr20 text-left text-center">
+                {$authorization_article.data.shop_article_content}<a href="{$authorization_article.data.shop_article_images}" class="image-zoom">(样图)</a>
+            </p>
+        </td>
+        <td class="solid_all">
+            <a class="authorization_img{$key}-href image-zoom" href="{notempty name="val.authorization"}{$image_domain}{$val.authorization}{else}/static/web/images/123.jpg{/notempty}">
+            <img class=" radius4px mr8 authorization_img{$key}" style="height:72px;width:72px;" src="{notempty name="val.authorization"}{$image_domain}{$val.authorization}{else}/static/web/images/123.jpg{/notempty}">
+            </a>
+        </td>
+        <td class="re">
+            <input type="hidden" name="brand[{$key}][authorization]" value="{notempty name="val.authorization"}{$val.authorization}{/notempty}" class="authorization{$key}">
+            <a href="javascript:;" class="color-blue" onclick="triggerUploadImages('.authorization{$key}','.authorization_img{$key}',false,{uploadImagesBaseZoomEle:'.authorization_img{$key}-href'})">上传图片</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<table class="table solid_all  table_dashed tr12 table12  table-center mb0 is_brand2_{$key}" {present name="val.is_brand"}{eq name="val.is_brand" value="1"} style="display: none;" {/eq}{else/}style="display: none;"{/present}>
+    <thead class=" bg-f5 ">
+    <tr>
+        <th class="small_xs ">资质名称</th>
+        <th class="small_xs ">描述</th>
+        <th class="small_xs ">资质图片</th>
+        <th class="small_xs ">操作</th>
+    </tr>
+    </thead>
+    <tbody class="td-pd14">
+
+    <tr>
+        <td class="solid_all">{$trademark_article.data.shop_article_title}</td>
+        <td class="solid_all">
+            <p class="pl20 pr20 text-left">
+                {$trademark_article.data.shop_article_content}<a href="{$trademark_article.data.shop_article_images}" class="image-zoom">(样图)</a>
+            </p>
+        </td>
+        <td class="solid_all">
+            <a class="trademark_img{$key}-href image-zoom" href="{notempty name="val.trademark"}{$image_domain}{$val.trademark}{else}/static/web/images/123.jpg{/notempty}">
+            <img class=" radius4px mr8 trademark_img{$key}" style="height:72px;width:72px;" src="{notempty name="val.trademark"}{$image_domain}{$val.trademark}{else}/static/web/images/123.jpg{/notempty}">
+            </a>
+        </td>
+        <td class="re">
+            <input type="hidden" name="brand[{$key}][trademark]" value="{notempty name="val.trademark"}{$val.trademark}{/notempty}" class="trademark{$key}">
+            <a href="javascript:;" class="color-blue" onclick="triggerUploadImages('.trademark{$key}','.trademark_img{$key}',false,{uploadImagesBaseZoomEle:'.trademark_img{$key}-href'})">上传图片</a>
+        </td>
+    </tr>
+    <tr>
+        <td class="solid_all">{$brand_authorization_article.data.shop_article_title}</td>
+        <td class="solid_all">
+            <p class="pl20 pr20 text-left">
+                {$brand_authorization_article.data.shop_article_content}<a href="{$brand_authorization_article.data.shop_article_images}" class="image-zoom">(样图)</a>
+            </p>
+        </td>
+        <td class="solid_all">
+            <a class="brand_authorization_img{$key}-href image-zoom" href="{notempty name="val.brand_authorization"}{$image_domain}{$val.brand_authorization}{else}/static/web/images/123.jpg{/notempty}">
+
+            <img class=" radius4px mr8 brand_authorization_img{$key}" style="height:72px;width:72px;" src="{notempty name="val.brand_authorization"}{$image_domain}{$val.brand_authorization}{else}/static/web/images/123.jpg{/notempty}">
+            </a>
+        </td>
+        <td class="re">
+            <input type="hidden" name="brand[{$key}][brand_authorization]" value="{notempty name="val.brand_authorization"}{$val.brand_authorization}{/notempty}" class="brand_authorization{$key}">
+            <a href="javascript:;" class="color-blue" onclick="triggerUploadImages('.brand_authorization{$key}','.brand_authorization_img{$key}',false,{uploadImagesBaseZoomEle:'.brand_authorization_img{$key}-href'})">上传图片</a>
+        </td>
+    </tr>
+    <tr>
+        <td class="solid_all">{$authorization_article.data.shop_article_title}</td>
+        <td class="solid_all">
+            <p class="pl20 pr20 text-left text-center">
+                {$authorization_article.data.shop_article_content}<a href="{$authorization_article.data.shop_article_images}" class="image-zoom">(样图)</a>
+            </p>
+        </td>
+        <td class="solid_all">
+            <a class="authorization_img{$key}-href image-zoom" href="{notempty name="val.authorization"}{$image_domain}{$val.authorization}{else}/static/web/images/123.jpg{/notempty}">
+
+            <img class=" radius4px mr8 authorization_img{$key}" style="height:72px;width:72px;" src="{notempty name="val.authorization"}{$image_domain}{$val.authorization}{else}/static/web/images/123.jpg{/notempty}">
+            </a>
+        </td>
+        <td class="re">
+            <input type="hidden" name="brand[{$key}][authorization]" value="{notempty name="val.authorization"}{$val.authorization}{/notempty}" class="authorization{$key}">
+            <a href="javascript:;" class="color-blue" onclick="triggerUploadImages('.authorization{$key}','.authorization_img{$key}',false,{uploadImagesBaseZoomEle:'.authorization_img{$key}-href'})">上传图片</a>
+        </td>
+    </tr>
+    </tbody>
+</table>

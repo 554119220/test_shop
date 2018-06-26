@@ -1,0 +1,237 @@
+{extend name="public:base" /}
+{block name="page"}
+<!-- 右边内容 -->
+<div class="tab_col pd10 pb0">
+    <input class="upload-file" style="display: none;" id="upload-images-base" type="file" onchange="uploadImagesBase();">
+    <div class="tab_row tab_row_set mb10 mt10">
+        <div class="tab_col bg_white" style="width:36%">
+            <div class="bg-red-thunderbird bg-font-red-thunderbird text-center fs16 pd10">店铺信息</div>
+            <div class="pd15 user_info_set">
+                <div class="user_info_left re radius4px over">
+                    <img width="120" src="{$Think.session.shop.shop_logo|thumb=120}">
+                    <a class="user_icon_set" href="{:url('/setting')}">设置图标</a>
+                </div>
+                <div class="user_info_right">
+                    <p class="line24 mg0">店铺名称：{$Think.session.shop.shop_name ?? '-'}</p>
+                    <p class="line24 mg0">店铺类型：{$Think.session.shop.shop_type_name ?? '-'}</p>
+                    <p class="line24 mg0 text_over">主营类目：{foreach name="Think.session.shop.goods_category_ids_name" item="val"}{$val.data.category_name ?? '--'}&nbsp;{/foreach}</p>
+                    <p class="line24 mg0">基础积分：
+                        <span class="color-red1">{$Think.session.shop.shop_basis_score}</span> 分
+                        [<span class="color-red1">积分扣完后店铺将被强制关闭</span>]
+                    </p>
+                    <p class="line24 mg0"><a href="{:url('/setting/index')}">店铺设置</a>丨<a class="color-blue copyShop" data-clipboard-text="{$shop.shop_url}&share_code={:cookie('SHARE_CODE')}" href="javascript:;">复制店铺链接</a></p>
+                </div>
+            </div>
+        </div>
+        <!--<div class="tab_col col_blank"></div>-->
+        <!--<div class="tab_col col_blank"></div>-->
+        <div class="tab_col bg_white hide" style="width:10%">
+            <div class="mg15">
+                <div class="title_set">账户资产</div>
+                <div class="ml15 mt10">
+                    <p class="mg0 line24">账户余额：<span class="color-red1">￥ 0.00 元</span></p>
+                    <p class="mg0 line24">待结算款：<span class="color-red1 mr15">￥ 0.00 元</span> <a class="text_blue hide" href="javascript:;">详情</a></p>
+                    <p class="mg0 line24">银行卡：（<span class="color-red1">0</span>）</p>
+                    <p class="mg0 line24 hide">
+                        <a class="mr15" href="javascript:;">充值</a>
+                        <a class="mr15" href="javascript:;">提现</a>
+                        <a class="mr15" href="javascript:;">转账</a>
+                        <a class="mr15" href="javascript:;">明细</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="tab_col col_blank"></div>
+        <div class="tab_col bg_white" style="width:20%">
+            <div class="mg15">
+                <div class="title_set">订单管理</div>
+                <div class="ml15 mt10">
+                    <p class="mg0 line24"><a href="/orders?state=2">待发货：（<span class="color-red1" id="wait-ship">0</span>）</a></p>
+                    <p class="mg0 line24"><a href="/orders?state=3">待收货：（<span class="color-red1" id="wait-receive">0</span>）</a></p>
+                    <p class="mg0 line24"><a href="/refund?state=seller">退款中：（<span class="color-red1" id="wait-refund">0</span>）</a></p>
+                    <p class="mg0 line24"><a href="/service?state=seller">售后中：（<span class="color-red1" id="wait-service">0</span>）</a></p>
+                </div>
+            </div>
+        </div>
+        <div class="tab_col col_blank"></div>
+        <div class="tab_col bg_white" style="width:20%">
+            <div class="mg15">
+                <div class="title_set">商品管理</div>
+                <div class="ml15 mt10">
+                    <p class="mg0 line24"><a href="/goods?state=1">销售中：（<span class="goods-statistics-state1 color-red1"></span>）</a></p>
+                    <p class="mg0 line24"><a href="/goods?state=2">待上架：（<span class="goods-statistics-state2 color-red1"></span>）</a></p>
+                    <p class="mg0 line24"><a href="/goods?recommend=1">橱窗中：（<span class="goods-statistics-recommend1 color-red1"></span>）</a></p>
+                    <p class="mg0 line24"><a href="/goods?state=3">违规中：（<span class="goods-statistics-violation color-red1"></span>）</a></p>
+                </div>
+            </div>
+        </div>
+        <div class="tab_col col_blank"></div>
+        <div class="tab_col bg_white" style="width:20%">
+            <div class="mg15">
+                <div class="title_set">违规记录</div>
+                <div class="ml15 mt10">
+                    <p class="mg0 line24"><a href="/orders?state=3">一般违规产品数量：（<span class="color-red1 goods-statistics-state3"></span>）</a></p>
+                    <p class="mg0 line24"><a href="/orders?state=3">严重违规产品数量：（<span class="color-red1 goods-statistics-state4"></span>）</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tab_row tab_row_set">
+        <div class="tab_col bg_white" style="width:25%">
+            <div class="mg15">
+                <div class="title_set">昨天订单数据</div>
+                <div class="ml15 mt10">
+                    <p class="mg0 line24"><a href="javascript:;">买家数：（<span class="color-red1" id="buyer_num">0</span>）</a></p>
+                    <p class="mg0 line24"><a href="javascript:;">订单数：（<span class="color-red1" id="orders_num">0</span>）</a></p>
+                    <p class="mg0 line24"><a href="javascript:;">销售额：（<span class="color-red1" id="orders_sales_amount">0.00</span>）</a></p>
+                    <p class="mg0 line24"><a href="javascript:;">支付金额：（<span class="color-red1" id="orders_pay_amount">0.00</span>）</a></p>
+                    <p class="mg0 line24"><a href="javascript:;">收货金额：（<span class="color-red1" id="orders_receive_amount">0.00</span>）</a></p>
+                    <p class="mg0 line24"><a href="javascript:;">收货数量：（<span class="color-red1" id="orders_receive_num">0</span>）</a></p>
+                    <p class="mg0 line24"><a href="javascript:;">支付订单数：（<span class="color-red1" id="orders_pay_num">0</span>）</a></p>
+                </div>
+            </div>
+        </div>
+        <div class="tab_col col_blank"></div>
+        <div class="tab_col bg_white" style="width:25%">
+            <div class="mg15">
+                <div class="title_set">昨天退款数据</div>
+                <div class="ml15 mt10">
+                    <p class="mg0 line24"><a href="javascript:;">申请金额：（<span class="color-red1" id="refund_amount">0.00</span>）</a></p>
+                    <p class="mg0 line24"><a href="javascript:;">申请退款数量：（<span class="color-red1" id="refund_num">0</span>）</a></p>
+                    <p class="mg0 line24"><a href="javascript:;">申请商品数量：（<span class="color-red1" id="refund_goods_num">0</span>）</a></p>
+                    <p class="mg0 line24"><a href="javascript:;">退款完成数量：（<span class="color-red1" id="refund_complete_num">0</span>）</a></p>
+                    <p class="mg0 line24"><a href="javascript:;">退款完成金额：（<span class="color-red1" id="refund_complete_amount">0.00</span>）</a></p>
+                </div>
+            </div>
+        </div>
+        <div class="tab_col col_blank"></div>
+        <div class="tab_col bg_white" style="width:25%">
+            <div class="mg15">
+                <div class="title_set">昨天售后数据</div>
+                <div class="ml15 mt10">
+                    <p class="mg0 line24"><a href="javascript:;">申请售后数量：（<span class="color-red1" id="service_num">0</span>）</a></p>
+                    <p class="mg0 line24"><a href="javascript:;">申请商品数量：（<span class="color-red1" id="service_goods_num">0</span>）</a></p>
+                    <p class="mg0 line24"><a href="javascript:;">售后完成数量：（<span class="color-red1" id="service_complete_num">0</span>）</a></p>
+                </div>
+            </div>
+        </div>
+        <div class="tab_col col_blank"></div>
+        <div class="tab_col bg_white" style="width:25%">
+            <div class="mg15">
+                <div class="title_set">昨天评价数据</div>
+                <div class="ml15 mt10">
+                    <p class="mg0 line24"><a href="javascript:;">评价数量：（<span class="color-red1" id="comment_num">0</span>）</a></p>
+                    <p class="mg0 line24"><a href="javascript:;">好评数量：（<span class="color-red1" id="comment_good_num">0</span>）</a></p>
+                    <p class="mg0 line24"><a href="javascript:;">中评数量：（<span class="color-red1" id="comment_middle_num">0</span>）</a></p>
+                    <p class="mg0 line24"><a href="javascript:;">差评数量：（<span class="color-red1" id="comment_poor_num">0</span>）</a></p>
+                    <p class="mg0 line24"><a href="javascript:;">追评数量：（<span class="color-red1" id="comment_append_num">0</span>）</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt10 pd10 bg_white radius_5 mb0 h315" >
+        <div class="main100 fs16" >
+            <i class="redicon" style="    margin-top: 8px;margin-left: 4px;"></i>
+            商家服务
+        </div>
+        <div class="row ml15 pt30 pb30">
+            <div class="col-xs-2 maxw150">
+                <a href="/orders">
+                    <img src="/static/web/images/icon/service_01.png">
+                    <p class="mg0">订单管理</p>
+                </a>
+            </div>
+            <div class="col-xs-2 maxw150">
+                <a href="/service">
+                    <img src="/static/web/images/icon/service_02.png">
+                    <p class="mg0">售后管理</p>
+                </a>
+            </div>
+            <div class="col-xs-2 maxw150">
+                <a href="/refund">
+                    <img src="/static/web/images/icon/service_03.png">
+                    <p class="mg0">退款管理</p>
+                </a>
+            </div>
+        </div>
+    </div>
+</div><!-- 右边内容结束 -->
+{/block}
+{block name="script"}
+<script type="text/javascript">
+    // 复制店铺链接
+    $(function(){
+        var clipboard = new Clipboard('.copyShop');
+        clipboard.on('success', function(e) {
+            success('复制成功');
+            e.clearSelection();
+        });
+        clipboard.on('error', function(e) {
+            error('复制失败，换浏览器试试');
+        });
+    });
+    // 商品统计
+    $(function(){
+        apiPost({
+            data:{},
+            header:getHeader('headers0'),
+            success:function(ret){
+                if ( ret.code == 20000 ) {
+                    $('.goods-statistics-state1').html(ret.data.up);
+                    $('.goods-statistics-state2').html(ret.data.down);
+                    $('.goods-statistics-state3').html(ret.data.violation);
+                    $('.goods-statistics-state4').html(ret.data.very_violation);
+                    $('.goods-statistics-violation').html(ret.data.violation + ret.data.very_violation);
+                    $('.goods-statistics-recommend1').html(ret.data.recommend);
+                }
+            },
+        });
+        //  订单统计
+        apiPost({
+            header : getHeader('orders_total'),
+            data : {},
+            success : function (ret) {
+                if (ret.code === 20000) {
+                    $("#wait-ship").html(ret.data.wait_ship);
+                    $("#wait-receive").html(ret.data.wait_receive);
+                    $("#wait-refund").html(ret.data.refund);
+                    $("#wait-service").html(ret.data.service);
+                }
+            }
+        });
+        //  昨日数据统计
+        apiPost({
+            header : getHeader('shop_total'),
+            data : {},
+            success : function (ret) {
+                if (ret.code === 20000) {
+                    var d = ret.data;
+                    $("#orders_num").html(d.statistics_orders_num);
+                    $("#buyer_num").html(d.statistics_buyer_num);
+                    $("#orders_sales_amount").html(d.statistics_orders_sales_amount);
+                    $("#orders_pay_amount").html(d.statistics_orders_pay_amount);
+                    $("#orders_receive_amount").html(d.statistics_receive_amount);
+                    $("#orders_receive_num").html(d.statistics_receive_num);
+                    $("#orders_pay_num").html(d.statistics_orders_pay_num);
+                    $("#refund_amount").html(d.statistics_refund_amount);
+                    $("#refund_num").html(d.statistics_refund_num);
+                    $("#refund_goods_num").html(d.statistics_refund_goods_num);
+                    $("#refund_complete_num").html(d.statistics_refund_complete_num);
+                    $("#refund_complete_amount").html(d.statistics_refund_complete_amount);
+                    $("#service_num").html(d.statistics_service_num);
+                    $("#service_goods_num").html(d.statistics_service_goods_num);
+                    $("#service_complete_num").html(d.statistics_service_complete_num);
+                    $("#comment_num").html(d.statistics_comment_num);
+                    $("#comment_good_num").html(d.statistics_comment_good_num);
+                    $("#comment_middle_num").html(d.statistics_comment_middle_num);
+                    $("#comment_poor_num").html(d.statistics_comment_poor_num);
+                    $("#comment_append_num").html(d.statistics_comment_append_num);
+                }
+            }
+        })
+    });
+
+</script>
+{/block}

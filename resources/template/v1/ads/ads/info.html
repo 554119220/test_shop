@@ -1,0 +1,123 @@
+{extend name="public:base"}{/extend}
+{block name="content"}
+
+<div class="container-fluid bg_white">
+	<div class="container">
+		<div class="main100 bg_white pl15 pr15 radius4px">
+			<a type="button" class="btn red text_white pd7 pl25 pr25 mt13 fr mb15 fs12" href="javascript:window.history.go(-1);">返回</a>
+        	<table class="table solid_all table_dashed tr12 table12">
+	                <thead class="bg-f5">
+	                    <tr>
+	                        <th class="small_xs ">广告位名称</th>
+	                        <th class="small_xs ">广告位类型</th>
+	                        <th class="small_xs ">投放端</th>
+	                        <th class="small_xs ">位置数</th>
+	                        <th class="small_xs ">日单价</th>
+	                        <th class="small_xs ">示例图</th>
+	                        <th class="small_xs ">要求素材宽高</th>
+	                        <th class="small_xs ">描述</th>
+	                    </tr>
+	                </thead>
+	                <tbody>
+	                    <tr>
+	                        <td>{$info.position.ads_position_name}</td>
+	                        <td>{$info.position.ads_position_type_name}</td>
+	                        <td>{$info.position.ads_position_device_name}</td>
+	                        <td>{$info.position.ads_position_num}</td>
+	                        <td>{$info.position.ads_position_price}</td>
+	                        <td>
+	                        	<a class="image-zoom" href="{$info.position.ads_position_example_image}">
+	                        		<img class="radius4px w50" src="{$info.position.ads_position_example_image}?imageMogr2/thumbnail/200x200!">
+	                        	</a>
+	                        </td>
+	                        <td>{$info.position.ads_position_width}x{$info.position.ads_position_height}</td>
+	                        <td>{$info.position.ads_position_descript}</td>
+	                    </tr>
+	                </tbody>
+	            </table>
+		</div>
+	</div>
+	<!-- <hr> -->
+	<div class="container">
+		<div class="main100 bg_white pl15 pr15 radius4px">
+			<form id="form">
+				<!-- 位置选择 -->
+				<div class="main100  fs14 color666">选择位置(请先选择位置再填写广告订单)</div>
+				<div class="main100 over">
+					{php}for($i = 1; $i<=$info['position']['ads_position_num'];$i++){{/php}
+						{if condition="$i eq $info['ads_sort']"}
+							<a type="button" class="btn red text_white pd7 pl25 pr25 mt13 fl mr15 fs12" href="javascript:;">位置{$i}</a>
+						{else}
+							<a type="button" class="btn default pd7 pl25 pr25 mt13 fl mr15 fs12" href="javascript:;" >位置{$i}</a>
+						{/if}
+					{php}}{/php}
+				</div>
+				<!-- 广告标题 -->
+				<div class="main100 mb10 fs14 pt15">标题</div>
+				<div class="main100">
+					<input name="ads_title" readonly="true" placeholder="请输入广告标题" maxlength="30" class="main100 radius4px container-fluid line32 bor_img h34  mb10" value="{$info.ads_title}">
+				</div>
+				<!-- 广告副标题 -->
+				<div class="main100 mb10 fs14 pt15">副标题</div>
+				<div class="main100">
+					<input name="ads_sub_title" readonly="true" placeholder="请输入广告副标题" maxlength="30" class="main100 radius4px container-fluid line32 bor_img h34  mb10" value="{$info.ads_sub_title}">
+				</div>
+				<!-- 链接地址 -->
+				<div class="main100 mb10 fs14">投放链接</div>
+				<div class="main100">
+					<input name="ads_url" readonly="true" placeholder="请输入链接地址，可从商家中心复制店铺链接或商品链接" maxlength="255" class="main100 radius4px container-fluid line32 bor_img h34  mb10" value="{$info.ads_url}">
+				</div>
+				<!-- 描述 -->
+				<div class="main100 mb10 fs14">描述</div>
+				<textarea name="ads_descript" readonly="true" maxlength="255" class="main100 bor_img radius4px pd10 h70 mb15" placeholder="描述">{$info.ads_descript}</textarea>
+				<!-- 广告图 -->
+				<div class="main100 mb10 fs14 ">广告素材</div>
+				
+				<div class="main100 mb20 over">
+					<img class="pull-left bor_img radius4px ads_sucai_images" style="max-width: 300px;max-height: 300px;" src="{$info.ads_images}?imageMogr2/thumbnail/600x600!">
+				</div>
+				<!-- 投放时间段 -->
+				<div class="main100 fs14 color666">投放日期</div>
+				<div class="main100 over">
+			        <div class="row mb15 mt15" id="calendar-list">
+			        	<!-- 投放时间表 -->
+			        	{php}
+			        		$days = explode(',',$info['ads_days']);
+			        		foreach($days as $day){
+			        			echo '<span class="ml15">' . $day . '</span>';
+			        		}
+			        	{/php}
+			        </div>
+			    </div>
+			    <!-- 投放时间段 -->
+				<div class="main100 fs14 color666">订单状态：{$info.ads_state_name}</div>
+				
+			    <!-- 投放记录 -->
+				<div class="main100 over mb25 mt15">
+			        <h4>共<span class="totle_days_num color-red1">{$info.ads_days_nums}</span> 天，订单金额：<span class="totle_money color-red1">{$info.ads_money}</span></h4>
+			    </div>
+			</form>
+		</div>
+	</div>
+</div>
+{/block}
+{block name="js"}
+<script type="text/javascript">
+	$(function(){
+		// 日历
+		$('#calendar-list tbody td').on('click', function(){
+			// 已被使用 过期 今天 都不能选
+			if( ! $(this).hasClass('isuse') && ! $(this).hasClass('expire') && ! $(this).hasClass('today') && $(this).hasClass('hover') ){
+				if($(this).hasClass('active')){
+					$(this).removeClass('active');
+				}else{
+					$(this).addClass('active');
+				}
+			}
+		});
+		
+		
+		
+	});
+</script>
+{/block}

@@ -1,0 +1,81 @@
+{extend name="public:base" /}
+{block name="page"}
+<!-- 顶部标题栏 -->
+<header class="bar bar-nav bg_white">
+    <a class="icon icon_common pull-left r12 icon_back back" style="margin-top:.6rem"></a>
+    <h1 class="title">我的评价</h1>
+</header>
+<div class="content pull-to-refresh-content infinite-scroll infinite-scroll-bottom" data-ptr-distance="50">
+    <!-- 默认的下拉刷新层 -->
+    {include file="public:refresh" /}
+    {eq name="data.code" value="20000"}
+    {volist name="data.data.data" id="vo"}
+        <div class="bg_white rmb10">
+            <div class="solid_b rpd10"><!-- 首次评价 -->
+                <img class="pull-left shop_user" style="border-radius:0px" src="{$vo.sku.goods_images|thumb=88}">
+                <div class="clearfix rmb10">
+                    <p class="rfs12 text_77 mt0 rmb5 text_over">
+                        <span class="pull-right text_99 ml5">{$vo.goods_comment_create_time}</span>
+                        <a data-no-cache="true" class="text_77" href="/goods?id={$vo.goods_sku_id}">{$vo.sku.goods_name}</a>
+                    </p>
+                    {for start="0" end="$vo.fraction"}
+                    <img class="icon_love" src="/static/wap/images/icon/icon_love_a.png">
+                    {/for}
+                    {for start="0" end="$vo.fraction_poor"}
+                        <img class="icon_love" src="/static/wap/images/icon/icon_love.png">
+                    {/for}
+                    {if condition="$vo.goods_comment_is_change == 0 && $vo.goods_comment_is_effect == 0"}
+                        <a href="/comment/edit?id={$vo.goods_comment_id}" class="button button_small button-light pull-right mt-3 text_99">修改评价</a>
+                    {/if}
+                    {if condition="empty($vo['append']) && $vo.goods_comment_is_effect == 1"}
+                        <a href="/comment/append?id={$vo.goods_comment_id}" class="button button_small button-light pull-right mt-3 text_99 active">追加评价</a>
+                    {/if}
+                </div>
+                <div class="clearfix page_comment_img">
+                    {notempty name="vo.goods_comment_content.goods_comment_images"}
+                        {volist name="vo.goods_comment_content.goods_comment_images" id="images"}
+                            <img src="{$images|thumb=176}">
+                        {/volist}
+                    {/notempty}
+                </div>
+                <p class="mg0 rfs12 text_77">{$vo.goods_comment_content.goods_comment_content}</p>
+				{notempty name="vo.goods_comment_content.goods_comment_reply_content"}
+				<div class="rmt10 manager_reply">
+					<p class="mg0 rfs12 text_77">商家回复：{$vo.goods_comment_content.goods_comment_reply_content}</p>
+				</div>
+                {/notempty}
+            </div>
+            {notempty name="vo.append"}
+            <div class="solid_b rpd10"><!-- 追加评价 -->
+                <p class="mt-5 rmb5 rfs14 text_red">追加评价
+                    <span class="pull-right text_99 ml5 text_77 rfs12">{$vo.append.goods_comment_create_time}</span>
+                </p>
+                {notempty name="vo.append.goods_comment_content.goods_comment_images"}
+                <div class="clearfix page_comment_img">
+                    {volist name="vo.append.goods_comment_content.goods_comment_images" id="images"}
+                    <img src="{$images|thumb=176}">
+                    {/volist}
+                </div>
+                {/notempty}
+                <p class="mg0 rfs12 text_77">{$vo.append.goods_comment_content.goods_comment_content}</p>
+				{notempty name="vo.goods_comment_content.goods_comment_reply_content"}
+					<div class="rmt10 manager_reply">
+						<p class="mg0 rfs12 text_77">商家回复：{$vo.goods_comment_content.goods_comment_reply_content}</p>
+					</div>
+				{/notempty}
+            </div>
+            {/notempty}
+        </div>
+    {/volist}
+    <div class="container" id="container" data-request="1" data-page="2">
+        <user-comment-list></user-comment-list>
+        <!-- 加载提示符 -->
+        <div class="infinite-scroll-preloader">
+            <div class="preloader"></div>
+        </div>
+    </div>
+    {else /}
+    {/eq}
+</div>
+<!-- 页面内容区到此为止 -->
+{/block}

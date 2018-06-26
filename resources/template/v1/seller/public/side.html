@@ -1,0 +1,34 @@
+<div class="tab_col bg_white" style="width:210px">
+    <!-- data-controller首字母请大写 -->
+    <div class="pd15 left_list_set tab-controller" data-controller="{:request()->controller()}">
+        <div class="title_set mb10">
+            <div class="mb10">交易管理</div>
+            <a data-controller="Orders" class="a-side" href="/orders">订单管理</a>
+            <div class="main100 hide">
+                <a class="list-btn">一级类目 <img class="pl2" src="/static/web/images/icon/botbtn.png"></a>
+                <div class="list-list">
+                    <a class="active marl10" href="javascript:;">二级类目</a>
+                    <a class="marl10" href="javascript:;">订单管理</a>
+                </div>
+                <a class="list-btn">一级类目 <img class="pl2" src="/static/web/images/icon/botbtn.png"></a>
+                <div class="list-list">
+                    <a class="active marl10" href="javascript:;">二级类目</a>
+                    <a class="marl10" href="javascript:;">订单管理</a>
+                </div>
+            </div>
+            <a data-controller="Comments" class="a-side" href="/comments">评价管理</a>
+            <a data-controller="Service" class="a-side" href="/service">售后管理</a>
+            <a data-controller="Refund" class="a-side" href="/refund">退款管理</a>
+        </div>
+        <div class="title_set mb10">
+            <div class="mb10">模板管理</div>
+            <a data-controller="Express" class="a-side" href="/express">运费模板</a>
+            <a data-controller="Package" class="a-side" href="/package">包装模板</a>
+            <a data-controller="Protection" class="a-side" href="/protection">售后模板</a>
+        </div>
+        <div class="title_set mb10">
+            <div class="mb10">客户服务</div>
+            <a data-controller="Address" class="a-side" href="/address">收货地址</a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,79 @@
+{extend name="public:base" /}
+{block name="page"}
+<!-- 顶部标题栏 -->
+<header class="bar bar-nav bg_white">
+    <a class="icon icon_common pull-left r12 icon_back back" style="margin-top:.6rem"></a>
+    <h1 class="title">  手机充值  </h1>
+    <a class="pull-right rfs12 text_55" style="margin-top:.65rem;display: none">充值记录</a>
+</header>
+
+<nav class="bar bar-tab bg_white buy_money" style="display: none">
+    <a class="tab-item external" href="javascript:;">
+        实付款：50.00元
+    </a>
+    <a class="tab-item external" href="javascript:;">
+        <span class="tab-label">确认支付</span>
+    </a>
+</nav>
+
+<div class="content bg_f8">
+    <div class="db text-center">
+        <img style="width:5rem;margin: 2rem 0 1rem" src="/static/wap/images/shop_no.png">
+        <p class="mg0 text_77 rfs16">即将开放</p>
+        <p class="mg0 text_99 rfs14">客官，<a class="text_red" href="/">去商城看看吧~</a></p>
+    </div>
+</div>
+
+<div class="content bg_f8" style="display: none">
+    <div class="buttons-tab rmb10 tab_set_red">
+        <a href="#tab1" class="tab-link rfs12 active button">话费充值</a>
+        <a href="#tab2" class="tab-link rfs12 button">流量充值</a>
+    </div>
+    <div class="tabs">
+        <div id="tab1" class="tab active">
+            <div class="rpd10 bg_white">
+                <div class="search-input number_recharge">
+                    <input class="bor_no" type="number" id="search" placeholder="请输入要充值的手机号码">
+                    <a class="icon icon_common pull-right r10 icon_fork"></a>
+                </div>
+            </div>
+            <div class="rpd10 text_red rfs12">号码归属的：号码为输入或不正确</div>
+            <div class="rpd10 rpt20 bg_white">
+                <div class="row">
+                    <div class="col-33 number_money active">50元</div>
+                    <div class="col-33 number_money">100元</div>
+                    <div class="col-33 number_money">150元</div>
+                    <div class="col-33 number_money">200元</div>
+                    <div class="col-33 number_money">300元</div>
+                </div>
+
+            </div>
+            <div class="rpd10 text_red bg_powder rfs12">50元 &nbsp; 赠送5000积分</div>
+        </div>
+        <div id="tab2" class="tab">
+            <div class="rpd10 bg_white">
+                <div class="search-input number_recharge">
+                    <input class="bor_no" type="number" id="search" placeholder="请输入要充值的手机号码">
+                    <a class="icon icon_common pull-right r10 icon_fork"></a>
+                </div>
+            </div>
+            <div class="rpd10 text_red rfs12">号码归属的：号码为输入或不正确</div>
+            <div class="rpd10 rpt20 bg_white">
+                <div class="row">
+                    <div class="col-33 number_money active">10M</div>
+                    <div class="col-33 number_money">30M</div>
+                    <div class="col-33 number_money">70M</div>
+                    <div class="col-33 number_money">100M</div>
+                    <div class="col-33 number_money">300M</div>
+                    <div class="col-33 number_money">500M</div>
+                    <div class="col-33 number_money">1G</div>
+                    <div class="col-33 number_money">5G</div>
+                    <div class="col-33 number_money">10G</div>
+                </div>
+
+            </div>
+            <div class="rpd10 text_red bg_powder rfs12">50元 &nbsp; 赠送5000积分</div>
+        </div>
+    </div>
+</div>
+{/block}

@@ -1,0 +1,85 @@
+{extend name="public:base" /}
+
+{block name="page"}
+<!-- 标题栏 -->
+    <header class="bar bar-nav bbai bor_none">
+        <a class="l_return back"><img class="main100" src="/static/wap/images/reg/l_return1.png"></a>
+        <h1 class="title">现金明细</h1>
+    </header>
+
+   
+
+    <!-- 这里是页面内容区 -->
+    <div class="content">
+        <div class="xj_title list2m bbai m5px row">
+            <div class="col-33">
+                <span>全部</span>
+            </div>
+            <div  class="col-33">
+                <span class="bott">转出</span>
+            </div>
+            <div  class="col-33">
+                <span class="bott">转出</span>
+            </div>
+            <!--转入 -->
+            <div class="main100 xj_opa ">
+                <ul class="main100 list2rem bbai">
+                    <li>充值</li>
+                    <li>分享赠送</li>   
+                    <li>银宝转入</li>   
+                    <li>货到付款</li>   
+                    <li>订单撤销退回</li> 
+                    <li>提现驳回</li>   
+                    <li>雇员操作</li>   
+                </ul>
+            </div>
+            <!-- 转出-->
+            <div class="main100 xj_opa ">
+                <ul class="main100 list2rem bbai">
+                    <li>提现</li>
+                    <li>现金消费</li>   
+                    <li>手续费</li>    
+                    <li>雇员操作</li>   
+                </ul>
+            </div>
+        </div>                
+        <!--提现记录-->
+        <ul class="xj_ji bbai">
+            <li >
+                <div class="main100">
+                    <span class="lleft">现金提现</span>
+                    <span class="rright">-6837.00</span>
+                </div>
+                <div class="main100">
+                    <span class="h999">2017-08-03 19:54:36</span>
+                    <span class="s cred">未结算</span>
+                </div>
+            </li>
+            <li >
+                <div class="main100">
+                    <span class="lleft">现金提现</span>
+                    <span class="rright">-6837.00</span>
+                </div>
+                <div class="main100">
+                    <span class="h999">2017-08-03 19:54:36</span>
+                    <span class="s lv">在途</span>
+                </div>
+            </li>
+            <li >
+                <div class="main100">
+                    <span class="lleft">现金提现</span>
+                    <span class="rright">-6837.00</span>
+                </div>
+                <div class="main100">
+                    <span class="h999">2017-08-03 19:54:36</span>
+                    <span class="s h999">已结算</span>
+                </div>
+            </li>
+            
+        </ul>
+    
+    
+    
+    <!--n页面内容end-->
+    </div>
+{/block}

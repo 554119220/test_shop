@@ -1,0 +1,369 @@
+{extend name="public:base"}{/extend}
+{block name="content"}
+<style type="text/css">
+	table.calendar{
+		display: inline-block;
+		cursor:default
+	}
+	table.calendar td.expire{
+	    color: silver;
+	}
+	table.calendar td.active {
+	    background-color: #3cb371;
+	    color: white;
+	}
+	table.calendar .today{
+	    background-color: #fdf5e6;
+	    color: red;
+	    font-weight: bold;
+	}
+	table.calendar .isuse{
+	    background-color: gray;
+	    color: #fff;
+	    font-weight: bold;
+	}
+	table.calendar td,table.calendar th{
+		border:1PX solid #CCC;
+	    padding: 9px 10px;
+	}
+</style>
+<div class="container-fluid bg_white">
+	<div class="container">
+		<div class="main100 bg_white pl15 pr15 radius4px">
+        	<table class="table solid_all table_dashed tr12 table12">
+	                <thead class="bg-f5">
+	                    <tr>
+	                        <th class="small_xs ">广告位名称</th>
+	                        <th class="small_xs ">广告位类型</th>
+	                        <th class="small_xs ">投放端</th>
+	                        <th class="small_xs ">位置数</th>
+	                        <th class="small_xs ">日单价</th>
+	                        <th class="small_xs ">示例图</th>
+	                        <th class="small_xs ">要求素材宽高</th>
+	                        <th class="small_xs ">描述</th>
+	                    </tr>
+	                </thead>
+	                <tbody>
+	                    <tr>
+	                        <td>{$positionInfo.ads_position_name}</td>
+	                        <td>{$positionInfo.ads_position_type_name}</td>
+	                        <td>{$positionInfo.ads_position_device_name}</td>
+	                        <td>{$positionInfo.ads_position_num}</td>
+	                        <td>{$positionInfo.ads_position_price}</td>
+	                        <td>
+	                        	<a class="image-zoom" href="{$positionInfo.ads_position_example_image}">
+	                        		<img class="radius4px w50" src="{$positionInfo.ads_position_example_image}?imageMogr2/thumbnail/200x200!">
+	                        	</a>
+	                        </td>
+	                        <td>{$positionInfo.ads_position_width}x{$positionInfo.ads_position_height}</td>
+	                        <td>{$positionInfo.ads_position_descript}</td>
+	                    </tr>
+	                </tbody>
+	            </table>
+		</div>
+	</div>
+	<!-- <hr> -->
+	<div class="container">
+		<div class="main100 bg_white pl15 pr15 radius4px">
+			<form id="form">
+				<!-- 位置选择 -->
+				<div class="main100  fs14 color666">选择位置(请先选择位置再填写广告订单)<span class="color-red1">*</span></div>
+				<div class="main100 over">
+					{php}for($i = 1; $i<=$positionInfo['ads_position_num'];$i++){{/php}
+						{if condition="$i eq $sort"}
+							<a type="button" class="btn red text_white pd7 pl25 pr25 mt13 fl mr15 fs12 position-sort" sort="{$i}" href="javascript:;">位置{$i}</a>
+						{else}
+							<a type="button" class="btn default pd7 pl25 pr25 mt13 fl mr15 fs12 position-sort" sort="{$i}" href="javascript:;" >位置{$i}</a>
+						{/if}
+					{php}}{/php}
+				</div>
+				<!-- 广告标题 -->
+				<div class="main100 mb10 fs14 pt15">标题<span class="color-red1">*</span></div>
+				<div class="main100">
+					<input name="ads_title" placeholder="请输入广告标题" maxlength="30" class="main100 radius4px container-fluid line32 bor_img h34  mb10" value="">
+				</div>
+				<!-- 广告副标题 -->
+				<div class="main100 mb10 fs14 pt15">副标题<span class="color-red1">*</span></div>
+				<div class="main100">
+					<input name="ads_sub_title" placeholder="请输入广告副标题" maxlength="30" class="main100 radius4px container-fluid line32 bor_img h34  mb10" value="">
+				</div>
+				<!-- 链接地址 -->
+				<div class="main100 mb10 fs14">投放链接<span class="color-red1">*</span></div>
+				<div class="main100">
+					<input name="ads_url" placeholder="请输入链接地址，可从商家中心复制店铺链接或商品链接" maxlength="255" class="main100 radius4px container-fluid line32 bor_img h34  mb10" value="">
+				</div>
+				<!-- 描述 -->
+				<div class="main100 mb10 fs14">描述<span class="color-red1">*</span></div>
+				<textarea name="ads_descript" maxlength="255" class="main100 bor_img radius4px pd10 h70 mb15" placeholder="描述"></textarea>
+				<!-- 广告图 -->
+				<div class="main100 mb10 fs14 ">广告素材（<span class="color-red1">请确保存在尺寸为{$positionInfo.ads_position_width}x{$positionInfo.ads_position_width}并审核通过的广告素材</span>）<span class="color-red1">*</span></div>
+				<div class="main100 mb10 over">
+					<a type="button" id="choose_sucai" class="btn red text_white pd7 pl25 pr25 mt13 fl mr15 fs12"  href="javascript:;">选择广告素材图片</a>
+				</div>
+				<div class="main100 mb20 over">
+					<img class="pull-left bor_img radius4px ads_sucai_images" style="max-width: 300px;max-height: 300px;" src="/static/web/images/icon/imgimg.jpg">
+				</div>
+				<!-- 投放时间段 -->
+				<div class="main100 fs14 color666">选择投放日期<span class="color-red1">*</span></div>
+				<div class="main100 over">
+			        <div class="row mb15 mt15" id="calendar-list">
+			        	<!-- 投放时间表 -->
+			        	{php}for($i = 0; $i < \mercury\constants\State::ADS_MAX_BUY_MONTH; $i++){{/php}
+							<div class="col-xs-4">
+								<div class="strong text-center mb10 fs16">{php}echo $position['calendar'][$i]['year'] ?? '--';{/php} 年 {php}echo $position['calendar'][$i]['month'] ?? '--';{/php} 月</div>
+								<div class="text-center">{php}echo $position['calendar'][$i]['cal'] ?? '';{/php}</div>
+							</div>
+						{php}}{/php}
+			        </div>
+			    </div>
+			    <!-- 投放记录 -->
+				<div class="main100 over mb25 mt15">
+			        <h4>已选择 <span class="totle_days_num color-red1">0</span> 天，总计：￥<span class="totle_money color-red1">0</span></h4>
+			    </div>
+			    <!-- hidden msg -->
+			    <input type="hidden" name="ads_position_id" value="{:input('id')}">
+			    <input type="hidden" name="ads_days" value="">
+			    <input type="hidden" name="ads_images" value="" id="ads_images">
+			    <input type="hidden" name="ads_sort" value="{$sort}">
+			    <input type="hidden" name="ads_sucai_id" value="">
+				<!-- 提交信息 -->
+				<a class="btn text_white bg-red-thunderbird pd8 pl35 pr35 mb100" id="sure_create">创建订单</a>
+			</form>
+
+			<input class="upload-file" style="display: none;" id="upload-images-base-new" type="file" onchange="uploadImagesBaseNew();">
+
+		</div>
+	</div>
+</div>
+{/block}
+{block name="js"}
+<script type="text/javascript">
+	$(function(){
+		// 选择位置
+		var PositionSort = new Array();
+		$('.position-sort').on('click',function(){
+			var id = {:input('id')};
+			var sort = parseInt($(this).attr('sort'));
+			if ( PositionSort.hasOwnProperty(sort) ) {
+				changeSortRush(PositionSort[sort],sort);
+			} else {
+				apiPost({
+					data:{
+						id:"{:input('id')}",
+						sort:sort,
+					},
+					header:getHeader('change_sort'),
+					log:true,
+					success:function(ret){
+						if ( ret.code == 20000 ) {
+							PositionSort[sort] = ret.data.days_use;
+							changeSortRush(PositionSort[sort],sort);
+						} else {
+							error('网络错误');
+						}
+					}
+				});
+			}
+		});
+		function changeSortRush(data,sort){
+			// sort改变
+			$('input[name="ads_sort"]').val(sort);
+			// 变更样式
+			$('.position-sort').each(function(x,y){
+				if ( $(this).attr('sort') == sort ) {
+					$(this).removeClass('default').addClass('red').addClass('text_white');
+					$(this).siblings().addClass('default').removeClass('red').removeClass('text_white');
+				}
+			})
+			// 重新生成
+			$('#calendar-list tbody td').each(function(k,ele){
+				// 移除旧的
+				if ( $(this).hasClass('isuse') || $(this).hasClass('active') ) {
+					$(this).removeClass('active');
+					$(this).removeClass('isuse');
+					$(this).addClass('hover');
+				}
+				// 使用新的 已使用日期
+				var day = $(this).data('day');
+				if ( day && $.inArray(day,data) > -1 ) {
+					$(this).addClass('isuse');
+				}
+			});
+			allCount();
+		}
+		// 日历
+		$('#calendar-list tbody td').on('click', function(){
+			// 已被使用 过期 今天 都不能选
+			if( $(this).hasClass('hover') ){
+				if($(this).hasClass('active')){
+					$(this).removeClass('active');
+				}else{
+					$(this).addClass('active');
+				}
+				allCount();
+			}
+		});
+		// 计算
+		function allCount(){
+			var price 	= '{$position.data.ads_position_price}';
+			var days 	= [];
+			var i 		= 0;
+			$('#calendar-list tbody td').each(function(x,y){
+				if($(this).hasClass('active')){
+					days.push($(this).data('day'));
+					i++;
+				}
+			});
+			// 投放天数
+			if ( i > 0 ) {
+				$('input[name="ads_days"]').val(days.join());
+			} else {
+				$('input[name="ads_days"]').val('');
+			}
+			// 计算总额
+			$('.totle_days_num').html(i);
+			$('.totle_money').html(i * price);
+			return i * price;
+		}
+		function sucaiTr(data){
+			var html = '';
+			$.each(data,function(key,value){
+				html += '<tr>';
+				html += '	<td>' + value.ads_sucai_id + '</td>';
+				html += '	<td>' + value.ads_sucai_name + '</td>';
+				html += '	<td><a class="" href="javascript:;"><img class="radius4px w50"  src="' + value.ads_sucai_images + '?imageMogr2/thumbnail/200x200!"></a></td>';
+				html += '	<td>' + value.ads_sucai_width + '</td>';
+				html += '	<td>' + value.ads_sucai_height + '</td>';
+				html += '	<td>' + value.ads_sucai_create_time + '</td>';
+				html += '	<td><a class="color-blue mr5 choose_sucai_btn" href="javascript:;" sucaiimages="' + value.ads_sucai_images + '" sucaiid="' + value.ads_sucai_id + '">选择</a></td>';
+				html += '</tr>';
+			});
+			return html;
+		}
+		// 选择素材
+		$('#choose_sucai').on('click',function(){
+			var p = 1;
+			var last_page = 1;
+			var data = {
+				p:1,
+				ads_sucai_user_id:'{:session("user.user_id")}',
+				ads_sucai_state:1,
+				wh:'{$positionInfo.ads_position_width}x{$positionInfo.ads_position_height}',
+			};
+			apiPost({
+				data:data,
+				header:getHeader('sucai_index'),
+				log:true,
+				success:function(ret){
+					if ( ret.code == 20000 ) {
+						last_page = ret.data.last_page;
+						var html = '';
+						html += '<table class="table solid_all  table_dashed tr12 table12">';
+						html += '	<thead class="bg-f5">';
+						html += '		<tr>';
+						html += '			<th class="small_xs ">素材ID</th>';
+						html += '			<th class="small_xs ">素材标题</th>';
+						html += '			<th class="small_xs ">素材缩列图</th>';
+						html += '			<th class="small_xs ">素材长度</th>';
+						html += '			<th class="small_xs ">素材高度</th>';
+						html += '			<th class="small_xs ">创建时间</th>';
+						html += '			<th class="small_xs ">操作</th>';
+						html += '		</tr>';
+						html += '	</thead>';
+						html += '	<tbody id="sucai-list">';
+						html += sucaiTr(ret.data.data);
+						html += '	</tbody>';
+						html += '</table>';
+
+						// 页数按钮
+						html += '<a type="button" class="btn red mb10 up-page" href="javascript:;">上一页</a>';
+						html += '<a type="button" class="btn red mb10 ml20 down-page" href="javascript:;">下一页</a>';
+						html += '<span class="ml20">第<span class="tj-page">' + p + '</span>/' + last_page + '页</span>';
+						
+						// 加载模态框
+						MyModal({
+							title:'选择素材',
+							msg:html,
+							footer:false,
+						},function(){
+							// 选择素材
+							$(document).on('click.modal','.choose_sucai_btn',function(){
+								var sucaiid = $(this).attr('sucaiid');
+								var sucaiimages = $(this).attr('sucaiimages');
+								$('input[name="ads_sucai_id"]').val(sucaiid);
+								$('.ads_sucai_images').attr('src',sucaiimages);
+								$('#modal').modal('hide');
+							});
+							// 加载上一页
+							$(document).on('click.modal','.up-page',function(){
+								if ( p == 1 ) {
+									error('你已经在第一页。');
+									return;
+								}
+								data.p = --p;
+								apiPost({
+									data:data,
+									header:getHeader('sucai_index'),
+									log:true,
+									success:function(ret){
+										if (ret.code == 20000) {
+											$('#sucai-list').html(sucaiTr(ret.data.data));
+											$('.tj-page').html(p);
+										} else {
+											$('.more-sucai').addClass('hide');
+											error('暂无符合条件的素材。');
+										}
+									}
+								});
+							});
+							// 加载下一页
+							$(document).on('click.modal','.down-page',function(){
+								if ( p == last_page ) {
+									error('你已经在最后一页。');
+									return;
+								}
+								data.p = ++p;
+								apiPost({
+									data:data,
+									header:getHeader('sucai_index'),
+									log:true,
+									success:function(ret){
+										if (ret.code == 20000) {
+											$('#sucai-list').html(sucaiTr(ret.data.data));
+											$('.tj-page').html(p);
+										} else {
+											$('.more-sucai').addClass('hide');
+											error('暂无符合条件的素材。');
+										}
+									}
+								});
+							});
+						});
+					} else {
+						error('暂无符合条件的素材。');
+					}
+				}
+			});
+		});
+		// 提交
+		$('#sure_create').on('click',function(){
+			var data = getFormJson('#form');
+			apiPost({
+				data:data,
+				header:getHeader('ads_create'),
+				log:true,
+				success:function(ret){
+					if ( ret.code == 20000 ) {
+						success(ret.msg);
+						setTimeout(function(){
+							window.location.href = '/ads/index';
+						},800);
+					} else {
+						error(ret.msg);
+					}
+				},
+			});
+		});
+	});
+</script>
+{/block}

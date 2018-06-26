@@ -1,0 +1,579 @@
+{extend name="public:base" /}
+
+{block name="css"}
+<style>
+	.s_main{width:100%;overflow:hidden;}
+	.s_main .red{background:#fff7f8;height:160px;margin-bottom:16px;}
+	.s_main .lan{background:#f7fcff;height:160px;margin-bottom:16px;}
+	.s_main .huang{background:#fffcf7;height:160px;margin-bottom:16px;}
+	.s_main.red span a{color:#ec6670 !important;}
+	.s_main.lan span a{color:#66b9ed !important;}
+	.s_main.huang span a{color:#f3c477 !important;}
+	.s_user{width:15%;float:left;overflow:hidden;}
+	.sxx{float:left;height:160px;width:13.5%;}
+	.slogo{width:70px; height:70px; border-radius: 50% !important; margin: 30px auto 10px auto;}
+	.sl1{background:#ec6670 url(/static/images/work/home-suser.png) no-repeat center;}
+	.sl2{background:#66b9ed url(/static/images/work/home-sdai.png) no-repeat center;}
+	.sl3{background:#f3c477 url(/static/images/work/home-scp.png) no-repeat center;}
+	.sxx span{font-size:20px;width:100%; display: inline-block; height:110px; line-height:130px; text-align: center;}
+	.sxx h4,.s_user h3{font-size:16px; color:#666;height:25px;line-height:25px;text-align: center;}
+</style>
+{/block}
+
+<!--主体内容-->
+{block name="content"}
+	<div class="s_main">
+		<div class="s_main">
+			<div class="s_main red">
+				<div class="s_user">
+					<div class="slogo sl1"></div>
+					<h3>用户</h3>
+				</div>
+				<div class="sxx">
+					<span>
+						<a href="javascript:void(0); " data-id="80" data-url="/user" onclick="window.parent.openMenu($(this),'用户管理')">
+							{$data.statistics_member_total}
+						</a>
+					</span>
+					<h4>用户总数</h4>
+				</div>
+				<div class="sxx">
+					<span>
+						<a href="javascript:void(0); "  data-id="82" data-url="/user" onclick="window.parent.openMenu($(this),'用户管理')">
+						{$data.statistics_member_active}
+						</a>
+					</span>
+					<h4>昨日活跃用户</h4>
+				</div>
+				<div class="sxx">
+					<span>
+						<a href="javascript:void(0); " data-id="213" data-url="/user" onclick="window.parent.openMenu($(this),'用户管理')">
+							{$data.statistics_member_added}
+						</a>
+					</span>
+					<h4>昨日新增注册用户</h4>
+				</div>
+				<div class="sxx">
+					<span>
+						<a href="javascript:void(0); " data-id="213" data-url="/user" onclick="window.parent.openMenu($(this),'用户管理')">
+							{$data.statistics_member_month_active}
+						</a>
+					</span>
+					<h4>月活跃用户数</h4>
+				</div>
+			</div>
+
+			<div class="s_main lan">
+				<div class="s_user">
+					<div class="slogo sl2"></div>
+					<h3>订单</h3>
+				</div>
+				<div class="sxx">
+					<span>
+						<a href="javascript:void(0); " data-id="108" data-url="/ordersShop" onclick="window.parent.openMenu($(this),'订单管理')">
+							{$data.statistics_orders_total}
+						</a>
+					</span>
+					<h4>订单总数</h4>
+				</div>
+				<div class="sxx">
+					<span>
+						<a href="javascript:void(0); " data-id="267" data-url="/ordersShop" onclick="window.parent.openMenu($(this),'订单管理')">
+							{$data.statistics_orders_pay_total}
+						</a>
+					</span>
+					<h4>付款订单数</h4>
+				</div>
+				<div class="sxx">
+					<span>
+						<a href="javascript:void(0); " data-id="228" data-url="/ordersShop" onclick="window.parent.openMenu($(this),'订单管理')">
+							{$data.statistics_orders_added}
+						</a>
+					</span>
+					<h4>昨日新增订单数</h4>
+				</div>
+				<div class="sxx">
+					<span>
+						<a href="javascript:void(0); " data-id="270" data-url="/ordersShop" onclick="window.parent.openMenu($(this),'订单管理')">
+							{$data.statistics_orders_pay_added}
+						</a>
+					</span>
+					<h4>新增付款单数</h4>
+				</div>
+				<div class="sxx">
+					<span>
+						<a href="javascript:void(0); " data-id="270" data-url="/ordersShop" onclick="window.parent.openMenu($(this),'订单管理')">
+							{$data.statistics_orders_receive_total}
+						</a>
+					</span>
+					<h4>收货订单数</h4>
+				</div>
+				<div class="sxx">
+					<span>
+						<a href="javascript:void(0); " data-id="270" data-url="/ordersShop" onclick="window.parent.openMenu($(this),'订单管理')">
+							{$data.statistics_orders_receive_added}
+						</a>
+					</span>
+					<h4>昨日新增收货单数</h4>
+				</div>
+			</div>
+			<div class="s_main lan">
+				<div class="s_user">
+					<div class="slogo sl2"></div>
+					<h3>订单</h3>
+				</div>
+				<div class="sxx">
+					<span>
+						<a href="javascript:void(0); " data-id="270" data-url="/ordersShop" onclick="window.parent.openMenu($(this),'订单管理')">
+							{$data.statistics_orders_comment_total}
+						</a>
+					</span>
+					<h4>评价总单数</h4>
+				</div>
+				<div class="sxx">
+					<span>
+						<a href="javascript:void(0); " data-id="270" data-url="/ordersShop" onclick="window.parent.openMenu($(this),'订单管理')">
+						{$data.statistics_orders_comment_added}
+						</a>
+					</span>
+					<h4>昨日新增评价单数</h4>
+				</div>
+				<div class="sxx">
+					<span>
+						<a href="javascript:void(0); " data-id="270" data-url="/ordersShop" onclick="window.parent.openMenu($(this),'订单管理')">
+							{$data.statistics_orders_pay_amount_total}
+						</a>
+					</span>
+					<h4>付款金额</h4>
+				</div>
+				<div class="sxx">
+					<span>
+						<a href="javascript:void(0); " data-id="270" data-url="/ordersShop" onclick="window.parent.openMenu($(this),'订单管理')">
+							{$data.statistics_orders_pay_amount_added}
+						</a>
+					</span>
+					<h4>昨日新增付款金额</h4>
+				</div>
+				<div class="sxx">
+					<span>
+						<a href="javascript:void(0); " data-id="270" data-url="/ordersShop" onclick="window.parent.openMenu($(this),'订单管理')">
+							{$data.statistics_orders_receive_amount_total}
+						</a>
+					</span>
+					<h4>订单收货总金额</h4>
+				</div>
+				<div class="sxx">
+					<span>
+						<a href="javascript:void(0); " data-id="270" data-url="/ordersShop" onclick="window.parent.openMenu($(this),'订单管理')">
+							{$data.statistics_orders_receive_amount_added}
+						</a>
+					</span>
+					<h4>昨日新增收货金额</h4>
+				</div>
+			</div>
+
+			<div class="s_main huang">
+				<div class="s_user">
+					<div class="slogo sl3"></div>
+					<h3>退款</h3>
+				</div>
+				<div class="sxx">
+					<span>
+						<a href="javascript:void(0); " data-id="100" data-url="/ordersRefund" onclick="window.parent.openMenu($(this),'退款管理')">
+							{$data.statistics_refund_total}
+						</a>
+					</span>
+					<h4>退款总单数</h4>
+				</div>
+				<div class="sxx">
+					<span>
+						<a href="javascript:void(0); " data-id="69" data-url="/ordersRefund" onclick="window.parent.openMenu($(this),'退款管理')">
+							{$data.statistics_refund_added}
+						</a>
+					</span>
+					<h4>昨日新增退款单数</h4>
+				</div>
+				<div class="sxx">
+					<span>
+						<a href="javascript:void(0); " data-id="147" data-url="/ordersRefund" onclick="window.parent.openMenu($(this),'退款管理')">
+							{$data.statistics_refund_complete_total}
+						</a>
+					</span>
+					<h4>退款完成总单数</h4>
+				</div>
+				<div class="sxx">
+					<span>
+						<a href="javascript:void(0); " data-id="90" data-url="/ordersRefund" onclick="window.parent.openMenu($(this),'退款管理')">
+							{$data.statistics_refund_complete_added}
+						</a>
+					</span>
+					<h4>昨日完成单数</h4>
+				</div>
+				<div class="sxx">
+					<span>
+						<a href="javascript:void(0); " data-id="90" data-url="/ordersRefund" onclick="window.parent.openMenu($(this),'退款管理')">
+							{$data.statistics_refund_amount_total}
+						</a>
+					</span>
+					<h4>退款总金额</h4>
+				</div>
+				<div class="sxx">
+					<span>
+						<a href="javascript:void(0); " data-id="90" data-url="/refund" onclick="window.parent.openMenu($(this),'退款管理')">
+							{$data.statistics_refund_amount_added}
+						</a>
+					</span>
+					<h4>昨日新增退款金额</h4>
+				</div>
+			</div>
+			<div class="s_main huang">
+				<div class="s_user">
+					<div class="slogo sl3"></div>
+					<h3>退款/售后</h3>
+				</div>
+				<div class="sxx">
+					<span>
+						<a href="javascript:void(0); " data-id="90" data-url="/ordersRefund" onclick="window.parent.openMenu($(this),'退款管理')">
+							{$data.statistics_refund_complete_amount_total}
+						</a>
+					</span>
+					<h4>退款完成总金额</h4>
+				</div>
+				<div class="sxx">
+					<span>
+						<a href="javascript:void(0); " data-id="90" data-url="/ordersRefund" onclick="window.parent.openMenu($(this),'退款管理')">
+							{$data.statistics_refund_complete_amount_added}
+						</a>
+					</span>
+					<h4>昨日退款完成总金额</h4>
+				</div>
+				<div class="sxx">
+					<span>
+						<a href="javascript:void(0); " data-id="90" data-url="/ordersServcie" onclick="window.parent.openMenu($(this),'售后管理')">
+							{$data.statistics_service_total}
+						</a>
+					</span>
+					<h4>售后总单数</h4>
+				</div>
+				<div class="sxx">
+					<span>
+						<a href="javascript:void(0); " data-id="90" data-url="/ordersServcie" onclick="window.parent.openMenu($(this),'售后管理')">
+							{$data.statistics_service_added}
+						</a>
+					</span>
+					<h4>昨日新增售后单数</h4>
+				</div>
+				<div class="sxx">
+					<span>
+						<a href="javascript:void(0); " data-id="90" data-url="/ordersServcie" onclick="window.parent.openMenu($(this),'售后管理')">
+							{$data.statistics_service_complete_total}
+						</a>
+					</span>
+					<h4>售后完成总单数</h4>
+				</div>
+				<div class="sxx">
+					<span>
+						<a href="javascript:void(0); " data-id="90" data-url="/ordersServcie" onclick="window.parent.openMenu($(this),'售后管理')">
+							{$data.statistics_service_complete_added}
+						</a>
+					</span>
+					<h4>昨日新增完成售后单数</h4>
+				</div>
+			</div>
+		</div>
+		<div class="s_main huang">
+			<div class="s_user">
+				<div class="slogo sl3"></div>
+				<h3>店铺/商品</h3>
+			</div>
+			<div class="sxx">
+				<span>
+					<a href="javascript:void(0); " data-id="90" data-url="/shop" onclick="window.parent.openMenu($(this),'商品管理')">
+						{$data.statistics_shop_total}
+					</a>
+				</span>
+				<h4>店铺总数量</h4>
+			</div>
+			<div class="sxx">
+				<span>
+					<a href="javascript:void(0); " data-id="90" data-url="/shop" onclick="window.parent.openMenu($(this),'商品管理')">
+						{$data.statistics_shop_added}
+					</a>
+				</span>
+				<h4>昨日新增店铺数量</h4>
+			</div>
+			<div class="sxx">
+				<span>
+					<a href="javascript:void(0); " data-id="90" data-url="/goods" onclick="window.parent.openMenu($(this),'商品管理')">
+						{$data.statistics_goods_total}
+					</a>
+				</span>
+				<h4>商品总数量</h4>
+			</div>
+			<div class="sxx">
+				<span>
+					<a href="javascript:void(0); " data-id="90" data-url="/goods" onclick="window.parent.openMenu($(this),'商品管理')">
+						{$data.statistics_goods_added}
+					</a>
+				</span>
+				<h4>昨日新增商品数量</h4>
+			</div>
+		</div>
+	</div>
+	
+	<!--图表-->
+	<div class="row">	
+		<div class="col-xs-6">
+			<div class="portlet light bordered">
+				<div class="portlet-title">
+					<div class="caption">
+						<span class="caption-subject bold uppercase font-dark">基础数据</span>
+						<span class="caption-helper">最近7天</span>
+					</div>
+					<div class="actions">
+					</div>
+				</div>
+				<div class="portlet-body" style="height: 500px;">
+					<div id="total_base" class="CSSAnimationChart clearfix"></div>
+				</div>
+			</div>				
+		</div>
+		<div class="col-xs-6">
+			<div class="portlet light bordered">
+				<div class="portlet-title">
+					<div class="caption">
+						<span class="caption-subject bold uppercase font-dark">用户数据</span>
+						<span class="caption-helper member-count-day">统计日期</span>
+					</div>
+					<div class="actions">
+					</div>
+				</div>
+				<div class="portlet-body" style="height: 500px;">
+					<div id="member_pie" class="CSSAnimationChart clearfix"></div>
+				</div>
+			</div>
+		</div>		
+	</div>
+{/block}
+
+<!--脚本-->
+{block name="javascript"}
+{js href="__JS__/plugins/amcharts/amcharts/amcharts.js" /}
+{js href="__JS__/plugins/amcharts/amcharts/serial.js" /}
+{js href="__JS__/plugins/amcharts/amcharts/pie.js" /}
+<script>
+	/*
+	ajax_post({
+		url:'/api/api',
+		data:{
+			member_pie:{openid:1,apiurl:'{//:str_encode('amcharts/member')}'},
+			total_base:{openid:1,apiurl:'{//:str_encode('amcharts/totalBase')}'}
+		},
+		success:function(ret){
+			console.log(ret);
+			if(ret.member_pie.code == 1){
+				$('.member-count-day').html(ret.member_pie.data.day);
+	            var chart;
+	            var legend;
+	
+	            var chartData = [
+	                {
+	                    "country": "消费商",
+	                    "value": ret.member_pie.data.member_level1_count
+	                },
+	                {
+	                    "country": "盛客",
+	                    "value": ret.member_pie.data.member_level2_count
+	                },
+	                {
+	                    "country": "盛投",
+	                    "value": ret.member_pie.data.member_level3_count
+	                },
+	                {
+	                    "country": "V",
+	                    "value": ret.member_pie.data.member_level4_count
+	                },
+	                {
+	                    "country": "VI",
+	                    "value": ret.member_pie.data.member_level5_count
+	                },
+	                {
+	                    "country": "VIP",
+	                    "value": ret.member_pie.data.member_level6_count
+	                },	
+	            ];
+	
+	            AmCharts.ready(function () {
+	                // PIE CHART
+	                chart = new AmCharts.AmPieChart();
+	                chart.dataProvider = chartData;
+	                chart.titleField = "country";
+	                chart.valueField = "value";
+	                chart.outlineColor = "#FFFFFF";
+	                chart.outlineAlpha = 0.8;
+	                chart.outlineThickness = 2;
+	                chart.balloonText = "[[title]]<br><span style='font-size:14px'><b>[[value]]</b> ([[percents]]%)</span>";
+	                // this makes the chart 3D
+	                chart.depth3D = 15;
+	                chart.angle = 30;
+	
+	                // WRITE
+	                chart.write("member_pie");
+	            });				
+			}
+			
+			
+			if(ret.total_base.code==1){
+				var e = [];
+				for(i=ret.total_base.data.length -1;i>=0;i--){
+					var tmp = {
+						date: ret.total_base.data[i].day,
+						distance: ret.total_base.data[i].withdraw_cash_add_total,
+						//townName: "云积分换换",
+						//townName2: "云积分换换",
+						townSize: 10,
+						latitude: (parseFloat(ret.total_base.data[i].lurpak_conver) / 10000).toFixed(2),
+						duration: (parseFloat(ret.total_base.data[i].integration_add) / 10000).toFixed(2)
+					};
+					
+					e.push(tmp);
+				}
+				e.push({date:ret.total_base.next_day});
+				console.log(e);
+				
+				AmCharts.makeChart("total_base", {
+					type: "serial",
+					fontSize: 12,
+					fontFamily: "Open Sans",
+					dataDateFormat: "YYYY-MM-DD",
+					dataProvider: e,
+					addClassNames: !0,
+					startDuration: 1,
+					color: "#6c7b88",
+					marginLeft: 0,
+					categoryField: "date",
+					categoryAxis: {
+						parseDates: !0,
+						minPeriod: "DD",
+						autoGridCount: !1,
+						gridCount: 50,
+						gridAlpha: .1,
+						gridColor: "#FFFFFF",
+						axisColor: "#555555",
+						dateFormats: [{
+							period: "DD",
+							format: "DD"
+						},
+						{
+							period: "WW",
+							format: "MMM DD"
+						},
+						{
+							period: "MM",
+							format: "MMM"
+						},
+						{
+							period: "YYYY",
+							format: "YYYY"
+						}]
+					},
+					valueAxes: [{
+						id: "a1",
+						title: "提现金额（元）",
+						gridAlpha: 0,
+						axisAlpha: 0
+					},
+					{
+						id: "a2",
+						position: "right",
+						gridAlpha: 0,
+						axisAlpha: 0,
+						labelsEnabled: !1
+					},
+					{
+						id: "a3",
+						title: "积分（万）",
+						position: "right",
+						gridAlpha: 0,
+						axisAlpha: 0,
+						inside: !0,
+
+					}],
+					graphs: [{
+						id: "g1",
+						valueField: "distance",
+						title: "提现金额",
+						type: "column",
+						fillAlphas: .7,
+						valueAxis: "a1",
+						balloonText: "[[value]] 元",
+						legendValueText: "[[value]] 元",
+						legendPeriodValueText: "total: [[value.sum]] 元",
+						lineColor: "#08a3cc",
+						alphaField: "alpha"
+					},
+					{
+						id: "g2",
+						valueField: "latitude",
+						classNameField: "bulletClass",
+						title: "云积分转换",
+						type: "line",
+						valueAxis: "a2",
+						lineColor: "#786c56",
+						lineThickness: 1,
+						legendValueText: "[[value]] 万",
+						legendPeriodValueText: "total: [[value.sum]] 万",
+						//descriptionField: "townName",
+						bullet: "round",
+						bulletSizeField: "townSize",
+						bulletBorderColor: "#02617a",
+						bulletBorderAlpha: 1,
+						bulletBorderThickness: 2,
+						bulletColor: "#89c4f4",
+						//labelText: "[[townName2]]",
+						labelPosition: "right",
+						balloonText: "云积分转换:[[value]] 万",
+						showBalloon: !0,
+						animationPlayed: !0
+					},
+					{
+						id: "g3",
+						title: "新增积分",
+						valueField: "duration",
+						type: "line",
+						valueAxis: "a3",
+						lineAlpha: .8,
+						lineColor: "#e26a6a",
+						balloonText: "新增积分:[[value]] 万",
+						legendPeriodValueText: "total: [[value.sum]] 万",
+						lineThickness: 1,
+						legendValueText: "[[value]] 万",
+						bullet: "square",
+						bulletBorderColor: "#e26a6a",
+						bulletBorderThickness: 1,
+						bulletBorderAlpha: .8,
+						dashLengthField: "dashLength",
+						animationPlayed: !0
+					}],
+					chartCursor: {
+						zoomable: !1,
+						categoryBalloonDateFormat: "YYYY-MM-DD",
+						cursorAlpha: 0,
+						categoryBalloonColor: "#e26a6a",
+						categoryBalloonAlpha: .8,
+						valueBalloonsEnabled: !1
+					},
+					legend: {
+						bulletType: "round",
+						equalWidths: !1,
+						valueWidth: 120,
+						useGraphSettings: !0,
+						color: "#6c7b88"
+					}
+				});				
+			}
+		}
+	});
+	*/
+</script>
+{/block}

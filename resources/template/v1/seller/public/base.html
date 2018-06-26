@@ -1,0 +1,27 @@
+{include file="public:header" /}
+<div class="common_page">
+    <!-- 页面头部 -->
+    <header class="line30 container-fluid">
+        您好：{$Think.session.user.user_username} <a class="ml10" href="{:domain('www','user/logout')}">退出登录</a>
+        <div class="pull-right">
+            <!--<a class="mr10" href="javascript:;">app下载</a>-->
+            客服电话：{:config('site.site')['tel']}
+        </div>
+    </header>
+
+    <div class="content_page">
+        <!-- 主体头部 -->
+        {include file="public:nav" /}
+        <!-- 页面主体内容 -->
+        <div class="tab_row mb10">
+            <!-- 左边 -->
+            {block name="side"}{include file="public:side" /}{/block}
+            {block name="page"}{/block}
+        </div><!-- 页面主体内容结束 -->
+    </div>
+
+</div>
+{include file="public:footer" /}
+{include file="public:script" /}
+{block name="script"}{/block}
+{include file="public:bottom" /}

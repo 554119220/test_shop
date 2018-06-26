@@ -1,0 +1,125 @@
+{extend name="public:base" /}
+
+{block name="page"}
+<div class="tab_col pd10 pb0">
+	
+	<!---->
+	
+	<div class="main100  bg-white radius4px pl15 pr15 minh595 over">
+		<div class="alert mt10 mb10 bg-red2 pl30">
+			{php} $need_shop_score = \mercury\constants\State::STATE_AYPPLY_RECOMMEND1_MIN_SHOP_SCORE; {/php}
+			{php} $need_up_num = \mercury\constants\State::STATE_AYPPLY_RECOMMEND1_MIN_GOODS_UP_NUM; {/php}
+			申请精选需要以下条件：
+			<p style="margin-top: 5px;!important;">店铺积分不能低于{php} echo $need_shop_score;{/php}（当前积分：{php} echo $shopDetail['shop_basis_score'] ?? 0; {/php}）</p>
+			<p style="margin-top: 5px;!important;">在售商品数不能低于{php} echo $need_up_num;{/php}（当前在售：{php} echo $statistics['up'] ?? 0; {/php}）</p>
+			<p style="margin-top: 5px;!important;">在售优选商品数不能低于1</p>
+		</div>
+		<div class="main100 line55 radius4px mb15 mt5 over">
+			<!--  -->
+			<a href="/goods/apply_recommend1" class="btn text_white bg-red-thunderbird radius4px pd7 pl25 pr25 mt13 fl mr15 fs12" >申请记录</a>
+			<a href="javascript:;" id="apply_recommend1_create" target="_blank" class="btn text_white bg-red-thunderbird radius4px pd7 pl25 pr25 mt13 fl mr15 fs12" >申请精选须知</a>
+			<!-- <a href="https://www.zrst.com/rule/detail/id/386" target="_blank" class="btn text_white bg-red-thunderbird radius4px pd7 pl25 pr25 mt13 fl mr15 fs12" >精选商品服务协议</a> -->
+		</div>
+		<div class="main100 radius4px over">
+			<table class="table solid_all table_dashed tr12 table12" >
+                <thead class="bg-f5">
+                    <tr>
+						<th class="small_xs ">商品ID</th>
+                        <th class="small_xs ">商品图片</th>
+                        <th class="small_xs ">商品名称</th>
+                        <th class="small_xs ">最大价格</th>
+                        <th class="small_xs ">最小价格</th>
+                        <th class="small_xs ">商品库存</th>
+                        <th class="small_xs ">销售数量</th>
+                        <th class="small_xs ">是否橱窗</th>
+                        <th class="small_xs ">优选精选</th>
+                        <th class="small_xs ">发布时间</th>
+                        <th class="small_xs ">状态</th>
+                        <th class="small_xs ">操作</th>
+                    </tr>
+                </thead>
+                <tbody class="goods-list">
+            		{php}$i=0;{/php}
+                	{foreach name="list" key="key" item="value"}
+	                    <tr>
+	                    	<td>{$value.goods_id}</td>
+	                        <td><a class="image-zoom" href="{$value.goods_images}"><img width="100" class="radius4px" src="{$value.goods_images}?imageMogr2/thumbnail/200x200!"></a></td>
+	                        <td>{$value.goods_name}</td>
+	                        <td class="text_green">{$value.goods_max_price|default=""}</td>
+	                        <td class="text_green">{$value.goods_min_price|default=""}</td>
+	                        <td>{$value.goods_sku_num}</td>
+	                        <td>{$value.goods_sale_num}</td>
+	                        <td>{$value.goods_recommend == 1 ? '<span class="text_green">是</span>':'否'}</td>
+	                        <td>
+	                        	{switch name="value.goods_recommend_type"}
+	                        		{case value="1"}<span class="text_red">精选</span>{/case}
+	                        		{case value="2"}<span class="text_green">优选</span>{/case}
+	                        		{default}常规
+	                        	{/switch}
+	                        </td>
+	                        <!-- <td>百望商城</td> -->
+	                        <td>{$value.goods_create_time}</td>
+	                        <td><span class="{$value.goods_state == 1 ? '': 'text_red'}">{$value.goods_state_name}</span></td>
+	                        <td><a href="javascript:;" goods_id="{$value.goods_id}" class="goods-apply-recommend1">发起申请</a></td>
+	                    </tr>
+                    {/foreach}
+                </tbody>
+            </table>
+		</div>
+		<!--页按钮-->
+		<div class="text-center">{$data.page|default=""}</div>
+	</div>
+</div>
+{/block}
+{block name="script"}
+<script type="text/javascript">
+
+	$('.goods-apply-recommend1').on('click',function(){
+		var id = $(this).attr('goods_id');
+		// 协议
+		MyModal({
+			title:'{$recommend1Notice2.article_title|default=""}',
+			msg:'{$recommend1Notice2.article_content.article_content|default=""}',
+		},function(){
+			$(document).on('click.modal','#modal .modal-ok',function(){
+				
+				// 加载提交内容
+				MyModal({
+					'title':'申请精选 - 商品ID ' + id,
+					'url':'/goods/apply_recommend1_create_content/goods_id/' + id,
+				},function(){
+					$(document).on('click.modal','#modal .modal-ok',function(){
+						var data = getFormJson('#apply_content');
+						apiPost({
+							data:data,
+							header:getHeader('headers0'),
+							log:true,
+							success:function(ret){
+								if ( ret.code == 20000 ) {
+									success('申请成功');
+									setTimeout(function(){
+										window.location.reload();
+									},1000);
+								} else {
+									error(ret.msg);
+								}
+							},
+						});
+					});
+				});
+			});
+		});
+	});
+	// 申请精选
+	$('#apply_recommend1_create').on('click',function(){
+		MyModal({
+			title:'{$recommend1Notice1.article_title|default=""}',
+			msg:'{$recommend1Notice1.article_content.article_content|default=""}',
+		},function(){
+			$(document).on('click.modal','#modal .modal-ok',function(){
+				$('#modal').modal('hide');
+			});
+		});
+	});
+</script>
+{/block}

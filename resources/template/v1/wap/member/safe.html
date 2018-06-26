@@ -1,0 +1,38 @@
+{extend name="public:base" /}
+
+{block name="page"}
+<!-- 标题栏 -->
+<header class="bar bar-nav bbai">
+    <a class="l_return back"><img class="main100" src="/static/wap/images/reg/l_return1.png"></a>
+    <h1 class="title">修改安全密码</h1>
+</header>
+<!-- 这里是页面内容区 -->
+<div class="content">
+    <div class="main100 bbai qiye">
+        <div class="ren">
+            <a data-no-cache="true" href="/member/update_password"><span class="lleft">修改登录密码</span></a>
+            <span class="s hot rright"></span>
+        </div>
+        {empty name="Think.session.user.user_pay_password"}
+        <div class="ren">
+            <a data-no-cache="true" href="/member/set_pay_password"><span class="lleft">设置安全密码</span></a>
+            <span class="s hot rright"></span>
+        </div>
+        {else/}
+        <div class="ren">
+            <a data-no-cache="true" href="/member/update_pay_password"><span class="lleft">修改安全密码</span></a>
+            <span class="s hot rright"></span>
+        </div>
+        {/empty}
+        <div class="ren">
+            <a data-no-cache="true" href="/member/forgot_password"><span class="lleft">忘记登录密码</span></a>
+            <span class="s hot rright"></span>
+        </div>
+        <div class="ren">
+            <a data-no-cache="true" href="/member/forgot_pay_password"><span class="lleft">忘记安全密码</span></a>
+            <span class="s hot rright"></span>
+        </div>
+    </div>
+</div>
+
+{/block}

@@ -1,0 +1,824 @@
+{extend name="public:base" /}
+{block name="page"}
+<div class="tab_row mb10">
+	<form id="create-goods-form">
+	<!-- 右边内容 -->
+	<div class="tab_col pd10 pb0">
+		<div class="container-fluid bg-white radius4px ">
+			<div class="main100 line55 nav-tog">
+				<a class="color666 fs14 mr15 di cursor cp-active">基本信息</a>
+				<a class="color666 fs14 ml15 mr15 di cursor" >店铺分类</a>
+				<a class="color666 fs14 ml15 mr15 di cursor" >模版设置</a>
+				<a class="color666 fs14 ml15 mr15 di cursor" >设置属性</a>
+				<a class="color666 fs14 ml15 mr15 di cursor" >产品参数</a>
+				<a class="color666 fs14 ml15 mr15 di cursor" >产品资质</a>
+				<a class="color666 fs14 ml15 mr15 di cursor" >商品详情</a>
+			</div>
+		</div>
+		<div class="alert mt10 mb10 bg-red2 color-red1 pl15">当前商品所选类目：{php}echo implode(" > ",$GoodsCategoryDetail['upName'] ?? []){/php}，默认售后天数：{$GoodsCategoryDetail.category_goods_service_days|default="0"}</div>
+		<div class="alert mt10 mb10 bg-red2 color-red1 pl15">商品主图和属性图的宽高必须一致，并且大于640</div>
+		<div class="alert mt10 mb10 bg-red2 color-red1 pl15">温馨提示：<br>
+		由于在商城发现有很多商家跨类目经营：<br>
+		（1）发布商品时，商品类目和入驻申请时选择的类目不一致。例如入驻时是化妆品，发布商品时是酒类。<br>
+		（2）发布的商品与商品类目不一致，例如男装发布到女装。<br>
+		针对以上情况，做个特别提醒，商品发布的类目要和申请入驻时选择的类目要一致，如发现不一致，商城会采取下架商品、取消优选（精选）的措施。并每次扣3分。<br>
+		</div>
+		<!-- 基本信息 -->
+		<div class="main100 bg_white pl15 pr15 radius4px nav-tog-list" style="display: block;">
+			<div class="main100 mb10 fs12 pt15">商品名称<span class="color-red1">*</span><span class="goods_name_length color-blue">(0/80)</span></div>
+
+			<div class="main100">
+				<input name="goods_name" placeholder="请输入商品名称" max-length="80" class="main100 radius4px container-fluid line32 bor_img mb10" value=""/>
+			</div>
+
+			<div class="main100 mb10 fs12 ">商品副标题<span class="goods_sub_name_length color-blue">(0/255)</span><span>(此处可填写商品的分享、推荐语、产品卖点等利于推荐、引爆、促销商品的话术)</span></div>
+			<textarea name="goods_sub_name" class="main100 bor_img radius4px pd10 h70 mb15" placeholder="商品副标题" max-length="240"></textarea>
+
+			<div class="main100 mb10 fs12 ">商品编号</div>
+			<div class="main100">
+				<input name="goods_number" placeholder="请输入商品编号" class="main100 radius4px container-fluid line32 bor_img mb10" />
+			</div>
+<div class="main100 mb10 fs12 ">赠送积分比例<span class="color-red1">*</span></div>
+		
+			<div class="main100 mb10">
+				<select name="goods_score_multi" class="bs-select form-control main100 fs12">
+                    <option value="">选择比例</option>
+					{foreach name="GoodsScoreMultis" item="value"}
+						
+                        	<option value="{$value}">{$value}%</option>
+                       
+					{/foreach}
+                </select>
+			</div>
+			<div class="main100 mb10 fs12 ">售后天数<span class="color-red1">*</span></div>
+			<div class="main100">
+				<input name="goods_service_days" placeholder="售后天数不能小于商品类目的默认售后天数" value="{$GoodsCategoryDetail.category_goods_service_days|default='0'}" class="main100 radius4px container-fluid line32 bor_img mb10" />
+			</div>
+
+			<div class="main100 mb10 fs12 ">商品主图<span class="color-red1">* 图片640*640</span></div>
+			<a class="btn text_white bg-red-thunderbird radius4px pd6 pl25 pr25 mb10" onclick="triggerUploadImagesNew({valueEle:'#goods-images',imgEle:'.goods-images'});">选择图片</a>
+			<!--img-->
+			<input type="hidden" name="goods_images" value="" id="goods-images">
+			<div class="main100 mb20 over">
+				<img class="pull-left bor_img radius4px goods-images" style="max-width: 300px;max-height: 300px;" src="/static/web/images/icon/imgimg.jpg">
+			</div>
+			<div class="main100  fs14 color666">商品状态<span class="color-red1">*</span></div>
+
+			<div class="main100 over pt10 pb10">
+				<div class="form-group">
+					<div class="pull-left">
+						<p class="pull-left mr15">
+							<label class="radius"><input type="radio" name="goods_state" value="1" checked><em class="fl"></em>
+							<span class="small_xs ml10">上架状态</span>
+						</label></p>
+						<p class="pull-left mr15">
+							<label class="radius"><input type="radio" name="goods_state" value="2"><em class="fl"></em>
+							<span class="small_xs ml10">下架状态</span>
+						</label></p>
+					</div>
+				</div>
+			</div>
+
+			<div class="main100  fs14 color666">推荐橱窗<span class="color-red1">*</span></div>
+			<div class="main100 over pt10 pb10">
+				<div class="form-group">
+					<div class="pull-left">
+						<p class="pull-left  mr15">
+							<label class="radius"><input type="radio" name="goods_recommend" value="1"><em class="fl"></em>
+							<span class="small_xs ml10">推荐</span>
+						</label></p>
+						<p class="pull-left mr15">
+							<label class="radius"><input type="radio" name="goods_recommend" value="0" checked><em class="fl"></em>
+							<span class="small_xs ml10">不推荐</span>
+						</label></p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- 店铺分类 -->
+		<div class="main100 bg_white radius4px pd15 minh595 nav-tog-list">
+			<div class="main100 mb10">店铺分类</div>
+			{foreach name="ShopGoodsCategory" key="key" item="value"}
+				<div class="main100 over color666">
+					<div class="form-group mb5">
+			            <div class=" province-child">
+			                <div class="mt-checkbox-inline">
+			                	<label class="mt-checkbox w170">
+			                        <input name="shop_goods_category_ids[]" value="{$value.goods_category_id}" type="checkbox" ><b>{$value.goods_category_name}</b>
+			                        <span></span>
+			                    </label>
+			                </div>
+			            </div>
+		        	</div>
+					{notempty name="value.child"}
+						{foreach name="value.child" key="ko" item="vo"}
+							<div class="form-group mb5 ml20 fl">
+					            <div class=" province-child">
+					                <div class="mt-checkbox-inline">
+					                	<label class="mt-checkbox">
+					                        <input name="shop_goods_category_ids[]" value="{$vo.goods_category_id}" type="checkbox" >{$vo.goods_category_name}
+					                        <span></span>
+					                    </label>
+					                </div>
+					            </div>
+				        	</div>
+						{/foreach}
+					{/notempty}
+				</div>
+			{/foreach}
+		</div>
+		<!-- 模板设置 -->
+		<div class="main100 bg_white pl15 pr15  radius4px minh595  nav-tog-list">
+			<div class="main100 mb10 fs12 pt15">商品品牌</div>
+			<div class="main100">
+				<select name="shop_goods_brand_id" class="bs-select form-control main100 fs12">
+						<option value="0">选择品牌</option>
+					{foreach name="ShopGoodsBrand" item="value"}
+                        <option value="{$value.shop_goods_brand_id}">{$value.goods_brand.goods_brand_name|default="未知品牌"}</option>
+					{/foreach}
+                </select>
+			</div>
+			<div class="main100 mb10 fs12 pt15">运费模版<span class="color-red1">*</span></div>
+			<div class="main100">
+				<select name="express_id" class="bs-select form-control main100 fs12">
+                    	<option value="">选择运费模板</option>
+					{foreach name="GoodsExpressTpl" item="value"}
+                        <option value="{$value.express_id}">{$value.express_name|default="未知运费模板"}</option>
+					{/foreach}
+                </select>
+			</div>
+			<div class="main100 mb10 fs12 pt15">包装模板<span class="color-red1">*</span></div>
+			<div class="main100">
+				<select name="package_id" class="bs-select form-control main100 fs12"  >
+                        <option value="">选择包装模板</option>
+					{foreach name="GoodsPackageTpl" item="value"}
+                        <option value="{$value.package_id}">{$value.package_name|default="未知包装模板"}</option>
+					{/foreach}
+                </select>
+			</div>
+			<div class="main100 mb10 fs12 pt15">售后模板<span class="color-red1">*</span></div>
+			<div class="main100">
+				<select name="protection_id" class="bs-select form-control main100 fs12">
+                        <option value="">选择售后模板</option>
+					{foreach name="GoodsProtectionTpl" item="value"}
+                        <option value="{$value.protection_id}">{$value.protection_name|default="未知售后模板"}</option>
+					{/foreach}
+                </select>
+			</div>
+		</div>
+		<!-- 商品属性 -->
+		<div class="main100 bg_white pd15  radius4px minh595  nav-tog-list" style="min-width: 1250px;">
+			<div class="main100 color333 over w270 mb40">
+				<a class="btn text_white bg-red-thunderbird radius4px pd6 pl25 pr25 mb10 fl" id="add-goods-sku">添加新属性组</a>
+			</div>
+			<!-- 属性组 -->
+			<div class="goods-sku-group-list">
+				<!-- <div class="goods-sku-group-item">
+					<div class="main100 color333 over">
+						<input name="goods_name" placeholder="请输入属性组名称" class="main100 radius4px container-fluid line32 bor_img mb10 fl w270" value=""/>
+						<a class="btn text_gray bg-gray radius4px pd7 pl25 pr25 mb10 line32 fl ml10">添加此属性组值</a>
+						<a class="btn text_white bg-red1 radius4px pd7 pl25 pr25 mb10 line32 fl ml10">删除</a>
+					</div>
+					<div class="main100 color333 over mb15 goods-sku-group-value-list">
+						<div class="fl over mr20 re mt15 goods-sku-group-value-item">
+							<div class="fl main100 over radius4px bor-f5 h32 line30 mb10">
+								<span class="fl w35 bg-f5 text-center h30">
+									<label class="square mar0 fl">
+										<input id="btn-active" type="checkbox"><em class="fl ml9 mt7"></em>
+									</label>
+								</span>
+								<input type="text"  placeholder="请输入属性值" class="fl bor_no w290 pl10"/>
+								<a class="fr pl10 pr10 bg-f5 text_red">删除此项值</a>
+							</div>
+							<div class="main100">
+								<div class="fl re over mr5">
+									<img src="/static/web/images/icon/imgimg.jpg" class="radius4px  fl w72 h72">
+								</div>
+								<div class="fl re over mr5 remove-img">
+									<a class="btn-xx ab" style="right:0;top:0;">x</a>
+									<img src="/static/web/images/123.jpg" class="radius4px  fl w72 h72">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div> -->
+			</div>
+
+			<!--属性组end-->
+			<table class="table solid_all table_dashed tr12 table12 center mt10">
+                <thead class=" bg-f5">
+                    <tr>
+                        <th class="small_xs">顺序</th>
+                        <th class="small_xs ">属性名</th>
+                        <th class="small_xs ">销售价</th>
+                        <th class="small_xs ">市场价</th>
+                        <th class="small_xs ">成本价</th>
+                        <th class="small_xs ">库存</th>
+                        <th class="small_xs ">重量(KG)</th>
+                    </tr>
+                </thead>
+                <tbody class="color666 goods-sku-list">
+                    
+                    
+                </tbody>
+            </table>
+	   	</div>
+	   	<!-- 商品参数 -->
+		<div class="main100 bg_white pl15 pr15 pb15  radius4px minh595 nav-tog-list">
+			{foreach name="GoodsParamsGroup" key="key" item="value"}
+				<input type="hidden" name="goods_params[{$key}][group_id]" value="{$value.params_group_id|default=""}">
+				<input type="hidden" name="goods_params[{$key}][group_name]" value="{$value.params_group_name|default=""}">
+				<div class="main100 mb10 fs12 pt15">{$value.params_group_name|default="未知参数组名"}<span class="color-red1">*</span></div>
+				
+					<!-- input -->
+					{if condition="$value['params_group_form_type'] eq 1"}
+						<div class="main100 mb10 h34">
+							<input name="goods_params[{$key}][group_value][0]" placeholder="请输入参数值" class="main100 radius4px container-fluid line32 bor_img mb10" value=""/>
+						</div>
+					{/if}
+					<!-- select -->
+					{if condition="$value['params_group_form_type'] eq 2"}
+						{notempty name="value.goods_params_group_value"}
+							<div class="main100 mb10 h34">
+								<select name="goods_params[{$key}][group_value][0]" class="bs-select form-control main100 fs12">
+									<option value="">请选择</option>
+									{foreach name="value.goods_params_group_value" item="vo"}
+			                        	<option value="{$vo.params_group_value_name}">{$vo.params_group_value_name}</option>
+			                        {/foreach}
+				                </select>
+				            </div>
+			            {else/}
+			            	<span>参数缺失。</span>
+			            {/notempty}
+					{/if}
+					<!-- checkbox -->
+					{if condition="$value['params_group_form_type'] eq 3"}
+						{notempty name="value.goods_params_group_value"}
+							<div class="main100 mb10 over">
+								{foreach name="value.goods_params_group_value" key="ko" item="vo"}
+		                        	<div class="fl mr25">
+										<label class="square mar0 fl">
+											<input name="goods_params[{$key}][group_value][{$ko}]" value="{$vo.params_group_value_name}" type="checkbox">
+											<em class="fl"></em>
+											<span class="ml10">{$vo.params_group_value_name}</span>
+										</label>
+									</div>
+		                        {/foreach}
+		                    </div>
+	                    {else/}
+	                    	<div class="fl mr25">
+	                    		<span>参数缺失。</span>
+	                    	</div>
+		                {/notempty}
+					{/if}
+					<!-- textarea -->
+					{if condition="$value['params_group_form_type'] eq 4"}
+						<div class="main100 over mb10">
+							<textarea name="goods_params[{$key}][group_value][0]" placeholder="请输入参数值" class="main100 bor_img radius4px pd10 h70 mb15"></textarea>
+						</div>
+					{/if}
+			{/foreach}
+		</div>
+		<!-- 产品资质 -->
+		<div class="main100 bg_white pl15 pr15 pb10 radius4px minh595 nav-tog-list">
+			<div class="main100 pt15"><div class="alert mt10 mb10 bg-red2 color-red1">商品若需申请精选优选，请至少选择一项提交</div></div>
+			{foreach name="GoodsQualificationsGroup" key="key" item="value"}
+				<input type="hidden" name="goods_qualifications[{$key}][qualifications_id]" value="{$value.goods_qualifications_group_id|default=""}">
+				<input type="hidden" name="goods_qualifications[{$key}][qualifications_name]" value="{$value.goods_qualifications_group_name|default=""}">
+				<div class="main100 mb10 fs12 pt15">{$value.goods_qualifications_group_name|default="未知参数组名"}</div>
+				
+				<!-- input -->
+				{if condition="$value['goods_qualifications_group_form_type'] eq 1"}
+					<div class="main100 mb10 h34">
+						<input name="goods_qualifications[{$key}][qualifications_value][0]" placeholder="请输入参数值" class="main100 radius4px container-fluid line32 bor_img mb10" value=""/>
+					</div>
+				{/if}
+				<!-- select -->
+				{if condition="$value['goods_qualifications_group_form_type'] eq 2"}
+					{notempty name="value.goods_qualifications_group_value"}
+						<div class="main100 mb10 h34">
+							<select name="goods_qualifications[{$key}][qualifications_value][0]" class="bs-select form-control main100 fs12">
+								<option value="">请选择</option>
+								{foreach name="value.goods_qualifications_group_value" key="ko" item="vo"}
+		                        	<option value="{$vo}">{$vo}</option>
+		                        {/foreach}
+			                </select>
+			            </div>
+		            {else/}
+		            	<span>参数缺失。</span>
+		            {/notempty}
+				{/if}
+				<!-- checkbox -->
+				{if condition="$value['goods_qualifications_group_form_type'] eq 3"}
+					{notempty name="value.goods_qualifications_group_value"}
+						<div class="main100 mb10 over">
+							{foreach name="value.goods_qualifications_group_value" key="ko" item="vo"}
+	                        	<div class="fl mr25">
+									<label class="square mar0 fl">
+										<input name="goods_qualifications[{$key}][qualifications_value][{$ko}]" value="{$vo}" type="checkbox">
+										<em class="fl"></em>
+										<span class="ml10">{$vo}</span>
+									</label>
+								</div>
+	                        {/foreach}
+	                    </div>
+                    {else/}
+                    	<div class="fl mr25">
+                    		<span>参数缺失。</span>
+                    	</div>
+	                {/notempty}
+				{/if}
+				<!-- textarea -->
+				{if condition="$value['goods_qualifications_group_form_type'] eq 4"}
+					<div class="main100 over mb10">
+						<textarea name="goods_qualifications[{$key}][qualifications_value][0]" placeholder="请输入参数值" class="main100 bor_img radius4px pd10 h70 mb15"></textarea>
+					</div>
+				{/if}
+				<!-- upload_img -->
+				{if condition="$value['goods_qualifications_group_form_type'] eq 5"}
+					<div class="main100 over mb10">
+						<div class="fl re over mr5 remove-img">
+							<a class="btn-xx ab hide" onclick="delQualificationsImg($(this))" style="right:0;top:0;">x</a>
+							<img onclick="triggerUploadImages('#goods_qualifications_img{$key}','.goods_qualifications_img{$key}',function(){changeQualificationsImg('#goods_qualifications_img{$key}')});" class="pull-left bor_img radius4px goods_qualifications_img{$key}" style="max-width: 300px;max-height: 300px;" src="/static/web/images/icon/imgimg.jpg">
+							<input value="" type="hidden" id="goods_qualifications_img{$key}" name="goods_qualifications[{$key}][qualifications_value][0]">
+						</div>
+					</div>
+				{/if}
+			{/foreach}
+		</div>
+		<!-- 商品详情内容 -->
+		<div class="main100 bg_white pd15 pb10 radius4px nav-tog-list">
+			<div class="main100 mb10 fs12 ">商品详情<span class="color-red1">*</span></div>
+			<div class="main100">
+				{$UEditor}
+			</div>
+			<!-- <div class="main100 mt20">
+				<a class="btn text_white bg-red-thunderbird radius4px pd8 pl35 pr35 mb100" id="create-goods-btn">发布商品</a>
+			</div> -->
+		</div>
+		<div class="main100 pl20 pt20 bg_white">
+			<a class="btn text_white bg-red-thunderbird radius4px pd8 pl35 pr35 mb100" id="create-goods-btn">发布商品</a>
+		</div>
+	</div><!-- 页面主体内容结束 -->
+	
+	<input type="hidden" name="goods_category_id" value="{:input('category_id',0,'int')}">
+	</form>
+</div>
+<!-- 上传图片 -->
+<input class="upload-file" style="display: none;" id="upload-images-base" type="file" onchange="uploadImagesBase();">
+<input class="upload-file" style="display: none;" id="upload-images-base-new" type="file" onchange="uploadImagesBaseNew();">
+{/block}
+{block name="script"}
+<script type="text/javascript">
+	// 资质图片处理
+	function delQualificationsImg(obj){
+		if ( confirm('确定删除吗？') ) {
+			obj.siblings('input').val('');
+			obj.siblings('img').attr('src','/static/web/images/icon/imgimg.jpg');
+			obj.addClass('hide');
+		}
+	}
+	function changeQualificationsImg(valueInputEle){
+		if($(valueInputEle).val() != ''){
+			$(valueInputEle).siblings('a').removeClass('hide');
+		}
+	}
+	// 计算字符
+	function getObjValueLen(obj){
+		var str = obj.val();
+		if (str == null) return 0;
+	  	if (typeof str != "string"){
+	    	str += "";
+	  	}
+	  	return str.replace(/[^\x00-\xff]/g,"01").length;
+	}
+	$('.goods_name_length').html('(' + getObjValueLen($('input[name="goods_name"]')) + '/80)');
+	$('.goods_sub_name_length').html('(' + getObjValueLen($('input[name="goods_sub_name"]')) + '/255)');
+	$('input[name="goods_name"]').on('change',function(){
+		$('.goods_name_length').html('(' + getObjValueLen($('input[name="goods_name"]')) + '/80)');
+		if ( getObjValueLen($('input[name="goods_name"]')) > 80 ) {
+			error('商品名称过长');
+			$('.goods_name_length').removeClass('color-blue').addClass('color-red1');
+		} else {
+			$('.goods_name_length').removeClass('color-red1').addClass('color-blue');
+		}
+	});
+	$('textarea[name="goods_sub_name"]').on('change',function(){
+		$('.goods_sub_name_length').html('(' + getObjValueLen($('textarea[name="goods_sub_name"]')) + '/255)');
+		if ( getObjValueLen($('textarea[name="goods_sub_name"]')) > 255 ) {
+			error('商品副标题过长');
+			$('.goods_sub_name_length').removeClass('color-blue').addClass('color-red1');
+		} else {
+			$('.goods_sub_name_length').removeClass('color-red1').addClass('color-blue');
+		}
+	});
+	// 同步下标价格等数据
+	$(document).on('click','.goods-sku-list .w25.bg-red1',function(){
+		var text = $(this).parent().find('input').val();
+		var index = $(this).parents('td').index();
+		$(this).parents('tr').siblings().each(function(){
+			$(this).find('td').each(function(){
+				if (index == $(this).index()) {
+					$(this).find('input').val(text);
+				}
+			});
+		});
+	});
+	// tab
+	$(document).on('click','.nav-tog a',function(){
+		var n = $('.nav-tog a').index(this);
+		$('.nav-tog a').removeClass('cp-active');
+		$(this).addClass('cp-active');
+		$('.nav-tog-list').hide();
+		$('.nav-tog-list').eq(n).show();
+	});
+	// 店铺分类
+	$('.shop-category-level-1').on('click',function(){
+		$(this).addClass('lei-action').siblings().removeClass('lei-action');
+		var id = $(this).data('id');
+		$('.shop-category-level-2').each(function(k,v){
+			if ( id == $(this).data('pid') ){
+				$(this).removeClass('hide');
+			} else {
+				$(this).addClass('hide');
+			}
+		});
+	});
+	// 属性组合属性值
+	var goodsSkuI = 0;
+	var goodsSkuJ = 0;
+	var goodsSkuK = 0;
+	var goodsSkuL = 0;
+	var goodsSkuM = 0;
+	var SKU_GROUP_MAX 				= parseInt('{$GoodsCondition.sku_group_max}');
+	var SKU_GROUP_VALUE_MAX 		= parseInt('{$GoodsCondition.sku_group_value_max}');
+	var SKU_GROUP_VALUE_IMAGES_MAX 	= parseInt('{$GoodsCondition.sku_group_value_images_max}');
+	// alert(SKU_GROUP_MAX);
+	function addSkuGroup(){
+		if ( SKU_GROUP_MAX <= $('.goods-sku-group-item').length ) {
+			error('最多添加' + SKU_GROUP_MAX + '个');
+			return;
+		}
+		var html = '';
+		html += '<div class="goods-sku-group-item"  data-i="' + goodsSkuI + '">';
+
+		html += '<div class="main100 color333 over">';
+		html += '<input name="goods_sku_group[' + goodsSkuI++ + '][sku_group_name]" placeholder="请输入属性组名称" class="main100 radius4px container-fluid line32 bor_img mb10 fl w270 input1" value=""/>';
+		html += '<a class="btn text_gray bg-gray radius4px pd7 pl25 pr25 mb10 line32 fl ml10" onclick="addSkuGroupValueItem(this)">添加此属性组值</a>';
+		html += '<a class="btn text_white bg-red1 radius4px pd7 pl25 pr25 mb10 line32 fl ml10"  onclick="removeSkuGroup(this)">删除</a>';
+		html += '</div>';
+
+		html += '<div class="main100 color333 over mb15 goods-sku-group-value-list"></div>';
+
+		html +=	'</div>';
+		$('.goods-sku-group-list').append(html);
+	}
+	function addSkuGroupValueItem(that){
+		if ( SKU_GROUP_VALUE_MAX <= $(that).parents('.goods-sku-group-item').find('.goods-sku-group-value-item').length ) {
+			error('最多添加' + SKU_GROUP_VALUE_MAX + '个');
+			return;
+		}
+		if ( $(that).parents('.goods-sku-group-item').find('.input1').val() == '' ) {
+			error('请先输入组名');
+			return ;
+		}
+		var html = '';
+		html += '<div class="fl over mr20 re mt15 goods-sku-group-value-item" data-i="' + goodsSkuL + '" style="min-width:390px;">';
+
+		html += '<div class="fl main100 over radius4px bor-f5 h32 line30 mb10">';
+		html += '<span class="fl w35 bg-f5 text-center h30">';
+		html += '<label class="square mar0 fl">';
+		html += '<input onclick="selectSkuGroupValue(this)" type="checkbox"><em class="fl ml9 mt7"></em>';
+		html += '</label>';
+		html += '</span>';
+		html += '<input  class="fl bor_no w290 pl10 goods-sku-value" name="goods_sku_group[' + $(that).parents('.goods-sku-group-item').data('i') + '][sku_group_value][' + goodsSkuL++ + ']" type="text"  placeholder="请输入属性值"/>';
+		html += '<a class="fr pl10 pr10 bg-f5 text_red" onclick="removeSkuGroupValueItem(this);">删除</a>';
+		html += '</div>';
+
+		html += '<div class="main100 goods-sku-images">';
+		html += '<div class="fl re over mr5 addSkuImages" onclick="addSkuImages(this)"><img src="/static/web/images/icon/imgimg.jpg" class="radius4px  fl w72 h72"></div>';
+		// html += '<div class="fl re over mr5 remove-img goods-sku-images-item"><a class="btn-xx ab" style="right:0;top:0;">x</a><img src="/static/web/images/123.jpg" class="radius4px  fl w72 h72"></div>';
+		html += '</div>';
+
+		html += '</div>';
+		// alert(html);
+		$(that).parent().parent().find('.goods-sku-group-value-list').append(html);
+	}
+	function removeSkuGroup(that){
+		if ( confirm('确定删除吗？') ) {
+			$(that).parent().parent().remove();
+			goodsSkuGroupMerge();
+		}
+	}
+	function removeSkuGroupValueItem(that){
+		if ( confirm('确定删除吗？') ) {
+			// 锁定和解锁 text input
+			var p = $(that).parents('.goods-sku-group-value-item');
+			var is = false;
+			p.siblings().each(function(){
+				if ( $(this).find('input[type="checkbox"]').prop('checked') == true ){
+					is = true;
+				}
+			});
+			if ( is ) {
+				p.parents('.goods-sku-group-item').find('.input1').attr('readonly',true);
+			} else {
+				p.parents('.goods-sku-group-item').find('.input1').attr('readonly',false);
+			}
+			$(that).parent().parent().remove();
+
+			goodsSkuGroupMerge();
+		}
+	}
+	function selectSkuGroupValue(that){
+		// 没有填组名
+		if ($(that).prop('checked') == true && $(that).parents('.goods-sku-group-item').find('.input1').val() == '' ) {
+			error('请先输入组名');
+			$(that).prop('checked',false);
+			return ;
+		}
+		
+		var p = $(that).parents('.goods-sku-group-value-item');
+		if ( $(that).prop('checked') == true ) {
+			if ( p.find('.goods-sku-value').val() == '' ) {
+				error('请先填写属性值');
+				$(that).prop('checked',false);
+				return ;
+			}
+			
+			p.find('.goods-sku-value').attr('readonly',true);
+		} else {
+			p.find('.goods-sku-value').attr('readonly',false);
+		}
+		// 锁定和解锁 text input
+		var is = false;
+		p.siblings().each(function(){
+			if ( $(this).find('input[type="checkbox"]').prop('checked') == true ){
+				is = true;
+			}
+		});
+		if ( is ) {
+			p.parents('.goods-sku-group-item').find('.input1').attr('readonly',true);
+		} else {
+			p.parents('.goods-sku-group-item').find('.input1').attr('readonly',false);
+		}
+		goodsSkuGroupMerge();
+	}
+	$('#add-goods-sku').on('click',function(){
+		addSkuGroup();
+	});
+	function addSkuImages(that){
+		var p = $(that).parents('.goods-sku-group-value-item');
+		if ( SKU_GROUP_VALUE_IMAGES_MAX <= $(that).parents('.goods-sku-images').find('.goods-sku-images-item').length ) {
+			error('最多添加' + SKU_GROUP_VALUE_IMAGES_MAX + '个');
+			return;
+		}
+		triggerUploadImagesNew({
+			callback:function(ret){
+				// console.log(ret);
+				var html = '';
+				var id = 'goods-sku-images-item-' + goodsSkuJ;
+				var id2 = 'goods-sku-images-item-v-' + goodsSkuJ++;
+				html += '<div class="fl re over mr5 remove-img goods-sku-images-item">';
+				html += '<a onclick="removeSkuImages(this)" class="btn-xx ab" style="right:0;top:0;">x</a>';
+				html += '<img id="' + id + '" src="' + ret.data.url + '" class="radius4px fl w72 h72">';
+				html += '<input name="goods_sku_group[' + $(that).parents('.goods-sku-group-item').data('i') + '][sku_group_album][' + $(that).parents('.goods-sku-group-value-item').data('i') + '][' + goodsSkuM++ + ']" type="hidden" id="' + id2 + '" value="' + ret.data.key + '" />';
+				html += '</div>';
+				$(that).parent().append(html);
+				goodsSkuGroupMerge();
+			}
+		});
+	}
+	function removeSkuImages(that){
+		if ( confirm('确定删除吗？') ){
+			$(that).parent().remove();
+			goodsSkuGroupMerge();
+		}
+	}
+	function getJsonLength(jsonData){
+	    var jsonLength = 0;
+	    for(var item in jsonData){
+	        jsonLength++;
+	    }
+	    return jsonLength;
+	}
+	var GoodsSkuArr = new Object();
+	function goodsSkuGroupMerge(){
+		console.log(GoodsSkuArr);
+		// 重新定义GoodsSkuArr
+		$('.goods-sku-list tr').each(function(){
+			var temp1 = $(this).find('td').eq(1).html();
+			var oobj = $(this);
+			// console.log(temp1);
+			var tempGoodsSku = new Object();
+			tempGoodsSku.goods_sku_group_values = temp1;
+			tempGoodsSku.goods_sku_price 		= oobj.find('td').eq(2).find('input[type="number"]').first().val();
+			tempGoodsSku.goods_sku_market_price = oobj.find('td').eq(3).find('input[type="number"]').first().val();
+			tempGoodsSku.goods_sku_cost_price 	= oobj.find('td').eq(4).find('input[type="number"]').first().val();
+			tempGoodsSku.goods_sku_num 			= oobj.find('td').eq(5).find('input[type="number"]').first().val();
+			tempGoodsSku.goods_sku_weight 		= oobj.find('td').eq(6).find('input[type="number"]').first().val();
+			var isHave = false;
+			$.each(GoodsSkuArr,function(k,v){
+				// console.log(k);
+				if ( temp1 == v.goods_sku_group_values ) {
+					isHave = true;
+					GoodsSkuArr[k] = $.extend(v,tempGoodsSku);
+				}
+			});
+			if ( isHave == false ) {
+				GoodsSkuArr[getJsonLength(GoodsSkuArr)] = tempGoodsSku;
+			}
+		});
+		// 
+		goodsSkuK = 0;
+		var Arr = [];
+		var Arr2 = [];
+		$('.goods-sku-group-list .goods-sku-group-item').each(function(){
+			var tempArr = [];
+			var tempArr2 = [];
+			$(this).find('.goods-sku-group-value-item').each(function(){
+				if ( $(this).find('input[type="checkbox"]').prop('checked') == true ) {
+					// alert($(this).find('input[type="text"]').val());
+					var tempImgArr = [];
+					var name = $(this).find('input[type="text"]').val();
+					$(this).find('.goods-sku-images-item input[type="hidden"]').each(function(){
+						tempImgArr.push($(this).val());
+					});
+					tempArr.push(name);
+					tempArr2.push(tempImgArr.join(',', tempImgArr));
+				}
+			});
+			if ( tempArr.length > 0 ) {
+				Arr.push(tempArr);
+				Arr2.push(tempArr2);
+			}
+		});
+		// console.log(Arr);
+		Arr = array_combine(Arr);
+		Arr2 = array_combine(Arr2);
+		// console.log(Arr);
+		// console.log(Arr2);
+		var html = '';
+		for (i=0;i < Arr.length;i++) {
+			var temp1 = Arr[i].join();
+			var temp2 = Arr2[i].join();
+			var GoodsSku = {
+				goods_sku_price:'',
+				goods_sku_market_price:'',
+				goods_sku_cost_price:'',
+				goods_sku_num:'',
+				goods_sku_weight:'',
+			};
+			$.each(GoodsSkuArr, function(k,v){
+				if ( v.goods_sku_group_values == temp1 ){
+					// html += '<input type="hidden" name="goods_sku[' + i + '][goods_sku_id]" value="' + v.goods_sku_id + '">';
+					GoodsSku = GoodsSkuArr[k];
+				}
+			});
+
+			html += '<tr>';
+
+			html += '<td class="text-center">' + (i + 1) + '</td>';
+
+			html += '<td>' + temp1 + '</td>';
+
+			html += '<td>';
+			html += '<div class="over radius4px border-red line30 h32 di">';
+			html += '<input name="goods_sku[' + i + '][goods_sku_price]" class="fl w80 bor_no pl10" type="number" value="' + GoodsSku.goods_sku_price + '">';
+			html += '<a  class="w25 bg-red1 fl h30"><img class="db" style="    margin-top: 9px;margin-left: 7px;" src="/static/web/images/icon/jiantou.png"></a>	';
+			html += '</div>';
+			html += '</td>';
+
+			html += '<td>';
+			html += '<div class="over radius4px border-red line30 h32 di">';
+			html += '<input name="goods_sku[' + i + '][goods_sku_market_price]" class="fl w80 bor_no pl10" type="number" value="' + GoodsSku.goods_sku_market_price + '">';
+			html += '<a  class="w25 bg-red1 fl h30"><img class="db" style="    margin-top: 9px;margin-left: 7px;" src="/static/web/images/icon/jiantou.png"></a>	';
+			html += '</div>';
+			html += '</td>';
+
+			html += '<td>';
+			html += '<div class="over radius4px border-red line30 h32 di">';
+			html += '<input name="goods_sku[' + i + '][goods_sku_cost_price]" class="fl w80 bor_no pl10" type="number" value="' + GoodsSku.goods_sku_cost_price + '">';
+			html += '<a  class="w25 bg-red1 fl h30"><img class="db" style="    margin-top: 9px;margin-left: 7px;" src="/static/web/images/icon/jiantou.png"></a>	';
+			html += '</div>';
+			html += '</td>';
+
+			html += '<td>';
+			html += '<div class="over radius4px border-red line30 h32 di">';
+			html += '<input name="goods_sku[' + i + '][goods_sku_num]" class="fl w80 bor_no pl10" type="number" value="' + GoodsSku.goods_sku_num + '">';
+			html += '<a  class="w25 bg-red1 fl h30"><img class="db" style="    margin-top: 9px;margin-left: 7px;" src="/static/web/images/icon/jiantou.png"></a>	';
+			html += '</div>';
+			html += '</td>';
+
+			html += '<td>';
+			html += '<div class="over radius4px border-red line30 h32 di">';
+			html += '<input name="goods_sku[' + i + '][goods_sku_weight]" class="fl w80 bor_no pl10" type="number" value="' + GoodsSku.goods_sku_weight + '">';
+			html += '<a  class="w25 bg-red1 fl h30"><img class="db" style="    margin-top: 9px;margin-left: 7px;" src="/static/web/images/icon/jiantou.png"></a>	';
+			html += '</div>';
+			html += '</td>';
+			
+			// console.log(temp1);
+			html += '<input type="hidden" value="' + temp1 + '" name="goods_sku[' + i + '][goods_sku_group_values]">';
+			html += '<input type="hidden" value="' + temp2 + '" name="goods_sku[' + i + '][goods_sku_album]">';
+
+			html += '</tr>';
+		}
+
+		$('.goods-sku-list').html(html);
+	}
+	/**
+	 * 对二维不定长数组（横纵均不固定）进行横向单元素全排列
+	 */
+	function array_combine(arr){
+		var length 	= arr.length;
+		var tempArr = [];//暂存一个排列组合
+		var result 	= [];//最终结果
+
+		function mkValueByIx(index){
+			var sourceArr = arr[index];
+			for(var i = 0;i < sourceArr.length;i++){
+				tempArr[index] = sourceArr[i];
+				if(index < length - 1){
+					mkValueByIx(index + 1);
+				}else{
+					result.push(tempArr.slice(0));//将拷贝放入结果中
+				}
+			}
+		}
+		if(length > 0){
+			mkValueByIx(0);
+		}
+		return result;
+	}
+	var isSubmitForm = false;
+	$('#create-goods-btn').on('click',function(){
+		if ( isSubmitForm == true ) {
+			error('正在提交数据，请勿重复操作');
+			return ;
+		}
+		// 是否全选
+		var isSelectAll = true;
+		$('.goods-sku-group-list').find('.goods-sku-group-value-item').each(function(){
+			if ( $(this).find('input[type="checkbox"]').prop('checked') == false ) {
+				isSelectAll = false;
+			}
+		});
+		if (false == isSelectAll) {
+			error('请勾选或删除属性值 再次提交。');
+			return false;
+		}
+		isSubmitForm = true;
+		apiPost({
+			data:getFormJson('#create-goods-form'),
+			header:getHeader('headers0'),
+			log:true,
+			success:function(ret){
+				if ( ret.code == 20000 ) {
+					success('发布商品成功');
+					$(window).unbind('beforeunload');
+					setTimeout(function(){
+						window.location.href = '/goods';
+					},1000);
+				} else {
+					error(ret.msg);
+					isSubmitForm = false;
+				}
+			},
+			error:function(e){
+				isSubmitForm = false;
+			},
+		});
+	});
+	$(function(){
+		$(window).bind('beforeunload',function(){ 
+			return '您输入的内容尚未保存，确定离开此页面吗？'; 
+		});
+	});
+	// function checkForm() {
+	// 	var data = getFormJson('#create-goods-form');
+	// 	console.log(data);
+	// 	var res = false;
+	// 	if ( $('input[name="goods_name"]').val() == '' ) {
+	// 		error('请输入商品名');
+	// 		return res;
+	// 	}
+	// 	if ( $('input[name="goods_service_days"]').val() == '' ) {
+	// 		error('请输入售后天数');
+	// 		return res;
+	// 	}
+	// 	if ( $('input[name="goods_images"]').val() == '' ) {
+	// 		error('请上传商品主图');
+	// 		return res;
+	// 	}
+	// 	if ( $('input[name="goods_state"]').val() == '' ) {
+	// 		error('请选择商品状态');
+	// 		return res;
+	// 	}
+	// 	if ( $('input[name="goods_recommend"]').val() == '' ) {
+	// 		error('请选择商品橱窗');
+	// 		return res;
+	// 	}
+		
+	// }
+</script>
+{/block}

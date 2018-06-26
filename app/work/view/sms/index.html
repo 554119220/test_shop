@@ -1,0 +1,48 @@
+{extend name="public:base" /}
+<!--导航-->
+{block name="nav"}{include file="sms:nav" /}{/block}
+{block name="search"}{include file="sms:search" /}{/block}
+<!--主体内容-->
+{block name="content"}
+{notempty name="list"}
+<form class="form-list" id="form-list" onsubmit="return false">
+	<table class="table table-bordered table-hover valign-middle">
+		<thead>
+			<th width="160" class="text-center">发送时间</th>
+			<th width="80" class="text-center">接收号码</th>
+			<th width="120" class="text-center">是否成功</th>
+			<th width="120" class="text-center">发送内容</th>
+		</thead>
+		<tbody>
+			{volist name="list" id="vo"}
+			<tr>
+				<td class="text-center">{$vo.time}</td>
+				<td class="text-center">{$vo.to}</td>
+				<td class="text-center">
+					{eq name="vo.flag" value="1"}
+						<span style="color: green">发送成功</span>
+					{else /}
+						<span style="color: red">发送失败</span>
+					{/eq}
+				</td>
+				<td><textarea row="3" class="form-control">{$vo.content}</textarea></td>
+			</tr>		
+			{/volist}
+		</tbody>
+	</table>
+</form>
+{else /}
+	<div class="text-center nors">
+		<h3>找不到记录！</h3>
+	</div>
+{/notempty}
+	<div class="page-box">
+		{:page_html_not_count($pageinfo)}
+	</div>
+                     
+{/block}
+
+<!--脚本-->
+{block name="javascript"}
+
+{/block}

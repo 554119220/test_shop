@@ -1,0 +1,51 @@
+
+            {extend name="public:base" /}
+
+{block name="page"}
+
+<!-- 标题栏 -->
+<header class="bar bar-nav login_head">
+    <a class="icon icon-left pull-left text_white back"></a>
+    <h1 class="title">登录</h1>
+</header>
+<!-- 这里是页面内容区 -->
+<div class="content bg_white">
+    <div class="content-block">
+        <div class="main100">
+            <img class="llogo" src="/static/wap/images/reg/logo.png">
+        </div>
+        <form>
+            <input type="hidden" name="" value={$login} id="login" >
+
+            <div class="main100 l_bor">
+                <img class="ab" style="width:.9rem;left:.75rem;top:.5rem" src="/static/wap/images/reg/icon_user.png">
+                <input class="main100 luser" name="account" type="text" placeholder="请输入会员名或手机号" style="background: none">
+                <a class="lbot"></a>
+                <!--记录历史帐号-->
+                <!-- <div class="lji">
+                    <div class="main100">
+                        <span>asdljasjsla</span><i></i>
+                    </div>
+                    <div class="main100">
+                        <span>记录的帐号</span><i></i>
+                    </div>
+                </div> -->
+            </div>
+            <div class="main100 l_bor">
+                <img class="ab" style="width:.9rem;left:.75rem;top:.5rem" src="/static/wap/images/reg/icon_mima.png">
+                <input class="main100 lmi" name="load_psw" type="password" placeholder="请输入用户密码" style="background: none">
+                <a class="lkai"></a>
+            </div>
+            <div class="main100 l_bor">
+                <input class="main100 lyan" name="captcha_code" type="text" placeholder="请输入验证码">
+                <img class="ab captcha_code" style="right:0;top:0;height:2rem" src="{:captcha_src()}" data-src="{:captcha_src()}">
+            </div>
+            <div class="login_go">
+                <input type="button" id="login-btn" value="登录">
+                <!-- <a href="#" class="l_wang">忘记密码？</a>
+                <a href="#" class="no_user"><span>快速安全登录</span></a> -->
+            </div>
+        </form>
+    </div>
+</div>
+{/block}

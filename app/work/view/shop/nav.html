@@ -1,0 +1,15 @@
+<div class="nav-title">
+	<div class="pull-right">
+		<a href="/{$Request.controller}/add" class="btn blue btn-100px btn-outline"><i class="icon-plus"></i> 新增</a>
+	</div>	
+	<ul>
+		<li class="active" data-baseUrl="/{$Request.controller}/index"><a href="/{$Request.controller}/index">店铺列表</a></li>
+		<li data-baseUrl="" data-cert="0"><a href="/{$Request.controller}/index/shop_state/0">已删除</a></li>
+		<li data-baseUrl="" data-cert="1"><a href="/{$Request.controller}/index/shop_state/1">正常</a></li>
+		<li data-baseUrl="" data-cert="2"><a href="/{$Request.controller}/index/shop_state/2">已冻结</a></li>
+		<li data-baseUrl="" data-cert="3"><a href="/{$Request.controller}/index/shop_state/3">已关闭</a></li>
+		<li data-baseUrl="" data-cert="4"><a href="/{$Request.controller}/index/shop_state/4">已被强制关闭</a></li>
+		<li data-otherUrl="/{$Request.controller}/{$Request.action}" class="hide"><a href="{$Request.url}">[title]</a></li>
+	</ul>
+</div>
+

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <title>开发文档 - 百望商城</title>
+</head>
+<!--<link rel="stylesheet" type="text/css" href="/static/web/assets/global/plugins/bootstrap/css/bootstrap.min.css">-->
+<link rel="stylesheet" href="/static/web/lay/lay.css"  media="all">
+<style type="text/css">
+    html, body {
+        background: #F0F0F0;
+    }
+    .header {
+        width: 100%;
+        background: #FFFFFF;
+        padding: 20px 0;
+    }
+    nav ul {
+        width: 1200px;
+        margin: 0 auto;
+        padding: 0;
+    }
+    nav li {
+        display: table-cell;
+    }
+    nav li a {
+        font-size: 18px;
+        color: #333;
+        padding: 0 20px;
+        text-decoration: none;
+    }
+
+    div.content {
+        width: 1200px;
+        margin: 30px auto;
+        background: #FFFFFF;
+        padding: 20px;
+    }
+    div.content:after {
+        clear: both;
+        display: block;
+        content: " ";
+    }
+    div.content .side {
+        float: left;
+        width: 18%;
+        border-right: solid 1px #F0F0F0;
+        padding-right: 20px;
+        box-sizing: border-box;
+    }
+    div.content .side h4 {
+        border-bottom: solid 1px #F0F0F0;
+        padding-bottom: 10px;
+        margin-top: 5px;
+    }
+    div.content .side dl {
+        border-bottom: solid 1px #F0F0F0;
+        padding: 0;
+        margin: 0 0 10px 0;
+    }
+    div.content .side dl dt{
+        padding-bottom: 10px;
+        padding-left: 10px;
+        padding-top: 5px;
+    }
+    div.content .side dl dd{
+        padding-bottom: 10px;
+        padding-left: 20px;
+    }
+    div.content .side a {
+        color: #666;
+        text-decoration: none;
+    }
+    div.content .main {
+        float: right;
+        width: 80%;
+        padding-left: 20px;
+    }
+    div.content .main h3 {
+        margin-top: 0;
+        border-bottom: solid 1px #F0F0F0;
+        padding-bottom: 10px;
+        box-sizing: border-box;
+    }
+    div.content .main h4 {
+        margin-top: 0;
+        border-bottom: solid 1px #F0F0F0;
+        padding-bottom: 10px;
+        padding-top: 10px;
+        margin-bottom: 10px;
+        font-size: 16px;
+    }
+    .main-route {
+        margin-left: 10px;
+        font-size: 16px;
+    }
+    pre {
+        border: 0;
+        background: #F0F0F0;
+        border-radius: 0;
+    }
+    img.logo {
+        width: 150px;
+        vertical-align: middle;
+    }
+    .list-plus {
+        float: right;
+    }
+    .main-params table {
+        border: 1px solid #e7ecf1;
+        width: 100%;
+        margin-bottom: 20px;
+        max-width: 100%;
+        background-color: transparent;
+        border-collapse: collapse;
+        border-spacing: 0;
+        box-sizing: border-box;
+    }
+    .main-params table thead{
+        display: table-header-group;
+        vertical-align: middle;
+        border-color: inherit;
+    }
+    .main-params table tr {
+        display: table-row;
+        vertical-align: inherit;
+        border-color: inherit;
+    }
+    .main-params table thead tr th {
+        /*border-top: 0;*/
+        /*border-bottom-width: 2px;*/
+        border: 1px solid #e7ecf1;
+        vertical-align: bottom;
+        padding: 8px;
+        line-height: 1.42857;
+        text-align: left;
+    }
+    .main-params table tbody tr {
+        background-color: #fbfcfd;
+        display: table-row;
+        vertical-align: inherit;
+        border-color: inherit;
+    }
+    .main-params table tbody tr td {
+        border: 1px solid #e7ecf1;
+        padding: 8px;
+        line-height: 1.42857;
+        vertical-align: top;
+    }
+    .hide {
+        display: none;
+    }
+    h3 {
+        font-size: 18px;
+    }
+    .text-center {
+        text-align: center;
+    }
+</style>
+<body>
+    <div class="contains">
+        {block name="page"}{/block}
+    </div>
+    <script src="/static/web/assets/global/plugins/jquery.min.js"></script>
+    <script src="/static/web/lay/lay.js" charset="utf-8"></script>
+    <!--<script src="https://cdn.jsdelivr.net/npm/vue"></script>-->
+    <script src="/static/web/js/doc.js"></script>
+    {block name="script"}
+    {/block}
+</body>
+</html>

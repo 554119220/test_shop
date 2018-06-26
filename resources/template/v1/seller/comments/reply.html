@@ -1,0 +1,103 @@
+{extend name="public:base" /}
+{block name="page"}
+<div class="tab_col pd10 pb0">
+    <div class="container-fluid bg-white radius4px">
+        <i class="redicon"></i>
+        <span class="fs14 color333 pl5">回复评价</span>
+    </div>
+    {empty name="detail"}
+        <div class="main100  bg-white radius4px pl15 pr15 pt15 over">
+            <h4>没有找到评价。</h4>
+        </div>
+    {else}
+        <div class="main100  bg-white radius4px pl15 pr15 pt15 over">
+
+            <div class="main100 radius4px over">
+                <table class="table solid_all  table_dashed tr12 table12  table-center" >
+                    <thead class=" bg-f5 ">
+                    <tr>
+                        <th class="small_xs text-leftt">商品信息</th>
+                        <th class="small_xs ">单价</th>
+                        <th class="small_xs ">数量</th>
+                        <th class="small_xs ">实付款</th>
+                        <th class="small_xs ">赠送积分</th>
+                        <th class="small_xs ">状态</th>
+                        <th class="small_xs ">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody >
+                    <tr>
+                        <td>
+                            <a href="javascript:;">
+                                <img class="fl radius4px mr8" style="height:72px;width:72px;" src="{$detail.orders_goods.goods_images|thumb=72}">
+                                <div class="fl text-leftt" style="width: calc(100% - 90px);">
+                                    <div class="line20 mt4 mb6 color666 ">{$detail.orders_goods.goods_name}</div>
+                                    <div class="color999">{$detail.orders_goods.goods_sku_name}</div>
+                                </div>
+                            </a>
+                        </td>
+                        <td class="text_green">￥{$detail.orders_goods.orders_goods_single_amount}元</td>
+                        <td>{$detail.orders_goods.orders_goods_num}</td>
+                        <td>{$detail.orders_goods.orders_goods_amount}元</td>
+                        <td>--</td>
+                        <td>
+                            <div class="main100">
+                                <div><a class="line22 color-red1" href="javascript:;">{$detail.goods_comment_is_effect_name}</a></div>
+                                <!-- <div><a  class="line22 color-blue" href="javascript:;">疑似刷单</a></div> -->
+                                <div><a  class="line22 color-red1" href="javascript:;">{$detail.goods_comment_evaluation_name}</a></div>
+                            </div>
+                        </td>
+                        <td  >
+                            <div class="main100">
+                                <!-- <div><a  class="line22 color-blue" href="javascript:;">回复评论</a></div> -->
+                                <!-- <div><a  class="line22 color-blue" href="javascript:;">刷单申诉</a></div> -->
+                                <div><a  class="line22 color-blue" href="/comments/detail/id/{$detail.goods_comment_id}">详情</a></div>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="main mt10 bg_white pd15 radius4px minh595">
+            {empty name="detail.goods_comment_content.goods_comment_reply_content"}
+            <form id="form">
+                <!--  -->
+                <input type="hidden" name="goods_comment_id" value="{:input('id')}">
+                <div class="main100 bg-white radius4px mb10">
+                    <i class="redicon mar0"></i>
+                    <span class="fs14 color333 pl5">回复内容</span>
+                </div>
+                <textarea name="goods_comment_reply_content" class="main100 bor_img radius4px pd10 h70 mb15" placeholder="商品发货很快，也很实惠！……"></textarea>
+                <div class="main100 over">
+                    <a class="btn text_white bg-red-thunderbird radius4px pd8 pl35 pr35 reply">立即回复</a>
+                </div>
+            </form>
+            {/empty}
+        </div>
+    {/empty}
+</div><!-- 右边内容结束 -->
+{/block}
+{block name="script"}
+<script type="text/javascript">
+    $(function(){
+        $('.reply').on('click',function(){
+            apiPost({
+                data:getFormJson('#form'),
+                header:getHeader('headers0'),
+                log:true,
+                success:function(ret){
+                    if (ret.code == 20000) {
+                        success('回复成功');
+                        setTimeout(function(){
+                            window.location.href = '/comments';
+                        },1000);
+                    } else {
+                        error(ret.msg);
+                    }
+                },
+            });
+        });
+    });
+</script>
+{/block}

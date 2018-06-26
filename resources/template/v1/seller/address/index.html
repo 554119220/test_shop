@@ -1,0 +1,29 @@
+{extend name="public:base" /}
+{block name="page"}
+<div class="tab_col pd10 pb0 ">
+    <div class="main100 over bg_white">
+        <div class="container-fluid line55 bg-white radius4px mb20">
+            <i class="redicon"></i>
+            <span class="fs14 color333 pl5">收货地址</span>
+            <a class="btn text_white bg-red-thunderbird radius4px pd5 pl25 pr25 mt15 fr" href="/address/create">添加地址</a>
+        </div>
+        {eq name="data.code" value="20000"}
+            <div class="main100  bg-white radius4px pl15 pr15 minh595">
+                {volist name="data.data" id="vo"}
+                <div class="main100 bg-gray radius4px over line60 pl40 pr40 mb10">
+                    <span class="fl main20 color666">{$vo.address_mobile}</span>
+                    <span class="fl color666 mr15">{$vo.province_name}{$vo.city_name}{$vo.district_name}{$vo.town_name}{$vo.address_street}{$vo.address_postal_code ? : ''}</span>
+                    <span class="fl color666 ">{$vo.address_name}{eq name="vo.address_is_default" value="1"}(默认地址){/eq}</span>
+                    <form data-header="delete" data-refresh="true" data-confirm="您真的要删除当前地址吗？">
+                        <input name="id" value="{$vo.address_id}" type="hidden">
+                        <a class="fr color-blue btn-submit"><span class="ml15 mr15 color999">|</span>删除</a>
+                    </form>
+                    <a href="/address/edit?id={$vo.address_id}" class="fr color-blue ">修改</a>
+                </div>
+                {/volist}
+            </div>
+        {else/}
+        {/eq}
+    </div>
+</div><!-- 右边内容结束 -->
+{/block}

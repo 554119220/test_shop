@@ -1,0 +1,21 @@
+<form class="form-horizontal" id="form-add-{$Request.param.id}" onsubmit="return sform($(this))">
+    {:buildform(array(
+    'field'		=>array(
+    array(
+    'formtype'		=>'text',
+    'label'			=>'天数',
+    'name'			=>'day',
+    'value'        =>1,
+    ),
+    array(
+    'formtype'		=>'textarea',
+    'label'			=>'操作说明',
+    'name'			=>'content',
+    ),
+    array(
+    'formtype'		=>'button',
+    'btns'			=>[['提交','btn btn-danger btn-150px','submit']],
+    ),
+    ),
+    ))}
+</form>

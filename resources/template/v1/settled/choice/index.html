@@ -1,0 +1,108 @@
+{extend name="public:base" /}
+{block name="nav"}
+{include file="public:nav2" /}
+{/block}
+{block name="content"}
+<!-- 页面主体内容 -->
+<div class="tab_row mb10">
+    <div class="tab_col pt10">
+        <div class="container-fluid line40 bg-white mb10">
+            <i class="redicon mar0" ></i>
+            <span class="fs14 color333 pl5">我要开店</span>
+        </div>
+        <div class=" pd15 bg-red2 color-red1 mt10 mb10">一个身份证只能开一个商家店铺，开店后店铺无法注销，申请开通审核预计需1~7个工作日，了解更多请看开店规则！</div>
+        <div class="main100 over">
+            <div class="fl pr12 pl12 pt20 pb70 bg_white  w140  minh595" >
+                <img src="/static/web/images/shop/icon_dianpu.png" class="main100 fl">
+                <div class="fl h115 main100 bg-red1 text_white pd5 pl12 pr12 line20 mb1">1、<br><strong>阅读开店须知</strong><br>确认自己符合店铺类型的相关规定</div>
+                <div class="fl h115 main100 bg-f5 color666 pd5 pl12 pr12 line20 mb1">2、<br><strong class="color333">申请开店认证</strong><br>需提供认证相关资料，等待审核通过</div>
+                <div class="fl h115 main100 bg-f5 color666 pd5 pl12 pr12 line20 mb1">3、<br><strong class="color333">选择开店类型</strong><br>个人店铺<br>企业店铺</div>
+            </div>
+            <div class="over pd16 bg_white fl ml10 minh595" style="width:calc(100% - 150px)">
+
+                <form role="form" onsubmit="return false;" method="post">
+                <div class="bor-f5 over radius4px pd15 mb15">
+                    <div class="main100 fs14 color-red1 mb5">{$notice.data.shop_article_title}</div>
+                    <div class="over main100 color666 line20">{:html_entity_decode($notice['data']['shop_article_content'])}
+                    </div>
+                </div>
+                <div class="bor-f5 over radius4px pd15 mb15">
+                    <div class="main100 fs14 color-red1 mb5">{$agreement.data.shop_article_title}</div>
+                    <div class="over main100 color666 line20">
+                        {:html_entity_decode($agreement['data']['shop_article_content'])}
+                    </div>
+                </div>
+                <div class="main100   over">
+
+                    <label class="square">
+                        <input type="checkbox" id="checkbox-id" name="is_agreen" value="1"><em class="fl"></em>
+                        <span class="small_xs ml10 fs14">我已仔细阅读并同意协议
+                            <a class="color-red1" data-toggle="modal" data-target="#myModal">《{$service_agreement.data.shop_article_title}》</a>
+                            及授权</span>
+                    </label>
+                </div>
+                <div class="main100 over mb50 mt10">
+
+                        <input type="hidden" name="step" value="step_agree">
+                        <input type="hidden" name="user_id" value="{$Think.session.user.user_id}">
+                        <input type="hidden" name="redirect" value="/choice/choiceshoptype" />
+                        <button type="submit" class="btn color666 bg-f5 radius4px pd7 continue pl20 pr20  fl  fs12 red-action text_white btn-submit3">我已了解，继续开店</button>
+
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div><!-- 页面主体内容结束 -->
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="false" data-keyboard="false" aria-hidden="true">
+    <div class="modal-dialog" style="width:85%;height: 200px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">{$service_agreement.data.shop_article_title}</h4>
+            </div>
+            <div class="modal-body">{:html_entity_decode($service_agreement['data']['shop_article_content'])}</div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+{/block}
+{block name="js"}
+<script>
+    $(document).ready(function(){
+        $(".btn-submit3").click(function () {
+            if(!$('#checkbox-id').is(':checked')) {
+                error('请阅读百望商城卖家服务协议，并同意！');
+                return false;
+            }
+            var parent  = $(this).closest('form');
+            var data    = parent.data();
+            if (data.confirm !== undefined) {
+                if (confirm(data.confirm) === false) return;
+            }
+            var params  = {
+                header : getHeader('record_step'),
+                data : getForm(parent),
+                success : function (ret) {
+                    if (ret.code === 20000) {
+                        success(ret.msg);
+                        //  执行跳转
+                            window.location.href = '/choice/choiceshoptype';
+                        //  执行刷新
+                        if (data.refresh !== undefined) {
+                            window.location.reload();
+                        }
+                    } else {
+                        error(ret.msg);
+                    }
+                }
+            };
+            apiPost(params);
+        });
+    });
+
+</script>
+{/block}

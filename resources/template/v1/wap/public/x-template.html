@@ -1,0 +1,588 @@
+<!-- vue.js x-template -->
+<!-- 订单列表 -->
+<script type="text/x-template" id="orders-list">
+    <div class="orders-list-box">
+    <template v-if="data">
+        <div class="main100 bor5px" v-for="item in data">
+            <div class="fu_title">
+                <a data-no-cache="true" :href="'/shop?id=' + item.shop.shop_id">
+                    <img class="shop-logo" :src="thumb(item.shop.shop_logo, 25)">
+                    <span class="shop-title f7 h333">{{ item.shop.shop_name }}</span>
+                </a>
+                <span class="s yellow">{{ item.orders_shop_state_name }}</span>
+            </div>
+            <template v-for="goods in item.Goods">
+                <div class="li_main">
+                    <a data-no-cache="true" :href="'/goods?id=' + goods.goods_sku_id"><img class="img lazyload no-src" :src="thumb(goods.goods_images, 176)" data-no-cache="true"></a>
+                    <div class="cart_cpx">
+                        <p class="title_ text_line_2"><a style="color: #999" :href="'/goods?id=' + goods.goods_sku_id">{{ goods.goods_name }}</a></p>
+                        <span class="rmb">￥ {{ goods.orders_goods_amount }}</span>
+                        <div class="color">{{ goods.goods_sku_name }} <span>x {{ goods.orders_goods_num }}</span>
+                        <template v-if="goods.orders_goods_num - goods.goods_refund_num > 0">
+                            <span style="color: red">已退 {{ goods.orders_goods_num - goods.goods_refund_num }} 件</span>
+                        </template>
+                        </div>
+                    </div>
+                </div>
+            </template>
+
+            <div class="main100">
+                <div class="order_rmb list2m">总金额：
+                    <span class="cred">￥ {{ item.orders_shop_edit_amount }}</span>
+                    <span class="s">(运费 ￥ {{ item.orders_shop_express_edit_amount }})</span> 共 {{ item.goods_count_num }} 件商品
+                </div>
+            </div>
+
+            <div class="order_shop">
+                <span class="lleft">&nbsp;</span>
+                <a data-no-cache="true" :href="'/orders/detail?shop_no=' + item.orders_shop_no" class="red-b btn rright">查看详情</a>
+                <template v-if="item.orders_shop_state == 1">
+                    <a data-no-cache="true" class="rright h999" :href="'/pay/single?shop_no=' + item.orders_shop_no">立即支付</a>
+                    <a class="rright h999 orders-cancel" :data-no="item.orders_shop_no" @click="cancelOrders">取消订单</a>
+                </template>
+                <template v-if="item.orders_shop_state == 2">
+                    <a class="rright h999 orders-notice-ship" :data-no="item.orders_shop_no" @click="noticeShip">提醒发货</a>
+                    <a data-no-cache="true" class="rright h999" :href="'/refund/goods?shop_no=' + item.orders_shop_no">申请退款</a>
+                </template>
+                <template v-if="item.orders_shop_state == 3">
+                    <a class="rright h999 orders-receive" :data-no="item.orders_shop_no" @click="receiveOrders">确认收货</a>
+                    <a data-no-cache="true" class="rright h999" :data-no="item.orders_shop_no" :href="'/orders/logistics?shop_no=' + item.orders_shop_no">查看物流</a>
+                    <a data-no-cache="true" class="rright h999" :href="'/refund/goods?shop_no=' + item.orders_shop_no">申请退款</a>
+                </template>
+                <template v-if="item.orders_shop_state == 4">
+                    <a data-no-cache="true" class="rright h999" :href="'/orders/comments?shop_no=' + item.orders_shop_no">立即评价</a>
+                    <a data-no-cache="true" class="rright h999" :data-no="item.orders_shop_no" :href="'/orders/logistics?shop_no=' + item.orders_shop_no">查看物流</a>
+                    <a data-no-cache="true" class="rright h999" :href="'/service/goods?shop_no=' + item.orders_shop_no">申请售后</a>
+                </template>
+                <template v-if="item.orders_shop_state == 5">
+                    <!--<a class="red-b btn rright" :href="'/pay/single?shop_no=' + item.orders_shop_no">再次购买</a>-->
+                    <a data-no-cache="true" class="rright h999" :href="'/service/goods?shop_no=' + item.orders_shop_no">申请售后</a>
+                    <a data-no-cache="true" class="rright h999" :data-no="item.orders_shop_no" :href="'/orders/logistics?shop_no=' + item.orders_shop_no">查看物流</a>
+                </template>
+                <template v-if="item.orders_shop_state == 41">
+                    <!--<a class="red-b btn rright orders-buy-again" href="javascript:;">再次购买</a>-->
+                    <a class="rright h999" :data-no="item.orders_shop_no">退款并关闭</a>
+                </template>
+                <template v-if="item.orders_shop_state == 51">
+                    <!--<a class="red-b btn rright orders-buy-again" href="javascript:;">再次购买</a>-->
+                    <a class="rright h999" :data-no="item.orders_shop_no">订单已关闭</a>
+                </template>
+            </div>
+        </div>
+    </template>
+    <template v-else>
+        <div class="mg40 text-center">
+            <img class="lazyload no-src" style="width:8rem" src="/static/wap/images/icon/icon_no_msg.png">
+            <div class="text_99 rfs14 mt30">您当前还没有购买订单噢~~快去下单吧!</div>
+        </div>
+    </template>
+    </div>
+</script>
+<!-- 无订单 -->
+<script type="text/x-template" id="orders-no-data">
+    <div class="mg40 text-center">
+        <img style="width:8rem" src="/static/wap/images/icon/icon_no_msg.png">
+        <div class="text_99 rfs14 mt30">您当前还没有购买订单噢~~快去下单吧！</div>
+    </div>
+</script>
+
+<!-- 售后订单 -->
+<script type="text/x-template" id="service-list">
+    <div class="orders-list-box">
+        <template v-if="data">
+            <template v-for="item in data">
+                <div class="main100 bor5px">
+                    <div class="fu_title">
+                        <span class="shop-title f7 h333 ">{{ item.orders_service_no }}</span>
+                        <span class="s yellow">{{ item.orders_service_state_name }}</span>
+
+                    </div>
+                    <div class="li_main">
+                        <a data-no-cache="true" :href="'/goods?id=' + item.OrdersGoods.goods_sku_id">
+                            <img class="img lazyload no-src" :src="thumb(item.OrdersGoods.goods_images, 176)">
+                        </a>
+                        <div class="cart_cpx">
+                            <p class="title_ text_line_2"><a style="color: #999" :href="'/goods?id=' + item.OrdersGoods.goods_sku_id">{{ item.OrdersGoods.goods_name }}</a></p>
+                            <span class="rmb">￥ {{ item.OrdersGoods.orders_goods_single_amount }}</span>
+                            <div class="color">
+                                {{ item.OrdersGoods.goods_sku_name }}
+                                <span>x {{ item.orders_service_num }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="order_shop">
+                        <span class="lleft">&nbsp;</span>
+                        <a data-no-cache="true" :href="'/service/detail?service_no=' + item.orders_service_no" class="red-b btn rright">查看详情</a>
+                        <template v-if="item.orders_service_state == 1">
+                            <a :data-no="item.orders_service_no" href="javascript:;" class="rright h999 btn-cancel-service" @click="cancelService">取消售后</a>
+                        </template>
+                        <template v-if="item.orders_service_state == 2">
+                            <a :data-no="item.orders_service_no" href="javascript:;" class="rright h999 btn-cancel-service" @click="cancelService">取消售后</a>
+                            <a data-no-cache="true" :data-no="item.orders_service_no" :href="'/service/ship?service_no=' + item.orders_service_no" class="rright h999">邮寄商品</a>
+                        </template>
+                        <template v-if="item.orders_service_state == 3">
+                            <a :data-no="item.orders_service_no" href="javascript:;" class="rright h999 btn-cancel-service">等待商家收货</a>
+                            <!--<a :data-no="item.orders_service_no" href="javascript:;" class="rright h999 btn-cancel-service" @click="cancelService">取消售后</a>-->
+                        </template>
+                        <template v-if="item.orders_service_state == 4">
+                            <!--<a :data-no="item.orders_service_no" href="javascript:;" class="rright h999 btn-cancel-service" @click="cancelService">取消售后</a>-->
+                            <a data-no-cache="true" :data-no="item.orders_service_no" :href="'/service/appeal?service_no=' + item.orders_service_no" class="rright h999">提起申诉</a>
+                        </template>
+                        <template v-if="item.orders_service_state == 5">
+                            <!--<a :data-no="item.orders_service_no" href="javascript:;" class="rright h999 btn-cancel-service" @click="cancelService">取消售后</a>-->
+                            <a data-no-cache="true" :data-no="item.orders_service_no" :href="'/service/appeal?service_no=' + item.orders_service_no" class="rright h999">提起申诉</a>
+                            <a :data-no="item.orders_service_no" href="javascript:;" class="rright h999 btn-receive-service" @click="receiveService">确认收货</a>
+                        </template>
+                        <template v-if="item.orders_service_state == 31">
+                            <a :data-no="item.orders_service_no" href="javascript:;" class="rright h999 btn-cancel-service">等待仲裁</a>
+                            <!--<a :data-no="item.orders_service_no" href="javascript:;" class="rright h999 btn-cancel-service" @click="cancelService">取消售后</a>-->
+                        </template>
+                        <template v-if="item.orders_service_state == 41">
+                            <a :data-no="item.orders_service_no" href="javascript:;" class="rright h999 btn-cancel-service" @click="cancelService">取消售后</a>
+                            <a data-no-cache="true" :data-no="item.orders_service_no" :href="'/service/edit?service_no=' + item.orders_service_no" class="rright h999">修改售后</a>
+                            <a data-no-cache="true" :data-no="item.orders_service_no" :href="'/service/appeal?service_no=' + item.orders_service_no" class="rright h999">提起申诉</a>
+                        </template>
+                    </div>
+                </div>
+            </template>
+        </template>
+    </div>
+</script>
+
+<!-- 退款订单 -->
+<script type="text/x-template" id="refund-list">
+    <div class="orders-list-box">
+        <template v-if="data">
+            <template v-for="item in data">
+                <div class="main100 bor5px">
+                    <div class="fu_title">
+                        <span class="shop-title f7 h333 ">{{ item.orders_refund_no }}</span>
+                        <span class="s yellow">{{ item.orders_refund_state_name }}</span>
+                    </div>
+                    <div class="li_main">
+                        <a data-no-cache="true" :href="'/goods?id=' + item.OrdersGoods.goods_sku_id">
+                            <img class="img lazyload no-src" :src="thumb(item.OrdersGoods.goods_images, 176)">
+                        </a>
+                        <div class="cart_cpx">
+                            <p class="title_ text_line_2">
+                                <a data-no-cache="true" style="color:#999;" :href="'/goods?id=' + item.OrdersGoods.goods_sku_id">
+                                    {{ item.OrdersGoods.goods_name }}
+                                </a>
+                            </p>
+                            <span class="rmb">￥ {{ item.orders_refund_amount }}</span>
+                            <div class="color">
+                                {{ item.OrdersGoods.goods_sku_name }}
+                                <span>x {{ item.orders_refund_num }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!--联系商家-->
+                    <div class="order_shop">
+                        <span class="lleft">&nbsp;</span>
+                        <a data-no-cache="true" :href="'/refund/detail?refund_no=' + item.orders_refund_no" class="red-b btn rright">查看详情</a>
+                        <template v-if="item.orders_refund_state == 1">
+                            <a :data-no="item.orders_refund_no" href="javascript:;" class="rright h999 btn-cancel-refund" @click="cancelRefund">取消退款</a>
+                        </template>
+                        <template v-if="item.orders_refund_state == 2">
+                            <a :data-no="item.orders_refund_no" href="javascript:;" class="rright h999 btn-cancel-refund" @click="cancelRefund">取消退款</a>
+                            <a data-no-cache="true" :data-no="item.orders_refund_no" :href="'/refund/ship?refund_no=' + item.orders_refund_no" class="rright h999">邮寄商品</a>
+                        </template>
+                        <template v-if="item.orders_refund_state == 3">
+                            <a :data-no="item.orders_refund_no" href="javascript:;" class="rright h999 btn-cancel-refund" @click="cancelRefund">取消退款</a>
+                            <a data-no-cache="true" :data-no="item.orders_refund_no" :href="'/refund/logistics?refund_no=' + item.orders_refund_no" class="rright h999">查看物流</a>
+                        </template>
+                        <template v-if="item.orders_refund_state == 31">
+                            <a :data-no="item.orders_refund_no" href="javascript:;" class="rright h999 btn-cancel-refund" @click="cancelRefund">取消退款</a>
+                        </template>
+                        <template v-if="item.orders_refund_state == 41">
+                            <a :data-no="item.orders_refund_no" href="javascript:;" class="rright h999 btn-cancel-refund" @click="cancelRefund">取消退款</a>
+                            <a data-no-cache="true" :data-no="item.orders_refund_no" :href="'/refund/edit?refund_no=' + item.orders_refund_no" class="rright h999">修改退款</a>
+                            <a data-no-cache="true" :data-no="item.orders_refund_no" :href="'/refund/appeal?refund_no=' + item.orders_refund_no" class="rright h999">提起申诉</a>
+                        </template>
+                    </div>
+                </div>
+            </template>
+        </template>
+    </div>
+</script>
+
+<!-- 商品评价 -->
+<script type="text/x-template" id="comments-list">
+    <div class="orders-list-box">
+        <template v-if="data">
+            <template v-for="item in data">
+                <div class="solid_b rpd10">
+                    <img class="pull-left shop_user lazyload no-src" :src="item.user.user_avatar + '?imageMogr2/thumbnail/80x80!'">
+                    <div class="clearfix rmb10">
+                        <p class="rfs12 text_77 mt0 rmb5">{{ item.user.user_nick }}  <span class="pull-right text_99">{{ item.goods_comment_create_time}}</span></p>
+                        <template v-for="n in item.fraction">
+                            <img class="icon_love" src="/static/wap/images/icon/icon_love_a.png">
+                        </template>
+                        <template v-if="item.fraction_poor > 0">
+                            <template v-for="n in item.fraction_poor">
+                                <img class="icon_love" src="/static/wap/images/icon/icon_love_a.png">
+                            </template>
+                        </template>
+                    </div>
+                    <div class="clearfix page_comment_img">
+                        <template v-if="item.goods_comment_content.goods_comment_images">
+                            <!--图片-->
+                            <template v-for="img in item.goods_comment_content.goods_comment_images">
+                                <img class="lazyload no-src" :src="thumb(img, 160)">
+                            </template>
+                        </template>
+                    </div>
+                    <p class="mg0 rfs12 text_77">{{ item.goods_comment_content.goods_comment_content }}</p>
+                    <!-- 回复 -->
+                    <template v-if="item.goods_comment_content.goods_comment_reply_content">
+                        <div class="rmt10 manager_reply">
+                            掌柜回复：{{ item.goods_comment_content.goods_comment_reply_content }}
+                        </div>
+                    </template>
+                    <!-- 这里显示追加 -->
+                    <template v-if="item.append">
+                        <div class="solid_t rmt5">
+                            <p class="text_red rfs14 rmb5 rmt5">追加评价</p>
+                            <template v-if="item.append.goods_comment_content.goods_comment_images">
+                                <!--图片-->
+                                <div class="clearfix page_comment_img">
+                                    <template v-for="img2 in item.append.goods_comment_content.goods_comment_images">
+                                        <img class="lazyload no-src" :src="img2 + '?imageMogr2/thumbnail/160x160!'">
+                                    </template>
+                                </div>
+                            </template>
+                            <p class="mg0 rfs12 text_77">{{ item.append.goods_comment_content.goods_comment_content }}</p>
+                            <!-- 回复 -->
+                            <template v-if="item.append.goods_comment_content.goods_comment_reply_content">
+                                <div class="rmt10 manager_reply">
+                                    掌柜回复：{{ item.append.goods_comment_content.goods_comment_reply_content }}
+                                </div>
+                            </template>
+                        </div>
+                    </template>
+                    <!-- 这里显示追加end -->
+                </div>
+            </template>
+        </template>
+    </div>
+</script>
+
+<!-- 商品列表 -->
+<script type="text/x-template" id="goods-list">
+    <div class="orders-list-box loding">
+        <template v-if="data">
+            <template v-for="item in data">
+                <div class="shop_line clearfix">
+                    <a data-no-cache="true" :href="'/goods?id=' + item.sku_id">
+                        <img class="lazyload no-src" :src="thumb(item.goods_images, 176)">
+                    </a>
+                    <div class="pull-left">
+                        <div class="rtxt_line_2 rmb10">
+                            <a data-no-cache="true" class="text_77 rfs12" :href="'/goods?id=' + item.sku_id">{{ item.goods_name }}</a>
+                        </div>
+                        <div class="text_99 clearfix re">
+                            <p class="rfs12 text_55 mg0">
+                                <template v-for="label in item.goods_labels">
+                                <small class="text_promotion rfs10 bg_red" style="margin-right: 0.3rem">{{ label }}</small>
+                                </template>
+                                <span class="text_red">￥ {{ item.goods_min_price }}</span>
+                            </p>
+                            <span class="rfs10 fl">
+                                最多可赠送 {{ item.reward_score }} 分
+                                已售出 {{ item.goods_sale_num }} 件
+                            </span>
+                            <!--<button class="button buttom_set_xs button-bordered button-danger pull-right">再次购买</button>-->
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </template>
+    </div>
+</script>
+
+<!-- 店铺首页商品列表 -->
+<script type="text/x-template" id="goods-list22">
+    <div class="type_setting clearfix orders-list-box">
+        <template v-if="data">
+            <template v-for="item in data">
+                <div class="col_2">
+                    <div class="amg">
+                        <a data-no-cache="true" :href="'/goods?id=' + item.sku_id">
+                            <img class="lazyload no-src" :src="'' + item.goods_images + '?imageMogr2/thumbnail/410x410!'">
+                        </a>
+                    </div>
+                    <div class="rtxt_line_2 rmb5 rmt5">
+                        <a data-no-cache="true" class="text_77 rfs12" :href="'/goods?id=' + item.sku_id">{{ item.goods_name }}</a>
+                    </div>
+                    <p class="mg0 rfs14"><span style="font-size: 0.5rem; float: right"><img style="height: 0.6rem; width:1.4rem; vertical-align: middle" src="/static/wap/images/icon/list_discount.png"> <span class="text_red">{{ item.goods_shopping_score_multi }}%</span></span><span class="text_red">￥ {{ item.goods_min_price }}</span></p>
+                </div>
+            </template>
+        </template>
+    </div>
+</script>
+
+<!--收藏商品列表-->
+<script type="text/x-template" id="attention-goods-list">
+    <div class="orders-list-box">
+        <template v-if="data">
+            <template v-for="item in data">
+                <div class="shop_line clearfix attention-goods-box">
+                    <a data-no-cache="true" :href="'/goods?id=' + item.sku.goods_sku_id">
+                        <img class="lazyload no-src" :src="thumb(item.goods.goods_images, 176)">
+                    </a>
+                    <div class="pull-left">
+                        <div class="rtxt_line_2 rmb10 rfs12">
+                            <a data-no-cache="true" class="text_77" :href="'/goods?id=' + item.sku.goods_sku_id">{{ item.goods.goods_name }}</a>
+                        </div>
+                        <div class="text_99 clearfix re" :data-id="item.user_attention_id">
+                            <p class="rfs12 text_55 mg0">
+                                <!--<small class="text_promotion rfs10 bg_red">促</small>-->
+                                <span class="text_red">￥ {{ item.goods.goods_min_price }}</span>
+                            </p>
+                            <span class="rfs10 fl">已售出 {{ item.goods.goods_sale_num }} 件</span>
+                            <span class="icon icon-remove pull-right mt-5 rfs16 shop_line_remove" @click="deleteAttentionGoods"></span>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </template>
+    </div>
+</script>
+
+<!--收藏商家列表-->
+<script type="text/x-template" id="attention-shop-list">
+    <div class="orders-list-box">
+        <template v-if="data">
+            <template v-for="item in data">
+                <div class="bg_white rmb10 attention-shop-box">
+                    <div class="solid_b rpd10">
+                        <a data-no-cache="true" :href="'/shop?id=' + item.shop.shop_id">
+                            <img class="pull-left shop_user lazyload no-src" :src="item.shop.shop_logo">
+                        </a>
+                        <div class="clearfix mr20 collect_shop">
+                            <p class="rfs14 text_77 mg0 mt2">
+                                <a data-no-cache="true" :href="'/shop?id=' + item.shop.shop_id">
+                                    {{ item.shop.shop_name }}
+                                </a>
+                            </p>
+                            <p class="rfs10 text_99 mg0">在售商品 {{ item.shop.goods_in_sales_num }} 件</p>
+                            <a href="javascript:;" :data-id="item.user_attention_id" @click="deleteAttentionShop">
+                                <img src="/static/wap/images/icon/ic_garbage.png">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="rpd10 over">
+                        <div class="row">
+                            <template v-for="goods in item.goods">
+                            <div class="col-33 loding">
+                                <a data-no-cache="true" :href="'/goods?id=' + goods.sku_id">
+                                    <img class="img_max lazyload no-src" :src="thumb(goods.goods_images, 240)">
+                                </a>
+                            </div>
+                            </template>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </template>
+    </div>
+</script>
+
+<!--优惠券列表-->
+<script type="text/x-template" id="coupon-list">
+    <div class="orders-list-box">
+        <template v-if="data">
+            <template v-for="item in data">
+                <div class="bg_white rpd10 rfs14 text_over">
+                    <span class="vertical_red"></span>
+                    <span class="text_77">10元商品礼金券</span>
+                </div>
+                <div class="clearfix coupons_type coupons_green">
+                    <div class="pull-left coupons_left">
+                        <small class="f12">￥</small>
+                        <span>10</span>
+                        <p class="mg0 text_over">部分特殊商品除外</p>
+                    </div>
+                    <div class="pull-left coupons_right">
+                        <span class="fl">优惠券</span>
+                        <p class="mg0">适用于：指定商品</p>
+                        <i>剩一天</i>
+                        <small>有效期至：2017-10-10</small>
+                        <a class="button button-round" href="javascript:;">立即使用</a>
+                    </div>
+                </div>
+            </template>
+        </template>
+    </div>
+</script>
+
+<!-- 用户扩展信息 推荐类目 -->
+<script type="text/x-template" id="user-extend-category">
+    <div class="orders-list-box">
+        <template v-if="data">
+            <template v-for="item in data">
+                <div class="row" style="margin-left: 0 !important;">
+                    <div class="card">
+                        <div class="card-header">{{ item.category_name }}</div>
+                        <div class="card-content">
+                            <div class="card-content-inner">
+                                <!--  -->
+                                <div class="row" style="margin-left: 0 !important;">
+                                    <template v-if="item.child">
+                                        <template v-for="item2 in item.child">
+                                            <div class="col-50">
+                                                <div class="item-inner">
+                                                    <div class="item-title label">{{ item2.category_name }}</div>
+                                                    <div class="item-input">
+                                                        <!-- 是否选中 -->
+                                                        <label class="label-switch">
+                                                            <input class="select-category-item" type="checkbox" :value="item2.category_id">
+                                                            <div class="checkbox"></div>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                        </template>
+                                    </template>
+                                </div>
+                                <!--  -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </template>
+    </div>
+</script>
+
+<!-- 用户评价 -->
+<script type="text/x-template" id="user-comment-list">
+    <div class="orders-list-box">
+        <template v-for="item in data">
+            <div class="bg_white rmb10">
+                <div class="solid_b rpd10">
+                    <img class="pull-left shop_user lazyload no-src" style="border-radius:0px" :src="thumb(item.sku.goods_images, 176)">
+                    <div class="clearfix rmb10">
+                        <p class="rfs12 text_77 mt0 rmb5 text_over">
+                            <span class="pull-right text_99 ml5">{{ item.goods_comment_create_time }}</span>
+                            {{ item.sku.goods_name }}
+                        </p>
+                        <template v-for="n in item.fraction">
+                            <img class="icon_love" src="/static/wap/images/icon/icon_love_a.png">
+                        </template>
+                        <template v-if="item.fraction_poor > 0">
+                            <template v-for="n in item.fraction_poor">
+                                <img class="icon_love" src="/static/wap/images/icon/icon_love.png">
+                            </template>
+                        </template>
+                        <!--<img class="icon_love" src="/static/wap/images/icon/icon_love_a.png">-->
+                        <!--<img class="icon_love" src="/static/wap/images/icon/icon_love_a.png">-->
+                        <!--<img class="icon_love" src="/static/wap/images/icon/icon_love_a.png">-->
+                        <!--<img class="icon_love" src="/static/wap/images/icon/icon_love_a.png">-->
+                        <!--<img class="icon_love" src="/static/wap/images/icon/icon_love.png">-->
+                        <template v-if="item.goods_comment_is_effect == 0 && item.goods_comment_is_change == 0">
+                            <a data-no-cache="true" :href="'/comment/edit?id=' + item.goods_comment_id" class="button button_small button-light pull-right mt-3 text_99">修改评价</a>
+                        </template>
+                        <template v-if="item.append == '' && item.goods_comment_is_effect == 1">
+                            <a data-no-cache="true" :href="'/comment/append?id=' + item.goods_comment_id" class="button button_small button-light pull-right mt-3 text_99 active">追加评价</a>
+                        </template>
+                    </div>
+                    <template v-if="item.goods_comment_content.goods_comment_images != ''">
+                        <div class="clearfix page_comment_img">
+                            <template v-for="images in item.goods_comment_content.goods_comment_images">
+                                <img :src="thumb(images, 176)">
+                            </template>
+                        </div>
+                    </template>
+                    <p class="mg0 rfs12 text_77">{{ item.goods_comment_content.goods_comment_content }}</p>
+                </div>
+                <template v-if="item.append != ''">
+                    <div class="solid_b rpd10"><!-- 追加评价 -->
+                        <p class="mt-5 rmb5 rfs14 text_red">追加评价
+                            <span class="pull-right text_99 ml5 text_77 rfs12">{{ item.append.goods_comment_create_time }}</span>
+                        </p>
+                        <template v-if="item.append.goods_comment_content.goods_comment_images != ''">
+                            <div class="clearfix page_comment_img">
+                                <template v-for="images in item.append.goods_comment_content.goods_comment_images">
+                                    <img :src="thumb(images, 176)">
+                                </template>
+                            </div>
+                        </template>
+                        <p class="mg0 rfs12 text_77">{{ item.append.goods_comment_content.goods_comment_content }}</p>
+                    </div>
+                </template>
+            </div>
+        </template>
+    </div>
+</script>
+
+<script type="text/x-template" id="goods-list1">
+    <div class="row set_img_50 orders-list-box">
+        <template v-if="data">
+            <template v-for="item in data">
+                <a data-no-cache="true" class="col-50 bg_white re" :href="'/goods?id=' + item.sku_id">
+                    <img class="db no-src loding lazyloaded" :src="thumb(item.goods_images, 410)">
+                    <div class="mg0 rfs12 text_77">
+                        <p class="mg0">
+                            <template v-if="item.goods_recommend_type == 2 || item.goods_recommend_type == 1">
+                                <span style="float: right; margin-left: 5px">
+                                    <img style="width: 14px; height: 16px" src="/static/wap/images/icon/list_youxuan.png">
+                                </span>
+                            </template>
+                            <template v-if="item.goods_recommend_type == 1">
+                                <span style="float: right;">
+                                    <img style="height: 0.7rem; width:1.4rem;" src="/static/wap/images/icon/list_jingxuan.png">
+                                </span>
+                            </template>
+
+                            <span class="text_red rfs14">￥ {{ item.goods_min_price }}
+                                <!--<del class="text_99 ml5"><small>￥ {{ item.market_price }}</small></del> -->
+                            </span>
+                        </p>
+                        <p class="mg0 pb2">
+                            <span style="float: right;" class="hide">销量 {{ item.goods_sale_num }}</span>
+                            <img style="height: 0.7rem; width:1.4rem; vertical-align: middle" src="/static/wap/images/icon/list_discount.png">
+                            <span class="text_red"> {{ item.goods_shopping_score_multi }}%</span>
+                        </p>
+                        <p class="rtext_line_2 mg0">{{ item.goods_name }}</p>
+                    </div>
+                    <template v-if="item.goods_sku_num <= 0">
+                        <img class="ab" style="width:4rem;right:1rem;bottom:5rem;" src="/static/wap/images/icon/loot_all.png">
+                    </template>
+                </a>
+            </template>
+        </template>
+    </div>
+</script>
+
+<!-- 店铺搜索 -->
+<script type="text/x-template" id="shop-list">
+    <div class="row set_img_50 orders-list-box">
+        <template v-if="data">
+            <template v-for="item in data">
+                <div class="bg_white rmb10">
+                    <div class="rpd10 clearfix solid_b">
+                        <img class="bor_img pull-left rmr5" width="100" height="40" :src="thumb(item.shop_logo, 100, 40)">
+                        <a data-no-cache="true" :href="'/shop?id='+ item.shop_id" class="button button-danger pull-right rmt5">进店</a>
+                        <p class="mg0 text_over rfs14 line20">
+                            {{ item.shop_name }}<br>
+                            <span class="rfs12 text_77">{{ item.goods_attention_num }} 人收藏</span>
+                            <span class="rfs12 text_77" style="margin-left: 1.0rem">综合评分 {{ item.shop_synthesis_fraction }} 分</span>
+                        </p>
+                    </div>
+                    <div class="row rpd10 shop_commodity">
+                        <template v-if="item.goods">
+                            <template v-for="goods in item.goods">
+                                <div class="col-33 re">
+                                    <a data-no-cache="true" class="amg" :href="'/goods?id=' + goods.sku_id"><img :src="thumb(goods.goods_images, 360, 330)"></a>
+                                    <div class="ab rfs14">￥ {{ goods.goods_min_price }}</div>
+                                </div>
+                            </template>
+                        </template>
+                    </div>
+                </div>
+            </template>
+        </template>
+    </div>
+</script>

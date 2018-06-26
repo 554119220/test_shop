@@ -1,0 +1,166 @@
+{extend name="public:base" /}
+{block name="page"}
+<div class="tab_row mb10">
+	<!-- 右边内容 -->
+	<div class="tab_col pd10 pb0">
+		<div class="alert mb10 bg-red2 color-red1">温馨提示，在发布商品之前需要选择要发布商品的分类，请认真选择分类，因为商品分类是不可以修改的……</div>
+		<div class="container-fluid pb20 bg-white radius4px mb10">
+			<i class="redicon"></i>
+			<span class="fs14 color333">条件检测</span>
+			<hr>
+			{foreach name="createCheck" key="key" item="value"}
+				{if condition="$value['is'] eq 1"}
+					<a href="javascript:;" type="button" class="btn btn-success ml20">{$value.name} - 已创建</a>
+				{else/}
+					<a href="{$value.url}" type="button"  class="btn btn-danger ml20">{$value.name} - 未创建</a>
+				{/if}
+			{/foreach}
+		</div>
+		<div class="container-fluid line55 bg-white radius4px mb10">
+			<i class="redicon"></i>
+			<span class="fs14 color333">请选择商品分类</span>
+		</div>
+		<div class="main100 over radius4px">
+			<div class="col-md-4 radius4px over bg_white mr15" style="width:calc(33.3% - 15px);">
+				<div class="active">
+						<h4 class="line30 fs14 dashed-bot mb5 pb5 mt5">一级类目</h4>
+                </div>
+				<ul class="nav-ul  main100 pb5" style="height:280px;overflow: auto;">
+                    {foreach name="GoodsCategory" item="value"}
+                    	<li>
+                        	<a data-id="{$value.category_id}" data-sid="{$value.category_sid}" href="javascript:;" class="level-1 color333 fss12 line28 pl15 db">{$value.category_name}</a>
+                    	</li>
+                    {/foreach}
+            	</ul>
+			</div>
+			<div class="col-md-4 radius4px over bg_white mr15 pr15" style="width:calc(33.3% - 15px);">
+				<div class="active">
+					<h4 class="line30 fs14 dashed-bot mb5 pb5 mt5">二级类目</h4>
+                </div>
+				<ul class="nav-ul  main100 pb5" style="height:280px;overflow: auto;">
+                    {foreach name="GoodsCategory" item="value"}
+                    	{notempty name="value.child"}
+	                    	{foreach name="value.child" item="vo"}
+	                    		<li>
+	                        		<a data-id="{$vo.category_id}" data-sid="{$vo.category_sid}" href="javascript:;" class="level-2 color333 fss12 line28 pl15 db hide">{$vo.category_name}</a>
+	                    		</li>
+	                    	{/foreach}
+	                    {/notempty}
+                    {/foreach}
+            	</ul>
+			</div>
+			<div class="col-md-4 radius4px over bg_white mr15" style="width:calc(33.3% - 15px);">
+					<div class="active">
+						<h4 class="line30 fs14 dashed-bot mb5 pb5 mt5">三级类目</h4>
+                    </div>
+				<ul class="nav-ul  main100 pb5" id="level-3-items" style="height:280px;overflow: auto;">
+                    
+            	</ul>
+			</div>
+		</div>
+		<div class="alert mt10 bg-red2 color-red1 mb10">你当前的选择是：<span class="current-select"></span></div>
+		<div class="main100 bg_white pd15 radius4px h300">
+			<h4 class="fs14 color333">百望富通平台发布商品协议</h4>
+			<div class="main100 over line20 color666 mb30">如您成为百望卖家，并使用百望商城平台所提供的卖家平台服务，
+				您应当阅读并遵守《百望富通商城平台个人卖家服务协议》（以下简称“本协议”）、《平台服务协议》
+				等相关协议百望富通平台所实时发布的平台规则。请您务必审慎阅读、充分理解各条款内容，特别是免除或者限制责任的条款，
+				以及开通或使用某项服务的单独协议。限制、免责条款可能以黑体加粗形式提示您注意。
+				除非您已阅读并接受本协议所有条款，否则您无权使用本协议所约定提供的平台服务。
+				您申请开通或使用本服务即视为您已阅读并同意上述协议的约束。
+			</div>
+			<div class="main100">
+				{if condition="$check eq 1"}
+				<a class="btn text_white bg-red-thunderbird radius4px pd8 pl15 pr15 mb20 fs12" id="create-goods">同意协议并开始发布商品</a>
+				{else}
+				<a class="btn text_white grey-mint radius4px pd8 pl15 pr15 mb20 fs12" style="">还有模板未创建</a>
+				{/if}
+				
+			</div>
+		</div>
+	</div><!-- 右边内容结束 -->
+</div>
+{/block}
+{block name="script"}
+<script type="text/javascript">
+	$(document).on('click','.nav-ul li a',function(){
+		$(this).parent().parent().find('a').removeClass('bg-gray');
+		$(this).addClass('bg-gray');
+	})
+	$('.level-1').on('click',function(){
+		// 隐藏二级
+		$('.level-2').addClass('hide');
+		// 移除三级
+		$('.level-3').remove();
+		// 显示子二级类目
+		var sid = $(this).data('id');
+		$('.level-2').each(function(k,v){
+			if ( sid == $(this).data('sid') ) {
+				$(this).removeClass('hide');
+			}
+		});
+	});
+
+	var levelThree = [];
+	$('.level-2').on('click',function(){
+		if ($(this).hasClass('hide')){
+			return ;
+		}
+		// 移除三级
+		$('.level-3').remove();
+		// add item
+		function addItem(data){
+			var html = '';
+			$.each(data,function(k,v){
+				html += '<li>';
+				html += '<a data-id="' + v.category_id + '" data-sid="' + v.category_sid + '" href="javascript:;" class="level-3 color333 fss12 line28 pl15 db">' + v.category_name + '</a>';
+				html += '<li>';
+			});
+			$('#level-3-items').html(html);
+		}
+		// 获取
+		var category_id = $(this).data('id');
+		// 
+		if ( levelThree.hasOwnProperty(category_id) ) {
+			addItem(levelThree[category_id]);
+			return ;
+		}
+		// alert(category_id);
+		apiPost({
+			data:{
+				category_id:category_id,
+			},
+			header:getHeader('headers0'),
+			log:true,
+			success:function(ret){
+				if ( ret.code == 20000 ) {
+					levelThree[category_id] = ret.data;
+					addItem(levelThree[category_id]);
+				} else {
+					error('无三级类目');
+				}
+			},
+			error:function(e){
+				error('获取类目时出错');
+			},
+		});
+	});
+
+	$('#level-3-items').on('click','.level-3',function(){
+		var select = [];
+		select.push($('.level-1.bg-gray').eq(0).html());
+		select.push($('.level-2.bg-gray').eq(0).html());
+		select.push($(this).html());
+		// alert($('.level-3.bg-gray').eq(0).html());
+		$('.current-select').html(select.join(' > '));
+	});
+
+	$('#create-goods').on('click',function(){
+		var cid = $('#level-3-items .level-3.bg-gray').data('id');
+		if ( ! cid ){
+			error('请选择三级类目');
+			return ;
+		}
+		window.location.href = '/goods/create?category_id=' + cid;
+	});
+</script>
+{/block}

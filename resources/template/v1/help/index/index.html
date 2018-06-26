@@ -1,0 +1,28 @@
+{extend name="public:base"}{/extend}
+{block name="content"}
+<!-- 右边内容 -->
+<div class="tab_col pd10 pb0">
+	<div class="bg_white minh595 over">
+		<div class="fs18 h50 bor-bot-f5 color333 pl20 h70 line70" style="font-weight: bold;">
+			<img src="/static/web/images/icon/help1.png" class="mr10"><span>帮助列表</span>
+		</div>
+		<!--列表-->
+		{empty name="list.data"}
+			<div class="main100 pd15">
+				<div><h4 class="ml20">未找到帮助列表。</h4></div>
+			</div>
+		{else/}
+			<ul>
+				{foreach name="list.data" item="value" key="key"}
+					<li class="h36 line36 bor-bot-f5">
+						<a href="/index/detail/id/{$value.article_id}">{$value.article_title}</a>
+						<span class="pull-right mr10">{$value.article_create_time}</span>
+					</li>
+				{/foreach}
+			</ul>
+			<!--页按钮-->
+			{$page}
+		{/empty}
+	</div>
+</div>
+{/block}

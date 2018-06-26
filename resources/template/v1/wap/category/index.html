@@ -1,0 +1,65 @@
+{extend name="public:base" /}
+{block name="page"}
+<!--<div class="bar sbai flei bbai">-->
+    <!--<div class="searchbar">-->
+        <!--<div class="search-input">-->
+            <!--<label class="icon icon-search" for="search"></label>-->
+            <!--<input type="search" id='search' placeholder='输入关键字...'/>-->
+        <!--</div>-->
+        <!--<img class="newxx" src="/static/wap/images/lei/newxx.png">-->
+    <!--</div>-->
+<!--</div>-->
+<header class="bar bar-nav bg_white">
+    <!-- <a class="icon icon-me pull-left open-panel"></a> -->
+    <a class="icon icon_common pull-left r12 icon_back back" style="margin-top:.6rem"></a>
+    <h1 class="title home_title">
+        <div class="search-input">
+            <label class="icon icon-search" for="search"></label>
+            <input class="bg_f8" type="search" id='search' placeholder='输入关键字搜索产品'/>
+        </div>
+    </h1>
+    <a href="javascript:;" class="pull-right rfs14 text_55 btn-search" style="margin-top:.5rem">搜索</a>
+</header>
+
+<!-- 这里是页面内容区 -->
+<div class="content bar-header-secondary flei">
+    <div class="content bfafafa">
+        <ul class="flist" style="overflow-y: scroll; height: 100%;">
+            {php}$CI = 0;{/php}
+            {foreach name="list" key="key" item="value"}
+                {notempty name="value.child"}
+                {foreach name="value.child" key="ko" item="vo"}
+                    <li {if condition="$CI++ eq 0"} class="hot" {/if} >{$vo.category_sub_name ? $vo.category_sub_name : $vo.category_name }</li>
+                {/foreach}
+                {/notempty}
+            {/foreach}
+        </ul>
+        <!--左边列表end-->
+        {php}$CI = 0;{/php}
+        {foreach name="list" key="key" item="value"}
+            {notempty name="value.child"}
+            {foreach name="value.child" key="ko" item="vo"}
+                <div class="lleft lei three-item" style="overflow-y: scroll; height: 100%;width:75%;">
+                    <div class="fcp" >
+                        <ul class="fcp_main ">
+                            {notempty name="vo.child"}
+                            {foreach name="vo.child" key="k" item="v"}
+                                {if condition="$v['have_images'] eq 1"}
+                                <li >
+                                    <a data-no-cache="true" href="/search/goods?cate={$v.category_id}">
+                                        <img class="lazyload no-src" style="width:75px;height:75px;" src="{$v.category_icon}?imageMogr2/thumbnail/300x300!/quality/100">
+                                        <span>{$v.category_name|mb_substr=###,0,6}</span>
+                                    </a>
+                                </li>
+                                {/if}
+                            {/foreach}
+                            {/notempty}
+                        </ul>
+                    </div>
+                </div>
+            {/foreach}
+            {/notempty}
+        {/foreach}
+    </div>
+</div>
+{/block}

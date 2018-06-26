@@ -1,0 +1,310 @@
+<style>
+    .docs-pictures img{
+        width:100px;
+        height: 100px;
+    }
+</style>
+<div class="bg-white p20 docs-pictures">
+    <div class="row">
+        <div class="col-xs-4">
+            <h4>开店协议</h4>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>是否同意：</dt>
+                <dd>{eq name="$res.shop_settled_content.step_agree" value="1"}已经同意{else/}未同意{/eq}</dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>营业执照：</dt>
+                <dd><img data-original="{notempty name="res.licence_Photo"}{$res.licence_Photo}{else/}/static/images/logo150.png{/notempty}" src="{notempty name="res.licence_Photo"}{$res.licence_Photo}{else/}/static/images/logo150.png{/notempty}"></dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>手持身份证：</dt>
+                <dd><img data-original="{notempty name="res.idcard_h_photo"}{$res.idcard_h_photo}{else/}/static/images/logo150.png{/notempty}" src="{notempty name="res.idcard_h_photo"}{$res.idcard_h_photo}{else/}/static/images/logo150.png{/notempty}"></dd>
+            </dl>
+        </div>
+        <div class="col-xs-4">
+            <h4>开店类型</h4>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>店铺类型：</dt>
+                <dd><span class="text-danger font-lg">{present name="res.shop_settled_content.step_shop_type"}{$shoptypename}{/present}</span></dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>身份证正面：</dt>
+                <dd><img data-original="{notempty name="res.idcard_f_photo"}{$res.idcard_f_photo}{else/}/static/images/logo150.png{/notempty}" src="{notempty name="res.idcard_f_photo"}{$res.idcard_f_photo}{else/}/static/images/logo150.png{/notempty}"></dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>身份证反面：</dt>
+                <dd><img data-original="{notempty name="res.idcard_b_photo"}{$res.idcard_b_photo}{else/}/static/images/logo150.png{/notempty}" src="{notempty name="res.idcard_b_photo"}{$res.idcard_b_photo}{else/}/static/images/logo150.png{/notempty}"></dd>
+            </dl>
+        </div>
+        <div class="col-xs-4">
+            <h4>填写类目和品牌</h4>
+            <hr />
+            <dl class="dl-horizontal">
+                {present name="res.shop_settled_content.category_one_name"}
+                {foreach name="res.shop_settled_content.category_one_name" item="val" key="key"}
+                <dt>类目：</dt>
+                <dd><span class="audit-color-">{$val}>{php}echo $res['shop_settled_content']['category_two_name'][$key]{/php}</span></dd>
+                {/foreach}
+                {/present}
+            </dl>
+            <dl class="dl-horizontal">
+                {present name="res.shop_settled_content.brand"}
+                {foreach name="res.shop_settled_content.brand" item="val" key="key"}
+                <dt>品牌：</dt>
+                <dd><span class="audit-color-">{$val.name}</span></dd>
+                {/foreach}
+                {/present}
+            </dl>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-4">
+            <h4>填写品牌资料</h4>
+            <hr />
+            {present name="res.shop_settled_content.brand"}
+            {foreach name="res.shop_settled_content.brand" item="val" key="key"}
+            <dl class="dl-horizontal">
+                <dt>品牌名称：</dt>
+                <dd>{$val.name ?? ''}</dd>
+
+                <dt>申请商标编号：</dt>
+                <dd>{$val.number ?? ''}</dd>
+
+                <dt>品牌logo：</dt>
+                <dd>{present name="val.barnd_logo"}<img data-original="{php}echo \app\common\traits\F::getImages($val['barnd_logo']);{/php}" src="{php}echo \app\common\traits\F::getImages($val['barnd_logo']);{/php}">{/present}</dd>
+                {present name="val.is_brand"}
+                <dt>品牌类型：</dt>
+                <dd><span class="text-info ft16">{eq name="val.is_brand" value="1"}自有品牌{else/}代理品牌{/eq}</span></dd>
+                {/present}
+                {present name="val.is_brand"}
+                    {eq name="val.is_brand" value="1"}
+                        {present name="val.images1"}
+                        {foreach name="val.images1" item="v" key="k1"}
+                        <dt>{$v.images_name}：</dt>
+                        <dd><img data-original="{php}echo \app\common\traits\F::getImages($v['images']);{/php}" src="{php}echo \app\common\traits\F::getImages($v['images']);{/php}"></dd>
+                        {/foreach}
+                        {/present}
+                    {else}
+                        {present name="val.images2"}
+                        {foreach name="val.images2" item="v2" key="k2"}
+                        <dt>{$v2.images_name}：</dt>
+                        <dd><img data-original="{php}echo \app\common\traits\F::getImages($v2['images']);{/php}" src="{php}echo \app\common\traits\F::getImages($v2['images']);{/php}"></dd>
+                        {/foreach}
+                        {/present}
+                    {/eq}
+                {/present}
+            </dl>
+            {/foreach}
+            {/present}
+        </div>
+        <div class="col-xs-4">
+            <h4>上传行业资质</h4>
+            <hr />
+            <dl class="dl-horizontal">
+                {present name="res.shop_settled_content.category_one_name"}
+                {foreach name="res.shop_settled_content.category_one_name" item="val" key="key"}
+                <dt>类目：</dt>
+                <dd><span class="audit-color-">{$val}>{php}echo $res['shop_settled_content']['category_two_name'][$key]{/php}</span></dd>
+                <dt>资质图片：</dt>
+                    <dd><span class="audit-color-">{php}if(isset($res['shop_settled_content']['category_images'][$key]['category_images'])){{/php}<img data-original="{php}echo \app\common\traits\F::getImages($res['shop_settled_content']['category_images'][$key]['category_images'] ?? '');{/php}" src="{php}echo \app\common\traits\F::getImages($res['shop_settled_content']['category_images'][$key]['category_images'] ?? '');{/php}"/>{php}}{/php}</span></dd>
+                {/foreach}
+                {/present}
+                {present name="res.shop_settled_content.industry"}
+                {foreach name="res.shop_settled_content.industry" item="v" key="k"}
+                <dt>资质名称：</dt>
+                <dd><span class="audit-color-">{$v.name}</span></dd>
+                <dt>资质图片：</dt>
+                <dd><span class="audit-color-"> <img data-original="{php}echo \app\common\traits\F::getImages($v['industry_images']);{/php}" src="{php}echo \app\common\traits\F::getImages($v['industry_images']);{/php}"/></span></dd>
+                {/foreach}
+                {/present}
+            </dl>
+        </div>
+        <div class="col-xs-4">
+            <h4>填写店铺资料</h4>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>店铺名称：</dt>
+                <dd><span class="text-danger font-lg">{$res.shop_settled_content.step_shop_info.shop_name ?? ''}</span></dd>
+
+                <dt>店铺logo：</dt>
+                <dd>{present name="res.shop_settled_content.step_shop_info.shop_logo"}<img data-original="{php}echo \app\common\traits\F::getImages($res['shop_settled_content']['step_shop_info']['shop_logo']);{/php}" src="{php}echo \app\common\traits\F::getImages($res['shop_settled_content']['step_shop_info']['shop_logo']);{/php}"/>{/present}</dd>
+
+                <dt>店铺简介：</dt>
+                <dd>{$res.shop_settled_content.step_shop_info.shop_description ?? ''}</dd>
+
+                <dt>所在地址：</dt>
+                <dd>{$shop_province_name ?? ''}&nbsp;{$shop_city_name ?? ''}</dd>
+
+                <dt>详细地址：</dt>
+                <dd>{$res.shop_settled_content.step_shop_info.shop_street ?? ''}</dd>
+
+                <dt>联系人：</dt>
+                <dd>{$res.shop_settled_content.step_shop_info.shop_contect_person ?? ''}</dd>
+
+                <dt>手机号码：</dt>
+                <dd>{$res.shop_settled_content.step_shop_info.shop_mobile ?? ''}</dd>
+
+                <dt>电话号码：</dt>
+                <dd>{$res.shop_settled_content.step_shop_info.shop_tel ?? ''}</dd>
+
+                <dt>邮箱：</dt>
+                <dd>{$res.shop_settled_content.step_shop_info.shop_email ?? ''}</dd>
+            </dl>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <h2>二次提交资料</h2>
+            <hr />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-4">
+            <h4>填写品牌资料</h4>
+            <hr />
+            {present name="res.shop_settled_content_bak.brand"}
+            {foreach name="res.shop_settled_content_bak.brand" item="val" key="key"}
+            <dl class="dl-horizontal">
+                <dt>品牌名称：</dt>
+                <dd>{$val.name ?? ''}</dd>
+
+                <dt>申请商标编号：</dt>
+                <dd>{$val.number ?? ''}</dd>
+
+                <dt>品牌logo：</dt>
+                <dd>{present name="val.barnd_logo"}<img data-original="{php}echo \app\common\traits\F::getImages($val['barnd_logo']);{/php}" src="{php}echo \app\common\traits\F::getImages($val['barnd_logo']);{/php}">{/present}</dd>
+                {present name="val.is_brand"}
+                <dt>品牌类型：</dt>
+                <dd><span class="text-info ft16">{eq name="val.is_brand" value="1"}自有品牌{else/}代理品牌{/eq}</span></dd>
+                {/present}
+                {present name="val.is_brand"}
+                {eq name="val.is_brand" value="1"}
+                {present name="val.images1"}
+                {foreach name="val.images1" item="v" key="k1"}
+                <dt>{$v.images_name}：</dt>
+                <dd><img data-original="{php}echo \app\common\traits\F::getImages($v['images']);{/php}" src="{php}echo \app\common\traits\F::getImages($v['images']);{/php}"></dd>
+                {/foreach}
+                {/present}
+                {else}
+                {present name="val.images2"}
+                {foreach name="val.images2" item="v2" key="k2"}
+                <dt>{$v2.images_name}：</dt>
+                <dd><img data-original="{php}echo \app\common\traits\F::getImages($v2['images']);{/php}" src="{php}echo \app\common\traits\F::getImages($v2['images']);{/php}"></dd>
+                {/foreach}
+                {/present}
+                {/eq}
+                {/present}
+            </dl>
+            {/foreach}
+            {/present}
+        </div>
+        <div class="col-xs-4">
+            <h4>上传行业资质</h4>
+            <hr />
+            <dl class="dl-horizontal">
+                {present name="res.shop_settled_content_bak.category_one_name"}
+                {foreach name="res.shop_settled_content_bak.category_one_name" item="val" key="key"}
+                <dt>类目：</dt>
+                <dd><span class="audit-color-">{$val}>{php}echo $res['shop_settled_content_bak']['category_two_name'][$key]{/php}</span></dd>
+                <dt>资质图片：</dt>
+                <dd><span class="audit-color-">{php}if(isset($res['shop_settled_content_bak']['category_images'][$key]['category_images'])){{/php}<img data-original="{php}echo \app\common\traits\F::getImages($res['shop_settled_content']['category_images'][$key]['category_images'] ?? '');{/php}" src="{php}echo \app\common\traits\F::getImages($res['shop_settled_content']['category_images'][$key]['category_images'] ?? '');{/php}"/>{php}}{/php}</span></dd>
+                {/foreach}
+                {/present}
+                {present name="res.shop_settled_content_bak.industry"}
+                {foreach name="res.shop_settled_content_bak.industry" item="v" key="k"}
+                <dt>资质名称：</dt>
+                <dd><span class="audit-color-">{$v.name}</span></dd>
+                <dt>资质图片：</dt>
+                <dd><span class="audit-color-"> <img data-original="{php}echo \app\common\traits\F::getImages($v['industry_images']);{/php}" src="{php}echo \app\common\traits\F::getImages($v['industry_images']);{/php}"/></span></dd>
+                {/foreach}
+                {/present}
+            </dl>
+        </div>
+    </div>
+
+{eq name="res.shop_settled_state" value="0"}
+    <h4>审核</h4>
+    <hr />
+
+    <form class="form-horizontal" id="form-add-{$Request.param.id}" onsubmit="return sform($(this))">
+        <div class="form-group" id="f-shop_settled_state">
+            <label class="control-label col-xs-3">状态<span class="required"> * </span></label>
+            <div class="col-xs-6"><input type="hidden" name="shop_settled_state" id="shop_settled_state" class="form-control" placeholder="请填写状态" value="2"><div class="radio-box"><ul><li class="item-box hide" data-value="0" onclick="radio_box($(this))">待审核</li><li class="item-box" data-value="1" onclick="radio_box($(this))">审核通过</li><li class="item-box active" data-value="2" onclick="radio_box($(this))">拒绝</li><li class="item-box hide" data-value="3" onclick="radio_box($(this))">编辑中</li></ul></div></div>
+        </div>
+        <div class="form-group" id="f-shop_settled_step">
+            <label class="control-label col-xs-3">审核不通过的步骤</label>
+            <div class="col-xs-6"><div class="mt-checkbox-inline"><label class="mt-checkbox mt-checkbox-outline">
+                <input type="checkbox" name="shop_settled_step[]"  class="form-control" value="0" checked="checked">开店协议
+                <span></span>
+            </label><label class="mt-checkbox mt-checkbox-outline">
+                <input type="checkbox" name="shop_settled_step[]"  class="form-control" value="1" checked="checked">开店类型
+                <span></span>
+            </label><label class="mt-checkbox mt-checkbox-outline">
+                <input type="checkbox" name="shop_settled_step[]"  class="form-control" value="2" checked="checked">选择类目和品牌
+                <span></span>
+            </label><label class="mt-checkbox mt-checkbox-outline">
+                <input type="checkbox" name="shop_settled_step[]"  class="form-control" value="3" checked="checked">填写品牌资料
+                <span></span>
+            </label><label class="mt-checkbox mt-checkbox-outline">
+                <input type="checkbox" name="shop_settled_step[]"  class="form-control" value="4" checked="checked">上传行业资质
+                <span></span>
+            </label><label class="mt-checkbox mt-checkbox-outline">
+                <input type="checkbox" name="shop_settled_step[]" class="form-control" value="5" checked="checked">填写店铺资料
+                <span></span>
+            </label></div></div>
+        </div>
+        <div class="form-group" id="f-reason">
+            <label class="control-label col-xs-3">审核不通过原因</label>
+            <div class="col-xs-6"><textarea name="reason" id="reason" class="form-control" placeholder="请填写审核不通过原因"></textarea></div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-xs-3">短信内容（通过）</label>
+            <div class="col-xs-6"><textarea name="sms_content" class="form-control" placeholder="请填写短信内容">尊敬的用户:您的资料已通过审核，恭喜您开店成功，请查看帮助中心发布产品教程，登录商家中心完成产品发布、分享（请尽可能多的发布你的所有合格产品），快人一步瓜分数千万购物积 分消费红利 退订回N</textarea></div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-xs-3">短信内容（拒绝）</label>
+            <div class="col-xs-6"><textarea name="sms_content2" class="form-control" placeholder="请填写短信内容">尊敬的用户:抱歉通知您的资料未通过审核（目前平均审核通过率80%），请您马上于申请处查看未通过的原因，重新更改资料、提交审核（二次审核通过率90%），快人一步享受平台红利 退订回N</textarea></div>
+        </div>
+        <input type="hidden" name="shop_settled_id" id="shop_settled_id" value="{:request()->param('id')}">
+        <input type="hidden" name="is_work" id="is_work" value="1">
+        {:buildform(array(
+        'field'		=>array(
+        array(
+        'formtype'		=>'button',
+        'btns'			=>[['提交','btn btn-danger btn-150px','submit']],
+        ),
+        ),
+        ))}
+    </form>
+{/eq}
+
+    {notempty name="logs.data"}
+    <h4>审核记录</h4>
+    <hr />
+    <div class="mt-comments">
+        {volist name="logs.data" id="vo"}
+        <div class="mt-comment">
+            <div class="mt-comment-img">
+            </div>
+            <div class="mt-comment-body">
+                <div class="mt-comment-info">
+                    <span class="mt-comment-author">雇员：{$vo.employee.account}({$vo.employee.name})</span>
+                    <span class="mt-comment-date">{$vo.shop_settled_audit_create_time}</span>
+                </div>
+                <div class="mt-comment-text"> {$vo.shop_settled_audit_content} </div>
+                <div class="mt-comment-details">
+                    <span class="mt-comment-status {:$vo['shop_settled_audit_is_pass']==1?'mt-comment-status-approved':($vo['shop_settled_audit_is_pass']==2?'mt-comment-status-rejected':'mt-comment-status-pending')}">{eq name="$vo.shop_settled_audit_is_pass" value="2"}拒绝{else/}通过{/eq}</span>
+                </div>
+            </div>
+        </div>
+        {/volist}
+    </div>
+    {/notempty}
+
+</div>
+<link rel="stylesheet" href="/static/web/assets/zoom/dist/viewer.css">
+<script src="/static/web/assets/zoom/dist/viewer.js"></script>
+<script src="/static/web/assets/zoom/assets/js/main.js"></script>

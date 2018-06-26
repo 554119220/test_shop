@@ -1,0 +1,192 @@
+{extend name="public:base" /}
+{block name="nav"}
+{include file="public:nav2" /}
+{/block}
+{block name="content"}
+<!-- 页面主体内容 -->
+<!-- 页面主体内容 -->
+<style>
+    .error{
+        color:red;
+    }
+    .widths{
+        width: calc(100% - 80px);
+    }
+    .xinzeng label{
+        display: none !important;
+    }
+</style>
+<div class="tab_row mb10">
+    <div class="tab_col pt10">
+        <input class="upload-file" style="display: none;" id="upload-images-base-new" type="file" onchange="uploadImagesBaseNew();">
+        <form id="form_sample_1" class="form-horizontal" onsubmit="return false">
+        <div class="container-fluid line40 bg-white mb10">
+            <i class="redicon mar0"></i>
+            <span class="fs14 color333 pl5">填写店铺详情</span>
+        </div>
+        <div class="main100 mb10 over bg_white mb10  pl25 pr25 pt20 pb20">
+            <div class="main100  line36  over">
+                <div class="w80 fl  fs12 ">店铺名称<span class="color-red1">*</span></div>
+                <div class=" radius4px over fl re widths">
+                    <input placeholder="请输入店铺名称"{eq name="shopdetail.data.shop_type_id" value="3"} readonly {/eq} value="{eq name="shopdetail.data.shop_type_id" value="3"}{$shop_brand}{else/}{$shop.shop_settled_content.step_shop_info.shop_name ?? ''}{/eq}" name="shop_name" class="fl radius4px main100 pl10 line32 bor_img"  />
+                    <span class="fl ab bg-red1 text_white pl30 pr30 h38" style="right:0;top:0;"> {$shopdetail.data.shop_type_suffix}</span>
+                </div>
+            </div>
+            <div class="main100 mb5 line36  over">
+                <div class="w80 h36 fl  fs12 "></div>
+                <span class="color-red1">不允许出现{foreach name="disabled_keyword" item="val" key="k"}{lt name="k" value="6"}”{$val}“{neq name="key" value="$count_keyword-1"}、{/neq}{/lt}{/foreach}等字眼</span>
+            </div>
+            <div class="main100  line36  over mb14">
+                <div class="over">
+                    <div class="w80 fl  fs12 ">logo图标<span class="color-red1">*</span></div>
+                    <a class="btn text_white bg-red1 radius4px pd7 pl20 pr20  fl  fs12" onclick="triggerUploadImagesNew({imgEle:'.shop_logo_img',valueEle:'.shop_logo',zoomEle:'.shop_logo_img-href'})">
+                        <input type="hidden" name="shop_logo" value="{$shop.shop_settled_content.step_shop_info.shop_logo ?? ''}" class="shop_logo">
+                        上传图片</a>
+                </div>
+                <div class="main100 over mt14">
+                    {php}
+                    if (isset($shop['shop_settled_content']['step_shop_info']['shop_logo'])) {
+                    {/php}
+                    <a href="{:getImagesDomain($shop['shop_settled_content']['step_shop_info']['shop_logo'])}" class="image-zoom shop_logo_img-href"><img src="{:getImagesDomain($shop['shop_settled_content']['step_shop_info']['shop_logo'])}"  class="w80 h80 ml80 fl radius4px shop_logo_img"></a>
+
+                    {php}
+                    }else{
+                    {/php}
+                    <a href="/static/web/images/123.jpg" class="image-zoom shop_logo_img-href"><img src="/static/web/images/123.jpg"  class="w80 h80 ml80 fl radius4px shop_logo_img"></a>
+                    {php}
+                    }
+                    {/php}
+                </div>
+            </div>
+
+            <div class="main100  line36  over">
+                <div class="w80 fl  fs12 ">店铺简介<span class="color-red1">*</span></div>
+                <div class=" radius4px over fl re widths">
+                <textarea class="main100 bor_img radius4px pd10 h60  line18" name="shop_description" placeholder="请输入店铺简介">{$shop.shop_settled_content.step_shop_info.shop_description ?? ''}</textarea>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid line40 bg-white mb10">
+            <i class="redicon" style=" margin-top: 16px;"></i>
+            <span class="fs14 color333 pl5">店铺负责人联系信息</span>
+        </div>
+        <div class="main100 bg_white pd15  radius4px">
+            <div class="main100 mb18 line36 h36">
+                <div class="w80 fl  fs12 ">所在地址<span class="color-red1">*</span></div>
+                <div class="fl widths xinzeng">
+                    {$district}
+                </div>
+            </div>
+            <div class="main100 mb18 line36 over">
+                <div class="w80 fl  fs12 ">详细地址<span class="color-red1">*</span></div>
+                <div class=" radius4px over fl re widths">
+                    <input placeholder="请输入详细地址" value="{$shop.shop_settled_content.step_shop_info.shop_street ?? ''}" name="shop_street" class="fl radius4px main100 pl10 line32 bor_img" value="" />
+                </div>
+            </div>
+            <div class="main100 mb18 line36 over">
+                <div class="w80 fl  fs12 ">联系人<span class="color-red1">*</span></div>
+                <div class=" radius4px over fl re widths">
+                    <input placeholder="请输入联系人姓名" value="{$shop.shop_settled_content.step_shop_info.shop_contect_person ?? ''}" name="shop_contect_person" class="fl radius4px main100 pl10 line32 bor_img" value="" />
+                </div>
+            </div>
+            <div class="main100 mb18 line36 over">
+                <div class="w80 fl  fs12 ">手机号码<span class="color-red1">*</span></div>
+                <div class=" radius4px over fl re widths">
+                    <input placeholder="请输入手机号码" name="shop_mobile" value="{$shop.shop_settled_content.step_shop_info.shop_mobile ?? ''}" maxlength="11" type="number" class="fl radius4px main100 container-fluid line32 bor_img" value="" />
+                </div>
+            </div>
+            <div class="main100 mb18 line36 h36">
+                <div class="w80 fl  fs12 ">电话号码</div>
+                <div class=" radius4px over fl re widths">
+                    <input placeholder="请输入电话号码/手机号码" name="shop_tel"  value="{$shop.shop_settled_content.step_shop_info.shop_tel ?? ''}" type="number" class="fl radius4px container-fluid main100 line32 bor_img"/>
+                </div>
+            </div>
+            <div class="main100 mb18 line36 over">
+                <div class="w80 fl  fs12 ">邮箱地址<span class="color-red1">*</span></div>
+                <div class=" radius4px over fl re widths">
+                    <input placeholder="请输入邮箱地址" name="shop_email" value="{$shop.shop_settled_content.step_shop_info.shop_email ?? ''}"   class="fl radius4px container-fluid main100 line32 bor_img" value="" />
+                </div>
+            </div>
+            <div class="main100 over mb20">
+                <input type="hidden" name="step" value="step_shop_info">
+                <a class="btn color666 bg-f5 radius4px pd7 pl20 pr20 fl mr15 fs12" href="{:url('choice/industryqualification')}">上一步</a>
+                <button type="submit" class="btn text_white bg-red1 radius4px pd7 pl20 pr20  fl  fs12">提交审核</button>
+            </div>
+
+        </div>
+        </form>
+    </div><!-- 右边内容结束 -->
+</div><!-- 页面主体内容结束 -->
+{/block}
+{block name="js"}
+<script>
+    $(document).ready(function(){
+        $('select').addClass('radius4px');
+        var rules = {
+            shop_name:{required:true,minlength:2,maxlength:10},
+            shop_description:{required:true,minlength:20,maxlength:100},
+            shop_province_id:{required:true,},
+            shop_city_id:{required:true,},
+            shop_district_id:{required:true,},
+            shop_street:{required:true,minlength:5,maxlength:30},
+            shop_town_id:{required:true,},
+            shop_contect_person:{required:true,minlength:2,maxlength:20},
+            //shop_tel:{required:true,minlength:10,maxlength:11,digits: true},
+            shop_mobile:{required:true,minlength:11,maxlength:11,digits: true},
+            shop_email:{required:true,email:true},
+        };
+        var messages = {
+            shop_name:{required:'请输入店铺名称',minlength:'店铺名称不能少于2个字符',maxlength:'店铺名称不能大于10个字符'},
+            shop_description:{required:'请输入店铺简介',minlength:'店铺简介不能少于20个字符',maxlength:'店铺简介不能大于100个字符'},
+            shop_province_id:{required:'请选择省份'},
+            shop_city_id:{required:'请选择城市'},
+            shop_district_id:{required:'请选择县区'},
+            shop_street:{required:'请输入详细地址',minlength:'详细地址长度不能小于5',maxlength:'详细地址长度不能超过30'},
+            shop_town_id:{required:'请选择街道或镇或乡'},
+            shop_contect_person:{required:'请输入联系人',minlength:'联系人长度不能小于2',maxlength:'联系人长度不能超过20'},
+            //shop_tel:{required:'请输入电话号码或手机号码',minlength:'电话号码不能小于10',maxlength:'电话号码长度不能超过11',digits:'电话号码只能是数字'},
+            shop_mobile:{required:'请输入手机号码',minlength:'手机号码长度不能小于11',maxlength:'手机号码长度不能超过11',digits:'手机号码只能是数字'},
+            shop_email:{required:'请输入电子邮箱',email:'电子邮箱格式不正确'},
+        };
+        checkform10({
+            rules:rules,
+            header:'set_shop',
+            messages:messages,
+            formid:'#form_sample_1',
+            success : function (ret) {
+                if (ret.code === 20000) {
+                    success(ret.msg);
+                    //  执行跳转
+                    setTimeout(function(){
+                        window.location.href='/checksettled/process';
+                    },1000);
+                } else {
+                    error(ret.msg);
+                }
+            }
+        });
+        image_zoom();
+    });
+    function image_zoom(param){
+        var tag=$('body');
+        if(param && param.obj) var tag=param.obj;
+        else if(param && param.tag) var tag=$(param.tag);
+        //console.log(tag);
+        if(tag.find('.image-zoom').size()>0){
+            tag.find('.image-zoom').magnificPopup({
+                type: 'image',
+                mainClass: 'mfp-with-zoom', // this class is for CSS animation below
+                callbacks: {
+                    elementParse: function (item) {
+                        // Function will fire for each target element
+                        // "item.el" is a target DOM element (if present)
+                        // "item.src" is a source that you may modify
+
+                        console.log(item); // Do whatever you want with "item" object
+                    }
+                }
+            });
+        }
+    }
+</script>
+    {/block}

@@ -1,0 +1,42 @@
+<div class="container-fluid line55 bg-white radius4px mb10">
+	<i class="redicon"></i>
+	<span class="fs14 color333">请选择商品分类</span>
+</div>
+<div class="main100 over radius4px">
+	<div class="col-md-4 radius4px over bg_white mr15" style="width:calc(33.3% - 15px);">
+        <div class="active">
+                <h4 class="line30 fs14 dashed-bot mb5 pb5">一级类目</h4>
+        </div>
+		<ul class="nav-ul  main100" style="height: 300px;overflow: auto;">
+            {foreach name="GoodsCategory" item="value"}
+            	<li>
+                	<a data-id="{$value.category_id}" data-sid="{$value.category_sid}" href="javascript:;" class="level-1 color333 fss12 line28 pl15 db">{$value.category_name}</a>
+            	</li>
+            {/foreach}
+    	</ul>
+	</div>
+	<div class="col-md-4 radius4px over bg_white mr15 pr15" style="width:calc(33.3% - 15px);">
+        <div class="active">
+                <h4 class="line30 fs14 dashed-bot mb5 pb5">二级类目</h4>
+        </div>
+		<ul class="nav-ul  main100" style="height: 300px;overflow: auto;">
+            {foreach name="GoodsCategory" item="value"}
+            	{notempty name="value.child"}
+                	{foreach name="value.child" item="vo"}
+                		<li>
+                    		<a data-id="{$vo.category_id}" data-sid="{$vo.category_sid}" href="javascript:;" class="level-2 color333 fss12 line28 pl15 db hide">{$vo.category_name}</a>
+                		</li>
+                	{/foreach}
+                {/notempty}
+            {/foreach}
+    	</ul>
+	</div>
+	<div class="col-md-4 radius4px over bg_white mr15" style="width:calc(33.3% - 15px);">
+        <div class="active">
+                <h4 class="line30 fs14 dashed-bot mb5 pb5">三级类目</h4>
+        </div>
+		<ul class="nav-ul  main100" id="level-3-items" style="height: 300px;overflow: auto;">
+    	</ul>
+	</div>
+</div>
+<div class="alert mt10 bg-red2 color-red1 mb10">你当前的选择是：<span class="current-select"></span></div>

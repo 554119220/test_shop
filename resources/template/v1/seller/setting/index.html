@@ -1,0 +1,146 @@
+{extend name="public:base" /}
+{block name="page"}
+<style>
+    .error{
+        color:red;
+    }
+    .id_id{
+        width: 100% !important;
+        height: 100% !important;
+        opacity: 0;
+        position: absolute;
+        left: 0;
+        top: 0;
+        cursor: pointer;
+    }
+    .widths{
+        width: calc(100% - 80px);
+    }
+    .widths label{
+        display: none !important;
+    }
+</style>
+<!-- 右边内容 -->
+<div class="tab_col pd10 pb0">
+    <input class="upload-file" style="display: none;" id="upload-images-base-new" type="file" onchange="uploadImagesBaseNew();">
+    <form action="/setting/ajaxsetting" id="form_sample_1" class="form-horizontal">
+    <div class="main100 bg_white pl15 pr15  radius4px">
+        <div class="main100 line55 bg-white ">
+            <i class="redicon"></i>
+            <span class="fs14 color333">店铺设置</span>
+        </div>
+        <div class="main100 mb10 fs12 ">店铺名称<span class="color-red1">*</span></div>
+        <div class="main100">
+            <input readonly class="main100 radius4px container-fluid line32 h34 bor_img mb10" name="shop_name" value="{$shop.shop_name ?? ''}" />
+            <input class="main100 radius4px container-fluid line32 h34 bor_img mb10" type="hidden" name="shop_type_id" value="{$shop.shop_type_id ?? ''}" />
+        </div>
+        <input type="hidden" name="shop_domain" value="{$shop.shop_domain ?? ''}"/>
+        <div class="main100 mb10 fs12 ">联系人<span class="color-red1">*</span></div>
+        <div class="main100">
+            <input class="main100 radius4px container-fluid line32 h34 bor_img mb10" name="shop_contect_person" value="{$shop.shop_contect_person ?? ''}" />
+        </div>
+        <div class="main100 mb10 fs12 ">店铺简介<span class="color-red1">*</span></div>
+        <textarea class="main100 bor_img radius4px pd10 h70 mb15" placeholder="店铺简介" name="shop_description">{$shop.shop_description ?? ''}</textarea>
+
+        <div class="main100 mb10 fs12 ">店铺logo<span class="color-red1">*</span></div>
+
+        <a class="btn text_white bg-red-thunderbird radius4px pd6 pl25 pr25 mb10" onclick="triggerUploadImagesNew({imgEle:'.shop_logo_img',valueEle:'.shop_logo',zoomEle:'.shop_logo_img-href-href'})">上传文件</a>
+        <!--img-->
+        <div class="main100 mb20 over">
+            <a href="{$shop.shop_logo ? $shop.shop_logo : ''}" class="image-zoom shop_logo_img-href" ><img class="pull-left bor_img radius4px shop_logo_img" width="100" src="{$shop.shop_logo ? $shop.shop_logo : ''}"></a>
+            <input type="hidden" name="shop_logo" value="{$shop.shop_logo_key ?? ''}" class="shop_logo">
+        </div>
+        <div class="main100 mb10 fs12 ">手机号码<span class="color-red1">*</span></div>
+        <div class="main100">
+            <input placeholder="请输入11位数手机号码" class="main100 radius4px container-fluid line32 h34 bor_img mb10" name="shop_mobile" value="{$shop.shop_mobile ?? ''}" />
+        </div>
+        <div class="main100 mb10 fs12 ">电话号码</div>
+        <div class="main100">
+            <input type="hidden" name="shop_id" value="{$Think.session.user.user_shop_id}">
+            <input placeholder="" class="main100 radius4px container-fluid line32 h34 bor_img mb10" name="shop_tel" value="{$shop.shop_tel ?? ''}" />
+        </div>
+        <div class="main100 mb10 fs12 ">腾讯QQ</div>
+        <div class="main100">
+            <input placeholder="" class="main100 radius4px container-fluid line32 h34 bor_img mb10" name="shop_qq" value="{$shop.shop_qq ?? ''}" />
+        </div>
+        <div class="main100 mb10 fs12 ">阿里旺旺</div>
+        <div class="main100">
+            <input placeholder="" class="main100 radius4px container-fluid line32 h34 bor_img mb10" name="shop_aliname" value="{$shop.shop_aliname ?? ''}" />
+        </div>
+        <div class="main100 mb10 fs12 ">电子邮箱<span class="color-red1">*</span></div>
+        <div class="main100">
+            <input placeholder="" class="main100 radius4px container-fluid line32 h34 bor_img mb10" name="shop_email" value="{$shop.shop_email ?? ''}" />
+        </div>
+        <div class="main100  mb10 widths">
+            {$district}
+        </div>
+        <div class="main100 mb10 fs12 ">详细地址<span class="color-red1">*</span></div>
+        <textarea class="main100 bor_img radius4px pd10 h70 mb15" placeholder="请输入详细地址" name="shop_street">{$shop.shop_street ?? ''}</textarea>
+        <div class="main100 over">
+            <button type="submit" class="btn text_white bg-red-thunderbird radius4px pd8 pl35 pr35 mb100">保存店铺信息</button>
+        </div>
+    </div><!-- 右边内容结束 -->
+    </form>
+</div><!-- 页面主体内容结束 -->
+{/block}
+{block name="script"}
+<link rel="stylesheet" href="/static/css/metronic/assets/global/plugins/jquery.magnific-popup/dist/magnific-popup.css"/>
+<script src="/static/web/assets/global/plugins/jquery-validation/js/jquery.validate.min.js" type="text/javascript"></script>
+<script src="/static/js/plugins/jquery.form.js" type="text/javascript"></script>
+<script src="/static/css/metronic/assets/global/plugins/jquery.magnific-popup/dist/jquery.magnific-popup.min.js"></script>
+<script src="/static/css/metronic/assets/global/plugins/backstretch/jquery.backstretch.min.js"></script>
+<script src="/static/web/js/apps.js"></script>
+<script>
+    $(document).ready(function(){
+        $('select').addClass('radius4px');
+        var rules = {
+            shop_name:{required:true,minlength:5,maxlength:40},
+            shop_description:{required:true,minlength:20,maxlength:100},
+            province_id:{required:true,},
+            city_id:{required:true,},
+            district_id:{required:true,},
+            qq:{required:true,minlength:5,maxlength:12,digits: true},
+            aliname:{required:true,},
+            shop_street:{required:true,minlength:5,maxlength:30},
+            town_id:{required:true,},
+            shop_contect_person:{required:true,minlength:2,maxlength:20},
+            shop_tel:{required:true,minlength:10,maxlength:12,digits: true},
+            shop_mobile:{required:true,minlength:11,maxlength:11,digits: true},
+            shop_email:{required:true,email:true},
+        };
+        var messages = {
+            shop_name:{required:'请输入店铺名称',minlength:'店铺名称不能少于5个字符',maxlength:'店铺名称不能大于40个字符'},
+            shop_description:{required:'请输入店铺简介',minlength:'店铺简介不能少于20个字符',maxlength:'店铺简介不能大于100个字符'},
+            province_id:{required:'请选择省份'},
+            city_id:{required:'请选择城市'},
+            district_id:{required:'请选择县区'},
+            shop_street:{required:'请输入详细地址',minlength:'详细地址长度不能小于5',maxlength:'详细地址长度不能超过30'},
+            town_id:{required:'请选择街道或镇或乡'},
+            qq:{required:'请输入腾讯QQ',minlength:'腾讯QQ长度不能小于5',maxlength:'腾讯QQ长度不能超过12',digits:'腾讯QQ只能是数字'},
+            aliname:{required:'请输入阿里旺旺账号'},
+            shop_contect_person:{required:'请输入联系人',minlength:'联系人长度不能小于2',maxlength:'联系人长度不能超过20'},
+            shop_tel:{required:'请输入电话号码或手机号码',minlength:'电话号码不能小于10',maxlength:'电话号码长度不能超过12',digits:'电话号码只能是数字'},
+            shop_mobile:{required:'请输入手机号码',minlength:'手机号码长度不能小于11',maxlength:'手机号码长度不能超过11',digits:'手机号码只能是数字'},
+            shop_email:{required:'请输入电子邮箱',email:'电子邮箱格式不正确'},
+        };
+        checkform10({
+            rules:rules,
+            header:'set_shop',
+            messages:messages,
+            formid:'#form_sample_1',
+            success : function (ret) {
+                if (ret.code === 20000) {
+                    success(ret.msg);
+                    //  执行跳转
+                    setTimeout(function(){
+                        window.location.href='/setting';
+                    },1000);
+                } else {
+                    error(ret.msg);
+                }
+            }
+        });
+    });
+    image_zoom();
+</script>
+{/block}

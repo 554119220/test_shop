@@ -1,0 +1,32 @@
+{extend name="public:base" /}
+{block name="page"}
+    <div class="contain">
+        <div class="header">
+            {include file="public:nav" /}
+        </div>
+
+        <div class="content">
+            <div class="text-center" style="width: 500px; margin: 0 auto; padding-bottom: 120px">
+                <div style="margin-bottom: 100px; border-bottom: solid 1px #F0F0F0; padding-bottom: 10px; text-align: left; color: #666;">
+                    <p><span style="color: red">{$app.app_name}</span> 将获取你的</p>
+                    <p><input type="checkbox" disabled checked style="vertical-align: middle"> 昵称</p>
+                    <p><input type="checkbox" disabled checked style="vertical-align: middle"> 头像</p>
+                    <p><input type="checkbox" disabled checked style="vertical-align: middle"> 是否已开店</p>
+                </div>
+                <a href="/index/erpOauth?{$params}" class="auth-other" style="display: inline-block">
+                    <p><img src="/static/wap/images/user/icon_grzl_tx.png"></p>
+                    <p style="color: #00a0e9; margin-top: 5px">使用其他账号</p>
+                </a>
+                {notempty name="user"}
+                    <a href="/index/code?{$params}" class="auth-login" style="display: inline-block; margin-left: 20px">
+                        <p><img style="border-radius: 35px" width="70" src="{$user.user_avatar}"></p>
+                        <p style="color: #00a0e9; margin-top: 5px">{$user.user_username}</p>
+                    </a>
+                {/notempty}
+            </div>
+        </div>
+    </div>
+{/block}
+{block name="script"}
+
+{/block}

@@ -1,0 +1,138 @@
+{extend name="public:base" /}
+
+{block name="page"}
+<div class="tab_col pd10 pb0">
+	
+	<!---->
+	<!-- <div class="alert mt10 mb10 bg-red2 color-red1 pl30">温馨提示，参与官方活动中的商品不允许编辑、下架、删除等操作……</div> -->
+	<div class="main100  bg-white radius4px pl15 pr15 minh595 over">
+		<div class="main100 line55 radius4px mb15 mt5 over">
+			<a class="btn text_white bg-red-thunderbird radius4px pd7 pl25 pr25 mt13 fl mr15 fs12" id="goods-apply-recommend">发起申请</a>
+			<a href="/goods/apply_recommend" class="btn text_white bg-red-thunderbird radius4px pd7 pl25 pr25 mt13 fr mr15 fs12" >申请记录</a>
+		</div>
+		<div class="main100 radius4px over">
+			<table class="table solid_all table_dashed tr12 table12" >
+                <thead class="bg-f5">
+                    <tr>
+                    	<th class="small_xs text-center">
+	                    	<label class="square mar0">
+								<input id="click-goods-active" type="checkbox"><em class="fl"></em>
+							</label>
+						</th>
+						<th class="small_xs ">商品ID</th>
+                        <th class="small_xs ">商品图片</th>
+                        <th class="small_xs ">商品名称</th>
+                        <th class="small_xs ">最大价格</th>
+                        <th class="small_xs ">最小价格</th>
+                        <th class="small_xs ">商品库存</th>
+                        <th class="small_xs ">销售数量</th>
+                        <th class="small_xs ">是否橱窗</th>
+                        <th class="small_xs ">优选精选</th>
+                        <th class="small_xs ">发布时间</th>
+                        <th class="small_xs ">状态</th>
+                    </tr>
+                </thead>
+                <tbody class="goods-list">
+            		{php}$i=0;{/php}
+                	{foreach name="list" key="key" item="value"}
+	                    <tr>
+	                    	<td class="text-center">
+	                    		{if condition="in_array($value['goods_id'],$noAudit)"}
+	                    			待审核
+	                    		{else/}
+	                    			<label class="square mar0">
+										<input data-goods_id="{$value.goods_id}" type="checkbox" class="goods-item-checkbox"><em class="fl"></em>
+									</label>
+	                    		{/if}
+	                    	</td>
+	                    	<td>{$value.goods_id}</td>
+	                        <td><a class="image-zoom" href="{$value.goods_images}"><img width="100" class="radius4px" src="{$value.goods_images}?imageMogr2/thumbnail/200x200!"></a></td>
+	                        <td>{$value.goods_name}</td>
+	                        <td class="text_green">{$value.goods_max_price|default=""}</td>
+	                        <td class="text_green">{$value.goods_min_price|default=""}</td>
+	                        <td>{$value.goods_sku_num}</td>
+	                        <td>{$value.goods_sale_num}</td>
+	                        <td>{$value.goods_recommend == 1 ? '<span class="text_green">是</span>':'否'}</td>
+	                        <td>
+	                        	{switch name="value.goods_recommend_type"}
+	                        		{case value="1"}<span class="text_red">精选</span>{/case}
+	                        		{case value="2"}<span class="text_green">优选</span>{/case}
+	                        		{default}常规
+	                        	{/switch}
+	                        </td>
+	                        <!-- <td>百望商城</td> -->
+	                        <td>{$value.goods_create_time}</td>
+	                        <td><span class="{$value.goods_state == 1 ? '': 'text_red'}">{$value.goods_state_name}</span></td>
+	                    </tr>
+                    {/foreach}
+                </tbody>
+            </table>
+		</div>
+		<!--页按钮-->
+		<div class="text-center">{$data.page|default=""}</div>
+	</div>
+</div>
+{/block}
+{block name="script"}
+<script type="text/javascript">
+	//全选
+	$(document).on('click','#click-goods-active', function(){
+		var n = $(".goods-list .goods-item-checkbox");
+		if( $("#click-goods-active").is(":checked") ){
+			for (var i = 0;i < n.length;i++) {
+				n.get(i).checked = 'checked';
+			}
+		} else {
+			for(var i = 0;i < n.length;i++){
+				n.get(i).checked = false;
+			}
+		}
+	});
+	
+	function goodsIsChecked(){
+		var is = false;
+		$(".goods-list .goods-item-checkbox").each(function(k,v){
+			if ( $(this).prop('checked') == true ) {
+				is = true;
+			}
+		});
+		if ( is == 0 ) {
+			error('请选择一个商品');
+		}
+		return is;
+	}
+	function goodsCheckedValue(){
+		var arr = [];
+		$(".goods-list .goods-item-checkbox").each(function(k,v){
+			if ( $(this).prop('checked') == true ) {
+				arr.push(parseInt($(this).data('goods_id')));
+			}
+		});
+		return arr.join();
+	}
+	// 申请优选
+	$('#goods-apply-recommend').on('click',function(){
+		if ( goodsIsChecked() == false ) {
+			return ;
+		}
+		apiPost({
+			data:{
+				goods_ids:goodsCheckedValue(),
+			},
+			header:getHeader('headers0'),
+			log:true,
+			success:function(ret){
+				if ( ret.code == 20000 ) {
+					success('申请成功');
+					setTimeout(function(){
+						window.location.reload();
+					},1000);
+				} else {
+					error(ret.msg);
+				}
+			},
+		});
+	});
+	
+</script>
+{/block}

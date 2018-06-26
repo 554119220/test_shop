@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<input type="hidden" value={$headers} id="header">
+<button id="submit">aaa</button>
+<script src="static/bootstrap/js/jquery-1.8.3.min.js"></script>
+<script src="static/js/public.js"></script>
+<script>
+    $("#submit").click(function () {
+        var header = JSON.parse($("#header").val());
+        console.log(header);
+        for (var i = 0; i < 1; i++) {
+            var data    = {user_username:'mercury'};
+            api(data, JSON.parse($("#header").val()));
+        }
+//        $.post('http://www.zrshop.com/index/test1', {}, function () {
+//
+//        }, 'json')
+    })
+</script>
+</body>
+</html>

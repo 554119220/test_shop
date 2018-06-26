@@ -1,0 +1,141 @@
+/***  初始   ***/
+html{height:100%}
+body{font-family:"微软雅黑";font-size:12px;	margin:0;padding:0;background:#f8f8f8;min-width:1200px;height:100%}
+a{text-decoration:none;color:#444}
+a:hover{text-decoration:none;color:#1B9AF7;}
+input:focus{outline: none;}
+p{font-size:12px;line-height:17px}
+h1, h2, h3, h4, h5, h6,p{font-family:"微软雅黑";}
+textarea{resize: none;}
+
+
+
+.container{width:1200px}
+.common_page{min-height: calc( 100% - 175px );	}
+
+.footer_set{
+	background:white;
+	padding:0 15px;
+}
+.footer_set .media{margin:0}
+.left_list_set{min-height:660px}
+.left_list_set .title_set a{
+	margin:0;
+    position: relative;
+	line-height:30px;
+	margin-left: -15px;
+    padding-left: 15px;
+	display:block;
+	font-size:12px
+}
+.left_list_set .title_set a:hover{
+	background:#ddd;
+	color:#D91E18
+}
+.left_list_set .title_set a.active{
+	color:#D91E18
+}
+.left_list_set .title_set a.active:before{
+	content:'';
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: #D91E18;
+    border-radius: 6px !important;
+    left: 5px;
+    top: 13px;	
+}
+/*.tab_row.tab_row_set{
+	padding:0 10px;
+}*/
+.tab_row_set .tab_col{
+	padding-left:0;
+	padding-right:0;
+	border-radius: 5px !important;
+    overflow: hidden;
+}
+.tab_col .col_blank{
+	width:1%
+}
+.user_info_left{
+	float:left;
+	width:120px;	
+}
+.user_icon_set{
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    text-align: center;
+    font-size: 14px;
+    background: rgba(220,220,220,.7);
+    line-height: 26px;
+}
+.user_info_right{
+	margin-left:135px;
+}
+.title_set{
+	padding-left:15px;
+	font-size:14px;
+	position:relative;
+}
+.title_set:before{
+	content:'';
+    position: absolute;
+    width: 4px;
+    height: 15px;
+    background: #D91E18;
+    border-radius: 2px !important;
+    left: 0;
+    top: 2px;
+}
+
+
+
+.alert_defelt_set{
+	width: 300px;
+    margin: 3px auto;
+    padding: 0;
+    height: 36px;
+    line-height: 36px;
+    font-size: 14px;
+    background: #ebebe4;
+    color: #999;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*模块区域*/
+.radius_5{border-radius:5px!important}
+/**  等高列  */
+.tab_row{width: 100%;display:table;}
+.tab_row >.tab_col{display:table-cell;vertical-align:top;float:none;}
+.tab_row >.tab_col_middle{display:table-cell;vertical-align:middle;float:none;}
+.over .equal{padding-bottom:9999px;margin-bottom:-9999px;-webkit-box-sizing: content-box;-moz-box-sizing: content-box;box-sizing: content-box;}
+.over .equal.solid_l{margin-left:-1px;}.over .equal.solid_r{margin-right:-1px;}
+
+
+
+
+

@@ -1,0 +1,42 @@
+{eq name="data.code" value="20000"}
+<div class="set_fles bg_white rpt10 re" style="z-index:10">
+    <a data-no-cache="true" href="/" class="rfs14 text_55 pd0 {empty name="Request.param.type"}active{/empty}">推荐</a>
+    {volist name="data.data" id="vo" offset="0" length='4'}
+        <a data-no-cache="true" href="/channel?type={$key}" class="rfs14 text_55 pd0 {eq name="Request.param.type" value="$key"}active{/eq}">{$vo}</a>
+    {/volist}
+    <span class="icon icon-down text_99" style="margin-top:.1rem"></span>
+
+    <div class="fix"><!-- 隐藏层 -->
+        <div class="rpd10 bg_white" style="padding-bottom:0">
+            <span class="rfs14">选择分类</span>
+            <span class="icon icon-down text_99 pull-right" style="margin-top:.1rem"></span>
+        </div>
+        <table class="table table-bordered">
+            <tbody class="rfs14 text-center">
+            {php}$num = 1;{/php}
+            {volist name="data.data" id="vo"}
+                {if condition="$i == 1"}
+                    <tr>
+                {/if}
+                        <td width="25%"><a data-no-cache="true" class="text_55 db rpd5 {eq name="Request.param.type" value="$key"}active{/eq}" href="/channel?type={$key}">{$vo}</a></td>
+                {if condition="!($i % 4) && ($i / 4) > 0"}
+                        {php}++$num;{/php}
+                    </tr>
+                    <tr>
+                {/if}
+            {/volist}
+                    {php}$num = ($num * 4) - $i;{/php}
+                        {for start="0" end="$num"}
+                        <td><a class="text_55 db rpd5" href="javascript:;">&nbsp;</a></td>
+                        {/for}
+                    </tr>
+            </tbody>
+        </table>
+        <div class="text-center">
+            <a data-no-cache="true" href="/category" class="button button-light rmt10" style="display:inline-block;width:35%">
+                <span>更多分类</span> <img class="text_bottom ml3" style="width:.8rem" src="/static/wap/images/icon/index_more.png">
+            </a>
+        </div>
+    </div>
+</div>
+{/eq}

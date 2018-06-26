@@ -1,0 +1,126 @@
+{extend name="public:base" /}
+{block name="page"}
+<div class="tab_col pd10 pb0">
+    {empty name="detail"}
+        <div class="radius4px mb10 bg_white pl15 pr15">
+            <div class="main100 line55 bg-white radius4px">
+                <i class="redicon"></i>
+                <span class="fs14 color333 pl5">评价详情</span>
+
+            </div>
+            <div class="main100  bg-white radius4px  mb10 over">
+                <h4>没有找到评价。</h4>
+            </div>
+        </div>
+    {else}
+        <div class="radius4px mb10 bg_white pl15 pr15">
+            <div class="main100 line55 bg-white radius4px">
+                <i class="redicon"></i>
+                <span class="fs14 color333 pl5">评价详情</span>
+
+            </div>
+            <div class="main100  bg-white radius4px  mb10 over">
+
+                <div class="main100 radius4px over">
+                    <table class="table solid_all  table_dashed tr12 table12  table-center" >
+                        <thead class=" bg-f5 ">
+                        <tr>
+                            <th class="small_xs ">商品信息</th>
+                            <th class="small_xs ">单价</th>
+                            <th class="small_xs ">数量</th>
+                            <th class="small_xs ">实付款</th>
+                            <th class="small_xs ">状态</th>
+                        </tr>
+                        </thead>
+                        <tbody >
+                        <tr>
+                            <td>
+                                <a href="#">
+                                    <img class="fl radius4px mr8" style="height:72px;width:72px;" src="{$detail.orders_goods.goods_images|thumb=72}">
+                                    <div class="fl pr70" style="width: calc(100% - 90px);">
+                                        <div class="line20 mt4 mb6 color666 ">{$detail.orders_goods.goods_name}</div>
+                                        <div class="color999">{$detail.orders_goods.goods_sku_name}</div>
+                                    </div>
+                                </a>
+                            </td>
+                            <td>￥{$detail.orders_goods.orders_goods_single_amount}元</td>
+                            <td>{$detail.orders_goods.orders_goods_num}</td>
+                            <td>￥{$detail.orders_goods.orders_goods_amount}元</td>
+                            <td><a class="color-red1">{$detail.goods_comment_is_effect_name}</a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+
+            </div>
+        </div>
+        <div class="main100 over mb10 " style="height: 600px;">
+            <div class="fl radius4px bg_white pd15 mr10" style="width:calc(30% - 10px); height:100%;">
+                <div class="main100 line30  mb5">
+                    <i class="redicon mar0" ></i>
+                    <span class="fs14 color333 pl5">用户信息</span>
+                </div>
+                <div class="main100 line24 color666">
+                    <span class="pl15">用户昵称：</span>
+                    <span>{$detail.user.user_nick}</span>
+                </div>
+
+            </div>
+
+            <div class="fl radius4px bg_white pd15 mr10" style="width:calc(35% - 10px); height:100%;">
+                <div class="main100 line30  mb5">
+                    <i class="redicon mar0" ></i>
+                    <span class="fs14 color333 pl5">评价信息</span>
+                </div>
+                <div class="main100 line24 color666 over">
+                    <span class="pl15 fl mr4">评价内容：</span>
+                    <span class="color-red1 fl" style="width: calc(100% - 120px);">{$detail.goods_comment_content.goods_comment_content}</span>
+                </div>
+                <div class="main100 line24 color666 over">
+                    <span class="pl15 fl mr4">订单编号：</span>
+                    <span class="color-red1 fl" style="width: calc(100% - 120px);">{$detail.orders_shop_no}</span>
+                </div>
+                <div class="main100 line24 color666 over">
+                    <span class="pl15">评价时间：</span>
+                    <span>{$detail.goods_comment_create_time}</span>
+                </div>
+
+            </div>
+
+            <div class="fl radius4px bg_white pd15 " style="width:calc(35% );height:100%;">
+                <div class="main100 line30  mb5 ">
+                    <i class="redicon mar0" ></i>
+                    <span class="fs14 color333 pl5">回复信息</span>
+                </div>
+                {empty name="detail.goods_comment_content.goods_comment_reply_content"}
+                    <div class="main100 line20 mb5 color666 pl15">
+                        <h4>尚未回复。</h4>
+                    </div>
+                {else/}
+                    <div class="main100 line20 mb5 color666 pl15">
+                        <span class="text_yellow">商家回复：</span>
+                        <span>{$detail.goods_comment_content.goods_comment_reply_content}</span>
+                        <span class="color999">({$detail.goods_comment_content.goods_comment_reply_time})</span>
+                    </div>
+                {/empty}
+                <!-- <div class="main100 line20 mb5 color666  pl35">
+                    <span class=" text_blue">客服回复：</span>
+                    <span>15811860434</span>
+                    <span class="color999">(2017-01-06 15：25：52)</span>
+                </div>
+                <div class="main100 line20 mb5 color666 pl15">
+                    <span class=" text_yellow">商家回复：</span>
+                    <span>暗色调</span>
+                    <span class="color999">(2017-01-06 15：25：52)</span>
+                </div>
+                <div class="main100 line20 mb5 color666  pl35">
+                    <span class=" text_blue">客服回复：</span>
+                    <span>15811860434</span>
+                    <span class="color999">(2017-01-06 15：25：52)</span>
+                </div> -->
+            </div>
+        </div>
+    {/empty}
+</div><!-- 右边内容结束 -->
+{/block}

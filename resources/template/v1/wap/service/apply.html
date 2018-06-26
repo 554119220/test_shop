@@ -1,0 +1,78 @@
+{extend name="public:base" /}
+{block name="page"}
+<!-- 顶部标题栏 -->
+<header class="bar bar-nav bg_white">
+    <a class="icon icon_common pull-left r12 icon_back back" style="margin-top:.6rem"></a>
+    <h1 class="title">申请售后</h1>
+</header>
+<!-- 这里是页面内容区 -->
+<div class="content">
+    <form>
+        {eq name="data.code" value="20000"}
+        <input type="hidden" name="goods_id" value="{$data.data.serviceApply.orders_goods_id}">
+        <input type="hidden" name="shop_no" value="{$data.data.serviceApply.orders_shop_no}">
+        <div class="main100 m5px cart_main">
+            <!--产品列表-->
+            <ul class="cart_newcp">
+                <li>
+                    <!--产品-->
+                    <div class="main100 ">
+                        <div class="fu_title">
+                            <span class=" f7 h333 ">订单编号：{$data.data.orders_shop_no}</span>
+                        </div>
+                        <div class="li_main">
+                            <img class="img" src="{$data.data.serviceApply.goods_images}">
+                            <div class="cart_cpx">
+                                <p class="title_ text_line_2">{$data.data.serviceApply.goods_name}</p>
+                                <span class="rmb">￥ {$data.data.serviceApply.orders_goods_amount}</span>
+                                <div class="color">
+                                    {$data.data.serviceApply.goods_sku_name}
+                                    <span>x {$data.data.serviceApply.orders_goods_num}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--产品end-->
+                </li>
+            </ul>
+        </div>
+        <!--产品end-->
+        <div class="main100 bbai m5px bj">
+            <div class="bg_white rpd10 rfs14 text_over">
+                <span class="vertical_red"></span>
+                <span class="text_77">售后原因</span>
+            </div>
+            <div class="textarea_set bg_white rpd10 m5px">
+                <textarea name="remark" class="form-control" rows="3" placeholder="请填写详细售后原因……"></textarea>
+            </div>
+
+            <div class="bg_white rpd10 rfs14 text_over">
+                <span class="vertical_red"></span>
+                <span class="text_77">售后数量 (本次最多可申请售后 {$data.data.serviceApply.goods_service_num} 件)</span>
+            </div>
+            <div class="textarea_set bg_white rpd10 m5px">
+                <input placeholder="请输入售后数量" type="number" class="main100 form-control bor_none" name="num" value="{$data.data.serviceApply.goods_service_num}">
+            </div>
+
+            <!--上传凭证-->
+            <div class="bg_white rpd10 rfs14 text_over" style="border-bottom: 1px solid #f8f8f8;">
+                <span class="vertical_red"></span>
+                <span class="text_77" >上传凭证</span>
+            </div>
+            <div class="bg_white rpd10 bb12">
+                <div class="clearfix mg5 box-images">
+                    <div class="camera_input pingz">
+                        <input class="upload-file" data-input="images" type="file" onchange="uploadImages(this);">
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" id="images" name="images" value="">
+            <div class="rpd10">
+                <a href="javascript:;" class="button button_strong button-fill button-danger btn-submit">提交申请</a>
+            </div>
+        </div>
+        {/eq}
+    </form>
+</div>
+<!-- 页面内容区到此为止 -->
+{/block}

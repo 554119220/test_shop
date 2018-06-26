@@ -1,0 +1,28 @@
+<div class="tab_col bg_white" style="width:210px">
+    <!-- data-controller首字母请大写 -->
+    <div class="pd15 left_list_set tab-controller" data-controller="{:request()->controller()}">
+        <div class="title_set mb10">
+            <div class="mb10">商品管理</div>
+            <a data-controller="Goods" class="a-side" href="/goods">商品管理</a>
+            <a data-controller="Goods" class="a-side" href="/goods/create">发布商品</a>
+            <!-- <div class="main100 hide">
+                <a class="list-btn">一级类目 <img class="pl2" src="/static/web/images/icon/botbtn.png"></a>
+                <div class="list-list">
+                    <a class="active marl10" href="javascript:;">二级类目</a>
+                    <a class="marl10" href="javascript:;">订单管理</a>
+                </div>
+                <a class="list-btn">一级类目 <img class="pl2" src="/static/web/images/icon/botbtn.png"></a>
+                <div class="list-list">
+                    <a class="active marl10" href="javascript:;">二级类目</a>
+                    <a class="marl10" href="javascript:;">订单管理</a>
+                </div>
+            </div> -->
+        </div>
+        <div class="title_set mb10">
+            <div class="mb10">模板管理</div>
+            <a data-controller="Package" class="a-side" href="/goods/package">包装模板</a>
+            <a data-controller="Promotion" class="a-side" href="/goods/promotion">售后模板</a>
+            <a data-controller="Express" class="a-side" href="/goods/express">运费模板</a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,194 @@
+{extend name="public:base" /}
+<!--导航-->
+{block name="nav"}{include file="goodsapplyrecommend:nav" /}{/block}
+{block name="search"}{include file="goodsapplyrecommend:search" /}{/block}
+<!--主体内容-->
+{block name="content"}
+<form class="form-list" id="form-list" onsubmit="return false">
+	{$html_table}
+	<div class="page-box">{:page_html($res.data.pageinfo)}</div>
+</form>
+<div class="md-buttom-bar clearfix"></div>
+{notempty name="res.data.list"}
+<div class="buttom-bar">
+	<div class="btn blue btn-100px fl mr10" onclick="selectAll({tag:'.form-list'})">全选/反选</div>
+	<div class="btn red btn-100px fl mr20" onclick="deleteSelect()">删除记录</div>
+	<div class="btn blue btn-100px fl mr10" onclick="audit_list($(this),1)">批量通过</div>
+	<?php
+		// dump(config('site.goods'));exit;
+		$refuseArr = explode( PHP_EOL ,config('site.goods')['goods_recommend_refuse_content'] ?? "");
+		$refuseArrNew = [["","拒绝理由"]];
+		foreach ($refuseArr as $key => $value) {
+			$refuseArrNew[] = [$value,$value];
+		}
+	?>
+	{:form_item(
+			array(
+				'formtype'		=>'select',
+				'label'			=>'状态',
+				'name'			=>'',
+				'data'			=>$refuseArrNew,
+				'field'			=>[0,1],
+				'next_btn'		=>'<button class="btn red btn-info" onclick="audit_list($(this),0)">批量拒绝</button>',
+				'is_first'		=>0,
+				'input_group_attr' => 'style="width:200px;float:left;margin-right:10px;"',
+			)
+	)}
+	<div class="clearfix"></div>
+</div>
+{/notempty}
+<link rel="stylesheet" href="/static/web/assets/zoom/dist/viewer.css">
+{/block}
+
+<!--脚本-->
+{block name="javascript"}
+
+<script src="/static/web/assets/zoom/dist/viewer.js"></script>
+<script src="/static/web/assets/zoom/assets/js/main.js"></script>
+<script>
+	function deleteSelect(){
+		var size = $('.form-list input[type="checkbox"]:checked').size();
+		if(size < 1){
+			toast({msg:'请至少选择一条记录！'});
+			return;
+		}
+		var data = getFormJson('#form-list');
+		vmodal_confirm({
+			title:'删除记录',
+			msg:'<h3 class="text-center">真的要删除记录吗？</h3>',
+			url:'{:url(request()->controller().'/deleteSelect')}',
+			data:data,
+			success:function(ret){
+				toast(ret);
+				if(ret.code == 1){
+					$('.form-list input[type="checkbox"]:checked').each(function(){
+						$(this).closest('tr').remove();
+					});
+					
+					$('.ajax-modal').modal('hide');
+				}
+			}
+		});
+	}
+	
+	function setStatus(obj){
+		var size = $('.form-list input[type="checkbox"]:checked').size();
+		if(size < 1){
+			toast({msg:'请至少选择一条记录！'});
+			return;
+		}
+		
+		var data = getFormJson('#form-list');
+		data.field 	= obj.closest('.input-group').find('select').attr('name');
+		data.value	= obj.closest('.input-group').find('select').val();
+		//console.log(data);
+		ajax_post({
+			url:'{:url(request()->controller().'/setStatus')}',
+			data:data,
+			success:function(ret){
+				toast(ret);
+				setTimeout(function(){
+					location.reload();
+				},1000);
+			}
+		});
+	}
+
+	/**
+     * 审核
+     */
+    function extra_tr_view(obj){
+
+        var id 	= obj.closest('tr').attr('id');
+        var url = '/Goodsapplyrecommend/indexItemAudit/id/' + id;
+        if ( obj.attr('isdata') == 1 ) {
+        	$('[data-id="ext-row-'+id+'"]').toggleClass('hide');
+        } else {
+        	obj.siblings().attr('isdata','');
+        	obj.attr('isdata',1);
+        	$('[data-id="ext-row-'+id+'"]').removeClass('hide');
+        	loadurl(url, $('[data-id="ext-row-' + id + '"]').find('td'), 1);
+        }
+    }
+    /**
+     * 快速审核
+     */
+    $(document).on('click', '.form-list .pass_fast', function(){
+		var data = {
+			goods_apply_recommend_audit_pass:1,
+			goods_apply_recommend_id:$(this).closest('tr').attr('id'),
+		};
+		$.ajax({
+			type:'post',
+			url:'/Goodsapplyrecommend/indexItemAuditSave',
+			data:data,
+			success:function(ret){
+				toast(ret);
+				if ( ret.code == 1 ) {
+					window.location.reload();
+				}
+			},
+			error:function(ret){
+				toast({msg:'请求出错'});
+			},
+		});
+	});
+	$(document).on('click', '.form-list .refuse_fast', function(){
+		var content = $(this).siblings('select').first().val();
+		if (content == undefined || content == '') {
+			toast({msg:'请选择拒绝理由'});
+			return ;
+		}
+		var data = {
+			goods_apply_recommend_audit_pass:0,
+			goods_apply_recommend_audit_content:content,
+			goods_apply_recommend_id:$(this).closest('tr').attr('id'),
+		};
+		$.ajax({
+			type:'post',
+			url:'/Goodsapplyrecommend/indexItemAuditSave',
+			data:data,
+			success:function(ret){
+				toast(ret);
+				if ( ret.code == 1 ) {
+					window.location.reload();
+				}
+			},
+			error:function(ret){
+				toast({msg:'请求出错'});
+			},
+		});
+	});
+	// 批量审核
+	function audit_list(obj,pass){
+		var size = $('.form-list input[type="checkbox"]:checked').size();
+		if(size < 1){
+			toast({msg:'请至少选择一条记录！'});
+			return;
+		}
+		var data = getFormJson('#form-list');
+		data.goods_apply_recommend_audit_pass 		= pass;
+		if ( pass == 0 ) {
+			data.goods_apply_recommend_audit_content 	= obj.closest('.input-group').find('select').val();
+			if ( data.goods_apply_recommend_audit_content == undefined || data.goods_apply_recommend_audit_content == '' ){
+				toast({msg:'请选择拒绝理由'});
+				return ;
+			}
+		}
+		$.ajax({
+			type:'post',
+			url:'/Goodsapplyrecommend/indexItemAuditSaveAll',
+			data:data,
+			success:function(ret){
+				toast(ret);
+				if ( ret.code == 1 ) {
+					window.location.reload();
+				}
+			},
+			error:function(ret){
+				toast({msg:'请求出错'});
+			},
+		});
+	}
+</script>
+{/block}

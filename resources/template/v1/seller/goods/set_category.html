@@ -1,0 +1,34 @@
+{empty name="list"}
+	<h3>您尚未添加店铺分类。</h3>
+{else/}
+	<!-- <div class="main100 mb10">店铺分类</div> -->
+	<div class="main100 over pt10 mt20 color666 fs14">
+		<form id="form-goods-set-category">
+		{php}$i = 0;{/php}
+		{foreach name="list" key="key" item="value"}
+			<label class="square fl ml10">
+                <input name="shop_goods_category_ids[{$i++}]" type="checkbox" value="{$value.goods_category_id}"><em class="fl"></em>
+                <span class="ml5"><b>{$value.goods_category_name}</b></span>
+            </label>
+			<div class="form-group">
+		        <label><b>&nbsp;</b></label>
+				<div class="mt-checkbox-inline">
+					{notempty name="value.child"}
+						{foreach name="value.child" key="ko" item="vo"}
+							<label class="square fl ml30">
+				                <input name="shop_goods_category_ids[{$i++}]" type="checkbox" value="{$vo.goods_category_id}"><em class="fl"></em>
+				                <span class="ml5">{$vo.goods_category_name}</span>
+				            </label>
+						{/foreach}
+					{else/}
+						<label class="square fl ml10">无子级分类。</label>
+					{/notempty}
+				</div>
+		    </div>
+		{/foreach}
+		</form>
+	</div>
+	<div class="main100 pt10 mt30 over">
+		<span class="fs14">可选多个分类</span>
+	</div>
+{/empty}

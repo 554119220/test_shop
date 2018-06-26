@@ -1,0 +1,84 @@
+.container .bottomMenu {
+	background-color: #FFF;
+	position: fixed;
+	bottom: 0px;
+	width: 100%;
+	border-top-width: 1px;
+	border-top-style: solid;
+	border-top-color: #F4F4F4;
+	height: 48px;
+	/*min-width: 360px; */
+	padding-top: 2px;
+	z-index:10;
+}
+.container .bottomMenu li {
+	width: 20%;
+	float: left;
+	text-align: center;
+	position:relative;
+	line-height:15px;
+}
+.container .bottomTip {
+	text-align: center;
+	font-size: 14px;
+	color: #CCC;
+	line-height: 40px;
+	padding-bottom: 50px;
+}
+.container .bottomMenu li a {
+	display: inline-block;
+	height: 100%;
+	width: 100%;
+	color: #999;
+	
+}
+
+.container .bottomMenu .find {
+	position: relative;
+	height: 48px;
+	background-image: none;
+}
+.container .bottomMenu .find .findSub {
+	position: absolute;
+	left: 0px;
+	z-index: 11;
+	bottom: 0px;
+}
+.container .bottomMenu .find .findSub img {
+	margin-left: 10%;
+}
+.container .moreservices {
+	position: fixed;
+	bottom:65px;
+	width: 100%;
+	min-width: 360px;
+	padding-top: 2px;
+	overflow: hidden;
+	display: none;
+	z-index:9;
+}
+.container .moreservices li {
+	width: 33%;
+	float: left;
+	text-align: center;
+	margin-bottom:8px;
+}
+.container .moreservices li a {
+	display: inline-block;
+	height: 100%;
+	width: 100%;
+	color: #999;
+}
+.container .moreservices .servLi {
+	width: 80%;
+	margin-right: auto;
+	margin-left: auto;
+	background-color: #FFF;
+	padding: 10px;
+	overflow: hidden;
+	border-width: 1px;
+	border-style: solid;
+	border-color: #F4F4F4;
+	border-radius: 8px;
+}
+.container .bottomMenu .hasnew{ position:absolute; top:5px; right:20px;}

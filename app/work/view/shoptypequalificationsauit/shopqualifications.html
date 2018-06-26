@@ -1,0 +1,78 @@
+<div class="bg-white p20">
+    <h4>修改资质</h4>
+    <hr />
+    <form class="form-horizontal" id="form-add-{$Request.param.id}" onsubmit="return sform($(this))">
+        <div class="form-group" id="f-shop_settled_step">
+            <label class="control-label" style="color: red;">会员资质</label>
+            <div class="btn red btn-100px btn-outline btn-flush-cache md5" href="javascript:;" onclick="flushCache(this)" data-url="/clearcache/flush?key=table:shop_qualifications:list:shop_type_id:shop_type_member:{$Request.param.id}">清除缓存</div>
+            <div class="col-xs-12">
+                <div class="mt-checkbox-inline">
+                    {volist name="qualifications" id="val"}
+                    {eq name="val.type" value="2"}
+                    <label class="mt-checkbox mt-checkbox-outline">
+                        <input type="checkbox" name="shop_type_member[]" {present name="qualifications2.shop_type_member"}{if condition="in_array($val['shop_qualifications_id'],$qualifications2['shop_type_member'])"} checked{/if}{/present}  class="form-control" value="{$val.shop_qualifications_id}">{$val.shop_qualifications_name}
+                        <span></span>
+                    </label>
+                    {/eq}
+                    {/volist}
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group" id="f-shop_settled_step2">
+            <label class="control-label red" style="color: red;">行业资质</label>
+            <div class="btn red btn-100px btn-outline btn-flush-cache md5" href="javascript:;" onclick="flushCache(this)" data-url="/clearcache/flush?key=table:shop_qualifications:list:shop_type_id:shop_type_industry:{$Request.param.id}">清除缓存</div>
+            <div class="col-xs-12">
+                <div class="mt-checkbox-inline">
+                    {volist name="qualifications" id="val"}
+                    {eq name="val.type" value="1"}
+                    <label class="mt-checkbox mt-checkbox-outline">
+                        <input type="checkbox" name="shop_type_industry[]" {present name="qualifications2.shop_type_industry"}{if condition="in_array($val['shop_qualifications_id'],$qualifications2['shop_type_industry'])"} checked{/if}{/present} class="form-control" value="{$val.shop_qualifications_id}">{$val.shop_qualifications_name}
+                        <span></span>
+                    </label>
+                    {/eq}
+                    {/volist}
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group" id="f-shop_settled_step3">
+            <label class="control-label" style="color: red;">品牌资质（自有）</label>
+            <div class="btn red btn-100px btn-outline btn-flush-cache md5" href="javascript:;" onclick="flushCache(this)" data-url="/clearcache/flush?key=table:shop_qualifications:list:shop_type_id:shop_type_brand1:{$Request.param.id}">清除缓存</div>
+            <div class="col-xs-12">
+                <div class="mt-checkbox-inline">
+                    {volist name="qualifications" id="val"}
+                    {eq name="val.type" value="0"}
+                    <label class="mt-checkbox mt-checkbox-outline">
+                        <input type="checkbox" name="shop_type_brand1[]" {present name="qualifications2.shop_type_brand1"}{if condition="in_array($val['shop_qualifications_id'],$qualifications2['shop_type_brand1'])"} checked{/if}{/present}  class="form-control" value="{$val.shop_qualifications_id}">{$val.shop_qualifications_name}
+                        <span></span>
+                    </label>
+                    {/eq}
+                    {/volist}
+                </div>
+            </div>
+        </div>
+        <div class="form-group" id="f-shop_settled_step4">
+            <label class="control-label" style="color: red;">品牌资质（代理）</label>
+            <div class="btn red btn-100px btn-outline btn-flush-cache md5" href="javascript:;" onclick="flushCache(this)" data-url="/clearcache/flush?key=table:shop_qualifications:list:shop_type_id:shop_type_brand2:{$Request.param.id}">清除缓存</div>
+            <div class="col-xs-12">
+                <div class="mt-checkbox-inline">
+                    {volist name="qualifications" id="val"}
+                    {eq name="val.type" value="0"}
+                    <label class="mt-checkbox mt-checkbox-outline">
+                        <input type="checkbox" name="shop_type_brand2[]" {present name="qualifications2.shop_type_brand2"}{if condition="in_array($val['shop_qualifications_id'],$qualifications2['shop_type_brand2'])"} checked{/if}{/present} class="form-control" value="{$val.shop_qualifications_id}">{$val.shop_qualifications_name}
+                        <span></span>
+                    </label>
+                    {/eq}
+                    {/volist}
+                </div>
+            </div>
+        </div>
+        <input type="hidden" name="id" value="{$Request.param.id}">
+        <button type="submit" class="btn btn-danger btn-150px">提交</button>
+    </form>
+
+</div>
+<script>
+    image_zoom();
+</script>

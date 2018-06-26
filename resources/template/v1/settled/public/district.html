@@ -1,0 +1,33 @@
+<select class="bs-select form-control w25-20 fl fs12 mr15 select-radius change-district district-level-1" data-level="1" id="shop_province_id" name="shop_province_id"  >
+    <option value="">请选择省</option>
+    {volist name="province.data" id="val"}
+    <option {notempty name="params.province"}{eq name="params.province" value="$val['id']"} selected {/eq}{/notempty} value="{$val.id}">{$val.a_name}</option>
+    {/volist}
+</select>
+<select class="bs-select form-control w25-20 fl fs12 mr15 select-radius change-district district-level-2" data-level="2" name="shop_city_id" >
+    <option value="">请选择市</option>
+    {notempty name="city"}
+        {volist name="city.data" id="val"}
+            <option {notempty name="params.city"}{eq name="params.city" value="$val['id']"} selected {/eq}{/notempty} value="{$val.id}">{$val.a_name}</option>
+        {/volist}
+    {/notempty}
+</select>
+<select class="bs-select form-control w25-20 fl fs12 mr15 select-radius change-district district-level-3" data-level="3" name="shop_district_id" >
+    <option value="">请选择区/县</option>
+    {notempty name="district"}
+        {volist name="district.data" id="val"}
+            <option {notempty name="params.district"}{eq name="params.district" value="$val['id']"} selected {/eq}{/notempty} value="{$val.id}">{$val.a_name}</option>
+        {/volist}
+    {/notempty}
+</select>
+
+<select class="bs-select form-control w25-20 fl fs12 mr15 select-radius change-district district-level-4" data-level="4" name="shop_town_id" >
+    <option value="">请选择/镇/街道/乡</option>
+    {present name="town.data"}
+    {notempty name="town"}
+        {volist name="town.data" id="val"}
+            <option {notempty name="params.town"}{eq name="params.town" value="$val['id']"} selected {/eq}{/notempty} value="{$val.id}">{$val.a_name}</option>
+        {/volist}
+    {/notempty}
+    {/present}
+</select>

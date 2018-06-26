@@ -1,0 +1,132 @@
+{extend name="public:base" /}
+
+{block name="page"}
+<!-- 标题栏 -->
+<header class="bar bar-nav bbai bor_none">
+    <a class="l_return back"><img class="main100" src="/static/wap/images/reg/l_return1.png"></a>
+    <h1 class="title">订单详情</h1>
+</header>
+
+<!-- 这里是页面内容区 -->
+<div class="content ">
+    {eq name="data.code" value="20000"}
+    <!--购物车内容-->
+    <div class="main100">
+        <!--购物车产品-->
+        <div class="cart_cp">
+            {notempty name="$data.data.orders_shop_next_run_time"}
+            <div class="tishi">{$data.data.orders_shop_next_run_time}</div>
+            {/notempty}
+            <!--收货地址-->
+            <ul class="main100 dz_list bbai bor5px">
+                <li class="bor_none">
+                    <div class="dz_name">
+                        <div class="lleft">收货人：<span>{$data.data.ordersAddress.orders_address_name}</span></div>
+                    </div>
+                    <div class="dz_name">
+                        <div class="lleft">联系号码：<span>{$data.data.ordersAddress.orders_address_connect}</span></div>
+                    </div>
+                    <p class="p">{$data.data.ordersAddress.orders_address}</p>
+                </li>
+            </ul>
+            <!---->
+
+            <div class="main100 cart_newcp">
+                <div class="tabs">
+                    <!--列表1-->
+                    <div class="tab active">
+                        <!--产品-->
+                        <div class="main100 bor5px">
+                            <div class="fu_title">
+                                <!--<span class="lleft" style="background:url({$data.data.shop.shop_logo}?imageMogr2/thumbnail/25x25) left no-repeat;">{$data.data.shop.shop_name}</span>-->
+                                <a data-no-cache="true" href="/shop?id={$data.data.shop.shop_id}">
+                                    <img class="shop-logo1" src="{$data.data.shop.shop_logo|thumb=40}">
+                                    <span class="shop-title f7 h333" style="text-align: left" >{$data.data.shop.shop_name}</span>
+                                </a>
+                                <span class="s yellow">{$data.data.orders_shop_state_name}</span>
+                            </div>
+                            {volist name="data.data.goods" id="vo"}
+                                <div class="li_main">
+                                    <a data-no-cache="true" href="/goods?id={$vo.goods_sku_id}"><img class="img" src="{$vo.goods_images}"></a>
+                                    <div class="cart_cpx">
+                                        <p class="title_ text_line_2"><a style="color: #999;" href="/goods?id={$vo.goods_sku_id}">{$vo.goods_name}</a></p>
+                                        <span class="rmb">￥ {$vo.orders_goods_amount}</span>
+                                        <div class="color">{$vo.goods_sku_name} <span>x {$vo.orders_goods_num}</span>
+                                        {if condition="$vo.orders_goods_num - $vo.goods_refund_num > 0"}
+                                            <span style="color: red">已退 {:$vo.orders_goods_num - $vo.goods_refund_num} 件</span>
+                                        {/if}
+                                        </div>
+                                    </div>
+                                </div>
+                            {/volist}
+                            <!--商品总金额2-->
+                            <ul class="main100 order_rmb2">
+                                <li class="main100 solid_b pb5 pt5">
+                                    <span class="lleft h999">商品总金额：</span>
+                                    <span class="rright h999">￥ {$data.data.orders_shop_goods_edit_amount}</span>
+                                </li>
+                                <li class="main100 solid_b pb5 pt5">
+                                    <span class="lleft h999">已退款金额：</span>
+                                    <span class="rright h999">￥ {:number_format($data.data.orders_shop_goods_edit_amount - $data.data.orders_refund_amount, 2)}</span>
+                                </li>
+                                <li class="main100 solid_b pb5 pt5">
+                                    <span class="lleft h999">已退款运费：</span>
+                                    <span class="rright h999">￥ {:number_format($data.data.orders_shop_express_edit_amount - $data.data.orders_refund_express_amount, 2)}</span>
+                                </li>
+                                <li class="main100 solid_b pb5 pt5">
+                                    <span class="lleft h999">优惠金额：</span>
+                                    <span class="rright h999">￥ {$data.data.orders_shop_discount_amount}</span>
+                                </li>
+                                <li class="main100 solid_b pb5 pt5">
+                                    <span class="lleft h999">购物积分抵扣：</span>
+                                    <span class="rright h999">￥ {:$data.data.orders_shop_pay_shopping_score * 0.01}</span>
+                                </li>
+                                <li class="main100 solid_b pb5 pt5">
+                                    <span class="lleft h999">现金付款金额：</span>
+                                    <span class="rright h999">￥ {$data.data.orders_shop_pay_cash}</span>
+                                </li>
+                                <li class="main100 solid_b pb5 pt5">
+                                    <span class="lleft h999">赠送积分：</span>
+                                    <span class="rright h999">{$data.data.orders_shop_score}</span>
+                                </li>
+                                <li class="main100 solid_b pb5 pt5">
+                                    <span class="lleft h999">运费：</span>
+                                    <span class="rright h999">￥ {$data.data.orders_shop_express_edit_amount}</span>
+                                </li>
+                                <li class="main100">
+                                    <span class="lleft h666">合计：</span>
+                                    <span class="rright cred">￥ {$data.data.orders_shop_edit_amount}</span>
+                                </li>
+                            </ul>
+                            <!---->
+
+                            <!--联系商家-->
+                            <div class="order_shop">
+                                {include file="orders/stateDetail" /}
+                            </div>
+                        </div>
+                        <!--产品end-->
+                    </div>
+                </div>
+                <!---->
+            </div>
+        </div>
+        <!--订单号-->
+        <div class="order_hot bbai h666 list2m">订单号：{$data.data.orders_shop_no}</div>
+        <div class="order_hot s bbai h666 list2m">订单日志</div>
+        <ul class="main100 bbai rizhi">
+            {volist name="data.data.logs" id="vo"}
+            <li class="pad75">
+                <div class="main100 m5px">
+                    <span class="lleft f65 h666">{$vo.orders_logs_title}</span>
+                    <span class="rright f6 h999">{$vo.orders_logs_create_time}</span>
+                </div>
+            </li>
+            {/volist}
+        </ul>
+    </div>
+    </div>
+    <!--购物车内容end-->
+    {/eq}
+</div>
+{/block}

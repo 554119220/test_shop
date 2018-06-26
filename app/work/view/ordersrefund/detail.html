@@ -1,0 +1,162 @@
+<div class="bg-white p20">
+    <div class="row">
+        <div class="col-xs-3">
+            <h4>退款信息</h4><hr />
+            <dl class="dl-horizontal">
+                <dt>订单号：</dt><dd>{$data.orders_shop_no}</dd>
+                <dt>退款单号：</dt><dd>{$data.orders_refund_no}</dd>
+                <dt>申请时间：</dt><dd>{$data.orders_refund_create_time}</dd>
+                <dt>退货数量：</dt><dd>{$data.orders_refund_num}</dd>
+                <dt>退款金额：</dt><dd>{$data.orders_refund_amount}</dd>
+                <dt>退积分：</dt><dd>{$data.orders_refund_score}</dd>
+                <dt>退运费金额：</dt><dd>{$data.orders_refund_express_amount}</dd>
+                <dt>退款类型：</dt><dd>{$data.orders_refund_type_name}</dd>
+                <dt>退款状态：</dt><dd>{$data.orders_refund_state_name}</dd>
+                <dt>店铺：</dt><dd>{$data.shop.shop_name}</dd>
+                <dt>商家：</dt><dd>{$data.seller.user_username}</dd>
+                <dt>买家：</dt><dd>{$data.user.user_username}</dd>
+            </dl>
+        </div>
+        {notempty name="data.OrdersRefundAddress"}
+        <div class="col-xs-3">
+            <h4>收货信息</h4><hr />
+            <dl class="dl-horizontal">
+                <dt>联系姓名：</dt><dd>{$data.OrdersRefundAddress.orders_refund_name}</dd>
+                <dt>联系方式：</dt><dd>{$data.OrdersRefundAddress.orders_refund_connect}</dd>
+                <dt>联系地址：</dt><dd>{$data.OrdersRefundAddress.orders_refund_address}</dd>
+                <dt>邮寄时间：</dt><dd>{$data.OrdersRefundAddress.orders_refund_time|default='-'}</dd>
+                <dt>快递公司：</dt><dd>{$data.OrdersRefundAddress.express_company_name|default='-'}</dd>
+                <dt>快递单号：</dt><dd>{$data.OrdersRefundAddress.express_no|default='-'}</dd>
+                <dt>发货备注：</dt><dd>{$data.OrdersRefundAddress.orders_refund_remark|default='-'}</dd>
+            </dl>
+        </div>
+        {/notempty}
+        <div class="col-xs-6">
+            <h4>商品信息</h4><hr />
+            <dl class="dl-horizontal">
+                <dt>商品名称：</dt><dd>{$data.OrdersGoods.goods_name}</dd>
+                <dt>库存呢名称：</dt><dd>{$data.OrdersGoods.goods_sku_name}</dd>
+                <dt>商品主图：</dt><dd>{:imgwh2($data['OrdersGoods']['goods_images'],60)}</dd>
+                <dt>商品总价：</dt><dd>{$data.OrdersGoods.orders_goods_amount}</dd>
+                <dt>商品单价：</dt><dd>{$data.OrdersGoods.orders_goods_single_amount}</dd>
+                <dt>积分倍数：</dt><dd>{$data.OrdersGoods.goods_score_multi}</dd>
+                <dt>奖励积分：</dt><dd>{$data.OrdersGoods.goods_score}</dd>
+                <dt>商品总重：</dt><dd>{$data.OrdersGoods.goods_weight}</dd>
+                <dt>商品单重：</dt><dd>{$data.OrdersGoods.goods_single_weight}</dd>
+                <dt>可使用购物积分：</dt><dd>{:$data.OrdersGoods.goods_shopping_score_multi * 10}</dd>
+                <dt>购买数量：</dt><dd>{$data.OrdersGoods.orders_goods_num}</dd>
+                <dt>可退数量：</dt><dd>{$data.OrdersGoods.goods_refund_num}</dd>
+                <dt>可退金额：</dt><dd>{$data.OrdersGoods.goods_refund_amount}</dd>
+                <dt>可退积分：</dt><dd>{$data.OrdersGoods.goods_refund_score}</dd>
+            </dl>
+        </div>
+    </div>
+
+
+    {in name="data.orders_refund_state" value="31,32"}
+    <div class="row">
+        <div class="col-md-12">
+            <h4>判决</h4><hr />
+            <form class="form-horizontal" action="/ordersrefund/referee" id="form-referee-{$Request.param.id}" onsubmit="return sendForm()">
+                {:buildform(array(
+                'field'		=>array(
+                array(
+                'formtype'		=> 'radio',
+                'label'			=> '判决类型',
+                'name'			=> 'referee_result',
+                'data'			=> [[0,'维持原判'],[1,'买家胜诉'],[2,'商家胜诉']],
+                'field'			=> [0,1],
+                'is_need'		=> 1,
+                ),
+                array(
+                'formtype'		=> 'textarea',
+                'label'			=> '原因',
+                'name'			=> 'remark',
+                'is_need'		=> 1,
+                ),
+                array(
+                'formtype'		=> 'hidden',
+                'name'			=> 'id',
+                'value'			=> request()->param('id'),
+                ),
+                array(
+                'formtype'		=> 'button',
+                'btns'			=> [['提交','btn btn-danger btn-150px','submit']],
+                ),
+                ),
+                )
+                )}
+            </form>
+        </div>
+    </div>
+    {/in}
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="portlet light portlet-fit ">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <span class="caption-subject bold font-green uppercase"> 操作日志</span>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <div class="timeline">
+                        <!-- TIMELINE ITEM -->
+                        {volist name="data.OrdersRefundLogs" id="vo"}
+                            <div class="timeline-item">
+                                <div class="timeline-badge">
+                                    <div class="timeline-icon">
+                                        <i class="icon-user-following font-green-haze"></i>
+                                    </div>
+                                </div>
+                                <div class="timeline-body">
+                                    <div class="timeline-body-arrow"> </div>
+                                    <div class="timeline-body-head">
+                                        <div class="timeline-body-head-caption">
+                                            <a href="javascript:;" class="timeline-body-title font-blue-madison">{$vo.refund_logs_title}</a>
+                                            <span class="timeline-body-time font-grey-cascade">{$vo.refund_logs_create_time}</span>
+                                        </div>
+                                    </div>
+                                    <div class="timeline-body-content">
+                                        <span class="font-grey-cascade">
+                                            {$vo.refund_logs_remark|default='-'}
+                                            {notempty name="vo.refund_logs_images"}
+                                                <ul class="form-images-list-more">
+                                                    {volist name="vo.refund_logs_images" id="vo"}
+                                                    <li class="img-item">
+                                                        <a class="image-zoom" href="{$vo}" title="大图">
+                                                            <img src="{:thumb($vo,100,100,2)}" alt="图片">
+                                                        </a>
+                                                    </li>
+                                                    {/volist}
+                                                </ul>
+                                            {/notempty}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        {/volist}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    image_zoom();
+    function sendForm(){
+        submitForm({
+            formid:'#form-referee-{$Request.param.id}',
+            success:function(ret){
+                toast(ret);
+                if(ret.code === 1){
+                    setTimeout(function(){
+                        window.location.reload()
+                    },1000);
+                }
+            }
+        });
+        return false;
+    }
+</script>

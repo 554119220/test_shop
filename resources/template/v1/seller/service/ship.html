@@ -1,0 +1,48 @@
+{extend name="public:base" /}
+{block name="page"}
+<div class="tab_col pd10 pb0">
+    <div class="container-fluid line55 bg-white radius4px mb10">
+        <i class="redicon"></i>
+        <span class="fs14 color333">邮寄商品</span>
+    </div>
+    <div class="alert mt10 mb10 bg-red2 color-red1 pl30">你正在操作邮寄商品，请确认商品是否已维修完成或更换完成！！！</div>
+    {include file="service:info" /}
+    <form data-redirect="/service/detail?service_no={$data.data.orders_service_no}" data-header="ship">
+        <input type="hidden" name="service_no" value="{$data.data.orders_service_no}">
+        <div class="main100  bg-white radius4px pd15"  style="min-height: 200px;">
+            <div class="main100 mb10 fs12 mt10">收货地址</div>
+            <div class="main100">
+                {notempty name="data.data.OrdersServiceAddress.1"}
+                <div>姓名：{$data.data.OrdersServiceAddress.1.orders_service_address_name}</div>
+                <div>地址：{$data.data.OrdersServiceAddress.1.orders_service_address}</div>
+                <div style="word-break: break-all;">电话：{$data.data.OrdersServiceAddress.1.orders_service_address_connect}</div>
+                {/notempty}
+            </div>
+            <div class="main100 mb10 fs12 mt4">快递公司<span class="color-red1">*</span></div>
+            <div class="main100 clear-after">
+                <select name="company_id" class="form-control main20 fl fs12 mr15 select-radius bor_img radius4px"  >
+                    <option>--选择物流公司--</option>
+                    {volist name="company.data" id="vo"}
+                    <option>{$key == 1 ? '常用' : $key}</option>
+                    {volist name="vo" id="company"}
+                    <option value="{$company.company_id}">&nbsp;&nbsp;&nbsp;&nbsp;{$company.company_name}</option>
+                    {/volist}
+                    {/volist}
+                </select>
+            </div>
+            <div class="main100 mb10 fs12 mt10">快递单号<span class="color-red1">*</span></div>
+            <div class="main100">
+                <input name="express_no" placeholder="请输入快递单号..." class="main100 radius4px container-fluid line32 bor_img mb10">
+            </div>
+            <div class="main100 mb10 fs12 ">收货备注<span class="color-red1"></span></div>
+            <textarea class="main100 bor_img radius4px pd10 h70 mb15" name="remark" placeholder="请输入收货备注..."></textarea>
+            <div class="main100 mb30 fs12 color-red1 ">选填，不得超过200个字</div>
+            {include file="public:upload" /}
+            <input type="hidden" name="images" id="images" value="" />
+            <div class="text-center main100  mb30">
+                <a class="btn text_white bg-red-thunderbird radius4px pd8 pl35 pr35 btn-submit">邮寄商品</a>
+            </div>
+        </div>
+    </form>
+</div><!-- 右边内容结束 -->
+{/block}

@@ -1,0 +1,110 @@
+{extend name="public:base" /}
+{block name="page"}
+<div class="tab_col pd10 pb0">
+    <div class="main100 bg-white radius4px mb10">
+        <div class="main100 line55 bg-white radius4px">
+            <a class="color666 fs14 ml15 mr15 di  cp-active" href="javascript:;">我的评价</a>
+            <!--<a class="color666 fs14 ml15 mr15 di" href="评价管理-申诉评价.html">申诉评价</a>-->
+            <!--<a class="color666 fs14 ml15 mr15 di" href="评价管理-刷单评价.html">刷单评价 </a>-->
+        </div>
+
+    </div>
+    <!---->
+    <div class="main100  bg-white radius4px pl15 pr15 pt15 minh595 over">
+        <div class="main100 radius4px over">
+            {eq name="data.code" value="20000"}
+                <table class="table solid_all  table_dashed tr12 table12  table-center" >
+                    <thead class=" bg-f5 ">
+                    <tr>
+                        <th class="small_xs text-leftt">商品信息</th>
+                        <th class="small_xs ">评价时间</th>
+                        <th class="small_xs ">订单号</th>
+                        <th class="small_xs ">状态</th>
+                        <th class="small_xs ">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody >
+                    {volist name="data.data.data" id="vo"}
+                        <tr>
+                            <td>
+                                <a href="#">
+                                    <img class="fl radius4px mr8" style="height:72px;width:72px;" src="{$vo.sku.goods_images}">
+                                    <div class="fl text-leftt" style="width: calc(100% - 90px);">
+                                        <div class="line20 mt4 mb6 color666 ">{$vo.sku.goods_name}</div>
+                                        <div class="color999"><span> {$vo.sku.goods_sku_name} </span></div>
+                                    </div>
+                                </a>
+                            </td>
+                            <td class="text_green">{$vo.goods_comment_create_time}</td>
+                            <td class="text_green">{$vo.orders_shop_no}</td>
+                            <td>
+                                <div class="main100">
+                                    <div><a class="line22 color-red1" href="javascript:;">{$vo.goods_comment_is_effect_name}</a></div>
+                                    <!--<div><a  class="line22 color-blue" href="javascript:;">疑似刷单</a></div>-->
+                                    <div><a  class="line22 color-red1" href="javascript:;">{$vo.goods_comment_evaluation_name}</a></div>
+                                </div>
+                            </td>
+                            <td  >
+                                <div class="main100">
+                                    <div>
+                                        {empty name="vo.goods_comment_content.goods_comment_reply_content"}
+                                        <!--<a class="btn btn-outline dark" data-url="ui_extended_modals_ajax_sample.html" data-toggle="modal"> View Demo </a>-->
+<!--<a class=" btn yellow btn-outline sbold" href="http://www.zrmall.com" data-target="#ajax" data-toggle="modal">xxx</a>-->
+                                        <a data-toggle="modal" class="line22 color-blue ajax-modal" data-id="{$vo.goods_comment_id}" data-url="/comments/ajaxReply?goods_comment_id={$vo.goods_comment_id}" data-href="/comments/reply?id={$vo.goods_comment_id}">回复评论</a>
+                                        {else/}
+                                            <span class="line22">已回复</span>
+                                        {/empty}
+                                    </div>
+                                    <!--<div><a  class="line22 color-blue" href="#">刷单申诉</a></div>-->
+                                    <div><a  class="line22 color-blue" href="/comments/detail?id={$vo.goods_comment_id}">详情</a></div>
+                                </div>
+                            </td>
+                        </tr>
+                    {/volist}
+                    </tbody>
+                </table>
+            {/eq}
+        </div>
+        <!--页按钮-->
+        <div class="text-center">{$data.data.page|default=""}</div>
+    </div>
+    <div class="main100 bg_white pl15 pr15 radius4px over mt10">
+        <div class="main100 line55 bg-white radius4px">
+            <i class="redicon"></i>
+            <span class="fs14 color333">评价规则</span>
+        </div>
+        <div class="mb20 color666 pl10 line24">
+            <strong>评价计分：评价积分的计算方法，具体为：“好评”加一分，“中评”零分，“差评”扣一分。</strong><br>
+            计分规则（含匿名评价）：<br>
+            （1）每个自然月中，相同买家和卖家之间的评价计分不得超过6分（以商城订单创建的时间计算）。<br>
+            超出计分规则范围的评价将不计分。<br>
+            （解释：每个自然月同买卖家之间评价计分在[-6,+6]之间，每个自然月相同买卖家之间总分不超过6分，也就是说总分在-6和+6之间，<br>
+            例如买家先给卖家6个差评，再给1个好评和1个差评，则7个差评都会生效计分。）<br>
+            （2）若14天内（以商城订单创建的时间计算）相同买卖家之间就同一个商品进行评价，多个好评只计一分，多个差评只记-1分。<br>
+        </div>
+    </div>
+</div><!-- 右边内容结束 -->
+
+
+<!-- ajax -->
+<div id="ajax-modal" class="modal fade" tabindex="-1"></div>
+
+<div class="modal fade" id="ajax" role="basic" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <img src="/static/web/assets/global/img/loading-spinner-grey.gif" alt="" class="loading">
+                <span> &nbsp;&nbsp;Loading... </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+{/block}
+{block name="script"}
+<script src="/static/web/assets/global/plugins/bootstrap-modal/js/bootstrap-modalmanager.js" type="text/javascript"></script>
+<script src="/static/web/assets/global/plugins/bootstrap-modal/js/bootstrap-modal.js" type="text/javascript"></script>
+<script src="/static/web/assets/pages/scripts/ui-extended-modals.min.js" type="text/javascript"></script>
+<script>
+</script>
+{/block}

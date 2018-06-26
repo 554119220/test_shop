@@ -1,0 +1,14 @@
+{switch name="vo.orders_shop_state"}
+    {case value="1"}
+        <div><a  class="line22 color-blue" href="/orders/close?shop_no={$vo.orders_shop_no}">关闭订单</a></div>
+        <div><a  class="line22 color-blue" href="/orders/editPrice?shop_no={$vo.orders_shop_no}">修改订单价格</a></div>
+    {/case}
+    {case value="2"}
+        <div><a  class="line22 color-blue" href="/orders/ship?shop_no={$vo.orders_shop_no}">立即发货</a></div>
+    {/case}
+    {case value="3"}
+        <div><a  class="line22 color-blue" href="/orders/editShip?shop_no={$vo.orders_shop_no}">修改发货信息</a></div>
+    {/case}
+    {case value="4"}{/case}
+    {case value="5"}{/case}
+{/switch}

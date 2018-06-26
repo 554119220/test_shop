@@ -1,0 +1,31 @@
+<div class="cart_xh bbai">
+    <div class="cart_xh1" style="text-align:left">
+    	<img src="/static/wap/images/icon/icon_xq_tj_xh.png" class="fl" style="margin-right:7px;margin-left: 0.75rem;width: 0.8rem;margin-top: 0.49rem;">
+    	{$title}
+    </div>
+    <!--有推荐的时候-->
+    <!--<div class="cart_xh1" style="text-align:left">
+    	<img src="/static/wap/images/icon/icon_xq_tj_tj.png" class="fl" style="margin-right:7px;margin-left: 0.75rem;width: 0.8rem;margin-top: 0.49rem;">
+    	{$title}
+    </div>-->
+    <!--喜欢列表产品-->
+    {eq name="data.code" value="20000"}
+        <ul class="cart_ul img100 loding">
+            {volist name="data.data.data" id="vo"}
+                <li>
+                    <a data-no-cache="true" href="/goods?id={$vo.sku_id}">
+                        <img class=" lazyload no-src" src="{$vo.goods_images}?imageMogr2/thumbnail/344x344!">
+                        <p class="mg0" style="height: 0.8rem; line-height: 0.8rem">{$vo.goods_name}</p>
+                        <p class="mg0 rfs14" style="height: 0.8rem; line-height: 0.8rem">
+                            购物积分<span class="text_red">抵扣 {$vo.goods_shopping_score_multi}%</span>
+                        </p>
+                        <div class="text">
+                            <span class="rmb">￥ {$vo.goods_min_price}</span>
+                            <span class="pl">{$vo.goods_comment_num} 评论</span>
+                        </div>
+                    </a>
+                </li>
+            {/volist}
+        </ul>
+    {/eq}
+</div>

@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>首页 - 百望商城</title>
+    <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" /><meta name="MobileOptimized" content="320" />
+    <link href="https://cdn01.baiwangfutong.com/index/css/common.css?v=0.0.1" rel="stylesheet" type="text/css" />
+    <script src="https://cdn01.baiwangfutong.com/index/js/jquery-3.2.1.min.js"></script>
+    <script src="https://cdn01.baiwangfutong.com/index/js/jquery.vticker-min.js"></script>
+
+    <meta name="description" content="" />
+    <meta name="Keywords" content="" />
+
+    <link href="/static/lwjz/CSS/header.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn01.baiwangfutong.com/index/css/footer.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdn01.baiwangfutong.com/index/css/swiper.css" />
+
+    <style type="text/css">
+    .container .topSearch{ position:fixed; top:0; z-index:2;}
+	.container .topSearchCover{ position:fixed; top:0; z-index:2;    width: 100%; height:50px; background-color:#000; opacity:0.1;}
+
+
+    .container .category li {
+	float: left;
+	width: 20%;
+	text-align: center;
+	background-color: #FFF;
+	font-size: 16px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+	.container .banners .swiper-wrapper .swiper-slide{ display:inline-block;line-height:0px; }
+    .container .banners .swiper-wrapper .swiper-slide .pic { overflow:hidden; width:100%; display:inline-block;line-height:0px; }
+    .bottomBlank {
+	height: 60px;
+	clear: both;
+	width: 100%;
+	overflow: hidden;
+}
+    .container .news {
+	background-color: #FFF;
+	width: 90%;
+	margin-top: 15px;
+	margin-right: auto;
+	margin-bottom: 15px;
+	margin-left: auto;
+	overflow: hidden;
+	border-radius:15px;
+	overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap
+}
+    .container .category {
+	overflow: hidden;
+}
+    .container .news #nt {
+}
+    .container .news .newsTitle {
+	margin-left: 15%;
+	position: absolute;
+	line-height: 40px;
+	font-size: 16px;
+	width:62%;
+	overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+    .container .news .NewsMore {
+	float: right;
+	width: 14%;
+	text-align: center;
+	line-height: 40px;
+	font-size: 16px;
+	padding-left: 1%;
+	border-left-width: 1px;
+	border-left-style: solid;
+	border-left-color: #F4F4F4;
+}
+    .container .news .newsimg {
+	width: 15%;
+	float: left;
+	text-align: center;
+	height: 40px;
+	position: relative;
+	margin-left: 5px;
+}
+    .container .news .newsimg #nt {
+		position: absolute;
+        top: 50%;
+        transform: translateY(-65%);
+		left:0;
+		width:100%;
+}
+    .container .topSearch .messageCover {
+	background-color: #000;
+}
+    .container .miao .mTop {
+	height: 50px;
+}
+    .container .miao .mTop #mTit {
+	float: left;
+	height: 40px;
+	margin-left: 5px;
+}
+    .container .miao .pList {
+}
+    .container .miao {
+	background-color: #FFF;
+	overflow: hidden;
+	padding-bottom: 10px;
+}
+    .container .miao .pList li {
+	float: left;
+	width: 25%;
+	text-align: center;
+}
+    .container .miao .pList li .curPrice {
+	font-size: 18px;
+	color: #C00;
+	line-height: 25px;
+}
+    .container .miao .pList li .curPrice .ricon {
+	font-size: 14px;
+}
+    .container .miao .pList li .yePrice {
+	color: #C0C0C0;
+	text-decoration: line-through;
+}
+    .container .miao .mTop .timeInfo {
+	float: right;
+	width: 200px;
+	line-height: 25px;
+	height: 25px;
+	margin-top: 10px;
+	font-size: 16px;
+	border-radius:3px;
+}
+    .container .miao .mTop .timeInfo .timeshow_y {
+	color: #FFF;
+	background-color: #000;
+	display: inline-block;
+	padding-right: 2px;
+	padding-left: 2px;
+	border-radius:3px;
+}
+    .container .subject li {
+	float: left;
+	width: 50%;
+	overflow: hidden;
+	position: relative;
+	margin-bottom: 10px;
+}
+    .container .subject {
+	background-color: #FFF;
+	overflow: hidden;
+	clear: both;
+	width: 100%;
+	margin-top: 10px;
+	padding-top: 10px;
+}
+    .container .subject .subl {
+	background-image: url(/static/lwjz/Images/line-dot.png);
+	background-repeat: repeat-y;
+	background-position: right;
+}
+    .container .subject .subtit {
+	width: 40%;
+	position: absolute;
+	left: 5px;
+	top: 2px;
+}
+    .container .subject .sub_s {
+	width: 40%;
+	margin-top: 50px;
+	margin-left: 2px;
+	float: left;
+	margin-bottom: 2px;
+}
+    .container .subject .sub_b {
+	width: 50%;
+	margin-right: 1px;
+	float: right;
+	margin-top: 5px;
+}
+    .container .plist dd {
+	float: left;
+	width: 50%;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #F4F4F4;
+}
+    .container .plist {
+	overflow: hidden;
+	background-color: #FFF;
+}
+    .container .plist dd .protitle {
+	font-size: 16px;
+	line-height: 38px;
+	overflow: hidden;
+	height: 30px;
+	width: 98%;
+	margin-right: auto;
+	margin-left: auto;
+}
+    .container .plist dd .proprice {
+	font-size: 16px;
+	line-height: 25px;
+	width: 98%;
+	margin-right: auto;
+	margin-left: auto;
+}
+    .container .plist dt {
+	line-height: 30px;
+	text-align: center;
+	height: 30px;
+	font-size: 18px;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #F4F4F4;
+}
+    .container .plist  .proprice .currtenprc {
+	font-size: 20px;
+	color: #C00;
+	float: left;
+}
+    .container .plist .proprice .currtenprc .rIcon {
+	font-size: 14px;
+}
+    .container .plist  .proprice .yePric {
+	float: right;
+	margin-right: 10px;
+	color: #C0C0C0;
+	text-decoration: line-through;
+}
+    .container .plist .plist_l {
+	background-image: url(/static/lwjz/Images/line-dot.png);
+	background-repeat: repeat-y;
+	background-position: right;
+}
+.loading0{ background-color:#FFF; margin-top:1px; position:fixed; bottom:48px; width:100%; z-index:9;}
+#loadingBottom
+{
+    height:50px;
+    line-height:50px;
+    text-align:center;
+    background-color:#FFF;
+    margin-right: auto;
+	margin-left: auto;
+	display:inline-block;
+	color:lightgray;
+	font-size:14px;
+    }
+#loadingBottom img
+{
+    float:left;
+    margin-right:10px;
+    }
+.loadingBottom{ background-color:#FFF; margin-top:1px;}
+    .container .plist dd .cert {
+	clear: both;
+	line-height: 30px;
+}
+    .container .plist dd .cert .certimg {
+	float: left;
+	width: 28px;
+}
+    .container .plist dd .cert .certWord {
+	color: #C00;
+	margin-left: 5px;
+	font-size: 12px;
+}
+    </style>
+    <script type="text/javascript" src="https://cdn01.baiwangfutong.com/index/js/jquery-latest.js"></script> 
+    <script type="text/javascript">
+        var startX, startY, moveEndX, moveEndY, X, Y;
+        var refreshStatus = 0;
+        var currentReFreshStatus = 0;
+        //防止刷新过快
+        setInterval(function () {
+            refreshStatus = refreshStatus + 1;
+            //$(".location").html(refreshStatus);
+
+        }, 1000);
+        $(function () {
+            document.addEventListener('touchstart', touchStart);
+            document.addEventListener('touchmove', touchMove);
+            document.addEventListener('touchend', touchEnd); //支持google,appcan等不自带下拉刷新的
+            document.addEventListener('touchcancel', touchEnd); //支持QQ、UC本身带下拉刷新功能的浏览器
+			
+
+           
+
+            //发现更多
+
+            $(".findSub").click(function () {
+                $(".moreservices").slideToggle();
+            });
+
+        });
+
+        function touchStart(e) {
+            //e.preventDefault();
+            startX = e.touches[0].pageX;
+            startY = e.touches[0].pageY;
+
+        }
+        function touchMove(e) {
+            currentY = document.body.scrollTop;
+            //$(".location").html(currentY);
+
+
+
+            moveEndX = e.changedTouches[0].pageX;
+            moveEndY = e.changedTouches[0].pageY;
+            X = moveEndX - startX;
+            Y = moveEndY - startY;
+            $(".test").html(Y);
+            if (Math.abs(X) > Math.abs(Y) && X > 10) {
+                //alert("向右");
+            } else if (Math.abs(X) > Math.abs(Y) && X < -10) {
+                //alert("向左");
+            } else if (Math.abs(Y) > Math.abs(X) && Y > 10) {
+                //alert("向下");
+                if (currentY == 0) {
+                    e.preventDefault();
+                    //alert("启动下拉刷新！");
+                    if (refreshStatus - currentReFreshStatus < 3)
+                        $("#loading #tip").html("火箭的刷新速度！");
+                    $("#loading").css("display", "");
+                }
+            } else if (Math.abs(Y) > Math.abs(X) && Y < -10) {
+                //alert("向上");
+
+                var a = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+                var b = document.documentElement.scrollTop == 0 ? document.body.scrollTop : document.documentElement.scrollTop;
+                var c = document.documentElement.scrollTop == 0 ? document.body.scrollHeight : document.documentElement.scrollHeight;
+
+                var totalheight = parseFloat($(window).height()) + parseFloat($(window).scrollTop());
+                //页面底部
+                if (a + Math.floor(b) == c || a + Math.ceil(b) == c) {
+                    //alert('页面到达底部');
+                    e.preventDefault();
+                    //alert("启动下拉刷新！");
+                    $("#loadingBottom").css("display", "");
+                }
+
+            } else {
+                //alert("其它");
+            }
+
+        }
+
+        function touchEnd(e) {
+            var tempY = Y;
+            Y = 0; //及时Y清零，防止“点击”操作受影响。
+            
+
+            //判断：往上、长度>10、在底部
+            
+            var a = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+            var b = document.documentElement.scrollTop ==0 ? document.body.scrollTop : document.documentElement.scrollTop;
+            var c = document.documentElement.scrollTop ==0 ? document.body.scrollHeight : document.documentElement.scrollHeight;
+
+            //当前文档高度   小于或等于   滚动条所在位置高度  则是页面底部
+            var sss = a + Math.floor(b);
+            var kkk = a + Math.ceil(b);
+
+
+            //alert("Math.abs(Y)：" + Math.abs(Y) + "\nMath.abs(X):" + Math.abs(X) + "\nY:" + Y+"\n a + Math.floor(b):" + sss + "\n a + Math.ceil(b):" + kkk + " \n c:" + c);
+			var currentRS = $("#currentRS").val();
+
+            if (Math.abs(tempY) > Math.abs(X) && tempY < -10 && (c - sss < 10 || c - kkk < 10) ) {  //c-sss<10 或c-kkk<10为兼容少量倒划
+            
+                //初始化下一次刷新的滑动高度，否则会出现刷新成功一次后，再随便点击都会刷新。
+                //没有这句，容易出现 touchend或touchcancel不执行
+                e.preventDefault();
+                $("#loadingBottom #tip").html("正在读取最新内容...");
+                //setTimeout(function () {
+				
+				var tt = "";
+				tt += "<dd class=\"plist_l\"><a href=\"/goods?id=536&share_code=djmi00\"><img src=\"https://cdn01.baiwangfutong.com/index/images/prod/20180530_16.jpg\" width=\"98%\" /></a>";
+    			tt += "<p class=\"protitle\">施华蔻保湿定型亮彩发胶250ml喷雾干胶</p>";
+        		tt += "<p class=\"proprice\"><span class=\"currtenprc\"><span class=\"rIcon\">￥</span>45.0</span>  <span class=\"yePric\">￥49.0</span></p>";
+        		tt += "<p class=\"cert\"><img src=\"https://cdn01.baiwangfutong.com/index/images/cert.png\" class=\"certimg\" /><span class=\"certWord\">可积分抵扣50%</span></p>";
+    			tt += "</dd>";
+    			tt += "<dd><a href=\"/goods?id=695&share_code=djmi00\"><img src=\"https://cdn01.baiwangfutong.com/index/images/prod/20180530_17.jpg\" width=\"98%\" /></a>";
+    			tt += "<p class=\"protitle\">欧莱雅男士控油炭爽抗黑头洁面膏100ml</p>";
+        		tt += "<p class=\"proprice\"><span class=\"currtenprc\"><span class=\"rIcon\">￥</span>30.0</span>  <span class=\"yePric\">￥33.0</span></p>";
+				tt += "<p class=\"cert\"><img src=\"https://cdn01.baiwangfutong.com/index/images/cert.png\" class=\"certimg\" /><span class=\"certWord\">可积分抵扣50%</span></p>";
+    			tt += "</dd>";
+    			tt += "<dd class=\"plist_l\"><a href=\"/goods?id=747&share_code=djmi00\"><img src=\"https://cdn01.baiwangfutong.com/index/images/prod/20180530_18.jpg\" width=\"98%\" /></a>";
+    			tt += "<p class=\"protitle\">欧莱雅男士控油洁面炭爽冰感洁面膏100ml</p>";
+        		tt += "<p class=\"proprice\"><span class=\"currtenprc\"><span class=\"rIcon\">￥</span>30.0</span>  <span class=\"yePric\">￥33.0</span></p>";
+				tt += "<p class=\"cert\"><img src=\"https://cdn01.baiwangfutong.com/index/images/cert.png\" class=\"certimg\" /><span class=\"certWord\">可积分抵扣50%</span></p>";
+    			tt += "</dd>";
+    			tt += "<dd><a href=\"/goods?id=1656&share_code=djmi00\"><img src=\"https://cdn01.baiwangfutong.com/index/images/prod/20180530_19.jpg\" width=\"98%\" /></a>";
+    			tt += "<p class=\"protitle\">奥碧虹 清新莹亮泡沫洁面霜120g</p>";
+        		tt += "<p class=\"proprice\"><span class=\"currtenprc\"><span class=\"rIcon\">￥</span>180.0</span>  <span class=\"yePric\">￥189.0</span></p>";
+				tt += "<p class=\"cert\"><img src=\"https://cdn01.baiwangfutong.com/index/images/cert.png\" class=\"certimg\" /><span class=\"certWord\">可积分抵扣50%</span></p>";
+    			tt += "</dd>";
+				
+				tt += "<dd class=\"plist_l\"><a href=\"/goods?id=906&share_code=djmi00\"><img src=\"https://cdn01.baiwangfutong.com/index/images/prod/20180530_20.jpg\" width=\"98%\" /></a>";
+    			tt += "<p class=\"protitle\">欧莱雅男士锐能抗皱紧致元气露110ml</p>";
+        		tt += "<p class=\"proprice\"><span class=\"currtenprc\"><span class=\"rIcon\">￥</span>124.0</span>  <span class=\"yePric\">￥130.0</span></p>";
+				tt += "<p class=\"cert\"><img src=\"https://cdn01.baiwangfutong.com/index/images/cert.png\" class=\"certimg\" /><span class=\"certWord\">可积分抵扣50%</span></p>";
+    			tt += "</dd>";
+    			tt += "<dd><a href=\"/goods?id=987&share_code=djmi00\"><img src=\"https://cdn01.baiwangfutong.com/index/images/prod/20180530_21.jpg\" width=\"98%\" /></a>";
+    			tt += "<p class=\"protitle\">双面头层牛皮皮带商务休闲纯正品裤带</p>";
+        		tt += "<p class=\"proprice\"><span class=\"currtenprc\"><span class=\"rIcon\">￥</span>48.0</span>  <span class=\"yePric\">￥50.0</span></p>";
+				tt += "<p class=\"cert\"><img src=\"https://cdn01.baiwangfutong.com/index/images/cert.png\" class=\"certimg\" /><span class=\"certWord\">可积分抵扣50%</span></p>";
+    			tt += "</dd>";
+    			tt += "<dd class=\"plist_l\"><a href=\"/goods?id=1124&share_code=djmi00\"><img src=\"https://cdn01.baiwangfutong.com/index/images/prod/20180530_22.jpg\" width=\"98%\" /></a>";
+    			tt += "<p class=\"protitle\">真皮自动扣牛皮韩版商务休闲裤带R650 </p>";
+        		tt += "<p class=\"proprice\"><span class=\"currtenprc\"><span class=\"rIcon\">￥</span>26.0</span>  <span class=\"yePric\">￥31.0</span></p>";
+				tt += "<p class=\"cert\"><img src=\"https://cdn01.baiwangfutong.com/index/images/cert.png\" class=\"certimg\" /><span class=\"certWord\">可积分抵扣50%</span></p>";
+    			tt += "</dd>";
+    			tt += "<dd><a href=\"/goods?id=470&share_code=djmi00\"><img src=\"https://cdn01.baiwangfutong.com/index/images/prod/20180530_23.jpg\" width=\"98%\" /></a>";
+    			tt += "<p class=\"protitle\">经典大框驾驶镜防眩光彩膜偏光眼镜3025V</p>";
+        		tt += "<p class=\"proprice\"><span class=\"currtenprc\"><span class=\"rIcon\">￥</span>38.0</span>  <span class=\"yePric\">￥42.0</span></p>";
+				tt += "<p class=\"cert\"><img src=\"https://cdn01.baiwangfutong.com/index/images/cert.png\" class=\"certimg\" /><span class=\"certWord\">可积分抵扣50%</span></p>";
+    			tt += "</dd>";
+				
+				var li = document.createElement('span');
+				//li.className = 'nxoorSubli';
+				li.innerHTML = tt;
+
+
+				//下拉刷新，新纪录插到最后面；
+				var table = document.body.querySelector('.plist');
+
+				if(currentRS==0){
+					table.appendChild(li);
+					$("html,body").animate({ "scrollTop": $("body").scrollTop() + 100 });
+				}
+				
+				$("#loadingBottom").css("display", "none");
+				$("#currentRS").val(1);
+
+				var htmlStr = "人生，无非就是拉拉扯扯";
+				var rs = Math.random();
+				if (rs > 0.5)
+					htmlStr = "百望富通 惠通天下";
+
+				$("#loadingBottom #tip").html(htmlStr);
+
+
+     
+
+                //}, 1000);
+            } //end if
+
+
+        }
+
+     
+</script>
+</head>
+<body>
+<div class="container">
+    <input type="hidden" id="currentRS" value="0" />
+    <div id="currentY" style=" position:fixed; top:20px; z-index:10; display:none;"></div>
+    <!--顶部搜索-->
+    <div class="topSearchCover"></div>
+    <div class="topSearch">
+        <div class="search">
+            <a href="javascript:;" ><img src="https://cdn01.baiwangfutong.com/index/images/searchbt.png" alt="" width="35" class="searchSub" height="35" /></a>
+            <div class="searchInput"><input type="text" class="keywords" id="keywords" placeholder="大金钢樱桃" onclick="window.location.href='/search'"/></div>
+        </div>
+        <div class="messageCover"></div>
+        <div class="message"><img src="https://cdn01.baiwangfutong.com/index/images/message_white.png" alt="" width="25" /><br />消息</div>
+    </div>
+
+
+    <div class="banners">
+        <div class="swiper-container turn1">
+            <ul class="swiper-wrapper">
+                <li class="swiper-slide"><a class="pic" href="/goods?id=1683&amp;share_code=cay900"><img src="https://cdn01.baiwangfutong.com/index/images/sub_0530_05.png" width="100%" /></a></li>
+                <li class="swiper-slide"><a class="pic" href="/goods?id=985&amp;share_code=cay900"><img src="https://cdn01.baiwangfutong.com/index/images/sub_0530_02.png" width="100%" /></a></li>
+                <li class="swiper-slide"><a class="pic" href="/goods?id=1682&amp;share_code=cay900"><img src="https://cdn01.baiwangfutong.com/index/images/sub_0530_03.png" width="100%" /></a></li>
+                <li class="swiper-slide"><a class="pic" href="/goods?id=359&amp;share_code=cay900"><img src="https://cdn01.baiwangfutong.com/index/images/sub_0530_04.png" width="100%" /></a></li>
+                <li class="swiper-slide"><a class="pic" href="/goods?id=1678&amp;share_code=cay900"><img src="https://cdn01.baiwangfutong.com/index/images/sub_0530_01.png" width="100%" /></a></li>
+                <li class="swiper-slide"><a class="pic" href="/goods?id=314&amp;share_code=cay900"><img src="https://cdn01.baiwangfutong.com/index/images/sub_0530_06.png" width="100%" /></a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="secBn"><img src="https://cdn01.baiwangfutong.com/index/images/banner-0001.png" width="100%" /></div>
+    <ul class="category">
+        <!--<li><img src="https://cdn01.baiwangfutong.com/index/images/category/cate_03-06.jpg" width="60%" /><br />百望自营</li>
+
+     <li><img src="https://cdn01.baiwangfutong.com/index/images/category/cate_03-10.png" width="60%" /><br />优选</li>
+     <li><img src="https://cdn01.baiwangfutong.com/index/images/category/cate_03-12.jpg" width="60%" /><br />团购</li>
+     <li><img src="https://cdn01.baiwangfutong.com/index/images/category/cate_03.png" width="60%" /><br />外卖</li>
+     <li><img src="https://cdn01.baiwangfutong.com/index/images/category/cate_03-19.png" width="60%" /><br />小家电</li>
+     <li><img src="https://cdn01.baiwangfutong.com/index/images/category/cate_03-20.png" width="60%" /><br />特产季</li>
+     <li><img src="https://cdn01.baiwangfutong.com/index/images/category/cate_03-21.jpg" width="60%" /><br />饰品</li>
+     <li><img src="https://cdn01.baiwangfutong.com/index/images/category/cate_03-22.jpg" width="60%" /><br />母婴</li>
+     <li><img src="https://cdn01.baiwangfutong.com/index/images/category/cate_03-08.jpg" width="60%" /><br />附近</li>
+     <li><img src="https://cdn01.baiwangfutong.com/index/images/category/cate_03-23.png" width="60%" /><br />PLUS会员</li>-->
+    </ul>
+    <div class="news">
+        <div class="newsimg"><img src="https://cdn01.baiwangfutong.com/index/images/bwNews.png" width="95%" id="nt" /></div>
+        <div class="newsTitle">【促销】百望生鲜 新版低价首推</div>
+        <span class="NewsMore">更多</span>
+    </div>
+    <div class="miao">
+        <div class="mTop"><img src="https://cdn01.baiwangfutong.com/index/images/Index_m_30.png" id="mTit"/>
+            <div class="timeInfo">
+                <span class="timeTit">6.2全天场</span>
+                <span class="timeshow_y">00</span>
+                <span class="timeshow_dot">:</span>
+                <span class="timeshow_y">00</span>
+                <span class="timeshow_dot">:</span>
+                <span class="timeshow_y">00</span>
+
+            </div>
+        </div>
+        <ul class="pList">
+            <li><a href="/goods?id=470&amp;share_code=cay900"><img src="https://cdn01.baiwangfutong.com/index/images/Index_m_34.png" width="80%" /></a><br /><p class="curPrice"><span class="ricon">￥</span>38</p><p class="yePrice">￥42.0</p></li>
+            <li><a href="/goods?id=747&amp;share_code=cay900"><img src="https://cdn01.baiwangfutong.com/index/images/Index_m_43.jpg" width="80%" /></a><br /><p class="curPrice"><span class="ricon">￥</span>30</p><p class="yePrice">￥33.0</p></li>
+            <li><a href="/goods?id=1678&amp;share_code=cay900"><img src="https://cdn01.baiwangfutong.com/index/images/Index_m_37.png" width="80%" /></a><br /><p class="curPrice"><span class="ricon">￥</span>148</p><p class="yePrice">￥188.0</p></li>
+            <li><a href="/goods?id=1124&amp;share_code=cay900"><img src="https://cdn01.baiwangfutong.com/index/images/Index_m_40.jpg" width="80%" /></a><br /><p class="curPrice"><span class="ricon">￥</span>26</p><p class="yePrice">￥31.0</p></li>
+        </ul>
+    </div>
+
+
+    <ul class="subject">
+        <li class="subl">
+            <img src="https://cdn01.baiwangfutong.com/index/images/act_001.png" class="subtit" />
+            <a href="/goods?id=1654&amp;share_code=cay900"><img src="https://cdn01.baiwangfutong.com/index/images/prod/prod_0001.jpg" class="sub_s" /></a>
+            <a href="/goods?id=851&amp;share_code=cay900"><img src="https://cdn01.baiwangfutong.com/index/images/prod/prod_0002.jpg" class="sub_b" /></a>
+        </li>
+        <li>
+            <img src="https://cdn01.baiwangfutong.com/index/images/act_002.png" class="subtit" />
+            <a href="/goods?id=605&amp;share_code=cay900"><img src="https://cdn01.baiwangfutong.com/index/images/prod/prod_0003.jpg" class="sub_s" /></a>
+            <a href="/goods?id=906&amp;share_code=cay900"><img src="https://cdn01.baiwangfutong.com/index/images/prod/prod_0004.png" class="sub_b" /></a>
+        </li>
+        <li class="subl">
+            <img src="https://cdn01.baiwangfutong.com/index/images/act_003.png" class="subtit" />
+            <a href="/goods?id=373&amp;share_code=cay900"><img src="https://cdn01.baiwangfutong.com/index/images/prod/prod_0005.jpg" class="sub_s" /></a>
+            <a href="/goods?id=1681&amp;share_code=cay900"><img src="https://cdn01.baiwangfutong.com/index/images/prod/prod_0006.png" class="sub_b" /></a>
+        </li>
+        <li>
+            <img src="https://cdn01.baiwangfutong.com/index/images/act_004.png" class="subtit" />
+            <a href="/goods?id=1685&amp;share_code=cay900"><img src="https://cdn01.baiwangfutong.com/index/images/prod/prod_0007.png" class="sub_s" /></a>
+            <a href="/goods?id=1651&amp;share_code=cay900"><img src="https://cdn01.baiwangfutong.com/index/images/prod/prod_0008.png" class="sub_b" /></a>
+        </li>
+
+
+    </ul>
+    <dl class="plist">
+   	<dt>为你推荐</dt>
+    <dd class="plist_l"><a href="/goods?id=1678&amp;share_code=cay900"><img src="https://cdn01.baiwangfutong.com/index/images/prod/20180530_0.png" width="98%" /></a>
+      <p class="protitle">黑金刚车厘子云端种植果肉细腻大樱桃2斤装礼盒</p>
+        <p class="proprice"><span class="currtenprc"><span class="rIcon">￥</span>148.0</span>  <span class="yePric">￥188.0</span></p>
+      <p class="cert"><img src="https://cdn01.baiwangfutong.com/index/images/cert.png" class="certimg" /><span class="certWord">可积分抵扣50%</span></p>
+    </dd>
+    <dd><a href="/goods?id=1682&amp;share_code=cay900"><img src="https://cdn01.baiwangfutong.com/index/images/prod/20180530_1.jpg" width="98%" /></a>
+    	<p class="protitle">太阳树特级初榨橄榄油500ml*2</p>
+        <p class="proprice"><span class="currtenprc"><span class="rIcon">￥</span>99.0</span>  <span class="yePric">￥158.0</span></p>
+        <p class="cert"><img src="https://cdn01.baiwangfutong.com/index/images/cert.png" class="certimg" /><span class="certWord">可积分抵扣50%</span></p>
+    </dd>
+    <dd class="plist_l"><a href="/goods?id=1683&amp;share_code=cay900"><img src="https://cdn01.baiwangfutong.com/index/images/prod/20180530_2.jpg" width="98%" /></a>
+    	<p class="protitle">天天坚果（A款）腰果桃仁189g </p>
+        <p class="proprice"><span class="currtenprc"><span class="rIcon">￥</span>45.0</span>  <span class="yePric">￥49.0</span></p>
+        <p class="cert"><img src="https://cdn01.baiwangfutong.com/index/images/cert.png" class="certimg" /><span class="certWord">可积分抵扣50%</span></p>
+    </dd>
+    <dd><a href="/goods?id=1684&amp;share_code=cay900"><img src="https://cdn01.baiwangfutong.com/index/images/prod/20180530_3.jpg" width="98%" /></a>
+    	<p class="protitle">南洋古早原味即溶白咖啡饮600克</p>
+        <p class="proprice"><span class="currtenprc"><span class="rIcon">￥</span>49.0</span>  <span class="yePric">￥56.0</span></p>
+        <p class="cert"><img src="https://cdn01.baiwangfutong.com/index/images/cert.png" class="certimg" /><span class="certWord">可积分抵扣50%</span></p>
+    </dd>
+    <dd class="plist_l"><a href="/goods?id=372&amp;share_code=cay900"><img src="https://cdn01.baiwangfutong.com/index/images/prod/20180530_4.jpg" width="98%" /></a>
+    	<p class="protitle">联创多功能电火锅多用途锅DF-BL8008M </p>
+        <p class="proprice"><span class="currtenprc"><span class="rIcon">￥</span>467.0</span>  <span class="yePric">￥928.0</span></p>
+        <p class="cert"><img src="https://cdn01.baiwangfutong.com/index/images/cert.png" class="certimg" /><span class="certWord">可积分抵扣50%</span></p>
+    </dd>
+    <dd><a href="/goods?id=403&amp;share_code=cay900"><img src="https://cdn01.baiwangfutong.com/index/images/prod/20180530_5.jpg" width="98%" /></a>
+    	<p class="protitle">家用全自动扫地机智能超薄机器人DF-SCX2</p>
+        <p class="proprice"><span class="currtenprc"><span class="rIcon">￥</span>1559.0</span>  <span class="yePric">￥2899.0</span></p>
+        <p class="cert"><img src="https://cdn01.baiwangfutong.com/index/images/cert.png" class="certimg" /><span class="certWord">可积分抵扣50%</span></p>
+    </dd>
+    <dd class="plist_l"><a href="/goods?id=252&amp;share_code=cay900"><img src="https://cdn01.baiwangfutong.com/index/images/prod/20180530_6.jpg" width="98%" /></a>
+    	<p class="protitle">联创多功能迷你电烤箱DF-OV3002M 杏色</p>
+        <p class="proprice"><span class="currtenprc"><span class="rIcon">￥</span>304.0</span>  <span class="yePric">￥499.0</span></p>
+        <p class="cert"><img src="https://cdn01.baiwangfutong.com/index/images/cert.png" class="certimg" /><span class="certWord">可积分抵扣50%</span></p>
+    </dd>
+    <dd><a href="/goods?id=359&amp;share_code=cay900"><img src="https://cdn01.baiwangfutong.com/index/images/prod/20180530_7.jpg" width="98%" /></a>
+    	<p class="protitle">美的迷你智能电饭锅SCF3079-FD </p>
+        <p class="proprice"><span class="currtenprc"><span class="rIcon">￥</span>399.0</span>  <span class="yePric">￥498.0</span></p>
+        <p class="cert"><img src="https://cdn01.baiwangfutong.com/index/images/cert.png" class="certimg" /><span class="certWord">可积分抵扣50%</span></p>
+    </dd>
+    <dd class="plist_l"><a href="/goods?id=373&amp;share_code=cay900"><img src="https://cdn01.baiwangfutong.com/index/images/prod/20180530_8.jpg" width="98%" /></a>
+    	<p class="protitle">美的电压力锅一锅多用SCY5031L</p>
+        <p class="proprice"><span class="currtenprc"><span class="rIcon">￥</span>519.0</span>  <span class="yePric">￥599.0</span></p>
+        <p class="cert"><img src="https://cdn01.baiwangfutong.com/index/images/cert.png" class="certimg" /><span class="certWord">可积分抵扣50%</span></p>
+    </dd>
+    <dd><a href="/goods?id=362&amp;share_code=cay900"><img src="https://cdn01.baiwangfutong.com/index/images/prod/20180530_9.jpg" width="98%" /></a>
+    	<p class="protitle">家用安全韩式迷你多功能电烧烤架</p>
+        <p class="proprice"><span class="currtenprc"><span class="rIcon">￥</span>171.0</span>  <span class="yePric">￥299.0</span></p>
+        <p class="cert"><img src="https://cdn01.baiwangfutong.com/index/images/cert.png" class="certimg" /><span class="certWord">可积分抵扣50%</span></p>
+    </dd>
+    <dd class="plist_l"><a href="/goods?id=394&amp;share_code=cay900"><img src="https://cdn01.baiwangfutong.com/index/images/prod/20180530_10.jpg" width="98%" /></a>
+    	<p class="protitle">家用全自智能动扫地机器人DF-SCX1</p>
+        <p class="proprice"><span class="currtenprc"><span class="rIcon">￥</span>1599.0</span>  <span class="yePric">￥1999.0</span></p>
+        <p class="cert"><img src="https://cdn01.baiwangfutong.com/index/images/cert.png" class="certimg" /><span class="certWord">可积分抵扣50%</span></p>
+    </dd>
+    <dd><a href="/goods?id=326&amp;share_code=cay900"><img src="https://cdn01.baiwangfutong.com/index/images/prod/20180530_11.jpg" width="98%" /></a>
+    	<p class="protitle">联创多功能美容仪细致毛孔</p>
+        <p class="proprice"><span class="currtenprc"><span class="rIcon">￥</span>542.0</span>  <span class="yePric">￥699.0</span></p>
+        <p class="cert"><img src="https://cdn01.baiwangfutong.com/index/images/cert.png" class="certimg" /><span class="certWord">可积分抵扣50%</span></p>
+    </dd>
+    <dd class="plist_l"><a href="/goods?id=382&amp;share_code=cay900"><img src="https://cdn01.baiwangfutong.com/index/images/prod/20180530_12.jpg" width="98%" /></a>
+    	<p class="protitle">联创足浴器足浴盆DF-MS18A泡脚盆</p>
+        <p class="proprice"><span class="currtenprc"><span class="rIcon">￥</span>428.0</span>  <span class="yePric">￥568.0</span></p>
+        <p class="cert"><img src="https://cdn01.baiwangfutong.com/index/images/cert.png" class="certimg" /><span class="certWord">可积分抵扣50%</span></p>
+    </dd>
+    <dd><a href="/goods?id=417&amp;share_code=cay900"><img src="https://cdn01.baiwangfutong.com/index/images/prod/20180530_13.jpg" width="98%" /></a>
+    	<p class="protitle">蓝牙智能体重秤人体秤DF-EW1001M</p>
+        <p class="proprice"><span class="currtenprc"><span class="rIcon">￥</span>189.0</span>  <span class="yePric">￥229.0</span></p>
+        <p class="cert"><img src="https://cdn01.baiwangfutong.com/index/images/cert.png" class="certimg" /><span class="certWord">可积分抵扣50%</span></p>
+    </dd>
+    <dd class="plist_l"><a href="/goods?id=274&amp;share_code=cay900"><img src="https://cdn01.baiwangfutong.com/index/images/prod/20180530_14.jpg" width="98%" /></a>
+    	<p class="protitle">按摩靠垫保健按摩垫自动感应靠垫</p>
+        <p class="proprice"><span class="currtenprc"><span class="rIcon">￥</span>330.0</span>  <span class="yePric">￥399.0</span></p>
+        <p class="cert"><img src="https://cdn01.baiwangfutong.com/index/images/cert.png" class="certimg" /><span class="certWord">可积分抵扣50%</span></p>
+    </dd>
+    <dd><a href="/goods?id=464&amp;share_code=cay900"><img src="https://cdn01.baiwangfutong.com/index/images/prod/20180530_15.jpg" width="98%" /></a>
+    	<p class="protitle">丝蕴持久定型强力造型啫喱膏 150ml</p>
+        <p class="proprice"><span class="currtenprc"><span class="rIcon">￥</span>19.0</span>  <span class="yePric">￥22.0</span></p>
+        <p class="cert"><img src="https://cdn01.baiwangfutong.com/index/images/cert.png" class="certimg" /><span class="certWord">可积分抵扣50%</span></p>
+    </dd>
+  </dl>
+
+    <div class="loading0"><center><span id="loadingBottom" style="display:none;"><img src="https://cdn01.baiwangfutong.com/index/images/loading.gif" /><span id="tip">加载更多内容...</span></span></center></div>
+	<ul class="bottomMenu">
+		<li><a href="/"><img src="/static/lwjz/Images/icon/icon_1.png" alt="" width="26" /><br /><span style="color:#d82128">首页</span></a></li>
+		<!--<li><a href="javascript:void(0)"><img src="/static/lwjz/Images/icon_news.png" alt="" width="26" height="26" /><br />附近</a></li>-->
+		<li><a href="/category"><img src="/static/lwjz/Images/icon/icon_02.png" alt="" width="26" height="26" /><br />类目</a></li>
+		<li><a href="/member/account"><img src="/static/lwjz/Images/icon/icon_03.png" alt="" width="26" height="26" /><br />财富</a></li>
+		<!-- <li class="find"><a href="/member/account"><div class="findSub"><img src="/static/lwjz/Images/dot_find.png" alt="" width="80%" /></a></div></li> -->
+		<li><a href="/cart"><img src="/static/lwjz/Images/icon/icon_04.png" alt="" width="26" height="26" /><br />购物车</a></li>
+		<li><a href="/member"><img src="/static/lwjz/Images/icon/icon_05.png" alt="" width="26" height="26" /><br />我的<span class="hasnew" style="display: none"><img src="/static/lwjz/Images/dot_red.png" width="10px" /></span></a></li>
+	</ul>
+
+</div>
+<div class="bottomBlank"></div>
+</div>
+<script type="text/javascript" src="https://cdn01.baiwangfutong.com/index/js/swiper.min.js"></script>
+<script type="text/javascript">
+	var swiper = new Swiper('.turn1', {
+		paginationType: 'progress',
+		spaceBetween: 10,
+		autoplay: 15000,
+		autoplayDisableOnInteraction: false
+	});
+
+</script>
+</body>
+</html>

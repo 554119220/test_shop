@@ -1,0 +1,51 @@
+{extend name="public:base" /}
+{block name="page"}
+<!-- 顶部标题栏 -->
+<header class="bar bar-nav bg_white">
+    <!-- <a class="icon icon_common pull-left r12 icon_back back" style="margin-top:.6rem"></a> -->
+    <a class="pull-right rfs14 text_55 back" id="search_cancel" style="margin-top:.6rem">取消</a>
+    <h1 class="title home_title" style="margin-left:calc(-50% + .5rem);width:83%">
+        <div class="search-input">
+            <input class="set_bg" type="search" id="search" placeholder="输入关键字搜索产品">
+        </div>
+    </h1>
+</header>
+
+<div class="content bg_white rpd10">
+    <div class="rmb5">
+        <p class="mg0">
+            <span class="rfs14 text_99">历史记录</span>
+            <!-- <a class="icon icon-remove pull-right text_99"></a> --><!-- 这里是清楚搜索记录的垃圾箱 -->
+        </p>
+        <div class="clearfix rmt5">
+            {eq name="data.code" value="20000"}
+                {volist name="data.data" id="vo"}
+                    <a data-no-cache="true" class="pull-left rmr5 search_record_new search-words" data-url="/search/goods?q={$vo}">{$vo}</a>
+                {/volist}
+            {/eq}
+        </div>
+    </div>
+    <div class="rmb5">
+        <p class="mg0">
+            <span class="rfs14 text_99">大家都在搜</span>
+            <!-- <a class="icon icon-remove pull-right text_99"></a> --><!-- 这里是清楚搜索记录的垃圾箱 -->
+        </p>
+        <div class="clearfix rmt5">
+            {eq name="hot.code" value="20000"}
+                {volist name="hot.data" id="vo"}
+                    <a data-no-cache="true" class="pull-left rmr5 search_record_new search-words" data-url="/search/goods?q={$key}">{$key}</a>
+                {/volist}
+            {/eq}
+        </div>
+    </div>
+    <div class="search_result">
+        <a href="javascript:;" class="rpd10 rfs14 text_over search-goods search-submit">
+            搜有关 <span class="keywords-box" style="color: red"></span> 的商品</a>
+        <a href="javascript:;" class="rpd10 rfs14 text_over search-shop search-submit" style="">
+            <span class="icon icon_common icon_06 r12 rmr10 fl"></span>
+            搜有关 <span class="keywords-box" style="color: red"></span> 的店铺
+        </a>
+    </div>
+</div>
+
+{/block}

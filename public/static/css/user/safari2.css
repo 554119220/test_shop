@@ -1,0 +1,17 @@
+
+
+.user,#yan,.i_input{
+	padding-top: 12px;
+	line-height:24px;
+}
+.i_input{
+	width:100%;
+}
+.slist{
+	background-position-x: 95%;
+}
+
+.header_nav .user{
+	line-height:inherit;
+	padding-top:0;
+}

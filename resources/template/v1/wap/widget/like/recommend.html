@@ -1,0 +1,17 @@
+<div class="bg_white rpd10 rfs14 rmb10 ">
+    <span class="vertical_red"></span>
+    <span class="text_77">浏览此商品的顾客也同时浏览</span>
+</div>
+{eq name="data.code" value="20000"}
+<div class="type_setting clearfix">
+    {volist name="data.data.data" id="vo"}
+        <div class="col_2 loding">
+            <div class="amg"><a data-no-cache="true" href="/goods?id={$vo.sku_id}"><img class=" lazyload no-src" src="{$vo.goods_images}"></a></div>
+            <div class="rtxt_line_2 rmb5 rmt5">
+                <a data-no-cache="true" class="text_77 rfs12" href="/goods?id={$vo.sku_id}">{$vo.goods_name}</a>
+            </div>
+            <p class="text_red mg0 rfs14"><span style="float: right">购物积分抵扣 {$vo.goods_shopping_score_multi}%</span>￥ {$vo.goods_min_price}</p>
+        </div>
+    {/volist}
+</div>
+{/eq}

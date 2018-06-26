@@ -1,0 +1,17 @@
+{extend name="public:base" /}
+{block name="page"}
+<div class="tab_col pd10 pb0">
+	<div class="container-fluid bg-white radius4px pt15">
+		<h3 class="mb30 ml20 mt30 text_red">要编辑的运费模板不存在不存在。</h3>
+	</div>
+</div>
+{/block}
+{block name="script"}
+<script type="text/javascript">
+	$(function(){
+		setTimeout(function(){
+			window.history.back();
+		},1500);
+	});
+</script>
+{/block}

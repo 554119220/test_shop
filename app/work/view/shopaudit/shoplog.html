@@ -1,0 +1,38 @@
+<div class="p20 bg-white">
+    {notempty name="logs.data"}
+    <h4>雇员操作记录</h4>
+    <hr />
+    <div class="mt-comments">
+        {volist name="logs.data" id="vo"}
+        <div class="mt-comment">
+            <div class="mt-comment-body">
+                <div class="mt-comment-info">
+                    <span class="mt-comment-author">雇员：{$vo.employee.name} ({$vo.employee.account})</span>
+                    <span class="mt-comment-date">{$vo.create_time}</span>
+                </div>
+                <div class="mt-comment-text">
+                    {$vo.content|nl2br}
+                </div>
+                <div class="mt-comment-details">
+                    <span class="mt-comment-status mt-comment-status-pending color-red">操作类型：{switch name="vo.is_pass"}
+                        {case value="1"}正常{/case}
+                        {case value="2"}已冻结{/case}
+                        {case value="3"}已关闭{/case}
+                        {case value="4"}强制关闭{/case}
+                        {case value="5"}二次审核{/case}
+                        {case value="0"}已删除{/case}
+                {/switch}</span>&nbsp;
+                    {neq name="vo.is_pass" value="1"}
+                    <span class="mt-comment-status mt-comment-status-pending">&nbsp;时长：{$vo.day}天</span>
+                    <span class="mt-comment-status mt-comment-status-pending">&nbsp;开始时间：{:date('Y-m-d H:i:s',$vo.start_time)}</span>&nbsp;
+                    <span class="mt-comment-status mt-comment-status-pending">&nbsp;结束时间：{:date('Y-m-d H:i:s',$vo.end_time)}</span>
+                    {/neq}
+                </div>
+            </div>
+        </div>
+        {/volist}
+    </div>
+    {else /}
+    <div class="nors text-center">暂无雇员操作记录！</div>
+    {/notempty}
+</div>

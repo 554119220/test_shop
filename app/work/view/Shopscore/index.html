@@ -1,0 +1,49 @@
+{extend name="public:base" /}
+<!--导航-->
+{block name="nav"}{include file="shopscore:nav" /}{/block}
+<!--主体内容-->
+{block name="content"}
+<div class="row">
+    <div class="col-md-12">
+        <form class="form-horizontal" method="post" action="/shopscore/post" id="form-referee-shopscore" onsubmit="return sendForm()">
+            {:buildform(array(
+            'field'		=>array(
+            array(
+            'formtype'		=> 'text',
+            'label'			=> '购物积分基数',
+            'name'			=> 'value',
+            'is_need'		=> 1,
+            'value'         => $value,
+            'tips'          => '持平值为0.01，请注意当前参数！,算法为：<strong style="color: red">订单总额 * 可使用积分倍数 / 购物积分基数,如 100 * 0.2 / 0.002 = 10000</strong>'
+            ),
+            array(
+            'formtype'		=> 'button',
+            'btns'			=> [['提交','btn btn-danger btn-150px','submit']],
+            ),
+            ),
+            )
+            )}
+        </form>
+    </div>
+</div>
+{/block}
+
+<!--脚本-->
+{block name="javascript"}
+<script>
+    function sendForm(){
+        submitForm({
+            formid:'#form-referee-shopscore',
+            success:function(ret){
+                toast(ret);
+                if(ret.code === 1){
+                    setTimeout(function(){
+                        window.location.reload()
+                    },1000);
+                }
+            }
+        });
+        return false;
+    }
+</script>
+{/block}

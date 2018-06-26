@@ -1,0 +1,161 @@
+{extend name="public:base" /}
+
+{block name="page"}
+<header class="bar bar-nav bg_white">
+    <a class="icon icon_common pull-left r12 icon_back back" style="margin-top:.6rem"></a>
+    <h1 class="title home_title">
+        {$shop.data.shop_name}
+        <!--<div class="search-input">-->
+            <!--<label class="icon icon-search" for="search"></label>-->
+            <!--<input class="bg_f8" type="search" id='search' placeholder='输入关键字搜索产品'/>-->
+        <!--</div>-->
+    </h1>
+    <span class="pull-right rfs14 text_77 icon icon-menu open-panel shop-category-list" data-panel=".panel-right1" data-sgcid="{$sgcid}" data-id="{$Think.get.id}"></span>
+</header>
+<!-- 这里是页面内容区 -->
+<div class="content bg_f8 pull-to-refresh-content infinite-scroll close-panel infinite-scroll-bottom" data-ptr-distance="50">
+    {include file="public:refresh" /}
+    <div class=" bbai" style="padding: 0.3rem 0;">
+        <div class="fu_title bbai  pad75 bor_no">
+            <img class="shop-logo app-share-img" src="{$shop.data.shop_logo}?imageMogr2/thumbnail/50x50">
+            <a data-no-cache="true" href="/shop/intro?id={$shop_id}" class="shop-title f7 h333 " style="width:37%;">{$shop.data.shop_name}</a>
+            <span class="rright shop-about" style="background-size: 0.85rem;background-position-y: 0.53rem;">&nbsp;<a href="tel:{$shop.data.shop_mobile}">联系商家</a></span>
+            <a class="fr f65 cred pr10 pl10 mr10 shop-data btn-attention-shop {eq name="is_shop.code" value="20000"}hide{else/}{/eq}" data-id="{$Think.get.id}" href="javascript:;">关注商家</a>
+            <a class="fr f65 cred pr10 pl10 mr10 shop-data btn-attention-shop2 {eq name="is_shop.code" value="20000"}{else/}hide{/eq}" data-id="{$Think.get.id}" href="javascript:;">取消关注</a>
+            <!--<a class="fr f65 cred pr10 pl10 mr10 shop-data" href="/shop/intro?id={$Think.get.id}">店铺简介</a>-->
+        </div>
+    </div>
+    <div class="bg_white swiper-container-shop pb0" data-space-between='10' style="overflow: hidden;position: relative;">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide"><a href="javascript:;"><img class=" img_max" src="{:thumb('/static/wap/images/bg_banner.png', 640, 116)}"></a></div>
+            <div class="swiper-slide"><a href="javascript:;"><img class=" img_max" src="{:thumb('/static/wap/images/bg_banner2.png', 640, 116)}"></a></div>
+            <div class="swiper-slide"><a href="javascript:;"><img class=" img_max" src="{:thumb('/static/wap/images/bg_banner3.png', 640, 116)}"></a></div>
+            <div class="swiper-slide"><a href="javascript:;"><img class=" img_max" src="{:thumb('/static/wap/images/bg_banner4.png', 640, 116)}"></a></div>
+        </div>
+        <div class="swiper-pagination"></div>
+    </div>
+
+
+    <div class="clearfix search_top_ic hide">
+        <div class="col_5 active">所有商品</div>
+        <!--<div class="col_5">商家类目</div>-->
+        <!--<div class="col_5 search_ic_3">销量</div>-->
+        <!--<div class="col_5">评价</div>-->
+        <div class="col_5"><a data-no-cache="true" href="/shop/intro?id={$shop_id}">联系商家</a></div>
+    </div>
+    <!-- 列表 -->
+    <div class="bg_white" id="search-goods-list" data-page="1" data-request="1">
+        <goods-list></goods-list>
+        <!--产品end-->
+        <!-- 加载提示符 -->
+        <div class="infinite-scroll-preloader">
+            <div class="preloader"></div>
+        </div>
+    </div>
+</div>
+<!-- 分类end -->
+<!-- 底部弹窗 -->
+
+<!-- 联系商家弹窗 -->
+<div class="f_back pad075" >
+    <div class="main100 bbai" style="padding: 1rem; border-radius: 4px; height:10rem;margin-top:calc(50%);">
+        <span class="cred pd15 main100 text-center">客服热线</span>
+        <span class="  main100 text-center h666 mb20">400-5656-5664</span>
+        <a class="red-b main100 pd8 fs14 text-center btn-ko">关闭</a>
+    </div>
+</div>
+{/block}
+{block name="page-popup"}
+<div class="mask_page"></div>
+<!-- 分类 -->
+<div class="panel panel-right panel-right1 panel-cover panel_set">
+    <header class="bar bar-nav bg_white close-panel">
+        <h1 class="title ">分类筛选</h1>
+    </header>
+    <div class="text_77 content rfs14 close-panel" id="text_red_active"></div>
+</div>
+{/block}
+{block name="script"}
+<script>
+    wx.config({
+        //debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+        appId: '{$weChat.appId}', // 必填，公众号的唯一标识
+        timestamp: '{$weChat.timestamp}', // 必填，生成签名的时间戳
+        nonceStr: '{$weChat.nonceStr}', // 必填，生成签名的随机串
+        signature: '{$weChat.signature}',// 必填，签名
+        jsApiList: {$weChat.jsApiList} // 必填，需要使用的JS接口列表
+    });
+    APP_SHARE_DATA.shop_image = '{$shop.data.shop_logo}?imageMogr2/thumbnail/200x200!';
+    wx.ready(function () {
+        var title   = '{$seo.title}';
+        var link    = '{:domain("wap", request()->url())}';
+        var desc    = '{$seo.description}';
+        var img     = '{$shop.data.shop_logo}?imageMogr2/thumbnail/200x200!';
+        wx.onMenuShareTimeline({
+            title: title, // 分享标题
+            link: link, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+            imgUrl: img, // 分享图标
+            success: function () {
+                // 用户确认分享后执行的回调函数
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+            }
+        });
+
+        wx.onMenuShareQQ({
+            title: title, // 分享标题
+            desc: desc, // 分享描述
+            link: link, // 分享链接
+            imgUrl: img, // 分享图标
+            success: function () {
+                // 用户确认分享后执行的回调函数
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+            }
+        });
+
+        wx.onMenuShareAppMessage({
+            title: title, // 分享标题
+            desc: desc, // 分享描述
+            link: link, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+            imgUrl: img, // 分享图标
+//                type: 'link', // 分享类型,music、video或link，不填默认为link
+//                dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+            success: function () {
+                // 用户确认分享后执行的回调函数
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+            }
+        });
+
+        wx.onMenuShareWeibo({
+            title: title, // 分享标题
+            desc: desc, // 分享描述
+            link: link, // 分享链接
+            imgUrl: img, // 分享图标
+            success: function () {
+// 用户确认分享后执行的回调函数
+            },
+            cancel: function () {
+// 用户取消分享后执行的回调函数
+            }
+        });
+
+        wx.onMenuShareQZone({
+            title: title, // 分享标题
+            desc: desc, // 分享描述
+            link: link, // 分享链接
+            imgUrl: img, // 分享图标
+            success: function () {
+// 用户确认分享后执行的回调函数
+            },
+            cancel: function () {
+// 用户取消分享后执行的回调函数
+            }
+        });
+    });
+</script>
+{/block}

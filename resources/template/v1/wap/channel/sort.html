@@ -1,0 +1,22 @@
+<input type="hidden" name="pathinfo" id="pathinfo" value="{$pathinfo}">
+<input type="hidden" name="sort" id="sort" value="{$sort}">
+<input type="hidden" name="params" id="params" value={$params}>
+<!--data.data.channel_result_sort-->
+<input type="hidden" name="order" id="order" value="">
+<div class="buttons-tab search_set_icon search-sort-box" style="z-index:7">
+    <a class="tab-link button icon_one tab-link-default">综合
+        <div class="ab dn">
+            <p data-url="{:url('/channel/special', searchFilter(array_merge($get, ['order' => '']), 'search'))}" class="mg0 search-sort tab-link-default-default">综合排序</p>
+            <p data-url="{:url('/channel/special', searchFilter(array_merge($get, ['order' => 'fraction']), 'search'))}" class="mg0 search-sort tab-link-default-fraction">信用评分</p>
+        </div>
+    </a>
+    <a class="tab-link button icon_tow search-sort tab-link-price" data-url="{:url('/channel/special', searchFilter(array_merge($get, ['order' => $price_sort]), 'search'))}">价格</a>
+    <a class="tab-link button search-sort tab-link-sales" data-url="{:url('/channel/special', searchFilter(array_merge($get, ['order' => 'sales']), 'search'))}">销量</a>
+    <a class="tab-link button tab-link-discount">抵扣
+        <div class="ab dn">
+            <p class="mg0 search-sort tab-link-discount-desc" data-url="{:url('/channel/special', searchFilter(array_merge($get, ['order' => 'shopping_score_desc']), 'search'))}">积分抵扣高到低</p>
+            <p class="mg0 search-sort tab-link-discount-asc" data-url="{:url('/channel/special', searchFilter(array_merge($get, ['order' => 'shopping_score_asc']), 'search'))}">积分抵扣低到高</p>
+        </div>
+    </a>
+    <a class="tab-link button open-panel icon_five" data-panel=".panel_right">筛选</a>
+</div>

@@ -1,0 +1,145 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">	
+	<meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+	<title>百望富通管理系统</title>
+	<meta name="keywords" content="百望富通管理系统">
+	<meta name="description" content="百望富通管理系统">	
+	<meta name="author" content="Lazycat">
+	
+	<!--字体Icon-->
+	{css href="__CSS__/metronic/assets/global/plugins/font-awesome/css/font-awesome.min.css" /}
+	{css href="__CSS__/metronic/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" /}
+	
+	{css href="__CSS__/metronic/assets/global/plugins/bootstrap/css/bootstrap.min.css" /}
+	{css href="__CSS__/metronic/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" /}		
+	<!--消息提示-->
+	{css href="__CSS__/metronic/assets/global/plugins/bootstrap-toastr/toastr.min.css" /}	
+	<!--模态框-->
+	{css href="__CSS__/metronic/assets/global/plugins/bootstrap-modal/css/bootstrap-modal-bs3patch.css" /}
+	{css href="__CSS__/metronic/assets/global/plugins/bootstrap-modal/css/bootstrap-modal.css" /}	
+	{css href="__CSS__/metronic/assets/global/plugins/jquery.magnific-popup/dist/magnific-popup.css" /}		
+	<!--日期相关-->
+	{css href="__CSS__/metronic/assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css" /}	
+	{css href="__CSS__/metronic/assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" /}		
+	<!--code editor-->
+	{css href="__CSS__/metronic/assets/global/plugins/codemirror/lib/codemirror.css" /}	
+	{css href="__CSS__/metronic/assets/global/plugins/codemirror/theme/neat.css" /}	
+	{css href="__CSS__/metronic/assets/global/plugins/codemirror/theme/ambiance.css" /}	
+	{css href="__CSS__/metronic/assets/global/plugins/codemirror/theme/material.css" /}	
+	{css href="__CSS__/metronic/assets/global/plugins/codemirror/theme/neo.css" /}	
+	
+	{css href="__CSS__/metronic/assets/global/css/components.min.css" /}
+	{css href="__CSS__/metronic/assets/global/css/plugins.min.css" /}
+	{css href="__CSS__/metronic/assets/layouts/layout/css/layout.css" /}
+	{css href="__CSS__/metronic/assets/layouts/layout/css/themes/darkblue.min.css" /}
+	{css href="__CSS__/work/css.css" /}
+	{block name="css"}<!--样式-->{/block}
+</head>
+<body class="bg-white" id="{$Request.controller}-{$Request.action}">
+	<!--[if lt IE 10]>
+	<div class="alert alert-warning md0 dn browser-low-tip">
+		<button type="button" class="close" data-dismiss="alert" aria-hidden="true" onclick="close_browser_low_tip(this)">&times;</button>
+		<i class="fa fa-warning sign"></i><strong>浏览器版本过低！</strong> 请使用谷歌浏览器(Chrome)、火狐浏览器(FireFox)、360浏览器、搜狗浏览器、腾讯浏览器(TT)、IE10以上、苹果浏览器(Safari)等浏览器浏览本站才可体验最佳效果。
+	</div>
+	<script>		
+		function close_browser_low_tip(obj){
+			$(obj).parent().remove();
+		}
+	</script>
+	<![endif]-->
+
+	<div class="m20">
+	{block name="nav"}<!--导航菜单-->{/block}
+	{block name="search"}<!--搜索-->{/block}
+	{block name="content"}<!--主体内容-->{/block}
+    	
+	{block name="custom"}<!--自定义内容-->{/block}
+	</div>
+	
+	<!--模态框-->
+	<div id="#ajax-modal" class="modal fade ajax-modal" tabindex="-1" data-backdrop="static">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+			<h4 class="modal-title">提示</h4>
+		</div>	
+		<div class="modal-body">
+			
+		</div>
+		<div class="modal-footer hide">
+			<span class="btns"></span>
+			<button type="button" data-dismiss="modal" class="btn btn-outline dark pull-left">关闭</button>
+		</div>
+	</div>
+	
+	<!--ajax-form-->
+	<div id="ajax_form" class="hide"></div>
+	
+	<!-- 上传图片 -->
+	<form enctype="multipart/form-data" id="form-upload" data-url="/upload/images" class="hide">
+		<input id="file" name="file" type="file" value="" />
+		<input type="hidden" id="width" name="width" value="">
+		<input type="hidden" id="height" name="height" value="">
+		<input type="hidden" id="type" name="type" value="">	
+		<input type="hidden" id="field" name="field" value="">
+		<input type="hidden" id="field1" name="field1" value="">
+		<input type="hidden" id="field2" name="field2" value="">
+	</form>	
+	
+	<div class="hide tmp"></div>
+	
+	<!--[if lt IE 9]>
+		{js href="__CSS__/metronic/assets/global/plugins/respond.min.js" /}
+		{js href="__CSS__/metronic/assets/global/plugins/excanvas.min.js" /}
+	<![endif]-->
+	{js href="__CSS__/metronic/assets/global/plugins/jquery.min.js" /}
+	{js href="__CSS__/metronic/assets/global/plugins/bootstrap/js/bootstrap.min.js" /}
+	{js href="__CSS__/metronic/assets/global/plugins/js.cookie.min.js" /}
+	{js href="__CSS__/metronic/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" /}
+	{js href="__CSS__/metronic/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" /}
+	{js href="__CSS__/metronic/assets/global/plugins/jquery.blockui.min.js" /}
+	{js href="__CSS__/metronic/assets/global/plugins/bootstrap-toastr/toastr.min.js" /}
+	{js href="__CSS__/metronic/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" /}    
+	{js href="__CSS__/metronic/assets/global/plugins/bootstrap-modal/js/bootstrap-modalmanager.js" /}    
+	{js href="__CSS__/metronic/assets/global/plugins/bootstrap-modal/js/bootstrap-modal.js" /}    
+	{js href="__CSS__/metronic/assets/global/plugins/jquery.magnific-popup/dist/jquery.magnific-popup.min.js" /} 
+	{js href="__CSS__/metronic/assets/global/plugins/jquery-ui/jquery-ui.min.js" /} 
+	<!--幻灯片背景-->
+	{js href="__CSS__/metronic/assets/global/plugins/backstretch/jquery.backstretch.min.js" /}	
+	<!--日期相关-->	
+	{js href="__CSS__/metronic/assets/global/plugins/bootbox/bootbox.min.js" /}
+	{js href="__CSS__/metronic/assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js" /}
+	{js href="__CSS__/metronic/assets/global/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js" /}
+	{js href="__CSS__/metronic/assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js" /} 
+	{js href="__CSS__/metronic/assets/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js" /}
+	<!-- code editor -->
+	{js href="__CSS__/metronic/assets/global/plugins/codemirror/lib/codemirror.js" /}
+	<!--图片base64上传-->
+	{js href="__JS__/plugins/localResizeIMG/dist/lrz.bundle.js" /}
+	<!--百度编辑器-->
+	{js href="/ueditor/ueditor.config.js" /}
+	{js href="/ueditor/ueditor.all.min.js" /}
+	{js href="/ueditor/lang/zh-cn/zh-cn.js" /}
+	<!-- 复制链接 -->
+	{js href="__CSS__/metronic/assets/global/clipboard/clipboard.min.js" /}
+
+	{js href="__JS__/plugins/jquery.form.js" /}
+	{js href="__JS__/work/apps.js" /}
+	<script>
+		if($('.nav-title').size() >0){
+			var baseUrl = '/{$Request.controller}/{$Request.action}';
+			$('.nav-title li').removeClass('active').parent().find('li[data-baseUrl="'+ baseUrl +'"]').addClass('active');
+			
+			if($('.nav-title li.active').size() == 0 && $('.nav-title li[data-otherUrl="'+ baseUrl +'"]').size() > 0){
+				$('.nav-title li[data-otherUrl="'+ baseUrl +'"]').removeClass('hide').addClass('active');
+			}
+		}
+	</script>
+	
+	{block name="javascript"}<!--自定义脚本-->{/block}
+	{block name="footer"}<!--页脚-->{/block}
+</body>
+</html>

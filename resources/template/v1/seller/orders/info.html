@@ -1,0 +1,92 @@
+<div class="radius4px mb10 bg_white pd15">
+    <div class="main100  bg-white radius4px over">
+        <div class="main100 radius4px over">
+            <table class="table solid_all  table_dashed tr12 table12  table-center mb0" >
+                <thead class=" bg-f5 ">
+                <tr>
+                    <th class="small_xs ">商品信息</th>
+                    <th class="small_xs ">单价</th>
+                    <th class="small_xs ">下单数量</th>
+                    <th class="small_xs ">退货数量</th>
+                    <th class="small_xs ">实付款</th>
+                    <th class="small_xs ">积分倍数</th>
+                    <th class="small_xs ">赠送积分</th>
+                </tr>
+                </thead>
+                <tbody >
+                {volist name="data.data.goods" id="goods"}
+                <tr>
+                    <td>
+                        <a href="javascript:;">
+                            <img class="fl radius4px mr8" style="height:72px;width:72px;" src="{:thumb($goods['goods_images'], 150)}">
+                            <div class="fl pr70" style="width: calc(100% - 90px);">
+                                <div class="line20 mt4 mb6 color666 ">{$goods.goods_name}</div>
+                                <div class="color999"><span>{$goods.goods_sku_name}</span></div>
+                            </div>
+                        </a>
+                    </td>
+                    <td>￥ {$goods.orders_goods_single_amount} 元</td>
+                    <td>{$goods.orders_goods_num}</td>
+                    <td>{:$goods.orders_goods_num - $goods.goods_refund_num}</td>
+                    <td>￥ {$goods.orders_goods_amount} 元
+                    </td>
+                    <td>x {$goods.goods_score_multi} 倍</td>
+                    <td>{$goods.goods_score}</td>
+                </tr>
+                {/volist}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="main100 over mb10">
+    <div class="fl radius4px bg_white pd15 h200 mr10" style="width:calc(30% - 10px);">
+        <div class="main100 line30  mb5">
+            <i class="redicon mar0" ></i>
+            <span class="fs14 color333 pl5">收货信息</span>
+        </div>
+        <div class="main100 line24 color666">
+            <span class="pl15 mr3 fl">联系姓名：</span>
+            <span>{$data.data.ordersAddress.orders_address_name}</span>
+        </div>
+        <div class="main100 line24 color666">
+            <span class="pl15 mr3 fl">联系手机：</span>
+            <span>{$data.data.ordersAddress.orders_address_connect}</span>
+        </div>
+        <div class="main100 line24 color666">
+            <span class="pl15 fl">收货地址：</span>
+            <span style="float: left;width: calc(100% - 105px);">{$data.data.ordersAddress.orders_address}</span>
+        </div>
+    </div>
+
+    <div class="fl radius4px bg_white pd15 h200 mr10" style="width:calc(35% - 10px);">
+        <div class="main100 line30  mb5">
+            <i class="redicon mar0" ></i>
+            <span class="fs14 color333 pl5">订单信息</span>
+        </div>
+        <div class="main100 line24 color666">
+            <span class="pl15 fl">邮寄方式：</span>
+            <span style="float: left;width: calc(100% - 120px);">快递</span>
+        </div>
+    </div>
+
+    <div class="fl radius4px bg_white pd15 h200 " style="width:calc(35% );">
+        <div class="main100 line30  mb5">
+            <i class="redicon mar0" ></i>
+            <span class="fs14 color333 pl5">订单信息</span>
+        </div>
+        <div class="main100 line24 color666">
+            <span class="pl15 mr3 fl">创建时间：</span>
+            <span style="float: left;width: calc(100% - 120px);">{$data.data.orders_shop_create_time}</span>
+        </div>
+        <div class="main100 line24 color666">
+            <span class="pl15 mr3 fl">订单编号：</span>
+            <span style="float: left;width: calc(100% - 120px);">{$data.data.orders_shop_no}</span>
+        </div>
+        <div class="main100 line24 color666">
+            <span class="pl15 fl">备注信息：</span>
+            <span style="float: left;width: calc(100% - 105px);">{$data.data.orders_shop_remark|default="-"}</span>
+        </div>
+    </div>
+</div>

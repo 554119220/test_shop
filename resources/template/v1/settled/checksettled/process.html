@@ -1,0 +1,147 @@
+{extend name="public:base" /}
+{block name="nav"}
+{include file="public:nav2" /}
+{/block}
+{block name="content"}
+<div class="tab_row mb10">
+    <div class="tab_col pt10">
+        <!-- 页面主体内容 -->
+        {if condition="($shop['shop_settled_state'] eq 2)"}
+            <div class="main100 bg_white pd25 over">
+                {foreach name="shop.shop_settled_audit" id="val"}
+                {if condition="$key eq (count($shop['shop_settled_audit'])-1)"}
+                <div class="alert alert-danger alert-dismissable">
+                    <button type="button" class="close" data-dismiss="alert"
+                            aria-hidden="true">
+                        &times;
+                    </button>
+                    【审核不通过原因】{$val.shop_settled_audit_content}
+                </div>
+                {/if}
+                {/foreach}
+            </div>
+        {elseif condition="($shop['shop_settled_state'] eq 0)"/}
+            <div class="main100 bg_white pd25 over">
+                <div class="alert alert-success alert-dismissable">
+                    <button type="button" class="close" data-dismiss="alert"
+                            aria-hidden="true">
+                        &times;
+                    </button>
+                    信息已经已经提交，请耐心等待审核！！！
+                </div>
+            </div>
+        {/if}
+        <!-- 页面主体内容结束 -->
+        <div class="main100 bg_white pd25 minh595 over pt110" style="background:#fff url(/static/web/images/shop/bgdt.png) center no-repeat;">
+            <div class="over re minh595 auto" style="width:1150px;background: url(/static/web/images/shop/bg-nav.png) top no-repeat;">
+                {if condition="in_array('0',$shop_settled_step)"}
+                <a href="{:url('choice/index')}">
+                <div class="ab center" style="background: url(/static/web/images/shop/bg-red.png) center no-repeat; width: 104px; height:104px;left: 100px;top: 85px;">
+                    <span class="main100 text_white h40 fs18 line40 mb10">1</span>
+                    <strong class="fs14" style="color: #e71b20;">开店须知<br></strong>
+                    <img src="/static/web/images/icon/nono.png" style="width:14px; position: absolute;bottom: 7px;right: 7px;">
+                </div>
+                </a>
+                {else/}
+                <div class="ab center" style="background: url(/static/web/images/shop/bg-lv.png) center no-repeat; width: 104px; height:104px;left: 100px;top: 85px;">
+                    <span class="main100 text_white h40 fs18 line40 mb10">1</span>
+                    <strong class="fs14" style="color: #33bbb2;">开店须知<br></strong>
+                    <img src="/static/web/images/icon/dui123.png" style="width:14px; position: absolute;bottom: 7px;right: 7px;">
+                </div>
+                {/if}
+
+
+                {if condition="in_array(1,$shop_settled_step)"}
+                <a href="{:url('choice/choiceshoptype')}">
+                    <div class="ab center" style="background: url(/static/web/images/shop/bg-red.png) center no-repeat; width: 104px; height:104px;left: 270px;top: 153px;">
+                        <span class="main100 text_white h40 fs18 line40 mb10">2</span>
+                        <strong class="fs14" style="color: #e71b20;">选择开店类型</strong>
+                        <img src="/static/web/images/icon/nono.png" style="width:14px; position: absolute;bottom: 7px;right: 7px;">
+                    </div>
+                </a>
+                {else/}
+                <div class="ab center" style="background: url(/static/web/images/shop/bg-lv.png) center no-repeat; width: 104px; height:104px;left: 270px;top: 153px;">
+                    <span class="main100 text_white h40 fs18 line40 mb10">2</span>
+                    <strong class="fs14" style="color: #33bbb2;">选择开店类型</strong>
+                    <img src="/static/web/images/icon/dui123.png" style="width:14px; position: absolute;bottom: 7px;right: 7px;">
+                </div>
+                {/if}
+
+
+                {if condition="in_array(2,$shop_settled_step)"}
+                <a href="{:url('choice/choicegoods')}">
+                    <div class="ab center" style="background: url(/static/web/images/shop/bg-red.png) center no-repeat; width: 104px; height:104px;left: 438px;top: 85px;">
+                        <span class="main100 text_white h40 fs18 line40 mb10">3</span>
+                        <strong class="fs14" style="color: #e71b20;">选择经营类型</strong>
+                        <img src="/static/web/images/icon/nono.png" style="width:14px; position: absolute;bottom: 7px;right: 7px;">
+                    </div>
+                </a>
+                {else/}
+                <div class="ab center" style="background: url(/static/web/images/shop/bg-lv.png) center no-repeat; width: 104px; height:104px;left: 438px;top: 85px;">
+                    <span class="main100 text_white h40 fs18 line40 mb10">3</span>
+                    <strong class="fs14" style="color: #33bbb2;">选择经营类型</strong>
+                    <img src="/static/web/images/icon/dui123.png" style="width:14px; position: absolute;bottom: 7px;right: 7px;">
+                </div>
+                {/if}
+
+                {present name="shop.shop_settled_content.brand"}
+                {if condition="in_array(3,$shop_settled_step)"}
+                <a href="{:url('choice/qualifications')}" title="编辑">
+                    <div class="ab center" style="background: url(/static/web/images/shop/bg-red.png) center no-repeat; width: 104px; height:104px;left: 608px;top: 152px;">
+                        <span class="main100 text_white h40 fs18 line40 mb10">4</span>
+                        <strong class="fs14" style="color: #e71b20;">填写品牌资料</strong>
+                        <img src="/static/web/images/icon/nono.png" style="width:14px; position: absolute;bottom: 7px;right: 7px;">
+                    </div>
+                </a>
+                {else/}
+                <div class="ab center" style="background: url(/static/web/images/shop/bg-lv.png) center no-repeat; width: 104px; height:104px;left: 608px;top: 152px;">
+                    <span class="main100 text_white h40 fs18 line40 mb10">4</span>
+                    <strong class="fs14" style="color: #33bbb2;">填写品牌资料</strong>
+                    <img src="/static/web/images/icon/dui123.png" style="width:14px; position: absolute;bottom: 7px;right: 7px;">
+                </div>
+                {/if}
+                {else/}
+                <div class="ab center" style="background: url(/static/web/images/shop/bg-lv.png) center no-repeat; width: 104px; height:104px;left: 608px;top: 152px;">
+                    <span class="main100 text_white h40 fs18 line40 mb10">4</span>
+                    <strong class="fs14" style="color: #33bbb2;">填写品牌资料</strong>
+                    <img src="/static/web/images/icon/dui123.png" style="width:14px; position: absolute;bottom: 7px;right: 7px;">
+                </div>
+                {/present}
+
+                    {if condition="in_array(4,$shop_settled_step)"}
+                    <a href="{:url('choice/qualifications')}" title="编辑">
+                        <div class="ab center" style="background: url(/static/web/images/shop/bg-red.png) center no-repeat; width: 104px; height:104px;left:777px;top: 85px;">
+                            <span class="main100 text_white h40 fs18 line40 mb10">5</span>
+                            <strong class="fs14" style="color: #e71b20;">上传行业资质</strong>
+                            <img src="/static/web/images/icon/nono.png" style="width:14px; position: absolute;bottom: 7px;right: 7px;">
+                        </div>
+                    </a>
+                    {else/}
+                <div class="ab center" style="background: url(/static/web/images/shop/bg-lv.png) center no-repeat; width: 104px; height:104px;left:777px;top: 85px;">
+                    <span class="main100 text_white h40 fs18 line40 mb10">5</span>
+                    <strong class="fs14" style="color: #33bbb2;">上传行业资质</strong>
+                    <img src="/static/web/images/icon/dui123.png" style="width:14px; position: absolute;bottom: 7px;right: 7px;">
+                </div>
+                    {/if}
+
+
+                {if condition="in_array(5,$shop_settled_step)"}
+                <a href="{:url('choice/setshop')}" title="编辑">
+                    <div class="ab center" style="background: url(/static/web/images/shop/bg-red.png) center no-repeat; width: 104px; height:104px;left:946px;top: 153px;">
+                        <span class="main100 text_white h40 fs18 line40 mb10">6</span>
+                        <strong class="fs14" style="color: #e71b20;">填写店铺信息<br></strong>
+                        <img src="/static/web/images/icon/nono.png" style="width:14px; position: absolute;bottom: 7px;right: 7px;">
+                    </div>
+                </a>
+                {else/}
+                <div class="ab center" style="background: url(/static/web/images/shop/bg-lv.png) center no-repeat; width: 104px; height:104px;left:946px;top: 153px;">
+                    <span class="main100 text_white h40 fs18 line40 mb10">6</span>
+                    <strong class="fs14" style="color: #33bbb2;">填写店铺信息<br></strong>
+                    <img src="/static/web/images/icon/dui123.png" style="width:14px; position: absolute;bottom: 7px;right: 7px;">
+                </div>
+                {/if}
+            </div>
+        </div>
+    </div><!-- 右边内容结束 -->
+</div><!-- 页面主体内容结束 -->
+{/block}

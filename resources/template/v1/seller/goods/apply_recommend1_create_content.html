@@ -1,0 +1,67 @@
+<form id="apply_content" class="form-horizontal" role="form" style="height: auto;overflow-y: auto;overflow-x: hidden;">
+
+    <input type="hidden" name="goods_ids" value="{php}echo request()->param()['goods_id'] ?? 0;{/php}">
+
+    <div class="form-body">
+        <div class="form-group">
+            <label class="col-md-2 control-label">&nbsp;</label>
+            <div class="col-md-9">
+                <div class="alert mt10 mb10 bg-red2 color-red1 pl15">
+                    {php}echo str_replace(PHP_EOL,'<BR>', config('site.goods')['apply_goods_recommend1_notice']);{/php}
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label">购物积分比例</label>
+            <div class="col-md-9">
+                <input name="score_multi" type="text" class="form-control" maxlength="4" placeholder="请输入购物积分比例 (20-60之间，整数)">
+                <!-- <span class="help-block"> A block of help text. </span> -->
+            </div>
+        </div>
+    	<div class="form-group">
+            <label class="col-md-2 control-label">天猫参考链接</label>
+            <div class="col-md-9">
+                <input name="tmall_link" type="text" class="form-control" maxlength="2000" placeholder="请输入天猫链接">
+                <!-- <span class="help-block"> A block of help text. </span> -->
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label">京东参考链接</label>
+            <div class="col-md-9">
+                <input name="jd_link" type="text" class="form-control" maxlength="2000" placeholder="请输入京东链接">
+                <!-- <span class="help-block"> A block of help text. </span> -->
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label">报名精选理由</label>
+            <div class="col-md-9">
+                <textarea name="reason" class="form-control" maxlength="255" placeholder="请输入报名精选理由"></textarea> 
+                <!-- <span class="help-block"> A block of help text. </span> -->
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label">填写申请属性价格</label>
+            <div class="col-md-9">
+                <table class="table table-bordered table-hover valign-middle">
+                    <thead>
+                        <tr>
+                            <th nowrap="">属性名称</th>
+                            <th nowrap="">市场价</th>
+                            <th nowrap="">报名活动价</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {foreach name="goodsSku" key="key" item="value"}
+                            <tr>
+                                <input type="hidden" name="goods_sku[{$key}][goods_sku_id]" value="{$value.goods_sku_id}">
+                                <td>{$value.goods_sku_group_values}</td>
+                                <td><input type="text" name="goods_sku[{$key}][goods_sku_market_price]" value="{$value.goods_sku_market_price}"></td>
+                                <td><input type="text" name="goods_sku[{$key}][goods_sku_price]" value="{$value.goods_sku_price}"></td>
+                            </tr>
+                        {/foreach}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</form>

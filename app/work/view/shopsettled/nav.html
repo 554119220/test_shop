@@ -1,0 +1,14 @@
+<div class="nav-title">
+	<div class="pull-right">
+		<a href="/{$Request.controller}/add" class="btn blue btn-100px btn-outline"><i class="icon-plus"></i> 新增</a>
+	</div>	
+	<ul>
+		<li class="active" data-baseUrl="/{$Request.controller}/index"><a href="/{$Request.controller}/index">招商入驻</a></li>
+		<li data-baseUrl="" data-cert="0"><a href="/{$Request.controller}/index/shop_settled_state/0">待审核</a></li>
+		<li data-baseUrl="" data-cert="1"><a href="/{$Request.controller}/index/shop_settled_state/1">审核通过</a></li>
+		<li data-baseUrl="" data-cert="2"><a href="/{$Request.controller}/index/shop_settled_state/2">已拒绝</a></li>
+		<li data-baseUrl="" data-cert="3"><a href="/{$Request.controller}/index/shop_settled_state/3">编辑中</a></li>
+		<li data-otherUrl="/{$Request.controller}/{$Request.action}" class="hide"><a href="{$Request.url}">[title]</a></li>
+	</ul>
+</div>
+

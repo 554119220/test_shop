@@ -1,0 +1,39 @@
+{extend name="public:base" /}
+
+{block name="page"}
+<!-- 顶部标题栏 -->
+<header class="bar bar-nav bg_white">
+    <a class="icon icon_common pull-left r12 icon_back back" style="margin-top:.6rem"></a>
+    <h1 class="title">  物流查询  </h1>
+</header>
+
+{eq name="data.code" value="20000"}
+<div class="content bg_f8">
+    <div class="rpd10 rmb10 bg_white">
+        <div class="clearfix">
+            <a href="javascript:;"><img class="fl rmr10 solid_all" style="width:4rem;height:4rem" src="{$data.data.OrdersGoods.goods_images|thumb=160}"></a>
+            <div class="rfs10 rline20">
+                <!--<p class="mg0 text_over text_77 rfs12">物流状态：<span class=text_yellow>运输中</span></p>-->
+                <p class="mg0 text_over text_99">承运来源：{$data.data.OrdersRefundAddress.express_company_name}</p>
+                <p class="mg0 text_over text_99">运单编号：{$data.data.OrdersRefundAddress.express_no}</p>
+                <p class="mg0 text_over text_99">发货备注：{$data.data.OrdersRefundAddress.orders_refund_remark|default='-'}</p>
+            </div>
+        </div>
+    </div>
+    {eq name="logistics.code" value="20000"}
+    <div class="bg_white text_77">
+        <div class="solid_b rpd10 text-center rfs14">物流跟踪</div>
+        <ul class="rpd10 rfs12 time_stamp">
+            {volist name="logistics.data" id="vo"}
+            <li>{$vo.text}<br><small>{$vo.time}</small><span></span></li>
+            {/volist}
+        </ul>
+    </div>
+    {else /}
+    <div class="bg_white text_77">
+        <div class="solid_b rpd10 text-center rfs14">{$logistics.msg}</div>
+    </div>
+    {/eq}
+</div>
+{/eq}
+{/block}

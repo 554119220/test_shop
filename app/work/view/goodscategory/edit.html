@@ -1,0 +1,196 @@
+{extend name="public:base" /}
+<!--导航-->
+{block name="nav"}{include file="goodscategory:nav" title="修改" /}{/block}
+
+<!--主体内容-->
+{block name="content"}
+<form class="form-horizontal" id="form-edit" action="/{$Request.controller}/edit_save" onsubmit="return sendForm()">
+	<ul class="nav nav-tabs">
+		{volist name="group" id="gl"}
+		<li class="{$i==1?'active':''}">
+			<a href="#tabs_{$i}" data-toggle="tab" aria-expanded="true"> {$gl.group_name} </a>
+		</li>
+		{/volist}
+		<li>
+			<a href="#tabs_{++$i}" data-toggle="tab" aria-expanded="true">设置资质</a>
+		</li>
+	</ul>
+	<div class="tab-content">
+		{volist name="group" id="gl"}
+		<div class="tab-pane fade in {$i==1?'active':''}" id="tabs_{$i}">
+		{notempty name="gl.remark"}
+			<div class="note note-info">
+				<p>提示：{$gl.remark}</p>
+			</div>			
+		{/notempty}			
+		{:buildform(array(
+			'field'		=>$gl.fields,
+		),$res)}			
+		</div><!--/end pane-->
+		{/volist}
+		<div class="tab-pane fade in" id="tabs_{++$i}">
+			{php}$i = 0;{/php}
+			{foreach name="GoodsQualificationsGroup" item="value"}
+				<div class="GoodsQualificationsGroup">
+					{:buildform(array(
+						'field'		=>array(
+							array(
+								'formtype'		=>'hidden',
+								'name'			=>'goods_qualifications_group[' . $i . '][goods_qualifications_group_id]',
+								'value'			=>$value['goods_qualifications_group_id'],
+							),
+							array(
+								'formtype'		=>'text',
+								'label'			=>'名称',
+								'is_need'		=> 1,
+								'name'			=>'goods_qualifications_group[' . $i . '][goods_qualifications_group_name]',
+								'value'			=>$value['goods_qualifications_group_name'],
+							),
+							array(
+								'formtype'		=>'select',
+								'label'			=>'资质类型',
+								'is_need'		=> 1,
+								'field'			=>[0,1],
+								'name'			=>'goods_qualifications_group[' . $i . '][goods_qualifications_group_form_type]',
+								'value'			=>$value['goods_qualifications_group_form_type'],
+								'data'			=> \\mercury\\constants\\State::GOODS_QUALIFICATIONS_GROUP_TYPE_ARRAYS_ADMIN,
+							),
+							array(
+								'formtype'		=>'textarea',
+								'label'			=>'值，每行一个',
+								'name'			=>'goods_qualifications_group[' . $i . '][goods_qualifications_group_value]',
+								'value'			=>$value['goods_qualifications_group_value'],
+							),
+							array(
+								'formtype'		=>'radio',
+								'label'			=>'状态',
+								'is_need'		=> 1,
+								'field'			=>[0,1],
+								'name'			=>'goods_qualifications_group[' . $i . '][goods_qualifications_group_state]',
+								'value'			=>$value['goods_qualifications_group_state'],
+								'data'			=>[[0,'锁定'],[1,'正常']],
+							),
+							array(
+								'formtype'		=>'button',
+								'btns'			=>[['删除','btn btn-danger btn-50px delGoodsQualificationsGroup','button']],
+							),
+						),
+					))}
+					<hr style="border-top: 1px solid #883636;">
+				</div>
+				
+			{php}$i++;{/php}
+			{/foreach}
+			{:buildform(array(
+				'field'		=>array(
+					array(
+						'formtype'		=>'button',
+						'btns'			=>[['新增一个资质','btn btn-success btn-150px addGoodsQualificationsGroup','button']],
+					),
+				),
+			))}
+			<hr>
+		</div>
+	</div>
+	{:buildform(array(
+		'field'		=>array(
+			array(
+				'formtype'		=>'hidden',
+				'name'			=>'category_id',
+				'value'			=>$res['category_id'],
+			),
+			array(
+				'formtype'		=>'button',
+				'btns'			=>[['保存分类设置','btn btn-danger btn-150px','submit']],
+			),
+		),
+	))}
+</form>
+{/block}
+
+<!--脚本-->
+{block name="javascript"}
+<script>
+	var GoodsQualificationsGroupI = parseInt({$i});
+	// alert(GoodsQualificationsGroupI);
+	function sendForm(){
+		submitForm({
+			formid:'#form-edit',
+			success:function(ret){
+				toast(ret);
+				if(ret.code == 1){
+					setTimeout(function(){
+						history.back();
+					},1000);
+				}
+			}
+		});
+		
+		return false;
+	}
+	$(document).on('click','.addGoodsQualificationsGroup',function(){
+		
+		var html = '';
+		html += '<div class="GoodsQualificationsGroup">';
+
+		html += '<div class="form-group" id="f-goods_qualifications_group[' + GoodsQualificationsGroupI + '][goods_qualifications_group_name]">';
+		html += '	<label class="control-label col-xs-3">名称<span class="required"> * </span></label>';
+		html += '	<div class="col-xs-6">';
+		html += '		<input type="text" name="goods_qualifications_group[' + GoodsQualificationsGroupI + '][goods_qualifications_group_name]" id="goods_qualifications_group[' + GoodsQualificationsGroupI + '][goods_qualifications_group_name]" class="form-control" placeholder="请填写名称" value="">';
+		html += '	</div>';
+		html += '</div>';
+
+		html += '<div class="form-group" id="f-goods_qualifications_group[' + GoodsQualificationsGroupI + '][goods_qualifications_group_form_type]">';
+		html += '	<label class="control-label col-xs-3">资质类型<span class="required"> * </span></label>';
+		html += '	<div class="col-xs-6">';
+		html += '		<select name="goods_qualifications_group[' + GoodsQualificationsGroupI + '][goods_qualifications_group_form_type]" id="goods_qualifications_group[' + GoodsQualificationsGroupI + '][goods_qualifications_group_form_type]" class="form-control" placeholder="请填写资质类型" "="" data-value="2">';
+		html += '			<option value="">请选择资质类型</option>';
+		<?php foreach(\mercury\constants\State::GOODS_QUALIFICATIONS_GROUP_TYPE_ARRAYS_NEW as $key => $value){ ?>
+		html += '			<option value="{$key}">{$value}</option>';
+		<?php } ?>
+		html += '		</select>';
+		html += '	</div>';
+		html +='</div>';
+
+		html += '<div class="form-group" id="f-goods_qualifications_group[' + GoodsQualificationsGroupI + '][goods_qualifications_group_value]">';
+		html += '	<label class="control-label col-xs-3">值，每行一个</label>';
+		html += '	<div class="col-xs-6">';
+		html += '		<textarea name="goods_qualifications_group[' + GoodsQualificationsGroupI + '][goods_qualifications_group_value]" id="goods_qualifications_group[' + GoodsQualificationsGroupI + '][goods_qualifications_group_value]" class="form-control" placeholder="请填写值，每行一个" style="margin: 0px -2px 0px 0px; height: 55px; width: 592px;"></textarea>';
+		html += '	</div>';
+		html += '</div>';
+
+		html += '<div class="form-group" id="f-goods_qualifications_group[' + GoodsQualificationsGroupI + '][goods_qualifications_group_state]">';
+		html += '	<label class="control-label col-xs-3">状态<span class="required"> * </span></label>';
+		html += '	<div class="col-xs-6">';
+		html += '		<div class="mt-radio-inline">';
+		html += '			<label class="mt-radio mt-radio-outline">';
+		html += '             	<input type="radio" name="goods_qualifications_group[' + GoodsQualificationsGroupI + '][goods_qualifications_group_state]" id="goods_qualifications_group[' + GoodsQualificationsGroupI + '][goods_qualifications_group_state]" class="form-control" placeholder="请填写状态" value="0">锁定';
+		html += '             	<span></span>';
+		html += '           	</label>';
+		html += '           	<label class="mt-radio mt-radio-outline">';
+		html += '             	<input type="radio" name="goods_qualifications_group[' + GoodsQualificationsGroupI + '][goods_qualifications_group_state]" id="goods_qualifications_group[' + GoodsQualificationsGroupI + '][goods_qualifications_group_state]" class="form-control" placeholder="请填写状态" value="1">正常';
+		html += '             	<span></span>';
+		html += '           	</label>';
+		html += '        </div>';
+		html += '    </div>';
+		html += '</div>';
+
+		html += '<div class="form-group" id="f-">';
+		html += '	<label class="control-label col-xs-3">&nbsp;</label>';
+		html += '	<div class="col-xs-6">';
+		html += '		<button type="button" class="btn btn-danger btn-50px delGoodsQualificationsGroup">删除</button>';
+		html += '	</div>';
+		html += '</div>';
+
+		html +='<hr style="border-top: 1px solid #883636;"></div>';
+
+		GoodsQualificationsGroupI++;
+		$(this).closest('.form-group').before(html);
+	});
+	$(document).on('click','.delGoodsQualificationsGroup',function(){
+		if ( confirm('确定删除该资质吗？') ) {
+			$(this).closest('.GoodsQualificationsGroup').remove();
+		}
+	});
+</script>
+{/block}

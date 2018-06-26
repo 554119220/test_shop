@@ -1,0 +1,37 @@
+<div class="container-fluid bg_white pd15">
+    <div class="row mg0">
+        <div class="col-xs-9">
+            <div style="width:210px">
+                <a href="{:domain('www')}" ><img class="pull-left" width="140" src="{:getImagesDomain(config('site.site')['shop_logo'])}"></a>
+            </div>
+            <div class="pull-left ml40">
+                <a  class="pl25 pr15 color333 fs14 fl line32" href="/">商家首页</a>
+
+                <div class="btn-group pr15 fs14 color333 fl">
+                    <a class="btn btn-default dropdown-toggle bor_no" data-toggle="dropdown" href="javascript:;" aria-expanded="false">店铺设置
+                        <i class="fa fa-angle-down"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="/setting/index"> 店铺设置 </a>
+                        </li>
+                        <li>
+                            <a href="/setting/domain"> 域名设置 </a>
+                        </li>
+                    </ul>
+                </div>
+                <a class="pl10 pr15 color333 fs14 fl line32" href="/goods">商品管理</a>
+                <a class="pl10 pr15 color333 fs14 fl line32" href="/category">店铺分类</a>
+            </div>
+        </div>
+        <div class="col-xs-3 input-group  radius4px border-red over hide">
+            <div class="input-icon">
+                <i class="icon-pencil"></i>
+                <input class="form-control bor_no" type="text" placeholder="请输入店铺/商品的搜索关键字">
+            </div>
+            <span class="input-group-btn">
+                <button id="genpassword" class="btn red" type="button">搜索</button>
+            </span>
+        </div>
+    </div>
+</div>

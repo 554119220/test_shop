@@ -1,0 +1,94 @@
+{extend name="public:base" /}
+
+{block name="page"}
+<!-- 标题栏 -->
+    <header class="bar bar-nav bbai">
+        <a class="l_return back"><img class="main100" src="/static/wap/images/reg/l_return1.png"></a>
+        <h1 class="title">扩展信息设置</h1>
+    </header>
+    <!-- 这里是页面内容区 -->
+    <div class="content">
+        <div class="list-block">
+            <form id="user_extend">
+                <input type="hidden" value={$headers0} id="headers0">
+                <input type="hidden" value={$headers1} id="headers1">
+                <input type="hidden" value="{php}echo implode(",", $detail['user_category'] ?? []);{/php}" id="have-category">
+                <ul>
+                    <!-- 生日 -->
+                    <li>
+                        <div class="item-content">
+                          <div class="item-media"><i class="icon icon-form-calendar"></i></div>
+                            <div class="item-inner">
+                                <div class="item-title label">生日</div>
+                                <div class="item-input">
+                                    <input id="birthday" name="user_birthday" type="text" placeholder="选择生日" minDate="1950-01-01" maxDate="{:date('Y-m-d')}" value="{$detail.user_birthday|default=''}">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <!-- 性别 -->
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon icon-form-gender"></i></div>
+                            <div class="item-inner">
+                                <div class="item-title label">性别</div>
+                                <div class="item-input">
+                                    <select name="user_sex">
+                                        {foreach name="userSex" item="value" key="key"}
+                                            <option value="{$key}" {if condition="$key eq ($detail['user_sex'] ?? '')"}selected{/if}>{$value}</option>
+                                        {/foreach}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <!-- 身份 -->
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon icon-form-gender"></i></div>
+                            <div class="item-inner">
+                                <div class="item-title label">身份</div>
+                                <div class="item-input">
+                                    <select name="user_type">
+                                        {foreach name="userType" item="value" key="key"}
+                                            <option value="{$key}" {if condition="$key eq ($detail['user_type'] ?? '')"}selected{/if}>{$value}</option>
+                                        {/foreach}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <!-- 爱好 -->
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon icon-form-gender"></i></div>
+                            <div class="item-inner">
+                                <div class="item-title label">偏好选择</div>
+                                <div class="item-input select-category">
+                                    <span class="select-category-span">
+                                        {php}echo count($detail['user_category'] ?? []) > 0 ? '已选' . count($detail['user_category']) . '个' : '点击选择';{/php}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </form>
+        </div>
+        <div class="content-block">
+            <div class="row">
+                <div class="col-100"><a href="#" id="save_extend" class="button button-big button-fill button-danger">保存</a></div>
+            </div>
+        </div>
+    </div>
+    <!-- 选择类目 -->
+    <div class="popup popup-about">
+        <div class="content-block">
+            <p class="close-select-category" style="margin:0.5rem"><a href="#" class="pull-right">确定</a></p><br>
+            <div class="user-extend-category">
+                <user-extend-category></user-extend-category>
+            </div>
+            
+        </div>
+    </div>
+{/block}

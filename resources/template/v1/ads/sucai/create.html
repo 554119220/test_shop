@@ -1,0 +1,106 @@
+{extend name="public:base"}{/extend}
+{block name="content"}
+<style>
+    .error{
+        color:red;
+    }
+</style>
+<div class="container-fluid bg_white pd15 pb0 ">
+    <input class="upload-file" style="display: none;" id="upload-images-base-new" type="file" onchange="uploadImagesBaseNew();">
+    <div class="container">
+        <form id="form_sample_1" class="form-horizontal" onsubmit="return false">
+        <div class="main100 bg_white pl15 pr15  radius4px">
+            <div class="main100 mb10 fs12 pt15">素材标题<span class="color-red1">*</span></div>
+            <div class="main100">
+                <input placeholder="请输入素材标题" type="text" name="ads_sucai_name" class="main100 radius4px container-fluid line32 bor_img h34  mb10" value="">
+            </div>
+            <div class="main100 mb10 fs12 hide">长度<span class="color-red1">*</span></div>
+            <div class="main100">
+                <input placeholder="请输入长度" type="hidden" name="ads_sucai_width" class="main100 radius4px container-fluid line32 bor_img h34  mb10 width">
+            </div>
+            <div class="main100 mb10 fs12 hide">高度<span class="color-red1">*</span></div>
+            <div class="main100">
+                <input placeholder="请输入高度" type="hidden" name="ads_sucai_height" class="main100 radius4px container-fluid line32 bor_img h34  mb10 height">
+            </div>
+            <div class="main100 mb10 fs12 ">素材图片<span class="color-red1">(尺寸支持：{volist name="res" id="val"}{php}echo $val[0].'*'.$val[1];{/php}&nbsp;{/volist})*</span></div>
+            <!-- <a class="btn text_white bg-red-thunderbird radius4px pd6 pl25 pr25 mb10">选择图片</a> -->
+            <div class="btn text_white bg-red-thunderbird radius4px mb10 re over"   onclick="triggerUploadImagesNew({imgEle:'.ads_sucai_images_img',valueEle:'.ads_sucai_images',zoomEle:'.ads_sucai_images-href',callback:function(ret) {Imageswh(ret);}})" style="width:120px;height:34px">
+                <input type="hidden" name="ads_sucai_images" value="" class="ads_sucai_images">
+                选择图片
+            </div>
+            <!--img-->
+            <div class="main100 mb20 over">
+                <a href="" class="ads_sucai_images-href image-zoom"><img class="pull-left bor_img radius4px ads_sucai_images_img" src=""></a>
+            </div>
+            <input type="hidden" name="ads_sucai_user_id" value="{$Think.session.user.user_id}">
+            <button type="submit" class="btn text_white bg-red1 radius4px pd7 pl20 mb10 pr20  fl  fs12"  style="width:120px;height:34px">保存信息</button>
+        </div>
+        </form>
+    </div>
+
+</div>
+{/block}
+
+{block name="js"}
+<script>
+    $(document).ready(function(){
+        $('select').addClass('radius4px');
+        var rules = {
+            ads_sucai_name:{required:true,minlength:3,maxlength:30},
+            ads_sucai_width:{required:true,minlength:1,maxlength:6,digits: true},
+            ads_sucai_height:{required:true,minlength:1,maxlength:6,digits: true},
+            ads_sucai_images:{required:true,},
+        };
+        var messages = {
+            ads_sucai_name:{required:'请输入素材标题',minlength:'素材标题不能少于3个字符',maxlength:'素材标题不能大于30个字符'},
+            ads_sucai_width:{required:'请输入图片宽度',minlength:'请输入图片宽度不能少于1个字符',maxlength:'请输入图片宽度不能大于6个字符',digits:'素材宽度只能是数字'},
+            ads_sucai_height:{required:'请输入图片高度',minlength:'请输入图片高度不能少于1个字符',maxlength:'请输入图片高度不能大于6个字符',digits:'素材高度只能是数字'},
+            ads_sucai_images:{required:'请上传素材图片'},
+        };
+        checkform10({
+            rules:rules,
+            header:'AdsSucai',
+            messages:messages,
+            formid:'#form_sample_1',
+            success : function (ret) {
+                if (ret.code === 20000) {
+                    success(ret.msg);
+                    //  执行跳转
+                    setTimeout(function(){
+                        window.location.href='/sucai/index';
+                    },1000);
+                } else {
+                    error(ret.msg);
+                }
+            }
+        });
+        image_zoom();
+    });
+    function image_zoom(param){
+        var tag=$('body');
+        if(param && param.obj) var tag=param.obj;
+        else if(param && param.tag) var tag=$(param.tag);
+        //console.log(tag);
+        if(tag.find('.image-zoom').size()>0){
+            tag.find('.image-zoom').magnificPopup({
+                type: 'image',
+                mainClass: 'mfp-with-zoom', // this class is for CSS animation below
+                callbacks: {
+                    elementParse: function (item) {
+                        // Function will fire for each target element
+                        // "item.el" is a target DOM element (if present)
+                        // "item.src" is a source that you may modify
+
+                        console.log(item); // Do whatever you want with "item" object
+                    }
+                }
+            });
+        }
+    }
+
+    function Imageswh(ret) {
+        $('.width').val(ret.data.w);
+        $('.height').val(ret.data.h);
+    }
+</script>
+{/block}

@@ -1,0 +1,130 @@
+{extend name="public:base" /}
+
+{block name="page"}
+<!-- 这里是页面内容区 -->
+<header class="user_head bar bar-nav bor_none">
+    <img class="logo" src="{$Think.session.user.user_avatar|default="/images/user_logo.jpg"}?imageMogr2/thumbnail/72x72!">
+    <div class="names">{$Think.session.user.user_username}</div>
+    <!--class vip 1~3代表每个等级的图标-->
+    <div class="vip vip{php}echo session('user.erpUser')['level_id']{/php}">{php} echo session('user.erpUser')['level_name'] ?? '未知';{/php}</div>
+    <div class="smain">
+        <!--<i class="xx"></i>-->
+        <a data-no-cache="true" href="/member/set"><i class="set"></i></a>
+    </div>
+</header>
+<!--积分余额-->
+<div class="user_rmb" style="display: none;">
+    <div class="s">
+        <span class="s1">积分余额</span>
+        <p class="cred">39300273244.609</p>
+    </div>
+    <div class="s">
+        <span class="s2">云积余额</span>
+        <p>39300273244.609</p>
+    </div>
+    <div class="s ss">
+        <span class="s3">现金余额</span>
+        <p>39300273244.609</p>
+    </div>
+    <div class="s ss">
+        <span class="s4">可用礼券</span>
+        <p class="cred">456498</p>
+    </div>
+</div>
+<div class="content pull-to-refresh-content s" data-ptr-distance="50">
+    {include file="public:refresh" /}
+    <!--我的账号-->
+    <div class="main100 user_user" style="padding-top:1.1rem;">
+        <div class="s">
+            <a data-no-cache="true" href="/member/account">
+                <img src="/static/wap/images/user/icon_wd_wdzh.png">
+                <div >我的账户</div>
+            </a>
+        </div>
+        <div class="s">
+            <a data-no-cache="true" href="/member/attention">
+                <img src="/static/wap/images/user/icon_wd_wdsc.png">
+                <div >我的收藏</div>
+            </a>
+        </div>
+        <div class="s">
+            <a data-no-cache="true" href="/member/coupon">
+                <img src="/static/wap/images/user/icon_wd_wdyhq8.png">
+                <div>我的优惠券</div>
+            </a>
+        </div>
+    </div>
+    <!--我的订单-->
+    <div class="main100 user_order bbai">
+        <div class="main100 title_">
+            <span class="lleft">我的订单</span>
+            <a data-no-cache="true" class="rright" href="/orders">查看全部订单>></a>
+        </div>
+        <ul class="main100">
+			<style>
+			.imgmain .hide{display:none;}
+			</style>
+            <li>
+                <a data-no-cache="true" href="/orders?state=1">
+                    <div class="imgmain">
+                        <i id="wait_pay" class="hide">0</i>
+                        <img class="s" src="/static/wap/images/user/icon_wd_dfk1.png">
+                    </div>
+                    <span class="main100">待付款</span>
+                </a>
+            </li>
+            <li>
+                <a data-no-cache="true" href="/orders?state=2">
+                    <div class="imgmain">
+                        <i id="wait_ship" class="hide">0</i>
+                        <img class="s1" src="/static/wap/images/user/icon_wd_dfh1.png">
+                    </div>
+                    <span class="main100">待发货</span>
+                </a>
+            </li>
+            <li>
+                <a data-no-cache="true" href="/orders?state=3">
+                    <div class="imgmain">
+                        <i id="wait_receive" class="hide">0</i>
+                        <img class="s2" src="/static/wap/images/user/icon_wd_dsh.png">
+                    </div>
+                    <span class="main100">待收货</span>
+                </a>
+            </li>
+            <li>
+                <a data-no-cache="true" href="/orders?state=4">
+                    <div class="imgmain">
+                        <i id="wait_comment" class="hide">0</i>
+                        <img class="s3" src="/static/wap/images/user/icon_wd_dpj2.png">
+                    </div>
+                    <span class="main100">待评价</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <ul class="main100 service_ul" style="padding: 0;">
+        <li class="bbai" style="margin: 0 0 0.3rem 0">
+            <img class="img lleft" src="/static/wap/images/cart/icon_tksh_tkz.png">
+            <span class="h666 lleft">退款中</span>
+            <i class="lleft red-b" id="wait_refund">0</i>
+            <a data-no-cache="true" class="rright s h999" href="/refund">查看全部</a>
+        </li>
+        <li class="bbai" style="margin: 0 0 0.3rem 0">
+            <img class="img lleft" src="/static/wap/images/cart/iocn_tksh_shz.png">
+            <span class="h666 lleft">售后中</span>
+            <i class="lleft red-b" id="wait_service">0</i>
+            <a data-no-cache="true" href="/service" class="rright s h999">查看全部</a>
+        </li>
+        <li class="bbai" style="margin: 0 0 0.3rem 0">
+            <img class="img lleft" src="/static/wap/images/cart/iocn_pingjia.png">
+            <span class="h666 lleft">我的评价</span>
+            <a data-no-cache="true" href="/comment" class="rright s h999">查看全部</a>
+        </li>
+    </ul>
+    <!--根据你的喜欢-->
+    <!--看你喜欢-->
+    {:widget('like/index')}
+</div>  
+
+<!-- 这里是页面内容区 end-->
+{/block}

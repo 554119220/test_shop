@@ -1,0 +1,127 @@
+{extend name="public:base" /}
+{block name="page"}
+<div class="tab_col pd10 pb0 ">
+	
+	<div class="main100 bg-white   radius4px pl15 pr15 minh595">
+        <div class="bg-white container-fluid line55 bg-white radius4px">
+            <p><i class="redicon"></i>
+            <span class="fs14 color333">修改运费模版</span></p>
+            <!-- <a href="/express/create" class="btn text_white bg-red-thunderbird radius4px pd8 pl35 pr35 mt8 fl mb20">创建运费模版</a> -->
+        </div>
+        {empty name="detail"}
+            <h3>未找到该运费模板。</h3>
+        {else/}
+            <form id="form">
+
+                <input type="hidden" name="express_id" value="{:input('express_id',0,'int')}">
+
+        		<div class="main100 radius4px over">
+                    <!-- 模板名称 -->
+                    <div class="main100 mb10 fs12 pt15">模板名称<span class="color-red1">*</span></div>
+                    <div class="main100 mb10">
+                        <input name="express_name" placeholder="请输入模板名称" class="main100 radius4px container-fluid line32 bor_img mb10" value="{$detail.express_name}"/>
+                    </div>
+                    <!-- 铭板备注 -->
+                    <div class="main100 mb10 fs12 pt15">模板备注<span class="color-red1">*</span></div>
+                    <div class="main100 mb10">
+                        <textarea name="express_remark" placeholder="请输入模板备注" class="main100 radius4px container-fluid line32 bor_img mb10">{$detail.express_remark}</textarea>
+                    </div>
+                    <!-- 选择省市 -->
+                    <div class="main100 mb10 fs12 pt15">选择省份和城市<span class="color-red1">*</span></div>
+                    <div class="main100 over mb20">
+                        <select class="form-control fl fs12 mr15 select-radius w25-20" name="express_province_id">
+                            <option value="">--请选择省份--</option>
+                            {foreach name="province" item="value"}
+                                {if condition="$value['id'] eq $detail['express_province_id']"}
+                                    <option value="{$value.id}" selected>{$value.a_name}</option>
+                                {else/}
+                                    <option value="{$value.id}">{$value.a_name}</option>
+                                {/if}
+                            {/foreach}
+                        </select>
+                        <select class="form-control fl fs12 mr15 select-radius w25-20" name="express_city_id">
+                            <option>--请选择城市--</option>
+                        </select>
+                    </div>
+                    <!-- 状态 -->
+                    <div class="main100 fs14 color666">是否包邮<span class="color-red1">*</span></div>
+                    <div class="main100 over">
+                        <div class="form-group">
+                            <div class="pull-left">
+                                <p class="pull-left mr15">
+                                    <label class="radius"><input type="radio" name="express_is_free" value="1"{eq name="detail.express_is_free" value="1"}checked{/eq}><em class="fl"></em>
+                                    <span class="small_xs ml10">是</span>
+                                </label></p>
+                                <p class="pull-left mr15">
+                                    <label class="radius"><input type="radio" name="express_is_free" value="0"{eq name="detail.express_is_free" value="0"}checked{/eq}><em class="fl"></em>
+                                    <span class="small_xs ml10">否</span>
+                                </label></p>
+                            </div>
+                        </div>
+                    </div>
+                    <a class="btn text_white bg-red-thunderbird radius4px pd7 pl25 pr25 mt13  fl mr15 fs12" id="post-data">确定修改</a>
+        		</div>
+            </form>
+        {/empty}
+	</div>
+</div>
+{/block}
+{block name="script"}
+<script type="text/javascript">
+    function selectCity(id,callback){
+        apiPost({
+            header : getHeader('headers1'),
+            data : {id : id},
+            log:true,
+            success : function (ret) {
+                if (ret.code === 20000) {
+                    var html = '<option value="">--请选择城市--</option>';
+                    for (var i in ret.data) {
+                        html += '<option value="'+ret.data[i].id+'">'+ret.data[i].a_name+'</option>'
+                    }
+                    $('select[name="express_city_id"]').html(html);
+                    if ( callback ) {
+                        callback();
+                    }
+                }
+            }
+        });
+    }
+    $(function(){
+        // 选择城市
+        $('select[name="express_province_id"]').on('change',function(){
+            var value = $(this).val();
+            if ( value == '' ) {
+                var html = '<option value="">--请选择城市--</option>';
+                $('select[name="express_city_id"]').html(html)
+            } else {
+                selectCity(value);
+            }
+        });
+        // 初始化 城市选择
+        selectCity($('select[name="express_province_id"]').val(),function(){
+            var city = '{$detail.express_city_id|default=""}';
+            $('select[name="express_city_id"]').val(city);
+        });
+        // 提交
+        $('#post-data').on('click',function(){
+            apiPost({
+                data:getFormJson('#form'),
+                header:getHeader('headers0'),
+                log:true,
+                success:function(ret){
+                    if ( ret.code == 20000 ) {
+                        success('添加成功');
+                        setTimeout(function(){
+                            window.location.href = '/express';
+                        },1000);
+                    } else {
+                        error(ret.msg);
+                    }
+                },
+            });
+        });
+    });
+    
+</script>
+{/block}

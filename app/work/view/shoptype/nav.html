@@ -1,0 +1,11 @@
+<div class="nav-title">
+	<div class="pull-right">
+		<a href="/{$Request.controller}/add" class="btn blue btn-100px btn-outline"><i class="icon-plus"></i> 新增</a>
+		<a href="javascript:;" onclick="flushCache(this)" data-url="/clearcache/flush?key=table:shop_type:list" class="btn red btn-100px btn-outline btn-flush-cache"><i class="icon-times"></i> 清除缓存</a>
+	</div>	
+	<ul>
+		<li class="active" data-baseUrl="/{$Request.controller}/index"><a href="/{$Request.controller}/index">店铺类型</a></li>
+		<li data-otherUrl="/{$Request.controller}/{$Request.action}" class="hide"><a href="{$Request.url}">[title]</a></li>
+	</ul>
+</div>
+

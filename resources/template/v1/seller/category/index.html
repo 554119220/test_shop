@@ -1,0 +1,104 @@
+{extend name="public:base" /}
+{block name="page"}
+<!-- 右边内容 -->
+<div class="tab_col pd10 pb0">
+	<div class="main100  bg-white radius4px pl15 pr15 minh595 over">
+		<div class="main100 line55 radius4px mb15 mt5 over">
+			<a class="btn text_white bg-red-thunderbird radius4px pd7 pl25 pr25 mt13  fl mr15 fs12" href="/category/create">添加类目</a>
+		</div>
+		<div class="main100 radius4px">
+            <!-- <h4 class="mt20 mb20">还没有创建店铺分类。</h4> -->
+            {empty name="list"}
+                <h4 class="mt20 mb20">还没有创建店铺分类。</h4>
+            {else/}
+    			<table class="table solid_all table_dashed tr12 table12 radius4px center" >
+                    <thead class="bg-f5">
+                        <tr>
+                            <th >分类名称</th>
+                            <th >图标</th>
+                            <th >排序</th>
+                            <th >状态</th>
+                            <th >创建时间</th>
+                            <th >操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {foreach name="list" item="value"}
+                            <tr>
+                                <td style="text-align: right;" class="w300">
+                                    <a type="button" class="btn btn-default w250 fr radius4px pd7 pl25 pr25 mt13  fl mr15 fs12">{$value.goods_category_name}</a>
+                                </td>
+                                <td><img class="w58 h58" src="{$value.goods_category_icon_url}"></td>
+                                <td >{$value.goods_category_sort}</td>
+                                <td ><span class="{eq name="value.goods_category_state" value="0"}text_red{/eq}">{$value.goods_category_state_name}</span></td>
+                                <td >
+                                    <div>{$value.goods_category_create_time}</div>
+                                </td>
+                                <td>
+                                    <a class="color-blue mr5" href="/category/update/category_id/{$value.goods_category_id}">修改</a>
+                                    <a class="color-blue mr5 del-category" data-id="{$value.goods_category_id}" href="javascript:;">删除</a>
+                                    <!-- <a class="color-blue" href="javascript:;">添加子分类</a> -->
+                                </td>
+                            </tr>
+                            {notempty name="value.child"}
+                                {foreach name="value.child" item="vo"}
+                                    <tr>
+                                        <td style="text-align: right;" class=" w300">
+                                            <a type="button" class="btn btn-default w170 fr radius4px pd7 pl25 pr25 mt13  fr mr15 fs12">{$vo.goods_category_name}</a>
+                                        </td>
+                                        <td><img class="w58 h58" src="{$vo.goods_category_icon_url}"></td>
+                                        <td >{$vo.goods_category_sort}</td>
+                                        <td ><span class="{eq name="vo.goods_category_state" value="0"}text_red{/eq}">{$vo.goods_category_state_name}</span></td>
+                                        <td >
+                                            <div>{$vo.goods_category_create_time}</div>
+                                        </td>
+                                        <td>
+                                            <a class="color-blue mr5" href="/category/update/category_id/{$vo.goods_category_id}">修改</a>
+                                            <a class="color-blue mr5 del-category" data-id="{$vo.goods_category_id}" href="javascript:;">删除</a>
+                                        </td>
+                                    </tr>
+                                {/foreach}
+                            {/notempty}
+                        <tr>
+                            <td colspan="6" style="padding: 0;" >
+                                <div class="main100 bg-f5 color-red1  line30  pb2 text-center append-btn">
+                                    <strong class="mr5 fs20"></strong>
+                                    <span class="line30 fs14">&nbsp;</span>
+                                </div>
+                            </td>
+                        </tr>
+                        {/foreach}
+    					<!---->
+                    </tbody>
+                </table>
+            {/empty}
+		</div>
+	</div>
+</div>
+{/block}
+{block name="script"}
+<script type="text/javascript">
+    $('.del-category').on('click',function(){
+        if ( confirm('确定删除级所有子分类吗？') ) {
+            var category_id = $(this).data('id');
+            apiPost({
+                data:{
+                    category_id:category_id,
+                },
+                header:getHeader('headers0'),
+                log:true,
+                success:function(ret){
+                    if ( ret.code == 20000 ) {
+                        success('删除成功');
+                        setTimeout(function(){
+                            window.location.href = '/category';
+                        },1000);
+                    } else {
+                        error(ret.msg);
+                    }
+                },
+            });
+        }
+    });
+</script>
+{/block}

@@ -1,0 +1,41 @@
+{extend name="public:base" /}
+{block name="page"}
+<div class="tab_col pd10 pb0">
+    {eq name="data.code" value="20000"}
+        <div class="container-fluid line55 bg-white radius4px">
+            <i class="redicon"></i>
+            <span class="fs14 color333 pl5">邮寄商品</span>
+        </div>
+        <div class="alert mt10 mb10 bg-red2 color-red1">温馨提示，您正在邮寄商品至买家收货地点，请仔细填写买家信息……</div>
+
+        {include file="orders:info" /}
+        <form data-redirect="/orders/detail?shop_no={$data.data.orders_shop_no}" data-header="ship">
+            <input type="hidden" name="shop_no" value="{$data.data.orders_shop_no}">
+            <div class="main100  bg-white radius4px pd15"  style="min-height: 200px;">
+                <div class="main100 mb10 fs12 mt4">快递公司<span class="color-red1">*</span></div>
+                <div class="main100 clear-after radius4px">
+                    <select name="company_id" class="form-control main20 fl fs12 mr15 select-radius radius4px bor_img"  >
+                        <option>--选择物流公司--</option>
+                        {volist name="company.data" id="vo"}
+                        <option>{$key == 1 ? '常用' : $key}</option>
+                        {volist name="vo" id="company"}
+                            <option value="{$company.company_id}">&nbsp;&nbsp;&nbsp;&nbsp;{$company.company_name}</option>
+                        {/volist}
+                        {/volist}
+                    </select>
+                </div>
+                <div class="main100 mb10 fs12 mt10">快递单号<span class="color-red1">*</span></div>
+                <div class="main100">
+                    <input name="express_no" placeholder="请输入快递单号..." class="main100 radius4px container-fluid line32 bor_img mb10">
+                </div>
+                <div class="main100 mb10 fs12 ">发货备注<span class="color-red1"></span></div>
+                <textarea class="main100 bor_img radius4px pd10 h70 mb15" name="express_remark" placeholder="请输入发货备注..."></textarea>
+                <div class="main100 mb30 fs12 color-red1 ">选填，不得超过200个字</div>
+                <div class="text-center main100  mb30">
+                    <a class="btn text_white bg-red-thunderbird radius4px pd8 pl35 pr35 btn-submit">确认邮寄</a>
+                </div>
+            </div>
+        </form>
+    {/eq}
+</div><!-- 右边内容结束 -->
+{/block}

@@ -1,0 +1,89 @@
+{extend name="public:base" /}
+{block name="page"}
+<div class="tab_col pd10 pb0">
+    <div class="container-fluid line55 bg-white radius4px mb10">
+        <i class="redicon"></i>
+        <span class="fs14 color333">退款详情</span>
+    </div>
+    {include file="refund:info" /}
+    <div class="main100  bg-white radius4px h135 over pl35 pr35 mb10">
+        <div class="main33 fl h135 text-center">
+            <div class="line50 h50 color333"></div>
+            <a href="javascript:;" class="line36 color666 radius4px bg-f5" style="padding: 10px 20px;">{$data.data.orders_refund_state_name}</a>
+        </div>
+        <div class="main33 fl h135 text-center">
+            <div class="line50 color333">物流信息</div>
+            {eq name="data.data.orders_refund_type" value="2"}
+                {notempty name="data.data.OrdersRefundAddress.express_company_id"}
+                    <a href="/refund/logistics?refund_no={$data.data.orders_refund_no}" class="line36 color666 radius4px bg-f5" style="padding: 10px 20px;">查看物流信息</a>
+                {else /}
+                    <a href="javascript:;" class="line36 color666 radius4px bg-f5" style="padding: 10px 20px;">未发货。</a>
+                {/notempty}
+            {else /}
+                <a href="javascript:;" class="line36 color666 radius4px bg-f5" style="padding: 10px 20px;">仅退款，无需发货！</a>
+            {/eq}
+        </div>
+        <div class="main33 fl h135">
+            <div class="line50 color333 w150 text-center">收货信息</div>
+            {notempty name="data.data.OrdersRefundAddress"}
+                <div class="color666">
+                    <p class="mr15">收货地址：{$data.data.OrdersRefundAddress.orders_refund_address}</p>
+                    <p class="mr15">收货人姓名：{$data.data.OrdersRefundAddress.orders_refund_name}</p>
+                    <p class="mr15">联系方式：{$data.data.OrdersRefundAddress.orders_refund_connect}</p>
+                </div>
+            {else /}
+                <div class="line50 color666 fr w150">暂无照片</div>
+            {/notempty}
+        </div>
+    </div>
+
+    <div class="main100 over ">
+        <div class="fl radius4px bg_white pd15 h250 mr10" style="width:calc(30% - 10px);">
+            <div class="main100 line30  mb5">
+                <i class="redicon mar0" ></i>
+                <span class="fs14 color333 pl5">申请信息</span>
+            </div>
+            <div class="main100 line24 color666">
+                <span class="pl15">退款单号：</span>
+                <span>{$data.data.orders_refund_no}</span>
+            </div>
+            <div class="main100 line24 color666">
+                <span class="pl15">订单编号：</span>
+                <span>{$data.data.orders_shop_no}</span>
+            </div>
+            <div class="main100 line24 color666">
+                <span class="pl15">申请时间：</span>
+                <span>{$data.data.orders_refund_create_time}</span>
+            </div>
+        </div>
+        <div id="container" class="fl radius4px bg_white pd15 h250 main70 re bg-xian"   style="overflow-y: scroll;" >
+	        <div id="samples">	
+	            <!--线-->
+	            <div class="main100 line30 mb5 pl10">
+	                <i class="redicon mar0 " ></i>
+	                <span class="fs14 color333 pl5">退款日志</span>
+	            </div>
+	            {volist name="data.data.OrdersRefundLogs" id="logs"}
+	            <div class="main100 line24 color666 {eq name="key" value="0"}color-red1{/eq} mb15 re">
+		            <i class="fl border-red-btn {eq name="key" value="0"}border-red-btn1{/eq}"></i>
+		            <span class="pl40 pr35">{$logs.refund_logs_create_time}</span>
+		            <span><b>{$logs.refund_logs_title}</b> [{$logs.refund_logs_remark}]</span>
+		        </div>
+		        {notempty name="logs.refund_logs_images"}
+		        <div class="main100 over mb10">
+		            {volist name="logs.refund_logs_images" id="images"}
+		            <div class="fl text-center" style="{eq name="key" value="0"}margin-left: 40px;{else/}margin-left: 10px;{/eq}">
+		            <a class="image-zoom" href="{$images}">
+		                <img class="radius4px" style="width:72px;" src="{$images}?imageView2/5/w/72/h/72">
+		            </a>
+			        </div>
+			        {/volist}
+			    </div>
+	    	
+			    {/notempty}
+			    {/volist}
+	        </div>
+		</div>
+</div>
+</div><!-- 右边内容结束 -->
+{/block}

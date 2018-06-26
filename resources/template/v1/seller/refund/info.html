@@ -1,0 +1,36 @@
+<div class="main100  bg-white radius4px pd15  mb10 over">
+    <div class="main100 radius4px over">
+        <table class="table solid_all  table_dashed tr12 table12  table-center" >
+            <thead class=" bg-f5 ">
+            <tr>
+                <th class="small_xs">商品信息</th>
+                <th class="small_xs">买家</th>
+                <th class="small_xs">申请数量</th>
+                <th class="small_xs">申请商品金额</th>
+                <th class="small_xs">申请运费金额</th>
+                <th class="small_xs">退款类型</th>
+                <th class="small_xs">状态</th>
+            </tr>
+            </thead>
+            <tbody >
+            <tr>
+                <td>
+                    <a class="image-zoom" href="{$data.data.OrdersGoods.goods_images}">
+                        <img class="fl radius4px mr8" style="height:72px;width:72px;" src="{:thumb($data['data']['OrdersGoods']['goods_images'], 150)}">
+                        <div class="fl pr70" style="width: calc(100% - 90px);">
+                            <div class="line20 mt4 mb6 color666 ">{$data.data.OrdersGoods.goods_name}</div>
+                            <div class="color999"><span>{$data.data.OrdersGoods.goods_sku_name}</span></div>
+                        </div>
+                    </a>
+                </td>
+                <td>{$data.data.user.user_username}</td>
+                <td>{$data.data.orders_refund_num}</td>
+                <td>{$data.data.orders_refund_amount}</td>
+                <td>{$data.data.orders_refund_express_amount}</td>
+                <td>{$data.data.orders_refund_type_name}</td>
+                <td>{$data.data.orders_refund_state_name}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

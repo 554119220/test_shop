@@ -1,0 +1,98 @@
+{extend name="public:base" /}
+{block name="page"}
+<!-- 顶部标题栏 -->
+<header class="bar bar-nav bg_white">
+    <a class="icon icon_common pull-left r12 icon_back back" style="margin-top:.6rem"></a>
+    <h1 class="title">修改评价</h1>
+</header>
+<div class="content">
+    {eq name="data.code" value="20000"}
+    <form>
+        <input type="hidden" name="id" value="{$data.data.goods_comment_id}">
+        <div class="shop_line clearfix bg_white">
+            <a data-no-cache="true" href="/goods?id={$data.data.goods_sku_id}"><img src="{$data.data.orders_goods.goods_images|thumb=176}"></a>
+            <div class="pull-left" style="border:none">
+                <div class="rtxt_line_2 rmb10 rfs12 rmt5">
+                    <a class="text_77" href="/goods?id={$data.data.goods_sku_id}">
+                        {$data.data.orders_goods.goods_name}
+                    </a>
+                </div>
+                <div class="text_99 clearfix">
+                    <span class="pull-left rfs14 text_77 mt-1">评价：</span>
+                    <div class="clearfix score_number_setr evaluation-box" style="font-size: 0.7rem">
+                        <input type="hidden" name="evaluation" value="1">
+                        <span data-id="1" class="dui dui_" style="margin-right: 0.5rem">好评</span>
+                        <span data-id="0" class="dui" style="margin-right: 0.5rem">中评</span>
+                        <span data-id="-1" class="dui" style="margin-right: 0.5rem">差评</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="textarea_set bg_white rpd10 rmb10">
+            <textarea class="form-control" rows="4" name="content" placeholder="您觉得宝贝满足您的期待了吗？可以发表您宝贵的意见…"></textarea>
+            <div class="clearfix mg5 box-images">
+                <div class="camera_input pingz">
+                    <input class="upload-file" data-input="images" type="file" onchange="uploadImages(this);">
+                </div>
+            </div>
+        </div>
+        <div class="bg_white rpd10 rfs14 text_over solid_b">
+            <span class="vertical_red"></span>
+            <span class="text_77">店铺评分</span>
+        </div>
+        <div class="rpd10 bg_white rmb10">
+            <div class="text_99 clearfix mt5">
+                <span class="pull-left rfs14 text_77 mt-1">服务态度：</span>
+                <div class="clearfix score_number_set fraction-box">
+                    <input type="hidden" name="service_fraction" value="5">
+                    <img style="width:1rem" src="/static/wap/images/icon/icon_love_a.png">
+                    <img style="width:1rem" src="/static/wap/images/icon/icon_love_a.png">
+                    <img style="width:1rem" src="/static/wap/images/icon/icon_love_a.png">
+                    <img style="width:1rem" src="/static/wap/images/icon/icon_love_a.png">
+                    <img style="width:1rem" src="/static/wap/images/icon/icon_love_a.png">
+                </div>
+            </div>
+            <div class="text_99 clearfix">
+                <span class="pull-left rfs14 text_77 mt-1">描述相符：</span>
+                <div class="clearfix score_number_set fraction-box">
+                    <input type="hidden" name="description_fraction" value="5">
+                    <img style="width:1rem" src="/static/wap/images/icon/icon_love_a.png">
+                    <img style="width:1rem" src="/static/wap/images/icon/icon_love_a.png">
+                    <img style="width:1rem" src="/static/wap/images/icon/icon_love_a.png">
+                    <img style="width:1rem" src="/static/wap/images/icon/icon_love_a.png">
+                    <img style="width:1rem" src="/static/wap/images/icon/icon_love_a.png">
+                </div>
+            </div>
+            <div class="text_99 clearfix mt5">
+                <span class="pull-left rfs14 text_77 mt-1">物流服务：</span>
+                <div class="clearfix score_number_set fraction-box">
+                    <input type="hidden" name="logistics_fraction" value="5">
+                    <img style="width:1rem" src="/static/wap/images/icon/icon_love_a.png">
+                    <img style="width:1rem" src="/static/wap/images/icon/icon_love_a.png">
+                    <img style="width:1rem" src="/static/wap/images/icon/icon_love_a.png">
+                    <img style="width:1rem" src="/static/wap/images/icon/icon_love_a.png">
+                    <img style="width:1rem" src="/static/wap/images/icon/icon_love_a.png">
+                </div>
+            </div>
+        </div>
+        <div class="bg_white rpd10 rfs14 text_over solid_b">
+            <span class="vertical_red"></span>
+            <span class="text_77">匿名评价</span>
+        </div>
+        <div class="rpd10 bg_white">
+            <p class="mg0 text_77 rfs14 camera_checkbox">
+                <span class="dui dui_"></span>
+                <input type="hidden" name="is_anonymous" value="1">
+                匿名评价
+            </p>
+        </div>
+        <input type="hidden" id="images" name="images" value="">
+        <div class="rpd10">
+            <a href="javascript:;" class="button button_strong button-fill button-danger btn-submit">修改评价</a>
+        </div>
+    </form>
+    {else /}
+    {/eq}
+</div>
+<!-- 页面内容区到此为止 -->
+{/block}

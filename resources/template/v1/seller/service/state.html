@@ -1,0 +1,21 @@
+{switch name="vo.orders_service_state"}
+    {case value="1"}
+        <div><a class="color-blue" href="/service/agree?service_no={$vo.orders_service_no}">同意售后</a></div>
+        <div><a class="color-blue" href="/service/refuse?service_no={$vo.orders_service_no}">拒绝售后</a></div>
+    {/case}
+    {case value="2"}
+
+    {/case}
+    {case value="3"}
+        <div><a class="color-blue" href="/service/receive?service_no={$vo.orders_service_no}">确认收货</a></div>
+        <div><a class="color-blue" href="/service/appeal?service_no={$vo.orders_service_no}">提起申诉</a></div>
+    {/case}
+    {case value="4"}
+        <div><a class="color-blue" href="/service/ship?service_no={$vo.orders_service_no}">邮寄商品</a></div>
+    {/case}
+    {case value="5"}{/case}
+    {case value="20"}{/case}
+    {case value="31"}{/case}
+    {case value="41"}{/case}
+    {case value="100"}{/case}
+{/switch}

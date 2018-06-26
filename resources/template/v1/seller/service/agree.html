@@ -1,0 +1,42 @@
+{extend name="public:base" /}
+{block name="page"}
+<div class="tab_col pd10 pb0">
+    <div class="container-fluid line55 bg-white radius4px mb10">
+        <i class="redicon"></i>
+        <span class="fs14 color333">同意售后</span>
+    </div>
+    <div class="alert mt10 mb10 bg-red2 color-red1 pl30">你正在操作同意售后，同意售后后需等待买家邮寄商品，请选择正确收货地址！！！</div>
+    {include file="service:info" /}
+    <form data-redirect="/service/detail?service_no={$data.data.orders_service_no}" data-header="agree" data-confirm="确定同意售后？">
+        <input type="hidden" name="service_no" value="{$data.data.orders_service_no}">
+        <div class="main100  bg-white radius4px pd15"  style="min-height: 200px;">
+            <div class="main100 mb10 fs12 mt4">收货地址<span class="color-red1">*</span></div>
+            <div class="main100 clear-after">
+                <select name="address_id" class="form-control fl fs12 mr15 select-radius radius4px bor_img"  >
+                    <option>--选择收货地址--</option>
+                    {volist name="address.data" id="vo"}
+                    <option value="{$vo.address_id}">
+                        {$vo.address_mobile},{$vo.address_name},
+                        {$vo.province_name}{$vo.city_name}{$vo.district_name}{$vo.town_name}{$vo.address_street}{$vo.address_postal_code}
+                    </option>
+                    {/volist}
+                </select>
+            </div>
+			<!--
+            <div class="main100 mb10 fs12 mt10">安全密码<span class="color-red1">*</span></div>
+            <div class="main100">
+                <input type="password" name="pay_password" placeholder="请输入安全密码..." class="main100 radius4px container-fluid line32 bor_img mb10">
+            </div>
+			-->
+            <div class="main100 mb10 fs12 ">售后备注<span class="color-red1"></span></div>
+            <textarea class="main100 bor_img radius4px pd10 h70 mb15" name="remark" placeholder="请输入售后备注..."></textarea>
+            <div class="main100 mb30 fs12 color-red1 ">选填，不得超过200个字</div>
+            {include file="public:upload" /}
+            <input type="hidden" name="images" id="images" value="" />
+            <div class="text-center main100  mb30">
+                <a class="btn text_white bg-red-thunderbird radius4px pd8 pl35 pr35 btn-submit">同意售后</a>
+            </div>
+        </div>
+    </form>
+</div><!-- 右边内容结束 -->
+{/block}

@@ -1,0 +1,42 @@
+{include file="public:header" /}
+<body>
+    <div class="page-group">
+        <!--  disable-router -->
+        <div
+                class="page"
+                id="page_{:strtolower(request()->controller())}_{:request()->action()}" data-redirect="{:request()->server('HTTP_REFERER')}"
+                {notempty name="headers"}
+                    {if condition="is_array($headers)"}
+                        {volist name="headers" id="vo"}
+                            data-headers_{$key}={$vo}
+                        {/volist}
+                    {else /}
+                        data-headers_header={$headers}
+                    {/if}
+                {/notempty}
+        >
+            {if condition="request()->noNav != 1"}
+                {include file="public:nav" /}
+            {/if}
+
+            {block name="page"}
+
+            {/block}
+        </div>
+        <div class="panel-overlay"></div>
+        {block name="page-popup"}{/block}
+        <div class="panel panel-right panel-cover panel_set panel_set_msg">
+            <div class="text_77 content rfs14 native-scroll">
+                <a href="/" class="close-panel" data-no-cache="true"><div class="rpd10 solid_b text_77">首页</div></a>
+                <a href="/cart" class="close-panel" data-no-cache="true"><div class="rpd10 solid_b text_77">购物车</div></a>
+                <a href="/member" class="close-panel" data-no-cache="true"><div class="rpd10 solid_b text_77">用户中心</div></a>
+            </div>
+        </div>
+    <!-- 侧边栏返回 -->
+    </div>
+    {include file="public:x-template" /}
+</body>
+{include file="public:footer" /}
+{block name="script"}{/block}
+</body>
+</html>

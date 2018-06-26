@@ -1,0 +1,253 @@
+textarea{
+    resize: none;
+}
+input[type=number] {  
+    -moz-appearance:textfield;  
+}  
+input[type=number]::-webkit-inner-spin-button,  
+input[type=number]::-webkit-outer-spin-button {  
+    -webkit-appearance: none !important;  
+    margin: 0;  
+} 
+
+.container{
+	width:1200px;
+}
+.mlr-5{
+	margin-left:-5px;
+	margin-right:-5px
+}
+.mlem{
+	margin-left:2em;
+}
+.initial{
+	padding-left:0;
+	padding-right:0;
+}
+.bg_f8{
+	background:#f8f8f8;
+}
+
+
+
+.business_core >a{
+	display:block;
+	height:300px;
+}
+.business_img{
+	background: #fe4c53 url(/images/index/business_img.jpg) no-repeat center;
+}
+
+.icon_right{
+	margin-top: 15px;
+    border-left: 2px solid #ddd;
+    padding: 3px 15px 3px;
+}
+.page_text_h{
+	height: 110px;
+	padding-top:10px;
+    overflow: hidden;
+    line-height: 20px;
+	border-top: 1px solid #eee;
+}
+.bos_post .media,.recruit_post .media{
+	-webkit-transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    transition: all .3s ease;
+}
+.bos_post .media:hover,.recruit_post .media:hover{
+	box-shadow: 0px 0px 10px #ddd;
+	-webkit-box-shadow: 0px 0px 10px #ddd;
+	-webkit-transform: translateY(-3px);
+    transform: translateY(-3px);    
+}
+.bos_post .media:hover .media-body{
+	background:#f23e47;
+	color:white;
+}
+.bos_post .media:hover .media-body .text_muted{
+	color:#eee
+}
+
+/* 人才招聘前后翻页 */
+.back_page,.next_page{
+	display:block;
+	padding:20px;
+	height:103px;
+	transition: all .36s ease;
+}
+.back_page .icon_L {
+    float: left;
+    width: 70px;
+    height: 24px;
+    padding-left: 30px;
+    padding-right: 10px;
+    margin-top: 20px;
+    margin-right: 15px;
+    border-right: 2px solid #ddd;
+	transition: all .36s ease;
+}
+.back_page:hover,.next_page:hover{
+	background:#fc4a51;
+}
+.back_page p{
+	float:left;
+	width:350px;
+	margin-top:20px;
+	transition: all .2s ease;
+}
+.back_page:hover p{
+	width:300px;
+	color:white;
+	margin-left:0
+}
+.back_page:hover .icon_L,.next_page:hover .icon_R{
+	padding-left: 20px;
+    padding-right: 20px;
+}
+.back_page >img{
+	position:absolute;
+	right:20px;
+	opacity: 0;
+	transition: all .5s ease;
+}
+.back_page:hover >img,.next_page:hover >img{
+	opacity: 1;
+}
+.next_page .icon_R {
+    float: right;
+    width: 70px;
+    height: 22px;
+    padding-left: 10px;
+    padding-right: 30px;
+    margin-top: 20px;
+    margin-left: 15px;
+    border-left: 2px solid #ddd;
+	transition: all .36s ease;
+}
+.next_page p{
+	float:right;
+	width:350px;
+	margin-top:20px;
+	transition: all .2s ease;
+}
+.next_page:hover p{
+	width:300px;
+	color:white;
+	margin-right:0
+}
+.next_page >img{
+	position:absolute;
+	left:20px;
+	opacity: 0;
+	transition: all .36s ease;
+}
+/* 人才招聘前后翻页 结束 */
+
+ 
+
+
+
+
+
+
+/** 面包屑*/
+.title_crumbs a{
+	color:#777777;
+	display: inline-block;
+    padding-left: 30px;
+	padding-right:10px;
+    background: url(/images/index/icon/right.png) no-repeat center left;
+}
+.title_crumbs a:hover{
+	color:#d7000f;
+}
+.title_crumbs a:first-child{
+	padding-left:20px;
+	background-image: url(/images/index/icon/icon_home.png);
+}
+.title_crumbs a:last-child{
+	background-image: url(/images/index/last_right.png);
+	color:#fc4a51
+}
+
+/*  业务中心 nav */
+.business_nav .nav_title{
+	margin-top:-21px
+}
+.business_nav .nav_title .col-xs-1 >div{
+	text-align: center;
+    height: 42px;
+    line-height: 42px;
+    font-size: 16px;
+	background: #f8f8f8;
+    opacity: .85;
+	cursor: pointer;
+}
+.business_nav .nav_title .col-xs-1 >div.active{
+	background:#d7000f;
+	color:white;
+	opacity: 1;
+}
+.centent_page.active{
+	display:block
+}
+/*nav over*/
+
+/*  关于百望 nav */
+.about_top{
+	height:200px;
+	background:url(/images/index/about_top.jpg) center no-repeat
+}
+.about_nav .nav_title{
+	width:160px;
+	float:left;
+	margin-right:15px
+}
+.about_nav .nav_title li{
+	line-height: 45px;
+    font-size: 16px;
+    padding-left: 20px;
+    border-left: 2px solid #ddd;
+	cursor: pointer;
+}
+.about_nav .nav_title li.active{
+	border-left: 2px solid #fc4a51;
+	color: #fc4a51;
+}
+.about_nav .nav_title li:hover{
+	color: #fc4a51;
+}
+.about_nav .nav_centent{
+	width:1025px;
+	float:left;
+	margin-top:12px
+}
+.nav_centent .nav_page{
+	display:none
+}
+.nav_centent .nav_page.active{
+	display:block
+}
+/*  关于百望 nav over*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

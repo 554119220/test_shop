@@ -1,0 +1,63 @@
+{extend name="public:base" /}
+{block name="page"}
+<!-- 顶部标题栏 -->
+<header class="bar bar-nav bg_white">
+    <a href="/" data-no-cache="true" class="icon pull-left icon_common icon_size_22 icon_logo rml5" style="margin-top:.6rem"></a>
+    <a href="/category" data-no-cache="true" class="icon pull-right icon_common icon_size_22 icon_more_new rmr5" style="margin-top:.6rem"></a>
+    <h1 class="title home_title">
+        <div class="search-input">
+            <!-- <label class="icon icon-search" for="search"></label> -->
+            <input class="set_bg" type="search" id='search' placeholder='输入关键字搜索产品'/>
+        </div>
+    </h1>
+</header>
+
+<div class="content bg_f8 pull-to-refresh-content infinite-scroll infinite-scroll-bottom" data-ptr-distance="50" >
+    <div class="mask_page"></div>
+    {include file="public:refresh" /}
+    {:widget('channel/menu')}
+    {eq name="data.code" value="20000"}
+    <input type="hidden" name="category_id" value="{$data.data.channel_bind_category}">
+    <!--data.data.channel_result_sort-->
+    <input type="hidden" name="order" value="">
+    <input type="hidden" name="name" id="name" value="{$data.data.channel_name}">
+        {notempty name="data.data.channel_slider"}
+            <div class="bg_white swiper-index-banner pb0" data-space-between='10' style="overflow: hidden;position: relative;">
+                <div class="swiper-wrapper">
+                    {volist name="data.data.channel_slider" id="vo"}
+                        <div class="swiper-slide">
+                            <a data-no-cache="true" href="{$vo.channel_redirect|default='javascript:;'}">
+                                <img class="img_max" src="{:thumb($vo['channel_images'], 640, 250)}">
+                            </a>
+                        </div>
+                    {/volist}
+                </div>
+                <div class="swiper-pagination1 swiper-pagination"></div>
+            </div>
+        {/notempty}
+    {notempty name="data.data.GoodsCategory"}
+        {include file="channel:cates" /}
+    {/notempty}
+    <div id="tab_set">
+        <div class="goods-list-box rmt10 active goods-list-show" id="index-goods-list-{$data.data.channel_name}-0" data-page="1" data-request="1">
+            <goods-list1></goods-list1>
+            <div class="infinite-scroll-preloader">
+                <div class="preloader"></div>
+            </div>
+        </div>
+        {notempty name="data.data.GoodsCategory"}
+            {volist name="data.data.GoodsCategory" id="vo"}
+                <div class="goods-list-box rmt10 hide" id="index-goods-list-{$data.data.channel_name}-{$i}" data-page="1" data-request="1">
+                    <goods-list1></goods-list1>
+                    <!-- 加载提示符 -->
+                    <div class="infinite-scroll-preloader">
+                        <div class="preloader"></div>
+                    </div>
+                </div>
+            {/volist}
+        {/notempty}
+    </div>
+    {else /}
+    {/eq}
+</div>
+{/block}

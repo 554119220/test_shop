@@ -1,0 +1,60 @@
+{extend name="public:base" /}
+{block name="page"}
+<style>
+    .error{
+        color:red;
+    }
+</style>
+<!-- 右边内容 -->
+<div class="tab_col pd10 pb0">
+    <div class="container-fluid line55 bg-white radius4px">
+        <i class="redicon"></i>
+        <span class="fs14 color333">域名设置</span>
+    </div>
+    <div class="alert mt10 mb10 bg-red2 color-red1">温馨提示，您当前正在添加域名前缀......(https://www.lwjz.com/,前缀指的是www部分)</div>
+    <div class="main100  bg-white radius4px pd15 minh595">
+        <form action="/setting/ajaxdomain" id="form_sample_1" class="form-horizontal">
+        <input type="hidden" name="shop_id" value="{$shop.shop_id ?? ''}">
+            <div class="main100 mb10 fs12 mt4">域名前缀<span class="color-red1">*</span></div>
+            <div class="main100">
+                <input placeholder="请输入域名前缀" class="main100 radius4px container-fluid line32 h34 bor_img mb10" value="{$shop.shop_domain ?? ''}" name="shop_domain" />
+            </div>
+            <button type="submit" class="btn text_white bg-red-thunderbird radius4px pd8 pl35 pr35">保存</button>
+        </form>
+    </div>
+</div><!-- 右边内容结束 -->
+{/block}
+
+{block name="script"}
+<script src="/static/web/assets/global/plugins/jquery-validation/js/jquery.validate.min.js" type="text/javascript"></script>
+<script src="/static/js/plugins/jquery.form.js" type="text/javascript"></script>
+<script src="/static/css/metronic/assets/global/plugins/backstretch/jquery.backstretch.min.js"></script>
+<script src="/static/web/js/apps.js"></script>
+<script>
+    $(document).ready(function(){
+        var rules = {
+            shop_domain:{required:true,minlength:4,maxlength:30},
+        };
+        var messages = {
+            shop_domain:{required:'请输入域名前缀',minlength:'域名前缀不能少于4个字符',maxlength:'域名前缀不能大于30个字符'},
+        };
+        checkform10({
+            rules:rules,
+            header:'set_domain',
+            messages:messages,
+            formid:'#form_sample_1',
+            success : function (ret) {
+                if (ret.code === 20000) {
+                    success(ret.msg);
+                    //  执行跳转
+                    setTimeout(function(){
+                        window.location.href='/setting/domain';
+                    },1000);
+                } else {
+                    error(ret.msg);
+                }
+            }
+        });
+    });
+</script>
+{/block}

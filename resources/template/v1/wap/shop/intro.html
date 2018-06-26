@@ -1,0 +1,64 @@
+{extend name="public:base" /}
+
+{block name="page"}
+<!-- 标题栏 -->
+<header class="bar bar-nav bbai">
+    <a class="l_return back"><img class="main100" src="/static/wap/images/reg/l_return1.png"></a>
+    <h1 class="title">店铺简介</h1>
+</header>
+
+
+
+<!-- 这里是页面内容区 -->
+<div class="content">
+    <div class="main100 ">
+
+        <div class="main100 bbai line50 cart_title m5px pad075">
+            <img class="shop-logo1" style="margin-top:15px; width: 18px;" src="{$shop.data.shop_logo}?imageMogr2/thumbnail/25x25">
+            <span class="shop-title f7 h333 ">{$shop.data.shop_type_name}</span>
+        </div>
+
+        <div class="bbai main100 m5px pad5-75">
+            <div class="bbai main100 ">
+                <span class="fl f7 line34" style="width:3.5rem;">综合评分</span>
+                <span class="fl f7 line34 yellow">{$shop.data.shop_synthesis_fraction}</span>
+            </div>
+            <div class="bbai main100 ">
+                <span class="fl f7 line34" style="width:3.5rem;">所在地</span>
+                <span class="fl f7 line34" >{$shop.data.province_name}&nbsp;{$shop.data.city_name}</span>
+            </div>
+        </div>
+
+        <div class="bbai main100 m5px pad5-75">
+            <div class="bbai main100 ">
+                <span class="fl f7 line34" style="width:3.5rem;">描述相关</span>
+                <span class="fl f7 line34 yellow">{$shop.data.shop_description_fraction}</span>
+            </div>
+            <div class="bbai main100 ">
+                <span class="fl f7 line34" style="width:3.5rem;">服务态度</span>
+                <span class="fl f7 line34 yellow">{$shop.data.shop_service_fraction}</span>
+            </div>
+            <div class="bbai main100 ">
+                <span class="fl f7 line34" style="width:3.5rem;">物流服务</span>
+                <span class="fl f7 line34 yellow">{$shop.data.shop_logistics_fraction}</span>
+            </div>
+        </div>
+
+        <div class="bbai main100 m5px pad5-75">
+            <div class="bbai main100 ">
+                <span class="fl f7 line34" style="width:3.5rem;">掌柜名</span>
+                <span class="fl f7 line34" >{$shop.data.shop_name}</span>
+            </div>
+            <div class="bbai main100 ">
+                <span class="fl f7 line34" style="width:3.5rem;">服务电话</span>
+                <span class="fl f7 line34" >{$shop.data.shop_mobile}</span>
+            </div>
+            {neq name="shop.data.shop_id" value="1"}
+            <div class="bbai main100 ">
+                <span class="f7 line34" style="width:3.5rem;"><a href="/shop/businesslicense?id={$shop.data.shop_id}"> 查看营业执照</a></span>
+            </div>
+            {/neq}
+        </div>
+    </div>
+</div>
+{/block}

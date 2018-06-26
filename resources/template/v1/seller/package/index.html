@@ -1,0 +1,68 @@
+{extend name="public:base" /}
+
+{block name="page"}
+<div class="tab_col pd10 pb0 ">
+	<div class="main100 over bg_white">
+		<div class="container-fluid line55 bg-white radius4px mb20">
+			<i class="redicon"></i>
+			<span class="fs14 color333 pl5">包装模板</span>
+			<a href="/package/create" class="btn text_white bg-red1 radius4px pd7 pl20 pr20 mt13 fr ml15 fs12">创建模版</a>
+		</div>
+		<div class="main100  bg-white radius4px pl15 pr15 minh595">
+			<table class="table solid_all  table_dashed tr12 table12">
+                <thead class="bg-f5">
+                    <tr>
+                        <th class="small_xs ">名称</th>
+                        <th class="small_xs ">创建时间</th>
+                        <th class="small_xs ">模板介绍</th>
+                        <th class="small_xs fr mr30">操作</th>
+                    </tr>
+                </thead>
+                <tbody class="goods-list">
+                	{notempty name="Package"}
+	                	{foreach name="Package" key="key" item="value"}
+	                    <tr>
+	                        <td>{$value.package_name}</td>
+	                        <td>{$value.package_create_time}</td>
+	                        <td>{$value.package_intro}</td>
+	                        <td>
+	                        	<a data-id="{$value.package_id}" class="deleteTpl fr color-blue"><span class="ml15 mr15 color999">|</span>删除</a>
+	                        	<a href="/package/edit/package_id/{$value.package_id}" class="fr color-blue ">修改</a>
+	                        </td>
+	                    </tr>
+	                    {/foreach}
+	                {else/}
+	                	<tr><td colspan="4"><h4>未创建模板。</h4></td></tr>
+                    {/notempty}
+                </tbody>
+            </table>
+		</div>
+	</div>
+</div>
+{/block}
+{block name="script"}
+<script type="text/javascript">
+	$('.deleteTpl').on('click',function(){
+		if ( confirm('确定删除吗？') ) {
+			var id = $(this).data('id');
+			apiPost({
+				data:{
+					package_id:id,
+				},
+				header:getHeader('headers0'),
+				log:true,
+				success:function(ret){
+					if ( ret.code == 20000 ) {
+						success('删除成功');
+						setTimeout(function(){
+							window.location.href = '/package';
+						},1000);
+					} else {
+						error(ret.msg);
+					}
+				},
+			});
+		}
+	});
+</script>
+{/block}

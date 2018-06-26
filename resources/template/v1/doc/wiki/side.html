@@ -1,0 +1,19 @@
+{volist name="data" id="vo"}
+    <h4>{$vo.title}</h4>
+        {notempty name="vo.child"}
+            {volist name="vo.child" id="child"}
+                <dl>
+                    <dt>
+                        <a href="javascript:;" class="list-plus-a"><span class="list-plus">＋</span>{$child.name}</a>
+                    </dt>
+                    {notempty name="child.methods"}
+                        {volist name="child.methods" id="m"}
+                            <dd class="hide">
+                                <a data-route="{$m.route}" href="/wiki?route={$m.route}" class="active">{$m.name}</a>
+                            </dd>
+                        {/volist}
+                    {/notempty}
+                </dl>
+            {/volist}
+        {/notempty}
+{/volist}

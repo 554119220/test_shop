@@ -1,0 +1,33 @@
+<div class="order_shop">
+    <span class="lleft">&nbsp;</span>
+    <a data-no-cache="true" href="/service/detail?orders_service_no={$vo.orders_service_no}" class="red-b btn rright">查看详情</a>
+    {switch name="vo.orders_service_state"}
+        {case value="1"}
+            <a data-no="{$vo.orders_service_no}" href="javascript:;" class="rright h999 btn-cancel-service">取消售后</a>
+        {/case}
+        {case value="2"}
+            <a data-no="{$vo.orders_service_no}" href="javascript:;" class="rright h999 btn-cancel-service">取消售后</a>
+            <a data-no-cache="true" data-no="{$vo.orders_service_no}" href="/service/ship?orders_service_no={$vo.orders_service_no}" class="rright h999">邮寄商品</a>
+        {/case}
+        {case value="3"}
+            <a data-no="{$vo.orders_service_no}" href="javascript:;" class="rright h999 btn-cancel-service">取消售后</a>
+        {/case}
+        {case value="4"}
+            <a data-no="{$vo.orders_service_no}" href="javascript:;" class="rright h999 btn-cancel-service">取消售后</a>
+            <a data-no-cache="true" data-no="{$vo.orders_service_no}" href="/service/ship?orders_service_no={$vo.orders_service_no}" class="rright h999">提起申诉</a>
+        {/case}
+        {case value="5"}
+            <a data-no="{$vo.orders_service_no}" href="javascript:;" class="rright h999 btn-cancel-service">取消售后</a>
+            <a data-no="{$vo.orders_service_no}" href="javascript:;" class="rright h999 btn-receive-service">确认收货</a>
+        {/case}
+        {case value="31"}
+            <a data-no="{$vo.orders_service_no}" href="javascript:;" class="rright h999 btn-cancel-service">取消售后</a>
+        {/case}
+        {case value="41"}
+            <a data-no="{$vo.orders_service_no}" href="javascript:;" class="rright h999 btn-cancel-service">取消售后</a>
+            <a data-no-cache="true" data-no="{$vo.orders_service_no}" href="/service/edit?orders_service_no={$vo.orders_service_no}" class="rright h999">修改售后</a>
+            <a data-no-cache="true" data-no="{$vo.orders_service_no}" href="/service/appeal?orders_service_no={$vo.orders_service_no}" class="rright h999">提起申诉</a>
+        {/case}
+        {default /}
+    {/switch}
+</div>

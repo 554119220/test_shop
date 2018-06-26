@@ -1,0 +1,33 @@
+{extend name="public:base"}{/extend}
+{block name="content"}
+
+<div class="container-fluid bg_white">
+	<div class="container text-center" style="height: 700px;">
+		<h3 class="">{$msg}</h3>
+		<a type="button" class="btn red text_white pd7 pl25 pr25 mt13 mb15 fs12" href="javascript:window.history.go(-1);">返回</a>
+		<br>
+	</div>
+	<!-- <hr> -->
+	
+</div>
+{/block}
+{block name="js"}
+<script type="text/javascript">
+	$(function(){
+		// 日历
+		$('#calendar-list tbody td').on('click', function(){
+			// 已被使用 过期 今天 都不能选
+			if( ! $(this).hasClass('isuse') && ! $(this).hasClass('expire') && ! $(this).hasClass('today') && $(this).hasClass('hover') ){
+				if($(this).hasClass('active')){
+					$(this).removeClass('active');
+				}else{
+					$(this).addClass('active');
+				}
+			}
+		});
+		
+		
+		
+	});
+</script>
+{/block}

@@ -1,0 +1,61 @@
+.container .topSearch {
+	height: 50px;
+	width: 100%;
+	position: relative;
+	overflow: hidden;
+}
+.container .topSearch .location {
+	font-size: 14px;
+	float: left;
+	width: 65px;
+	background-image: url(../Images/dot_down.png);
+	background-repeat: no-repeat;
+	background-position: 50px center;
+	text-align: left;
+	text-indent: 5px;
+	color: #FFF;
+	height: 50px;
+	line-height: 50px;
+}
+.container .topSearch .search {
+	height: 40px;
+	line-height: 40px;
+	width: auto;
+	margin-left: 60px;
+	margin-right: 60px;
+	background-color: #FFF;
+	border-radius: 20px;
+	margin-top: 5px;
+	opacity: 0.98;
+}
+.container .topSearch .search .searchInput #keywords {
+	width: 80%;
+    margin-left: 6%;
+    height: 30px;
+    border: 1px solid #FFF;
+    float: left;
+    margin-top: 2px;
+    text-align: center;
+    outline: none;
+}
+.container .topSearch .search .searchInput {
+	width: auto;
+	margin-right: 36px;
+}
+.container .topSearch .search .searchSub {
+	float: right;
+	margin-top: 3px;
+	margin-right:10px;
+}
+.container .message {
+	font-size: 12px;
+	float: right;
+	width: 50px;
+	text-align: center;
+	color: #FFF;
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	margin-top: 3px;
+}
+.container .topSearch .cloud{ position:absolute; top:0px; left:40px; display:inline-block; overflow:hidden;}

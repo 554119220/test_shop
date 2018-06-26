@@ -1,0 +1,320 @@
+{extend name="public2:base" /}
+{block name="nav"}
+{include file="public2:nav2" /}
+{/block}
+{block name="content"}
+<!-- 页面主体内容 -->
+<!-- 页面主体内容 -->
+<div class="tab_row mb10">
+
+    <div class="tab_col pt10">
+        <div class="main pl25 pr25 line40 bg-white mb10">
+            <i class="redicon mar0" ></i>
+            <span class="fs14 color333 pl5">选择经营类型(入驻时请选择一级，二级类目，开店成功发布产品时可选三级类目)</span>
+        </div>
+        <div class="main100 bg_white pl25 pr25 pb25">
+            <form role="form" action="{:url('choice/qualifications')}" onsubmit="return false;" method="post">
+            <div class="main100 radius4px over">
+
+                <div class="main100 line50  over">
+                    <div class="fl  fs14 text_red">
+                        经营品牌及类目(允许使用{$shopdetail.shop_band_num}个品牌，{$shopdetail.shop_category_one_num}个一级类目，{$shopdetail.shop_category_two_num}个二级类目)
+                    </div>
+                </div>
+                <div class="solid_all radius4px">
+                    <table class="table   table_dashed tr12 table12  table-center mb0" >
+                    <thead class=" bg-f5 ">
+                    <tr>
+                        <th class="small_xs ">序列</th>
+                        <th class="small_xs ">选择品牌</th>
+                        <th class="small_xs ">经营类目</th>
+                        <th class="small_xs "></th>
+                    </tr>
+                    </thead>
+                    <tbody class="td-pd14">
+                    {for start="1" end="$shopdetail.shop_band_num+1" name="i" }
+                    <tr>
+                        <td>{$i}</td>
+                        <td>
+                            <input type="text" placeholder="请输入品牌名称" name="brand[{$i}][name]" value="{php}echo $shop['shop_settled_content']['brand'][$i-1]['name'] ?? '';{/php}" class="h36 radius4px color999 bor-f5 plr10 w200 text-center">
+                        </td>
+                        {eq name="i" value="1"}
+                        <td class="hiddens{$i}" rowspan="{$shopdetail.shop_band_num}">
+                            {notempty name="shop.shop_settled_content.category_two"}
+                            {for start="1" end="$countcategory+1" name="ii" }
+                            {egt name="$shopdetail.shop_category_two_num" value="$ii"}
+                            <div class="alert alert_defelt_set re" style="padding: 0;margin-bottom: 5px;" role="alert">
+                                <button type="button" class="close ab" style="    right: 5px;top: 5px;" data-dismiss="alert" aria-hidden="true">×</button>{php}echo $shop['shop_settled_content']['category_one_name'][$ii-1];{/php} &gt; {php}echo $shop['shop_settled_content']['category_two_name'][$ii-1];{/php}
+                                <input type="hidden" class="category_one" name="category_one[]" value="{php}echo $shop['shop_settled_content']['category_one'][$ii-1];{/php}">
+                                <input type="hidden" class="category_two" name="category_two[]" value="{php}echo $shop['shop_settled_content']['category_two'][$ii-1];{/php}">
+                                <input type="hidden" class="category_one_name" name="category_one_name[]" value="{php}echo $shop['shop_settled_content']['category_one_name'][$ii-1];{/php}">
+                                <input type="hidden" class="category_two_name" name="category_two_name[]" value="{php}echo $shop['shop_settled_content']['category_two_name'][$ii-1];{/php}">
+                            </div>
+                            {/egt}
+                            {/for}
+                            {/notempty}
+                        </td>
+                        <td  rowspan="{$shopdetail.shop_band_num}">
+                            <a class="btn text_white bg-red1 radius4px pd8 pl20 pr20  fl  fs12 red-action class-tog xuanzhe data-t{$i}" data="{$i}" data-t="0">选择类目</a>
+                        </td>
+                        <!--弹窗-->
+                        <div class="bg-000-f bg-000-f{$i}" style="z-index: 5;">
+                            <div class="radius4px bg_white over ab pb20" style="height:385px;width:760px; left:calc(50% - 380px);top:calc(50% - 190px)">
+                                <div class="main pl20 pr20 dashed-bot line45 bg-white ">
+                                    <i class="redicon mar0"></i>
+                                    <span class="fs14 color333 pl5">选择经营类目(入驻时请选择一级，二级类目，开店成功发布产品时可选三级类目)</span>
+                                    <img src="/static/web/images/shop/icon_tcgb.png" class="fr mt14 btn-x cursor">
+                                </div>
+                                <div class="main100 pl20 pr20 mb10 over">
+                                    <div class="w240 over fl" >
+                                        <div class="color333 line36 mt4">一级类目</div>
+                                        <ul class="nav-ul scroll-y h220 main100 class-active bor-f5 class-active-one class-active{$i}" id="list{$i}" data-one="0" title="">
+
+                                        </ul>
+                                    </div>
+                                    <div class="w240 over fl" >
+                                        <div class="color333 line36 mt4">二级类目</div>
+                                        <ul class="nav-ul scroll-y h220 main100 class-active  bor-f5 class-active-two class-active{$i}" id="list_two{$i}" data-two="0"  title="">
+
+                                        </ul>
+                                    </div>
+                                    <div class="w240 over fl" >
+                                        <div class="color333 line36 mt4">三级类目</div>
+                                        <ul class="nav-ul scroll-y h220 main100 class-active  bor-f5 class-active{$i}" id="list_two2{$i}" data-two="0"  title="">
+
+                                        </ul>
+                                    </div>
+                                </div>
+                                <a class="btn text_white bg-red1 radius4px pd8 pl20 pr20 w100 ml20 fl  fs12 red-action class-btn" data="{$i}">确定</a>
+                            </div>
+                        </div>
+                        {/eq}
+                    </tr>
+                    {/for}
+                    </tbody>
+                </table>
+                </div>
+            </div>
+                <div class="main100 color-red1 mb10 mt10">已选择一级类目 <span class="category_one_nums">0</span> 个，二级类目 <span class="category_two_nums">0</span> 个</div>
+                {present name="shopdetail.shop_introduce"}
+                <div class="bor-f5 over radius4px pd15 mb15">
+                    <div class="over main100 color666 line20">
+                        {$shopdetail.shop_introduce}
+                    </div>
+                </div>
+                {/present}
+            <div class="main100 over mb20 mt20">
+                    <input type="hidden" name="step" value="step_brand_category">
+                    <input type="hidden" name="user_id" value="{$Think.session.user.user_id}">
+                    <button type="submit" class="btn color666 bg-f5 radius4px pd7 pl20 pr20  fl  fs12 red-action text_white btn-submit3">下一步</button>
+            </div>
+            </form>
+        </div>
+
+    </div><!-- 右边内容结束 -->
+</div><!-- 页面主体内容结束 -->
+{/block}
+{block name="js"}
+<script>
+    $(document).ready(function(){
+        $(".btn-submit3").click(function () {
+            var parent  = $(this).closest('form');
+            var data    = parent.data();
+            if (data.confirm !== undefined) {
+                if (confirm(data.confirm) === false) return;
+            }
+            var params  = {
+                header : getHeader('record_step'),
+                data : getForm(parent),
+                success : function (ret) {
+                    if (ret.code === 20000) {
+                        success(ret.msg);
+                        //  执行跳转
+                        window.location.href = '/shopupdate/qualifications';
+                    } else {
+                        error(ret.msg);
+                    }
+                }
+            };
+            apiPost(params);
+        });
+
+        $('.category_one_nums').html($('.category_one').length);
+        $('.category_two_nums').html($('.category_two').length);
+
+    });
+
+    $(document).on('click','.xuanzhe',function(){
+        var n=$('.class-tog').index(this);
+        var m = $(this).attr('data');
+        //这里请求接口获取数据
+        $('.bg-000-f'+m).show();
+        //if($(this).attr('data-t') == 0){
+            var params = {
+                header : getHeader('goodscategory'),
+                success : function (ret) {
+                    var html = '';
+                    if (ret.code === 20000) {
+                        for (var i in ret.data) {
+                            html += '<li class="line28 color666 pl10" data="'+ret.data[i].category_id+'" m="'+m+'">'+ret.data[i].category_name+'</li>';
+                        }
+                        $('.data-t'+m).attr('data-t',1);
+                        $("#list"+m).html(html);
+                        $("#list_two"+m).html('');
+                    }
+                }
+            };
+            apiPost(params);
+        //}
+    });
+    $(document).on('click','.class-active-one li',function(){
+        $(this).parent().find('li').removeClass('active');
+        $(this).parent().attr('title',$(this).text());
+        $(this).parent().attr('data-one',$(this).attr('data'));
+        $(this).addClass('active');
+        var id = $(this).attr('data');
+        //这里请求接口
+        var n=$(this).parent().attr('id');
+        var m = $(this).attr('m');
+        $("#list_two2"+m).html('');
+        //这里请求接口获取数据
+        var params = {
+            header : getHeader('goodscategory'),
+            data   : {category_id : id},
+            success : function (ret) {
+                var html = '';
+                if (ret.code === 20000) {
+                    for (var i in ret.data) {
+                        html += '<li class="line28 color666 pl10" data="'+ret.data[i].category_id+'"  m="'+m+'">'+ret.data[i].category_name+'</li>';
+                    }
+                    $("#list_two"+m).html(html);
+                    $("#list_two"+m).attr('title','');
+                }
+            }
+        };
+        apiPost(params);
+        $('.bg-000-f'+m).eq(n).show();
+        if(n=='list'+m){
+            $('.class-active').eq(1).attr('title','');
+            $('.class-active').eq(1).find('li').removeClass('active');
+        }
+    });
+
+    $(document).on('click','.class-active-two li',function(){
+        $(this).parent().find('li').removeClass('active');
+        $(this).parent().attr('title',$(this).text());
+        $(this).parent().attr('data-two',$(this).attr('data'));
+        $(this).addClass('active');
+        var n=$(this).parent().attr('id');
+        var m = $(this).attr('m');
+        var id = $(this).attr('data');
+        //这里请求接口
+        var n=$(this).parent().attr('id');
+        var m = $(this).attr('m');
+        //这里请求接口获取数据
+        var params = {
+            header : getHeader('goodscategory'),
+            data   : {category_id : id},
+            success : function (ret) {
+                var html = '';
+                if (ret.code === 20000) {
+                    for (var i in ret.data) {
+                        html += '<li class="line28 color666 pl10" data="'+ret.data[i].category_id+'"  m="'+m+'">'+ret.data[i].category_name+'</li>';
+                    }
+                    $("#list_two2"+m).html(html);
+                    $("#list_two2"+m).attr('title','');
+                }
+            }
+        };
+        apiPost(params);
+        if(n=='list'+m){
+            $('.class-active').eq(1).attr('title','');
+            $('.class-active').eq(1).find('li').removeClass('active');
+        }
+    });
+
+    $(document).on('click','.class-btn',function(){
+        var n=$('.class-btn').index(this);
+        var category_one_num = '{$shopdetail.shop_category_one_num}';
+        var category_two_num = '{$shopdetail.shop_category_two_num}';
+        var ss = $('.category_one');
+        var one_s = $('.class-active-one').attr('data-one');
+        var nn = new Array();
+        var cl = false;
+        for(var i= 0; i < ss.length; i++){
+            nn[i] = ss[i].value;
+            if(one_s == ss[i].value){
+                cl = true;
+            }
+        }
+        var dd = unique(nn);
+        var cl_l = dd.length;
+        if(!cl){
+            cl_l = parseInt(cl_l) + parseInt(1);
+        }
+//        if(cl_l > parseInt(category_one_num)){
+//            error('您最多只能选择'+category_one_num+'个一级级分类');
+//            return false;
+//        }
+        if($('.category_two').length >= parseInt(category_two_num)){
+            error('您最多只能选择'+category_two_num+'个二级分类');
+            return false;
+        }
+        var m = $(this).attr('data');
+        if($('.class-active'+m).eq(0).attr('title') == ''){
+            error('请选择一级类目！');
+            return false;
+        }
+        if($('.class-active'+m).eq(1).attr('title') == ''){
+            error('请选择二级类目！');
+            return false;
+        }
+        var is_repeat = true;
+        $("input[name='category_two[]']").each(function(index,item){
+            if($('.class-active'+m).eq(1).attr('data-two') == $(this).val()){
+                is_repeat =  false;
+            }
+         }
+        );
+        if(!is_repeat){
+            error('该二级分类已经选择，请勿重复选择！');
+            return false;
+        }
+        var html = '<div class="alert alert_defelt_set" style="padding: 0;margin-bottom: 5px;" role="alert"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>'+$('.class-active'+m).eq(0).attr('title')+' > '+$('.class-active'+m).eq(1).attr('title');
+        var cunzai = true;
+        $("input[name='category_one[]']").each(function(index,item){
+            if($('.class-active'+m).eq(0).attr('data-one') == $(this).val()){
+                cunzai = false;
+            }
+        });
+        //if(cunzai){
+            html += '<input type="hidden" class="category_one" name="category_one[]" value="'+$('.class-active'+m).eq(0).attr('data-one')+'" />';
+        html += '<input type="hidden" class="category_one_name" name="category_one_name[]" value="'+$('.class-active'+m).eq(0).attr('title')+'" />';
+        html += '<input type="hidden" class="category_two_name" name="category_two_name[]" value="'+$('.class-active'+m).eq(1).attr('title')+'" />';
+        //}
+        html += '<input type="hidden" class="category_two" name="category_two[]" value="'+$('.class-active'+m).eq(1).attr('data-two')+'" />';
+        html += '</div>';
+        $('.hiddens'+m).append(html);
+        $('.category_one_nums').html(dd.length);
+        $('.category_two_nums').html($('.category_two').length);
+        $('.bg-000-f').hide();
+
+        //$('#class-text'+m).val($('.class-active'+m).eq(0).attr('title')+' > '+$('.class-active'+m).eq(1).attr('title'));
+    });
+    $(document).on('click','.btn-x',function(){
+        var n=$('.btn-x').index(this);
+        $('.bg-000-f').eq(n).hide();
+    });
+
+    function unique(arr) {
+        var result = [], hash = {};
+        for (var i = 0, elem; (elem = arr[i]) != null; i++) {
+            if (!hash[elem]) {
+                result.push(elem);
+                hash[elem] = true;
+            }
+        }
+        return result;
+    }
+</script>
+{/block}

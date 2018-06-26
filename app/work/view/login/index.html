@@ -1,0 +1,141 @@
+{extend name="public:base" /}
+<!--导航-->
+
+<!--主体内容-->
+{block name="content"}
+<form class="form-horizontal" id="form-login" action="/login/checkLogin" onsubmit="return sendForm($(this))">
+	<div class="login-box">
+		<div class="portlet light ">
+			<div class="portlet-title">
+				<h4 class="text-center t_hot" onclick="stopSao();">雇员登录</h4>
+				<h4 class="text-center" onclick="myqcode();">扫码登录</h4>
+			</div>
+			<div class="portlet-body form">
+				<div class="sss">
+					<div class="form-body m20">
+						<div class="form-group">
+							<div class="input-icon input-icon-lg">
+								<i class="fa fa-user"></i>
+								<input type="text" name="username" class="form-control input-lg" placeholder="雇员账号" maxlength="30"> 
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="input-icon input-icon-lg">
+								<i class="fa fa-key"></i>
+								<input type="password" name="password" class="form-control input-lg" placeholder="登录密码" maxlength="30"> 
+							</div>
+						</div>
+						
+						<div class="row">
+							<div class="col-xs-6">
+								<div class="form-group">
+									<div class="input-icon input-icon-lg">
+										<i class="fa fa-key"></i>
+										<input type="text" name="vcode" class="form-control input-lg" placeholder="验证码" maxlength="5">
+									</div>
+								</div>								
+							</div>
+							<div class="col-xs-6 refVcode" onclick="refVcode($(this))">
+								{:captcha_img()}
+							</div>
+						</div>
+
+					</div>
+
+					<div class="form-actions text-center">
+						<button type="submit" class="btn red btn-lg btn-block"><i class="fa fa-key"></i> 登录</button>
+					</div>
+				</div>
+				<div class="sss">
+				<div class="form-body m20" style="padding-bottom: 0;">
+					<div class="eer">
+						<img src="{:url('login/qcode')}" onclick="myqcode();" class="img-responsive">
+					</div>
+					<span class="elogin" id="ref-code">请使用百望富通work端扫码登录</span>
+				</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+
+</form>
+
+{/block}
+
+<!--脚本-->
+{block name="javascript"}
+{js href="__JS__/work/rand-bg.js" /}
+<script>
+	$(document).ready(function(){
+		$('.sss').eq(1).hide();
+		$('.portlet-title h4').click(function(){
+			var n=$('.portlet-title h4').index(this);
+			$('.portlet-title h4').removeClass('t_hot')
+			$(this).addClass('t_hot')
+			$('.sss').hide().eq(n).show();
+		});
+		
+		var time1;
+		var time;	
+	});
+
+
+	function sendForm(obj){
+		submitForm({
+			formid:'#form-login',
+			success:function(ret){				
+				if(ret.code == 1){
+					location.href = '/';
+				}else if(ret.code == 10){
+					$('.refVcode').click();
+					ret.code = 0;
+				}
+				toast(ret);
+
+			}
+		});
+		return false;
+	}
+
+
+
+//	$().ready(function(){
+//		time1 = setInterval(saoMa,3000);//3秒,检查是否登录
+//		time = setTimeout(function(){
+//			$("#ref-code").html("二维码失效，请点击二维码刷新");
+//			clearInterval(time1);
+//		},30000);//30秒后启动
+//	});
+
+	function myqcode(){
+		$("#ref-code").html("请使用百望富通work端扫码登录");
+		time1 = setInterval(saoMa,3000);
+		time = setTimeout(function(){
+			$("#ref-code").html("二维码失效，请点击二维码刷新");
+			clearInterval(time1);
+		},60000);
+		$(".img-responsive").attr('src','/login/qcode?'+Math.random());
+	}
+
+	function stopSao(){
+		clearInterval(time1);
+	}
+
+	function saoMa(){
+		$.ajax({
+			type: 'post',
+			url: "{:url('login/scanCodeLogin')}",
+			data: '',
+			dataType: 'json',
+			success: function (ret) {
+				if(ret.code == 1){
+					location.href = '/';
+					toast(ret);
+				}
+			},
+		});
+	}
+</script>
+{/block}

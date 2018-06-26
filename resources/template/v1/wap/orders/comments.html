@@ -1,0 +1,105 @@
+{extend name="public:base" /}
+{block name="page"}
+<!-- 顶部标题栏 -->
+<header class="bar bar-nav bg_white">
+    <a class="icon icon_common pull-left r12 icon_back back" style="margin-top:.6rem"></a>
+    <h1 class="title">  评价晒单  </h1>
+</header>
+
+<div class="content bg_f8">
+    {eq name="data.code" value="20000"}
+        {volist name="data.data.commentGoods" id="vo"}
+            <form style="margin-bottom: 2.0rem">
+                <input type="hidden" name="sku_id" value="{$vo.goods_sku_id}">
+                <input type="hidden" name="shop_no" value="{$vo.orders_shop_no}">
+                <input type="hidden" name="is_append" value="0">
+                <div class="rpd10 bg_white">
+                    <div class="clearfix">
+                        <a href="javascript:;">
+                            <img class="fl rmr10 solid_all" style="width:4rem;height:4rem" src="{$vo.goods_images}">
+                        </a>
+                        <div class="rfs10 rline20">
+                            <p class="mg0 mb10 rfs14 text_line_2">{$vo.goods_name}</p>
+                            <p class="mg0 mb10 rfs14 text_over">{$vo.goods_sku_name}</p>                            
+                        </div>
+                        <div class="rmt20 rpt10 evaluation-box">
+                            <input type="hidden" name="evaluation" value="1">
+                            <span data-id="1" class="dui dui_" style="margin-right: 0.5rem">好评</span>
+                            <span data-id="0" class="dui" style="margin-right: 0.5rem">中评</span>
+                            <span data-id="-1" class="dui" style="margin-right: 0.5rem">差评</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg_white rpd10 rfs14 text_over" style="border-bottom: 1px solid #f8f8f8;">
+                    <span class="vertical_red"></span>
+                    <span class="text_77" >店铺评分</span>
+                </div>
+
+                <div class="rpd10 bg_white">
+                    <div class="rmt5">
+                        <div class="clearfix fraction-box">
+                            <input type="hidden" name="service_fraction" value="5">
+                            <img style="width:1rem;" src="/static/wap/images/icon/ic_star_a.png">
+                            <img style="width:1rem;" src="/static/wap/images/icon/ic_star_a.png">
+                            <img style="width:1rem;" src="/static/wap/images/icon/ic_star_a.png">
+                            <img style="width:1rem;" src="/static/wap/images/icon/ic_star_a.png">
+                            <img style="width:1rem;" src="/static/wap/images/icon/ic_star_a.png">
+                            <span class="rfs14 pull-left text_77">服务评分：</span>
+                        </div>
+                    </div>
+                    <div class="rmt5">
+                        <div class="clearfix fraction-box">
+                            <input type="hidden" name="description_fraction" value="5">
+                            <img style="width:1rem;" src="/static/wap/images/icon/ic_star_a.png">
+                            <img style="width:1rem;" src="/static/wap/images/icon/ic_star_a.png">
+                            <img style="width:1rem;" src="/static/wap/images/icon/ic_star_a.png">
+                            <img style="width:1rem;" src="/static/wap/images/icon/ic_star_a.png">
+                            <img style="width:1rem;" src="/static/wap/images/icon/ic_star_a.png">
+                            <span class="rfs14 pull-left text_77">描述相符：</span>
+                        </div>
+                    </div>
+                    <div class="rmt5">
+                        <div class="clearfix fraction-box">
+                            <input type="hidden" name="logistics_fraction" value="5">
+                            <img style="width:1rem;" src="/static/wap/images/icon/ic_star_a.png">
+                            <img style="width:1rem;" src="/static/wap/images/icon/ic_star_a.png">
+                            <img style="width:1rem;" src="/static/wap/images/icon/ic_star_a.png">
+                            <img style="width:1rem;" src="/static/wap/images/icon/ic_star_a.png">
+                            <img style="width:1rem;" src="/static/wap/images/icon/ic_star_a.png">
+                            <span class="rfs14 pull-left text_77">物流服务：</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="textarea_set bg_white rpd10">
+                    <textarea class="form-control" name="content" rows="5" placeholder="请填写评论"></textarea>
+                </div>
+                <!--上传凭证-->
+                <div class="bg_white rpd10 rfs14 text_over" style="border-bottom: 1px solid #f8f8f8;">
+                    <span class="vertical_red"></span>
+                    <span class="text_77" >晒单</span>
+                </div>
+                <div class="bg_white rpd10 bb12">
+                    <div class="clearfix mg5 box-images">
+                        <div class="camera_input pingz">
+                            <input class="upload-file" data-input="images" type="file" onchange="uploadImages(this);">
+                        </div>
+                    </div>
+                    <p class="mg0 text_77 rfs14 camera_checkbox">
+                        <span class="dui dui_"></span>
+                        <input type="hidden" name="is_anonymous" value="1">
+                        匿名评价
+                    </p>
+                </div>
+                <input type="hidden" id="images" name="images" value="">
+                <!--保存-->
+                <div class="qiye">
+                    <a class="main100 tt10 red-b btn-submit" href="javascript:;">提交评价</a>
+                </div>
+            </form>
+        {/volist}
+    {else /}
+        {:widget('Content/no', ['text' => $data['msg']])}
+    {/eq}
+</div>
+{/block}

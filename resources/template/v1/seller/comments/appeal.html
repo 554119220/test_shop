@@ -1,0 +1,103 @@
+{extend name="public:base" /}
+{block name="page"}
+<div class="tab_col pd10 pb0">
+    <div class="main100 bg-white radius4px mb10">
+        <div class="main100 line55 bg-white radius4px">
+            <a class="color666 fs14 ml15 mr15 di" href="评价管理-我的评价.html">我的评价</a>
+            <a class="color666 fs14 ml15 mr15 di  cp-active" href="评价管理-申诉评价.html">申诉评价</a>
+            <a class="color666 fs14 ml15 mr15 di" href="评价管理-刷单评价.html">刷单评价 </a>
+
+        </div>
+
+    </div>
+    <!---->
+    <div class="main100  bg-white radius4px pl15 pr15 pt15 minh595 over">
+
+        <div class="main100 radius4px over">
+            <table class="table solid_all  table_dashed tr12 table12  table-center" >
+                <thead class=" bg-f5 ">
+                <tr>
+                    <th class="small_xs text-leftt">商品信息</th>
+                    <th class="small_xs ">单价</th>
+                    <th class="small_xs ">数量</th>
+                    <th class="small_xs ">实付款</th>
+                    <th class="small_xs ">赠送积分</th>
+                    <th class="small_xs ">状态</th>
+                    <th class="small_xs ">操作</th>
+                </tr>
+                </thead>
+                <tbody >
+                <tr>
+                    <td>
+                        <a href="#">
+                            <img class="fl radius4px mr8" style="height:72px;width:72px;" src="/static/web/images/123.jpg">
+                            <div class="fl text-leftt" style="width: calc(100% - 90px);">
+                                <div class="line20 mt4 mb6 color666 ">2017款冬季短裙套装款冬季短裙套装款冬季短裙套装</div>
+                                <div class="color999"><span>默认</span></div>
+                            </div>
+                        </a>
+
+                    </td>
+                    <td class="text_green">￥20.00元</td>
+                    <td>999</td>
+                    <td>786元</td>
+                    <td>2000.00</td>
+                    <td>
+                        <div class="main100">
+                            <div><a class="line22 color-red1" href="#">已生效</a></div>
+                            <div><a  class="line22 color-blue" href="#">疑似刷单</a></div>
+                            <div><a  class="line22 color-red1" href="#">好评</a></div>
+                        </div>
+                    </td>
+                    <td  >
+                        <div class="main100">
+                            <div><a  class="line22 color-blue" href="#">回复评论</a></div>
+                            <div><a  class="line22 color-blue" href="#">刷单申诉</a></div>
+                            <div><a  class="line22 color-blue" href="#">详情</a></div>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+        <!--页按钮-->
+        <div class="ye_main">
+            <a href="#" class="go">GO</a>
+            <div class="ye">
+                跳转至:
+                <input type="text" value="12" maxlength="4">
+                页
+            </div>
+            <strong class="ye_right"></strong>
+            <div class="ye_">
+                <a href="#" class="ye_btn">1</a>
+                <a href="#">2</a>
+                <a href="#">3</a>
+                <a href="#">4</a>
+                <a href="#">5</a>
+                <a href="#">6</a>
+                <a href="#">7</a>
+                <span>...</span>
+                <a href="#">100</a>
+            </div>
+            <strong class="ye_left"></strong>
+        </div>
+    </div>
+    <div class="main100 bg_white pl15 pr15 radius4px over mt10">
+        <div class="main100 line55 bg-white radius4px">
+            <i class="redicon"></i>
+            <span class="fs14 color333">评价规则</span>
+        </div>
+        <div class="mb20 color666 pl10 line24">
+            <strong>评价计分：评价积分的计算方法，具体为：“好评”加一分，“中评”零分，“差评”扣一分。</strong><br>
+            计分规则（含匿名评价）：<br>
+            （1）每个自然月中，相同买家和卖家之间的评价计分不得超过6分（以商城订单创建的时间计算）。<br>
+            超出计分规则范围的评价将不计分。<br>
+            （解释：每个自然月同买卖家之间评价计分在[-6,+6]之间，每个自然月相同买卖家之间总分不超过6分，也就是说总分在-6和+6之间，<br>
+            例如买家先给卖家6个差评，再给1个好评和1个差评，则7个差评都会生效计分。）<br>
+            （2）若14天内（以商城订单创建的时间计算）相同买卖家之间就同一个商品进行评价，多个好评只计一分，多个差评只记-1分。<br>
+        </div>
+    </div>
+</div><!-- 右边内容结束 -->
+{/block}

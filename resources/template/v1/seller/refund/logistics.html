@@ -1,0 +1,85 @@
+{extend name="public:base" /}
+{block name="page"}
+<div class="tab_col pd10 pb0">
+    {eq name="data.code" value="20000"}
+    <div class="radius4px mb10 bg_white pl15 pr15" style="min-width:1200px" >
+        <div class="main100 line55 bg-white radius4px">
+            <i class="redicon"></i>
+            <span class="fs14 ml5 color333">物流信息</span>
+        </div>
+    </div>
+    <div class="main100 radius4px over pl35 pt20 pb20 pr35 mb10 bg_white re" style="min-height: 250px;">
+        <!--<div class="color333 fs14 mb10">您的包裹已被签收</div>-->
+        {notempty name="logistics.data"}
+        <i class="w1 h300 ab bg-ccc" style="left:54px; top:56px;"></i>
+        <!--线end-->
+        <div class="main100 radius4px over">
+            {volist name="logistics.data" id="vo"}
+            <div class="main100 line24 color666 color-red1 mb5 re">
+                <i class="fl border-red-btn border-red-btn1"></i>
+                <span class="pl40 pr10">{$vo.time}</span>
+                <!--<span class="pr30 di" style="min-width:54px;">周六</span>-->
+                <!--<span class="pr20"></span>-->
+                <span>{$vo.text}</span>
+            </div>
+            {/volist}
+        </div>
+        {else /}
+        <p class="text-center mt50">
+            {$logistics.msg}
+        </p>
+        {/notempty}
+    </div>
+    <div class="main100 radius4px bg_white pd15 color666" style="min-height: 250px;">
+        <div class="main100 mb5 over">
+            <div class="fl mr30">
+                <span>运单号码：</span>
+                <span>{$express.express_no}</span>
+            </div>
+            <div class="fl mr30">
+                <span>物流公司：</span>
+                <span>{$express.express_company_name}</span>
+            </div>
+            <div class="fl mr30">
+                <span>发货时间：</span>
+                <span>{$express.orders_refund_time|default='-'}</span>
+            </div>
+            <div class="fl mr30">
+                <span>备注信息：</span>
+                <span>{$express.orders_refund_remark|default='-'}</span>
+            </div>
+        </div>
+        <div class="main100 mb5 over hide">
+            <div class="fl mr30">
+                <span>卖家昵称：</span>
+                <span>广维数码专营</span>
+            </div>
+        </div>
+        <div class="main100 mb5 over">
+            <div class="fl mr30">
+                <span>收货信息：</span>
+                <span class="mr15">{$express.orders_refund_name}</span>
+                <span class="mr15">{$express.orders_refund_address}</span>
+                <span class="mr15">{$express.orders_refund_connect}</span>
+            </div>
+        </div>
+        <!--<div class="main100 mb5 over">
+            <div class="fl mr30">
+                <span>收货地址：</span>
+                <span class="mr15">四川省成都市青羊区 太升南路222号赛格广场负2楼1栋2单元9号 </span>
+                <span class="mr15">110110</span>
+                <span class="mr15">林先生</span>
+                <span class="mr15">15811860434</span>
+            </div>
+        </div>-->
+        <div class="main100 mb5 over hide">
+            <div class="fl mr30">
+                <img class="fl radius4px mr8" style="height:72px;width:72px;" src="/static/web/images/123.jpg">
+                <span class="mr15 line70">￥2541.00</span>
+                <span class="mr15">x6</span>
+            </div>
+        </div>
+    </div>
+    {/eq}
+</div>
+{/block}

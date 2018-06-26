@@ -1,0 +1,21 @@
+<div class="order_shop main100  bbai m5px ">
+    <span class="lleft">&nbsp;</span>
+    {switch name="data.data.orders_refund_state"}
+        {case value="1"}
+            <a data-no="{$data.data.orders_refund_no}" href="javascript:;" class="rright h999 btn-cancel-refund">取消退款</a>
+        {/case}
+        {case value="2"}
+            <a data-no="{$data.data.orders_refund_no}" href="javascript:;" class="rright h999 btn-cancel-refund">取消退款</a>
+            <a data-no-cache="true" data-no="{$data.data.orders_refund_no}" href="/refund/ship?refund_no={$data.data.orders_refund_no}" class="rright h999">邮寄商品</a>
+        {/case}
+        {case value="31"}
+            <a data-no="{$data.data.orders_refund_no}" href="javascript:;" class="rright h999 btn-cancel-refund">取消退款</a>
+        {/case}
+        {case value="41"}
+            <a data-no="{$data.data.orders_refund_no}" href="javascript:;" class="rright h999 btn-cancel-refund">取消退款</a>
+            <a data-no-cache="true" data-no="{$data.data.orders_refund_no}" href="/refund/edit?refund_no={$data.data.orders_refund_no}" class="rright h999">修改退款</a>
+            <a data-no-cache="true" data-no="{$data.data.orders_refund_no}" href="/refund/appeal?refund_no={$data.data.orders_refund_no}" class="rright h999">提起申诉</a>
+        {/case}
+        {default /}
+    {/switch}
+</div>

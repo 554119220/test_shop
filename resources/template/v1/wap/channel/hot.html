@@ -1,0 +1,97 @@
+{extend name="public:base" /}
+{block name="page"}
+<!-- 顶部标题栏 -->
+<header class="bar bar-nav bg_white">
+    <a href="/" class="icon pull-left icon_common icon_size_22 icon_logo rml5" style="margin-top:.6rem"></a>
+    <a href="/category" class="icon pull-right icon_common icon_size_22 icon_more_new rmr5" style="margin-top:.6rem"></a>
+    <h1 class="title home_title">
+        <div class="search-input">
+            <!-- <label class="icon icon-search" for="search"></label> -->
+            <input class="set_bg" type="search" id='search' placeholder='输入关键字搜索产品'/>
+        </div>
+    </h1>
+</header>
+
+<div class="content bg_f8 pull-to-refresh-content infinite-scroll infinite-scroll-bottom" data-ptr-distance="50">
+    <div class="mask_page"></div>
+    {include file="public:refresh" /}
+    {:widget('channel/menu')}
+    {eq name="data.code" value="20000"}
+        {notempty name="data.data.channel_slider"}
+        <div class="bg_white swiper-container swiper-index-banner pb0" data-space-between='10'>
+            <div class="swiper-wrapper">
+                {volist name="data.data.channel_slider" id="vo"}
+                <div class="swiper-slide">
+                    <a href="{$vo.channel_redirect|default='javascript:;'}">
+                        <img class="img_max" src="{:thumb($vo['channel_images'], 640, 250)}">
+                    </a>
+                </div>
+                {/volist}
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+        {/notempty}
+
+        {include file="channel:sort" /}
+
+        <div class="rmt10 goods-list-show" id="index-goods-list" data-page="1" data-request="1">
+            <goods-list1></goods-list1>
+            <!-- 加载提示符 -->
+            <div class="infinite-scroll-preloader">
+                <div class="preloader"></div>
+            </div>
+        </div>
+    {/eq}
+</div>
+{/block}
+{block name="page-popup"}
+<div class="panel panel-right panel-cover panel_set panel_right">
+    <form data-url="{$url}">
+        <div class="solid_b rpd10" style="display: none">
+            <span class="rfs14 text_77">品牌</span>
+            <div class="clearfix rmt10">
+                <a class="search_fast active">清风</a>
+                <a class="search_fast">vinda维达</a>
+                <a class="search_fast">好家风</a>
+                <a class="search_fast">花弄影</a>
+                <a class="search_fast">其他</a>
+            </div>
+        </div>
+        <div class="solid_b rpd10" style="display: none">
+            <span class="rfs14 text_77">类目</span>
+            <div class="clearfix rmt10">
+                <a class="search_fast">清风</a>
+                <a class="search_fast">vinda维达</a>
+                <a class="search_fast">好家风</a>
+                <a class="search_fast">花弄影</a>
+                <a class="search_fast">其他</a>
+            </div>
+        </div>
+        <div class="solid_b rpd10" style="display: none">
+            <span class="rfs14 text_77">优惠信息</span>
+            <div class="clearfix rmt10">
+                <a class="search_fast">清风</a>
+                <a class="search_fast">vinda维达</a>
+                <a class="search_fast">好家风</a>
+                <a class="search_fast">花弄影</a>
+                <a class="search_fast">其他</a>
+            </div>
+        </div>
+        <div class="solid_b rpd10">
+            <span class="rfs14 text_77">价格区间</span>
+            <div class="clearfix rmt10">
+                <input class="search_input" name="price_min" type="number" value="" placeholder="最低价">
+                <span class="fl text_77 text-center db" style="width:1.5rem">-</span>
+                <input class="search_input" name="price_max" type="number" placeholder="最高价">
+            </div>
+        </div>
+
+        <div class="rpd10 search_b_b">
+            <div class="row">
+                <div class="col-50"><a href="javascript:;" class="button button-danger close-panel btn-reset-filter">重置</a></div>
+                <div class="col-50"><a href="javascript:;" class="button btn-filter button-fill button-danger close-panel">确定</a></div>
+            </div>
+        </div>
+    </form>
+</div>
+{/block}

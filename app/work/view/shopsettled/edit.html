@@ -1,0 +1,92 @@
+{extend name="public:base" /}
+<!--导航-->
+{block name="nav"}{include file="shopsettled:nav" title="修改" /}{/block}
+
+<!--主体内容-->
+{block name="content"}
+<form class="form-horizontal" id="form-edit" action="/{$Request.controller}/edit_save" onsubmit="return sendForm()">
+	<ul class="nav nav-tabs">
+		{volist name="group" id="gl"}
+		<li class="{$i==1?'active':''}">
+			<a href="#tabs_{$i}" data-toggle="tab" aria-expanded="true"> {$gl.group_name} </a>
+		</li>
+		{/volist}
+		
+	</ul>
+	<div class="tab-content">
+		{volist name="group" id="gl"}
+		<div class="tab-pane fade in {$i==1?'active':''}" id="tabs_{$i}">
+		{notempty name="gl.remark"}
+			<div class="note note-info">
+				<p>提示：{$gl.remark}</p>
+			</div>			
+		{/notempty}			
+		{:buildform(array(
+			'field'		=>$gl.fields,
+		),$res)}			
+		</div><!--/end pane-->
+		{/volist}
+	</div>
+	
+	{:buildform(array(
+		'field'		=>array(
+			array(
+				'formtype'		=>'radio_box',
+				'label'			=>'状态',
+				'name'			=>'shop_settled_state',
+				'data'			=> [[0,'待审核'],[1,'审核通过'],[2,'拒绝'],[3,'编辑中']],
+				'field'			=> [0,1,2,3],
+				'value'			=> 2,
+				'is_need'		=> true,
+			),
+			array(
+				'formtype'		=>'radio_box',
+				'label'			=>'店铺类型',
+				'name'			=>'step_shop_type',
+				'data'			=> [[0,'待审核'],[1,'审核通过'],[2,'拒绝'],[3,'编辑中']],
+				'field'			=> [0,1,2,3],
+				'value'			=> 2,
+				'is_need'		=> true,
+			),
+			array(
+				'formtype'		=>'checkbox',
+				'label'			=>'审核不通过的步骤',
+				'name'			=>'shop_settled_step',
+				'data'			=> [[0,'开店协议'],[1,'开店类型'],[2,'选择类目和品牌'],[3,'填写品牌资料'],[4,'上传行业资质'],[5,'填写店铺资料']],
+				'field'			=> [0,1,2,3,4,5],
+				'is_need'		=> true,
+			),
+			array(
+				'formtype'		=>'hidden',
+				'name'			=>$primary_key,
+				'value'			=>$res[$primary_key],
+			),
+			array(
+				'formtype'		=>'button',
+				'btns'			=>[['提交','btn btn-danger btn-150px','submit']],
+			),
+		),
+	))}
+</form>
+{/block}
+
+<!--脚本-->
+{block name="javascript"}
+<script>
+	function sendForm(){
+		submitForm({
+			formid:'#form-edit',
+			success:function(ret){
+				toast(ret);
+				if(ret.code == 1){
+					setTimeout(function(){
+						history.back();
+					},1000);
+				}
+			}
+		});
+		
+		return false;
+	}
+</script>
+{/block}

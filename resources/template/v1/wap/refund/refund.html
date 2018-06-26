@@ -1,0 +1,23 @@
+<input type="hidden" name="type" id="type" value="1">
+<input type="hidden" name="is_ship" id="orders_refund_is_ship" value="{$data.data.orders_refund_is_ship}">
+{gt name="data.data.refundApply.goods_refund_num" value="0"}
+<div class="refund-num-box" data-num="{$data.data.refundApply.goods_refund_num}">
+    <div class="bg_white rpd10 rfs14 text_over">
+        <span class="vertical_red"></span>
+        <span class="text_77">退款数量 (本次最多可退 {$data.data.refundApply.goods_refund_num} 件)</span>
+    </div>
+    <div class="textarea_set bg_white rpd10 m5px">
+        <input data-max="{$data.data.refundApply.goods_refund_num}" data-min="1" placeholder="请输入退款数量" type="number" class="main100 form-control bor_none change-num" name="num" value="{$data.data.refundApply.goods_refund_num}">
+    </div>
+</div>
+{else /}
+    <input type="hidden" name="num" value="0" />
+{/gt}
+<div class="bg_white rpd10 rfs14 text_over">
+    <span class="vertical_red"></span>
+    <span class="text_77">退款金额 (本次最多可退 {$data.data.refundApply.goods_refund_amount} 元)</span>
+</div>
+<div class="textarea_set bg_white rpd10 m5px">
+    <span class="form-control bor_none main100">{$data.data.refundApply.goods_refund_amount}</span>
+    <input type="hidden" data-max="{$data.data.refundApply.goods_refund_amount}" data-min="{$data.data.refundApply.orders_goods_single_amount}" class="form-control bor_none main100" name="amount" value="{$data.data.refundApply.goods_refund_amount}">
+</div>

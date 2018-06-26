@@ -1,0 +1,26 @@
+{extend name="public:base" /}
+
+{block name="page"}
+<!-- 标题栏 -->
+<header class="bar bar-nav bbai">
+    <a class="l_return back"><img class="main100" src="/static/wap/images/reg/l_return1.png"></a>
+    <h1 class="title">查看营业执照</h1>
+</header>
+<!-- 这里是页面内容区 -->
+<div class="content bg_f8 rpd10">
+    <div class="amg dn">
+        <img class="businesslicense" src="https://img.zrst.com/FolQQj-001l0rhQ4NIOUHXiJinCg?imageMogr2/thumbnail/410x410!" alt=""/>
+    </div>
+
+    <div class="shop_businesslicense dn-" action="" onsubmit="return false;">
+        <div class="bg_white re rpd10" style="margin: 0 -0.5rem 1rem">
+            <input type="text" placeholder="请输入验证码" maxlength="5" name="code" id="codes" style="width:60%;border-color: transparent;">
+            <input type="hidden" name="shop_id" id="shop_id" value="{$Think.get.id}">
+            <img class="ab shop_businesslicense_img" style="right:.5rem;top:.2rem;height:2rem" src="{:captcha_src()}" onclick="javascript:this.src='{:captcha_src()}?tm='+Math.random();">
+        </div>
+        <a href="javascript:;" class="button button-big button-fill button-danger btn-attention-shop-businesslicens">提交验证</a>
+    </div>
+
+</div>
+<!-- 页面内容区到此为止 -->
+{/block}

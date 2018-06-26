@@ -1,0 +1,55 @@
+{extend name="public:base" /}
+{block name="page"}
+<div class="main100 bg_white pl15 pr15  radius4px container">
+    <form id="form-create-address" data-header="address" data-redirect="/address">
+        <div class="main100 line55 bg-white ">
+            <i class="redicon"></i>
+            <span class="fs14 color333 pl5">新增收货地址</span>
+            <!--<a class="btn text_white bg-red1 radius4px pd5 pl15 pr15 mt13 fr ml15">添加地址</a>-->
+        </div>
+
+        <div class="main100 mb10 fs12 ">收货人姓名<span class="color-red1">*</span></div>
+        <div class="main100">
+            <input placeholder="请输入收货人姓名" name="name" class="main100 radius4px container-fluid line32 bor_img mb10" v-model="addressName" />
+        </div>
+        <div class="main100 mb10 fs12 ">手机号码<span class="color-red1">*</span></div>
+        <div class="main100">
+            <input placeholder="请输入收货人手机号码" name="mobile" class="main100 radius4px container-fluid line32 bor_img mb10" />
+        </div>
+        <div class="main100 mb10 fs12 ">电话号码</div>
+        <div class="main100">
+            <input placeholder="请输入电话号码" name="tel" class="main100 radius4px container-fluid line32 bor_img mb10" />
+        </div>
+        {$district}
+        <div class="main100 mb10 fs12 ">详细地址<span class="color-red1">*</span></div>
+        <textarea class="main100 bor_img radius4px pd10 h70 mb15" name="street" placeholder="请输入详细地址"></textarea>
+        <div class="main100 mb10 fs12 ">邮政编码</div>
+        <div class="main100 mb15">
+            <input placeholder="请输入邮政编码" name="postal_code" class="main100 radius4px container-fluid line32 bor_img mb10" />
+        </div>
+        <div class="main100 over mb10">
+            <label class="square">
+                <input value="1" type="checkbox" name="is_default"><em class="fl"></em>
+                <span class="small_xs ml10">设为默认</span>
+            </label>
+
+        </div>
+        <div class="main100 over">
+            <a class="btn text_white bg-red-thunderbird radius4px pd8 pl35 pr35 mb100 btn-submit">立即添加</a>
+        </div>
+    </form>
+</div><!-- 右边内容结束 -->
+{/block}
+{block name="script"}
+<script>
+    Vue.filter('addressName', function (value) {
+       console.log(value)
+    });
+    var vm = new Vue({
+        el : ".container",
+        data : {
+            addressName : '',
+        }
+    })
+</script>
+{/block}

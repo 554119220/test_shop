@@ -1,0 +1,27 @@
+{extend name="public:base" /}
+{block name="page"}
+<!-- 顶部标题栏 -->
+<header class="bar bar-nav bg_white">
+    <a class="icon icon-left pull-left text_55 back"></a>
+    <a href="/" class="icon icon_common pull-right r12 icon_01 mr3" style="margin-top:.6rem"></a>
+    <h1 class="title home_title">
+        <div class="search-input">
+            <input class="set_bg" type="search" id="search" placeholder="输入关键字搜索店铺">
+        </div>
+    </h1>
+</header>
+
+<!-- 这里是页面内容区 -->
+<div class="content bg_f8 pull-to-refresh-content infinite-scroll infinite-scroll-bottom" data-ptr-distance="50">
+    {include file="public:refresh" /}
+    <div class="goods-list-show" id="search-shop-list" data-page="1" data-request="1">
+        <div class="rpd5 bg_white"></div>
+        <shop-list></shop-list>
+        <!-- 加载提示符 -->
+        <div class="infinite-scroll-preloader">
+            <div class="preloader"></div>
+        </div>
+    </div>
+</div>
+
+{/block}

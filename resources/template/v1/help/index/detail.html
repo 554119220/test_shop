@@ -1,0 +1,22 @@
+{extend name="public:base"}{/extend}
+{block name="content"}
+<!-- 右边内容 -->
+<div class="tab_col pd10 pb0">
+	<div class="bg_white minh595 over">
+		<div class="fs18 h50 bor-bot-f5 color333 pl20 h70 line70" style="font-weight: bold;">
+			<img src="/static/web/images/icon/help1.png" class="mr10"><span>帮助详情</span>
+		</div>
+		<!--列表-->
+		<div class="main100 pd15 max-img" >
+			{empty name="detail"}
+				<div><h4 class="ml20">未找到数据。</h4></div>
+			{else/}
+				<div class="text-center"><h3>{$detail.article_title}</h3></div>
+				<hr class='mr5 ml5'>
+				<div class="text-center"><span>时间：{$detail.article_create_time}</span></div>
+			    <div class="main100 pd25">{$detail.article_content.article_content}</div>
+			{/empty}
+		</div>
+	</div>
+</div>
+{/block}

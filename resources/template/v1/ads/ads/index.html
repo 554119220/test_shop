@@ -1,0 +1,103 @@
+{extend name="public:base"}{/extend}
+{block name="content"}
+<div class="container-fluid bg_white">
+	<div class="container pd0">
+		<div class="main100 bg-white radius4px pl15 pr15 minh595" >
+			<table class="table solid_all table_dashed tr12 table12">
+                <thead class="bg-f5">
+                    <tr>
+                    	<th class="small_xs ">订单号</th>
+                        <th class="small_xs ">标题</th>
+                        <th class="small_xs ">副标题</th>
+                        <th class="small_xs ">图片</th>
+                        <th class="small_xs ">描述</th>
+                        <th class="small_xs ">投放链接</th>
+                        <th class="small_xs ">状态</th>
+                        <th class="small_xs ">创建时间</th>
+                        <th class="small_xs ">投放位置</th>
+                        <th class="small_xs ">操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                	{foreach name="list" item="value"}
+	                    <tr>
+	                    	<td>{$value.ads_no}</td>
+	                        <td>{$value.ads_title}</td>
+	                        <td>{$value.ads_sub_title}</td>
+	                        <td>
+	                        	<a class="image-zoom" href="{$value.ads_images}">
+	                        		<img class="radius4px w50" src="{$value.ads_images}?imageMogr2/thumbnail/100x100!">
+	                        	</a>
+	                        </td>
+	                        <td>{$value.ads_descript}</td>
+	                        <td>{$value.ads_url}</td>
+	                        <td style="width:60px;"><span>{$value.ads_state_name}</span></td>
+	                        <td>{$value.ads_create_time}</td>
+	                        <td>位置{$value.ads_sort}</td>
+	                        <td style="width: 110px;">
+	                        	<a class="color-blue" href="/Ads/info/id/{$value.ads_id}">详情</a>
+	                        	{if condition="$value['ads_state'] eq 0"}
+	                        		<a class="color-blue ml5" href="javascript:ads_pay({$value.ads_id})">付款</a>
+	                        		<a class="color-blue ml5" href="javascript:ads_cancel({$value.ads_id});">取消</a>
+	                        	{/if}
+	                        </td>
+	                    </tr>
+                    {/foreach}
+                </tbody>
+            </table>
+		</div>
+		<!--页按钮-->
+		{$page}
+	</div>
+</div>
+
+{/block}
+{block name="js"}
+<script type="text/javascript">
+	function ads_pay(ads_id){
+		apiPost({
+			data:{
+				id:ads_id,
+			},
+			header:getHeader('ads_order'),
+			log:true,
+			success:function(ret){
+				if ( ret.code == 20000 ) {
+					// success(ret.msg);
+					window.open(ret.data.url);
+				} else {
+					error(ret.msg);
+				}
+			}
+		});
+	}
+			
+	function ads_cancel(ads_id){
+		MyModal({
+			title:'广告订单取消',
+			msg:'<div style="margin:auto;width:100%;text-align:center;color:red;"><h4>确定要取消订单吗？</h4></div>',
+		},function(){
+			$(document).on('click.modal','.modal-ok',function(){
+				$('#modal').modal('hide');
+				apiPost({
+					data:{
+						ads_id:ads_id,
+					},
+					header:getHeader('ads_cancel'),
+					log:true,
+					success:function(ret){
+						if ( ret.code == 20000 ) {
+							success(ret.msg);
+							setTimeout(function(){
+								window.location.reload();
+							},200);
+						} else {
+							error(ret.msg);
+						}
+					}
+				});
+			});
+		});
+	}
+</script>
+{/block}

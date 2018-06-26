@@ -1,0 +1,35 @@
+header{height: 40px;line-height: 40px;color: #fff;text-align: center;position: relative;background: #5990f4;}
+	header h2{font-size:16px;}
+	header .s{
+			position: absolute; 
+			left:4%;
+	    border-left: 2px solid #fff;
+	    width: 10px;
+	    height: 10px;
+	    display: block;
+	    top: calc(50% - 7px);
+	    border-top: 2px solid #fff;
+	    -webkit-transform: rotate(-45deg);
+	    -moz-transform: rotate(-45deg);
+	    -ms-transform: rotate(-45deg);
+	    transform: rotate(-45deg);
+	}
+	.xlist ul,.wen{overflow:hidden;padding: 10px 4%; border-radius: 4px;}
+	.xlist{background: #f8f8f8;}
+	.xlist li{height:40px;line-height:40px;overflow: hidden;color:#333;margin-bottom: 10px;background: #fff;font-size:14px;padding:0 5%;}
+	.xlist li a{float:left;}
+	.xlist li span{float:right;}
+
+	.wen h1{    font-size: 16px;margin-bottom: 5px;}
+	.time{
+    font-size: 13px;
+    color: #999;
+    border-bottom: 1px solid #E2E2E2;
+    padding-bottom: 12px;
+	}
+	.wen .p{
+    font-size: 14px;
+    color: #666;
+    line-height: 22px;
+    padding-top: 10px;
+}

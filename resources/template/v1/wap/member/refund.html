@@ -1,0 +1,30 @@
+{extend name="public:base" /}
+{block name="page"}
+<!-- 标题栏 -->
+<header class="bar bar-nav bbai">
+    <a class="l_return back"><img class="main100" src="/static/wap/images/reg/l_return1.png"></a>
+    <h1 class="title">退款/售后</h1>
+</header>
+<!-- 这里是页面内容区 -->
+<div class="content pull-to-refresh-content">
+    <!-- 默认的下拉刷新层 -->
+    <div class="pull-to-refresh-layer">
+        <div class="preloader"></div>
+        <div class="pull-to-refresh-arrow"></div>
+    </div>
+    <ul class="main100 service_ul">
+        <li class="bbai">
+            <img class="img lleft" src="/static/wap/images/cart/icon_tksh_tkz.png">
+            <span class="h666 lleft">退款中</span>
+            <i class="lleft red-b">5</i>
+            <a data-no-cache="true" class="rright s h999" href="/refund">查看全部</a>
+        </li>
+        <li class="bbai">
+            <img class="img lleft" src="/static/wap/images/cart/iocn_tksh_shz.png">
+            <span class="h666 lleft">售后中</span>
+            <i class="lleft red-b">52</i>
+            <a data-no-cache="true" href="/service" class="rright s h999">查看全部</a>
+        </li>
+    </ul>
+</div>
+{/block}

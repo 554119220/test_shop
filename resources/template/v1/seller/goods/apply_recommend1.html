@@ -1,0 +1,91 @@
+{extend name="public:base" /}
+
+{block name="page"}
+<div class="tab_col pd10 pb0">
+	<div class="container-fluid bg-white radius4px pt15">
+		<form method="get" action="/goods/apply_recommend1">
+			<div class="main20 border-red radius4px fl mr15 w200">
+				<a class="btn text_white bg-red1  fl  main30 text-center">状态</a>
+				<select name="state" class="bs-select form-control main70" tabindex="-98">
+					<option value="">所有</option>
+					<option value="0" {if condition="input('state') eq 0 and preg_match('/^0$/',input('state'))"} selected {/if}>待审核</option>
+					<option value="1" {if condition="input('state') eq 1"} selected {/if}>已审核</option>
+               	</select>
+			</div>
+			<button type="submit" class="btn bg-red1 text_white radius4px pd7 pl15 pr15">搜索</button type="submit">
+		</form>
+	</div>
+	<!---->
+	<!-- <div class="alert mt10 mb10 bg-red2 color-red1 pl30">温馨提示，参与官方活动中的商品不允许编辑、下架、删除等操作……</div> -->
+	<div class="main100  bg-white radius4px pl15 pr15 minh595 over">
+
+		<div class="main100 line55 radius4px mb15 mt5 over">
+			<a href="/goods/apply_recommend1_create" class="btn text_white bg-red-thunderbird radius4px pd7 pl25 pr25 mt13 fl mr15 fs12">发起精选申请</a>
+		</div>
+		<div class="main100 radius4px over">
+			<table class="table solid_all table_dashed tr12 table12" >
+                <thead class="bg-f5">
+                    <tr>
+						<th class="small_xs">编号</th>
+						<th class="small_xs">商品图片</th>
+                        <th class="small_xs">商品名称</th>
+                        <th class="small_xs">申请时间</th>
+                        <th class="small_xs">审核状态</th>
+                        
+                        <th class="small_xs">操作</th>
+                    </tr>
+                </thead>
+                <tbody class="goods-list">
+                	{foreach name="applyList" key="key" item="value"}
+                    <tr>
+                    	<td>{$value.goods_apply_recommend1_id}</td>
+                    	<td><a class="image-zoom" href="{$value.goods.goods_images}"><img width="100" class="radius4px" src="{$value.goods.goods_images}?imageMogr2/thumbnail/200x200!"></a></td>
+                        <td>{$value.goods.goods_name}</td>
+                        <td>{$value.goods_apply_recommend1_create_time}</td>
+                        <td>{$value.goods_apply_recommend1_is_audit ? '<span class="text_green">已审核</span>':'未审核'}</td>
+                        
+                        <td>
+                        	<a class="color-blue mr5 see-tpl" data-id="{$value.goods_apply_recommend1_id}" href="javascript:;">审核记录</a>
+                        </td>
+                    </tr>
+                    <tr class="see-content see-content-{$value.goods_apply_recommend1_id} hide">
+                        <td colspan="6">
+                            <div class="main100 bg_white radius4px">
+	                    		{foreach name="value.audit" key="ko" item="vo"}
+	                    			<p class="mt10 pl15 pr15">审核时间：{$vo.goods_apply_recommend1_audit_create_time}</p>
+	                    			<p class="mt10 pl15 pr15">审核结果：{$vo.goods_apply_recommend1_audit_pass ? '<span class="text_green">通过</span>':'<span class="text_red">未通过</span>'}</p>
+	                    			<p class="mt10 pl15 pr15">审核备注：{$vo.goods_apply_recommend1_audit_content}</p>
+	                    			{php}echo isset($value['audit'][$ko+1]) ? '<hr>' : '';{/php}
+	                    		{/foreach}
+	                    		{empty name="value.audit"}
+	                    			<p class="mt10 pl15 pr15">暂无记录。</p>
+	                    		{/empty}
+	                    	</div>
+                        </td>
+                    </tr>
+                    {/foreach}
+                </tbody>
+            </table>
+		</div>
+		<!--页按钮-->
+		<div class="text-center">{$data.page|default=""}</div>
+	</div>
+</div>
+{/block}
+{block name="script"}
+<script type="text/javascript">
+	
+	$('.see-tpl').on('click',function(){
+		// alert(1);
+        var ele = '.see-content-' + $(this).data('id');
+        var is = $(ele).hasClass('hide');
+        $('.see-content').addClass('hide');
+        if ( is ) {
+            $(ele).removeClass('hide');
+        } else {
+            $(ele).addClass('hide');
+        }
+    });
+	
+</script>
+{/block}

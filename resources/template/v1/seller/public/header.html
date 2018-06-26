@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<!--<![endif]-->
+<!-- BEGIN HEAD -->
+<head>
+    <meta charset="utf-8" />
+    <title>商家管理中心 - 百望商城</title>
+    <meta name=”renderer” content=”webkit”>
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <meta content="" name="description" />
+    <meta content="" name="author" />
+    {notempty name="headers"}
+        {volist name="headers" id="vo"}
+            <meta content={$vo} name="headers-{$key}">
+        {/volist}
+    {/notempty}
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <link href="/static/web/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="/static/web/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
+
+    <link href="/static/web/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <!-- BEGIN PAGE LEVEL PLUGINS -->
+    <link href="/static/web/assets/global/plugins/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet" type="text/css" />
+    <!-- END PAGE LEVEL PLUGINS -->
+
+    <link href="/static/web/assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css" rel="stylesheet" type="text/css" />
+    <link href="/static/web/assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" rel="stylesheet" type="text/css" />
+    <link href="/static/web/assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css" rel="stylesheet" type="text/css" />
+    <link href="/static/web/assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css" />
+
+
+
+    <!-- BEGIN THEME GLOBAL STYLES -->
+    <link href="/static/web/assets/global/css/components.min.css" rel="stylesheet" id="style_components" type="text/css" />
+    <link href="/static/web/assets/global/css/plugins.min.css" rel="stylesheet" type="text/css" />
+    <!--<link href="/static/web/assets/global/css/components.min.css" rel="stylesheet" type="text/css" />-->
+    <!-- END THEME GLOBAL STYLES -->
+    <link href="/static/web/assets/global/plugins/bootstrap-toastr/toastr.min.css" rel="stylesheet" type="text/css" />
+
+    <!-- BEGIN THEME LAYOUT STYLES -->
+    <link href="/static/web/assets/layouts/layout/css/layout.min.css" rel="stylesheet" type="text/css" />
+    <link href="/static/web/assets/layouts/layout/css/themes/darkblue.min.css" rel="stylesheet" type="text/css" id="style_color" />
+    <!-- END THEME LAYOUT STYLES -->
+
+    <link rel="stylesheet" href="/static/css/metronic/assets/global/plugins/jquery.magnific-popup/dist/magnific-popup.css"/>
+    <!-- 自定义样式区域 -->
+    <link href="/static/web/css/common.css" rel="stylesheet" type="text/css" />
+    <link href="/static/web/css/css.css" rel="stylesheet" type="text/css" />
+    <link href="/static/web/css/style.css" rel="stylesheet" type="text/css" />
+    <style>
+        .clear-after:after {
+            content: " ";
+            display: block;
+            clear: both;
+        }
+        .margin-bottom-10 {
+            margin-bottom: 10px;
+        }
+        .box-images {
+            margin: 10px 0;
+        }
+        .box-images .camera_img {
+            margin-right: 10px;
+            width: 120px;
+            height: 120px;
+            padding: 10px;
+            border: solid 1px #F0F0F0;
+            float: left;
+            position: relative;
+        }
+        .box-images .camera_img img {
+            width: 100px;
+            height: 100px;
+        }
+        .box-images .camera_img .btn-delete-images {
+            position: absolute;
+            top: 0;
+            right: 0;
+            padding: 0 4px;
+            z-index: 19;
+            font-size: 16px;
+            font-weight: bold;
+            color: red;
+            cursor: pointer;
+        }
+        .loading {
+            background: #F0F0F0;
+            text-align: center;
+            min-height: 100px;
+            font-size: 20px;
+            line-height: 60px;
+            min-width: 200px;
+            padding: 20px 50px;
+            border-radius: 20px !important;
+            position: absolute;
+            top: 300px;
+            left: 50%;
+            z-index: 29;
+        }
+    </style>
+</head>
+<!-- END HEAD -->
+<body>

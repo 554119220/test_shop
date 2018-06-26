@@ -1,0 +1,75 @@
+{extend name="public:base"}{/extend}
+{block name="content"}
+<div class="container-fluid bg_white">
+	<div class="container-fluid bg_white pd15 pb0 ">
+		<div class="container">
+			<form>
+				<div class="main100 mb10 clearfix">
+					<div class="main25 border-red over radius4px fl mr15" style="width:30% !important">
+						<a class="btn text_white bg-red1  fl  main30 text-center">广告位名称</a>
+						<input name="ads_position_name" value="{:input('ads_position_name','','htmlspecialchars')}" class="main70 line30 bor_no pl10 h34" placeholder="请输入广告位名称">
+					</div>
+					<div class="border-red radius4px fl mr15 w200">
+						<a class="btn text_white bg-red1  fl  main40 text-center">素材宽高</a>
+						<select name="wh" class="bs-select form-control main60" tabindex="-98">
+                            <option value="">全部</option>
+                            <?php foreach (\mercury\constants\State::ADS_POSITION_SIZE as $value) { ?>
+                                <?php if ( $value[0] . 'x' . $value[1] == input('wh') ){ ?>
+                                	<option value="{$value.0}x{$value.1}" selected="selected">{$value.0}x{$value.1}</option>
+                                <?php }else{ ?>
+                                	<option value="{$value.0}x{$value.1}">{$value.0}x{$value.1}</option>
+                                <?php } ?>
+                            <?php } ?>
+                       </select>
+					</div>
+					<button type="submit" class="btn bg-red1 text_white radius4px pd7 pl15 ml20 pr15 mr20">搜索</button>					
+				</div>
+			</form>
+		</div>
+	</div>
+	<div class="container pd0">
+		<div class="main100  bg-white radius4px pl15 pr15 minh595 over">
+			<div class="main100 radius4px over">
+				<table class="table solid_all table_dashed tr12 table12">
+	                <thead class="bg-f5">
+	                    <tr>
+	                        <th class="small_xs ">广告位名称</th>
+	                        <th class="small_xs ">广告位类型</th>
+	                        <th class="small_xs ">投放端</th>
+	                        <th class="small_xs ">位置数</th>
+	                        <th class="small_xs ">日单价</th>
+	                        <th class="small_xs ">示例图</th>
+	                        <th class="small_xs ">要求素材宽高</th>
+	                        <th class="small_xs ">操作</th>
+	                    </tr>
+	                </thead>
+	                <tbody>
+	                	{foreach name="list" item="value"}
+		                    <tr>
+		                        <td>{$value.ads_position_name}</td>
+		                        <td>{$value.ads_position_type_name}</td>
+		                        <td>{$value.ads_position_device_name}</td>
+		                        <td>{$value.ads_position_num}</td>
+		                        <td>{$value.ads_position_price}</td>
+		                        <td>
+		                        	<a class="image-zoom" href="{$value.ads_position_example_image}">
+		                        		<img class="radius4px w50" src="{$value.ads_position_example_image}?imageMogr2/thumbnail/200x200!">
+		                        	</a>
+		                        </td>
+		                        <td>{$value.ads_position_width}x{$value.ads_position_height}</td>
+		                        <td>
+		                        	<a class="color-blue" href="/Ads/create/id/{$value.ads_position_id}">投放</a>
+		                        	<a class="color-blue ml20" href="/Sucai/index/wh/{$value.ads_position_width}x{$value.ads_position_height}">符合条件的素材</a>
+		                        </td>
+		                    </tr>
+	                    {/foreach}
+	                </tbody>
+	            </table>
+			</div>
+			<!--页按钮-->
+			{$page}
+		</div>
+	</div>
+
+</div>
+{/block}

@@ -1,0 +1,66 @@
+{extend name="public:base" /}
+{block name="page"}
+<!-- 标题栏 -->
+<header class="bar bar-nav bbai">
+    <a class="l_return back"><img class="main100" src="/static/wap/images/reg/l_return1.png"></a>
+    <h1 class="title">地址管理</h1>
+</header>
+
+
+
+<!-- 这里是页面内容区 -->
+<div class="content pull-to-refresh-content infinite-scroll infinite-scroll-bottom" data-ptr-distance="50">
+    <!-- 默认的下拉刷新层 -->
+    {include file="public:refresh" /}
+    <div class="append_zd">
+        <!--收货地址-->
+        {eq name="data.code" value="20000"}
+            <ul class="main100 dz_list bbai">
+                {volist name="data.data" id="vo"}
+                    <li>
+                        <div class="dz_name">
+                            <div class="lleft">收货人：<span>{$vo.address_name}</span></div>
+                            <div class="rright">联系号码：<span>{$vo.address_mobile},{$vo.address_tel}</span></div>
+                        </div>
+                        <p class="p">{$vo.province_name}{$vo.city_name}{$vo.district_name}{$vo.town_name}{$vo.address_street}<span class="ml10 text_black">{$vo.address_postal_code ? : ''}</span></p>
+                        <div class="main100">
+                            <span data-id="{$vo.address_id}" class="s dui {eq name='$vo.address_is_default' value='1'}dui_{/eq}">默认收货地址</span>
+
+                            {switch name=":request()->get('ret')"}
+                                {case value="cart"}
+                                    <span class="disable-router">
+                                        <a data-no-cache="true" class="btn disable-router" href="/cart/confirm?id={$vo.address_id}">选择地址</a>
+                                    </span>
+                                {/case}
+                                {case value="service"}
+                                    <span class="disable-router">
+                                        <a data-no-cache="true"
+                                           class="btn disable-router"
+                                           href="/service/ship?id={$vo.address_id}&service_no={:request()->get('orders_service_no')}">
+                                            选择地址
+                                        </a>
+                                    </span>
+                                {/case}
+                                {default /}
+                                <a class="btn" href="/address/edit?id={$vo.address_id}">编辑</a>
+                                <a class="btn btn-delete-address" data-id="{$vo.address_id}">删除</a>
+                            {/switch}
+                        </div>
+                    </li>
+                {/volist}
+            </ul>
+        {else/}
+            <!--收货地址end-->
+            <div class="main100 append_none">
+                <img src='/static/wap/images/cart/icon_wu.png'>
+                <span>你暂无收货地址，若刚添加请下拉刷新！</span>
+            </div>
+        {/eq}
+
+        <div class="append_btn">
+            <a href="/address/create">添加新地址</a>
+        </div>
+    </div>
+
+</div>
+{/block}

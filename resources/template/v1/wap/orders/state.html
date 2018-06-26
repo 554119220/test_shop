@@ -1,0 +1,32 @@
+<span class="lleft">联系商家</span>
+<a href="/orders/detail?shop_no={$vo.orders_shop_no}" class="red-b btn rright">查看详情</a>
+{switch name="vo.orders_shop_state"}
+    {case value='1'}
+        <a class="red-b btn rright" href="{:url('/pay/single', ['orders_shop_no' => $vo['orders_shop_no']])}">立即支付</a>
+        <a class="rright h999 orders-cancel" data-no="{$vo.orders_shop_no}" data-header={$headers.cancel}>取消订单</a>
+    {/case}
+    {case value='2'}
+        <a class="red-b btn rright orders-notice-ship" data-no="{$vo.orders_shop_no}" data-header={$headers.notice_ship}>提醒发货</a>
+        <a class="rright h999" href="{:url('/refund/goods', ['orders_shop_no' => $vo['orders_shop_no']])}">申请退款</a>
+    {/case}
+    {case value='3'}
+        <a class="red-b btn rright orders-receive" data-no="{$vo.orders_shop_no}" data-header={$headers.receive}>确认收货</a>
+        <a class="rright h999" href="{:url('/refund/goods', ['orders_shop_no' => $vo['orders_shop_no']])}">申请退款</a>
+    {/case}
+    {case value='4'}
+        <a class="red-b btn rright" href="{:url('/orders/comments', ['orders_shop_no' => $vo['orders_shop_no']])}">立即评价</a>
+        <a class="rright h999" href="{:url('/service/goods', ['orders_shop_no' => $vo['orders_shop_no']])}">申请售后</a>
+    {/case}
+    {case value='5'}
+        <a class="red-b btn rright orders-buy-again" data-no="{$vo.orders_shop_no}" data-header={$headers.buy_again}>再次购买</a>
+        <a class="rright h999" href="{:url('/service/goods', ['orders_shop_no' => $vo['orders_shop_no']])}">申请售后</a>
+    {/case}
+    {case value='41'}
+        <a class="red-b btn rright orders-buy-again" data-no="{$vo.orders_shop_no}">再次购买</a>
+        <a class="rright h999">退款并关闭</a>
+    {/case}
+    {case value='51'}
+        <a class="red-b btn rright orders-buy-again" data-no="{$vo.orders_shop_no}">再次购买</a>
+        <a class="rright h999">订单已关闭</a>
+    {/case}
+{/switch}

@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{:isset($seo['title']) ? $seo['title'] : config('site.site')['name']}</title>
+    <meta name="keywords" content="{:isset($seo['keywords']) ? $seo['keywords'] : config('site.seo')['keywords']}">
+    <meta name="description" content="{:isset($seo['description']) ? $seo['description'] : config('site.seo')['description']}">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+    <link rel="apple-touch-icon" href="/static/wap/images/icon/apple-touch-icon.jpg">
+    <link rel="stylesheet" href="https://cdn01.baiwangfutong.com/wap/css/sm.min.css?v=0.0.1" />
+    <link rel="stylesheet" href="https://cdn01.baiwangfutong.com/wap/css/sm-extend.min.css" />
+    <!-- <link rel="stylesheet" href="css/swiper.min.css" /> -->
+    <link rel="stylesheet" href="https://cdn01.baiwangfutong.com/wap/css/common.css" />
+
+    <link rel="stylesheet" href="/static/wap/css/style.css" />
+    <link rel="stylesheet" href="/static/wap/css/css.css" />
+    <style>
+        .picker-items .col-group {
+            width: 30%;
+        }
+        .picker-items .col-name {
+            width: 70%;
+        }
+        .orders-list-box {
+            /*background: #f8f8f8;*/
+        }
+
+        .radio-box-false {
+            height: 3.5rem;
+            width: 0.8rem;
+            background: url(../images/cart/icon_kong.png) no-repeat center;
+            margin-right: 0.45rem;
+            float: left;
+            background-size: 0.8rem;
+            padding-left: 0.9rem;
+        }
+        .hide {
+            display: none;
+        }
+        .text-left {
+            text-align: left;
+        }
+        .goods-list-show .row {
+            display: block;
+        }
+        /** { touch-action: none; }*/
+    </style>
+    <script>
+        var APP_SHARE_DATA  = {
+            shop_title : "{:isset($seo['title']) ? $seo['title'] : config('site.site')['name']}",
+            shop_desc : "【百望商城】 {:isset($seo['description']) ? $seo['description'] : config('site.seo')['description']}",
+            shop_image : '{:getImagesDomain(config("site.site")["share_logo"])}',
+        }
+    </script>
+</head>

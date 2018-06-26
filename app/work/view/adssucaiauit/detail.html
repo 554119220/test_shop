@@ -1,0 +1,101 @@
+<style>
+    .docs-pictures img{
+        width:100px;
+        height: 100px;
+    }
+</style>
+<div class="bg-white p20 docs-pictures">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="col-xs-6">
+                <dl class="dl-horizontal">
+                    <dt>素材标题：</dt>
+                    <dd>{$res.ads_sucai_name ?? ''}</dd>
+                </dl>
+                <dl class="dl-horizontal">
+                    <dt>素材宽度：</dt>
+                    <dd>{$res.ads_sucai_width ?? ''}</dd>
+                </dl>
+                <dl class="dl-horizontal">
+                    <dt>素材高度：</dt>
+                    <dd>{$res.ads_sucai_height ?? ''}</dd>
+                </dl>
+            </div>
+            <div class="col-xs-6">
+                <dl class="dl-horizontal">
+                    <dt>素材图片：</dt>
+                    <dd><img data-original="{$res.ads_sucai_images}" src="{$res.ads_sucai_images}"></dd>
+                </dl>
+                <dl class="dl-horizontal">
+                    <dt>创建时间：</dt>
+                    <dd>{$res.ads_sucai_create_time ?? ''}</dd>
+                </dl>
+                <dl class="dl-horizontal">
+                    <dt>更新时间：</dt>
+                    <dd>{$res.ads_sucai_update_time ?? ''}</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+
+{eq name="res.ads_sucai_state" value="0"}
+    <h4>审核</h4>
+    <hr />
+
+    <form class="form-horizontal" id="form-add-{$Request.param.id}" onsubmit="return sform($(this))">
+        <div class="form-group" id="f-shop_settled_state">
+            <label class="control-label col-xs-3">状态<span class="required"> * </span></label>
+            <div class="col-xs-6"><input type="hidden" name="ads_sucai_state" id="ads_sucai_state" class="form-control" placeholder="请填写状态" value="2"><div class="radio-box"><ul><li class="item-box hide" data-value="0" onclick="radio_box($(this))">待审核</li><li class="item-box" data-value="1" onclick="radio_box($(this))">审核通过</li><li class="item-box active" data-value="2" onclick="radio_box($(this))">拒绝</li><li class="item-box hide" data-value="3" onclick="radio_box($(this))">编辑中</li></ul></div></div>
+        </div>
+        <div class="form-group" id="f-reason">
+            <label class="control-label col-xs-3">审核不通过原因</label>
+            <div class="col-xs-6"><textarea name="reason" id="reason" class="form-control" placeholder="请填写审核不通过原因"></textarea></div>
+        </div>
+        <div class="form-group hide">
+            <label class="control-label col-xs-3">短信内容（通过）</label>
+            <div class="col-xs-6"><textarea name="sms_content" class="form-control" placeholder="请填写短信内容">尊敬的用户:您的资料已通过审核，恭喜您开店成功，请查看帮助中心发布产品教程，登录商家中心完成产品发布、分享（请尽可能多的发布你的所有合格产品），快人一步瓜分数千万购物积 分消费红利 退订回N</textarea></div>
+        </div>
+        <div class="form-group hide">
+            <label class="control-label col-xs-3">短信内容（拒绝）</label>
+            <div class="col-xs-6"><textarea name="sms_content2" class="form-control" placeholder="请填写短信内容">尊敬的用户:抱歉通知您的资料未通过审核（目前平均审核通过率80%），请您马上于申请处查看未通过的原因，重新更改资料、提交审核（二次审核通过率90%），快人一步享受平台红利 退订回N</textarea></div>
+        </div>
+        <input type="hidden" name="ads_sucai_id" id="ads_sucai_id" value="{:request()->param('id')}">
+        <input type="hidden" name="is_work" id="is_work" value="1">
+        {:buildform(array(
+        'field'		=>array(
+        array(
+        'formtype'		=>'button',
+        'btns'			=>[['提交','btn btn-danger btn-150px','submit']],
+        ),
+        ),
+        ))}
+    </form>
+{/eq}
+
+    {notempty name="logs"}
+    <h4>审核记录</h4>
+    <hr />
+    <div class="mt-comments">
+        {volist name="logs" id="vo"}
+        <div class="mt-comment">
+            <div class="mt-comment-img">
+            </div>
+            <div class="mt-comment-body">
+                <div class="mt-comment-info">
+                    <span class="mt-comment-author">雇员：{$vo.work_account}({$vo.work_name})</span>
+                    <span class="mt-comment-date">{$vo.ads_sucai_audit_create_time}</span>
+                </div>
+                <div class="mt-comment-text"> {$vo.ads_sucai_audit_content} </div>
+                <div class="mt-comment-details">
+                    <span class="mt-comment-status {:$vo['ads_sucai_audit_state']==1?'mt-comment-status-approved':($vo['ads_sucai_audit_state']==0?'mt-comment-status-rejected':'mt-comment-status-pending')}">{eq name="$vo.ads_sucai_audit_state" value="0"}拒绝{else/}通过{/eq}</span>
+                </div>
+            </div>
+        </div>
+        {/volist}
+    </div>
+    {/notempty}
+
+</div>
+<link rel="stylesheet" href="/static/web/assets/zoom/dist/viewer.css">
+<script src="/static/web/assets/zoom/dist/viewer.js"></script>
+<script src="/static/web/assets/zoom/assets/js/main.js"></script>

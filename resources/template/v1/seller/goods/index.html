@@ -1,0 +1,409 @@
+{extend name="public:base" /}
+
+{block name="page"}
+<div class="tab_col pd10 pb0">
+	<div class="container-fluid bg-white radius4px pt15">
+		<form method="get" action="/goods">
+		<div class="main100 mb10">
+			<div class="main20 border-red over radius4px fl mr15">
+				<a class="btn text_white bg-red1  fl  main30 text-center">关键词</a>
+				<input name="q" value="{:input('q','')}" class="main70 line30 bor_no pl10" placeholder="请输入商品名称">
+			</div>
+			<div class="main25 border-red over radius4px fl mr15">
+				<a class="btn text_white bg-red1  fl  main20 pr10 text-center">价格</a>
+				<input name="min_price" value="{:input('min_price','')}" class="main30 line30 bor_no pl10 fl" placeholder="宝贝最低价">
+				<a class="btn text_white bg-red1  fl  main10  text-center">至</a>
+				<input name="max_price" value="{:input('max_price','')}" class="main30 line30 bor_no pl10 fl" placeholder="宝贝最高价">
+				<a class="btn text_white bg-red1  fl  main10 text-center">元</a>
+			</div>
+			<div class="main25 border-red radius4px fl mr15 w200">
+				<a class="btn text_white bg-red1  fl  main30 text-center">店铺分类</a>
+				<select name="sgcid" class="bs-select form-control main70" tabindex="-98">
+					<option value ="">选择店铺分类</option>
+					<!-- <option value ="">选择店铺分类</option> -->
+					{foreach name="shopGoodsCategory" key="key" item="value"}
+						<option value="{$value.goods_category_id}"{if condition="$value.goods_category_id eq input('sgcid')"}selected{/if}>{$value.goods_category_name}</option>
+							{notempty name="value.child"}
+								{foreach name="value.child" key="ko" item="vo"}
+									{if condition="$vo.goods_category_id eq input('sgcid')"}
+										<option value="{$vo.goods_category_id}" selected>&nbsp;&nbsp;{$vo.goods_category_name}</option>
+									{else/}
+										<option value="{$vo.goods_category_id}">&nbsp;&nbsp;{$vo.goods_category_name}</option>
+									{/if}
+								{/foreach}
+							{/notempty}
+						
+					{/foreach}
+               	</select>
+			</div>
+			<div class="main20 border-red radius4px fl mr15 w200">
+				<a class="btn text_white bg-red1  fl  main30 text-center">优选精选</a>
+				<select name="goods_recommend_type" class="bs-select form-control main70" tabindex="-98">
+					<option value="">选择</option>
+					{foreach name="recommendAttr" key="key" item="value"}
+						<option value="{$key}" {if condition="input('goods_recommend_type') eq $key and preg_match('/[0-9]+/',input('goods_recommend_type'))"} selected {/if}>{$value}</option>
+					{/foreach}
+               	</select>
+			</div>
+			<button type="submit" class="btn bg-red1 text_white radius4px pd7 pl15 pr15">搜索</button type="submit">
+		</div>
+		</form>
+		<div class="main100 line55 over row-tabs mt30" data-tab="{$Think.get.state}">
+				<a class="color666 fs14 ml15 mr15 a-tab" data-tab="" href="/goods" >全部</a>
+			{foreach name="stateArr" key="key" item="value"}
+				<a class="color666 fs14 ml15 mr15 a-tab" data-tab="{$key}" href="/goods?state={$key}" >{$value}</a>
+			{/foreach}
+				<a class="color666 fs14 ml15 mr15 a-tab" data-tab="recommend" href="/goods?state=recommend" >橱窗</a>
+
+				<a class="btn text_white bg-red-thunderbird radius4px pd7 pl25 pr25 mt13 fl mr15 fs12 fr"  href="/goods/create" >发布商品</a>
+				<a class="btn text_white bg-red-thunderbird radius4px pd7 pl25 pr25 mt13 fl mr15 fs12 fr"  href="/goods/apply_recommend_create" >申请优选</a>
+				{php}if(config('site.goods')['apply_goods_recommend1_open'] ?? 0){{/php}
+					<a class="btn text_white bg-red-thunderbird radius4px pd7 pl25 pr25 mt13 fl mr15 fs12 fr"  href="/goods/apply_recommend1_create" >申请精选</a>
+				{php}}{/php}
+		</div>
+	</div>
+	<!---->
+	<!-- <div class="alert mt10 mb10 bg-red2 color-red1 pl30">温馨提示，参与官方活动中的商品不允许编辑、下架、删除等操作……</div> -->
+	<div class="main100  bg-white radius4px pl15 pr15 minh595 over">
+		<div class="main100 line55 radius4px mb15 mt5 over">
+			<a class="btn text_white bg-red-thunderbird radius4px pd7 pl25 pr25 mt13 fl mr15 fs12" id="goods-putaway">批量上架</a>
+			<a class="btn text_white bg-red-thunderbird radius4px pd7 pl25 pr25 mt13 fl mr15 fs12" id="goods-under">批量下架</a>
+			<a class="btn text_white bg-red-thunderbird radius4px pd7 pl25 pr25 mt13 fl mr15 fs12" id="goods-set-category">批量修改店铺分类</a>
+			<a class="btn text_white bg-red-thunderbird radius4px pd7 pl25 pr25 mt13 fl mr15 fs12" id="goods-set-express">批量修改运费模板</a>
+			<a class="btn text_white bg-red-thunderbird radius4px pd7 pl25 pr25 mt13 fl mr15 fs12" id="goods-set-recommend">批量设置橱窗</a>
+			<a class="btn text_white bg-red-thunderbird radius4px pd7 pl25 pr25 mt13 fl mr15 fs12" id="goods-del-recommend">批量移除橱窗</a>
+			<a class="btn text_white bg-red-thunderbird radius4px pd7 pl25 pr25 mt13 fl mr15 fs12" id="goods-delete">批量删除</a>
+		</div>
+		<div class="main100 radius4px over">
+			<table class="table solid_all table_dashed tr12 table12" >
+                <thead class="bg-f5">
+                    <tr>
+                    	<th class="small_xs text-center">
+	                    	<label class="square mar0 fr">
+								<input id="click-goods-active" type="checkbox"><em class="fl"></em>
+							</label>
+						</th>
+						<th class="small_xs ">商品ID</th>
+                        <th class="small_xs ">商品图片</th>
+                        <th class="small_xs ">商品名称</th>
+                        <th class="small_xs ">最大价格</th>
+                        <th class="small_xs ">最小价格</th>
+                        <th class="small_xs ">商品库存</th>
+                        <th class="small_xs ">销售数量</th>
+                        <th class="small_xs ">是否橱窗</th>
+                        <th class="small_xs ">优选精选</th>
+                        <th class="small_xs ">购物积分比例</th>
+                        <th class="small_xs ">运费模版</th>
+                        <th class="small_xs ">商品分类</th>
+                        <!-- <th class="small_xs ">商品来源</th> -->
+                        <th class="small_xs ">发布时间</th>
+                        <th class="small_xs ">状态</th>
+                        <th class="small_xs ">操作</th>
+                    </tr>
+                </thead>
+                <tbody class="goods-list">
+                	{notempty name="data.data"}
+                		{php}$i=0;{/php}
+	                	{foreach name="data.data" key="key" item="value"}
+	                    <tr>
+	                    	<td class="text-center">
+	                    		<label class="square mar0 fr">
+									<input data-goods_id="{$value.goods_id}" type="checkbox" class="goods-item-checkbox"><em class="fl"></em>
+								</label>
+	                    	</td>
+	                    	<td>{$value.goods_id}</td>
+	                        <td><a class="image-zoom" href="{$value.goods_images}"><img width="100" class="radius4px" src="{$value.goods_images}?imageMogr2/thumbnail/200x200!"></a></td>
+	                        <td>{$value.goods_name}</td>
+	                        <td class="text_green">{$value.goods_max_price|default=""}</td>
+	                        <td class="text_green">{$value.goods_min_price|default=""}</td>
+	                        <td>{$value.goods_sku_num}</td>
+	                        <td>{$value.goods_sale_num}</td>
+	                        <td>{$value.goods_recommend == 1 ? '<span class="text_green">是</span>':'否'}</td>
+	                        <td>
+	                        	{switch name="value.goods_recommend_type"}
+	                        		{case value="1"}<span class="text_red">精选</span>{/case}
+	                        		{case value="2"}<span class="text_red">优选</span>{/case}
+	                        		{case value="3"}<span class="text_red">热卖</span>{/case}
+	                        		{case value="4"}<span class="text_red">每日必抢</span>{/case}
+	                        		{default}常规
+	                        	{/switch}
+	                        </td>
+	                        <td>{$value.goods_shopping_score_multi}%</td>
+	                        <td>{$value.goods_express_tpl.express_name|default=""}</td>
+	                        <td>{$value.goods_category.category_name|default=""}</td>
+	                        <!-- <td>百望商城</td> -->
+	                        <td>{$value.goods_create_time}</td>
+	                        <td><span class="{$value.goods_state == 1 ? '': 'text_red'}">{$value.goods_state_name}</span></td>
+	                        <td>
+	                        	<a class="color-blue mr5 copyHref" data-clipboard-text="{$wapDomain}/goods?id={$value.goods_sku.0.goods_sku_id|default=""}&share_code={:cookie('SHARE_CODE')}" href="javascript:;">复制链接</a>
+	                        	<a class="color-blue mr5" href="/goods/edit/id/{$value.goods_id}">编辑</a>
+	                        </td>
+	                    </tr>
+	                    {/foreach}
+                    {/notempty}
+                </tbody>
+            </table>
+		</div>
+		<!--页按钮-->
+		<div class="text-center">{$data.page|default=""}</div>
+	</div>
+</div>
+{/block}
+{block name="script"}
+<script type="text/javascript">
+	// 复制链接
+	$(function(){
+		var clipboard = new Clipboard('.copyHref');
+		clipboard.on('success', function(e) {
+		    success('复制成功');
+		    e.clearSelection();
+		});
+		clipboard.on('error', function(e) {
+		    error('复制失败，换浏览器试试');
+		});
+	});
+	//全选
+	$(document).on('click','#click-goods-active', function(){
+		var n = $(".goods-list .goods-item-checkbox");
+		if( $("#click-goods-active").is(":checked") ){
+			for (var i = 0;i < n.length;i++) {
+				n.get(i).checked = 'checked';
+			}
+		} else {
+			for(var i = 0;i < n.length;i++){
+				n.get(i).checked = false;
+			}
+		}
+	});
+	// 批量上架
+	$('#goods-putaway').on('click',function(){
+		if ( goodsIsChecked() == false ) {
+			return ;
+		}
+		if ( confirm('确定要上架吗？') ) {
+			apiPost({
+				data:{
+					goods_id:goodsCheckedValue(),
+				},
+				header:getHeader('headers0'),
+				log:true,
+				success:function(ret){
+					if ( ret.code == 20000 ) {
+						success('上架成功');
+						setTimeout(function(){
+							window.location.reload();
+						},1000);
+					} else {
+						error(ret.msg);
+					}
+				},
+			});
+		}
+	});
+	// 批量下架
+	$('#goods-under').on('click',function(){
+		if ( goodsIsChecked() == false ) {
+			return ;
+		}
+		if ( confirm('确定要下架吗？') ) {
+			apiPost({
+				data:{
+					goods_id:goodsCheckedValue(),
+				},
+				header:getHeader('headers1'),
+				log:true,
+				success:function(ret){
+					if ( ret.code == 20000 ) {
+						success('下架成功');
+						setTimeout(function(){
+							window.location.reload();
+						},1000);
+					} else {
+						error(ret.msg);
+					}
+				},
+			});
+		}
+	});
+	// 批量橱窗
+	$('#goods-set-recommend').on('click',function(){
+		if ( goodsIsChecked() == false ) {
+			return ;
+		}
+		if ( confirm('确定设置橱窗吗？') ) {
+			apiPost({
+				data:{
+					goods_id:goodsCheckedValue(),
+				},
+				header:getHeader('headers4'),
+				log:true,
+				success:function(ret){
+					if ( ret.code == 20000 ) {
+						success('设置成功');
+						setTimeout(function(){
+							window.location.reload();
+						},1000);
+					} else {
+						error(ret.msg);
+					}
+				},
+			});
+		}
+	});
+	// 批量移除橱窗
+	$('#goods-del-recommend').on('click',function(){
+		if ( goodsIsChecked() == false ) {
+			return ;
+		}
+		if ( confirm('确定移除橱窗吗？') ) {
+			apiPost({
+				data:{
+					goods_id:goodsCheckedValue(),
+				},
+				header:getHeader('headers5'),
+				log:true,
+				success:function(ret){
+					if ( ret.code == 20000 ) {
+						success('移除成功');
+						setTimeout(function(){
+							window.location.reload();
+						},1000);
+					} else {
+						error(ret.msg);
+					}
+				},
+			});
+		}
+	});
+	// 批量删除
+	$('#goods-delete').on('click',function(){
+		if ( goodsIsChecked() == false ) {
+			return ;
+		}
+		if ( confirm('确定要删除吗？') ) {
+			apiPost({
+				data:{
+					goods_id:goodsCheckedValue(),
+				},
+				header:getHeader('headers6'),
+				log:true,
+				success:function(ret){
+					if ( ret.code == 20000 ) {
+						success('删除成功');
+						setTimeout(function(){
+							window.location.reload();
+						},1000);
+					} else {
+						error(ret.msg);
+					}
+				},
+			});
+		}
+	});
+	function goodsIsChecked(){
+		var is = false;
+		$(".goods-list .goods-item-checkbox").each(function(k,v){
+			if ( $(this).prop('checked') == true ) {
+				is = true;
+			}
+		});
+		if ( is == 0 ) {
+			error('请选择一个商品');
+		}
+		return is;
+	}
+	function goodsCheckedValue(){
+		var arr = [];
+		$(".goods-list .goods-item-checkbox").each(function(k,v){
+			if ( $(this).prop('checked') == true ) {
+				arr.push(parseInt($(this).data('goods_id')));
+			}
+		});
+		return arr.join();
+	}
+	// 设置分类
+	$('#goods-set-category').on('click',function(){
+		if ( goodsIsChecked() == false ) {
+			return ;
+		}
+		MyModal({
+			title:'批量设置分类',
+			url:'/goods/set_category',
+		});
+		$(document).on('click.modal','#modal .modal-ok',function(){
+			var category_id = [];
+			$('#form-goods-set-category').find('input[type="checkbox"]').each(function(){
+				if ( $(this).prop('checked') == true ) {
+					category_id.push($(this).val());
+				}
+			});
+			if ( category_id.hasOwnProperty(0) == false ) {
+				error('请选择一个分类');
+				return;
+			}
+			apiPost({
+				data:{
+					goods_id:goodsCheckedValue(),
+					shop_goods_category_ids:category_id,
+				},
+				header:getHeader('headers2'),
+				log:true,
+				success:function(ret){
+					if ( ret.code == 20000 ) {
+						success('设置成功');
+						$('.modal-cancel').click();
+						setTimeout(function(){
+							window.location.reload();
+						},1000);
+					} else {
+						error(ret.msg);
+					}
+				},
+			});
+		});
+	});
+	// 设置运费模板
+	$('#goods-set-express').on('click',function(){
+		if ( goodsIsChecked() == false ) {
+			return ;
+		}
+		MyModal({
+			title:'批量设置运费模板',
+			url:'/goods/set_express',
+		});
+		$(document).on('click.modal','#modal .modal-ok',function(){
+			apiPost({
+				data:{
+					goods_id:goodsCheckedValue(),
+					express_id:$('input[type="radio"]:checked').val(),
+				},
+				header:getHeader('headers3'),
+				log:true,
+				success:function(ret){
+					if ( ret.code == 20000 ) {
+						// return;
+						success('设置成功');
+						$('.modal-cancel').click();
+						setTimeout(function(){
+							window.location.reload();
+						},1000);
+					} else {
+						error(ret.msg);
+					}
+				},
+			});
+		});
+	});
+	// 申请精选
+	$('#apply_recommend1_create').on('click',function(){
+		MyModal({
+			title:'{$recommend1Notice.article_title|default=""}',
+			msg:'{$recommend1Notice.article_content.article_content|default=""}',
+		},function(){
+			$(document).on('click.modal','#modal .modal-ok',function(){
+				window.location.href = '/goods/apply_recommend1_create';
+			});
+		});
+	});
+</script>
+{/block}

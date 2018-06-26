@@ -1,0 +1,824 @@
+
+/*注册*/
+body{
+	    background: url(/../images/pay/back.png) no-repeat right;
+		}
+.reg_main{
+	margin:0 auto;
+	    padding-top: 60px;
+	}
+#reg,.main_{
+	width:450px;
+	  -webkit-box-shadow: 0px 0px 11px #D8D8D8;
+	  background:#fff;
+	  border-radius:4px;
+	  margin:0 auto;
+	}
+.w400{
+	width:400px !important;
+	}
+.login_tishi{
+	background: #fdedee;
+    width: 320px;
+    height: 42px;
+    padding-top: 4px;
+    float: right;
+    border-radius: 3px;
+    padding-left: 16px;
+	}
+.login_tishi span{
+	color:#e70a1b;
+	}
+.tishi1{
+	margin-right:17px;
+	}
+.login_tishi div{
+	float:left;
+	}
+.zz_tishi{
+    width: 320px;
+    height: 32px;
+	line-height:32px;
+    float: right;
+	color:#e60012;
+	 text-align: center;
+	}	
+	
+.reg_title{
+	width:100%;
+	height:46px;
+	}
+.reg_title a{
+    width: 50%;
+    text-align: center;
+    color: #666;
+    float: left;
+    line-height: 46px;
+	font-size:16px;
+}
+.reg_title1{
+	color:#fff !important;
+	background:#e70a1b;
+	} 
+.content{
+	padding:28px 25px 0 0;
+	height:auto;
+	}
+.r{
+	    height: 56px;
+    position: relative;
+	}
+.r_{
+	    width: 100%;
+    overflow: hidden;
+	}
+.r_1{
+	height: initial;
+	width: 100%;
+    overflow: hidden;
+	}
+.r_name{
+    font-size: 14px;
+    color: #666;
+    text-align: right;
+    overflow: hidden;
+    line-height: 40px;
+    height: 40px;
+    float: right;
+	margin-right:10px;
+}
+
+.r_input {
+    border: 1px solid #d8d8d8;
+    border-radius: 3px;
+    font-size: 14px;
+    width: 318px;
+    line-height: 40px;
+    height: 40px;
+    padding-left: 16px;
+    float: right;
+}
+.tel{
+	width:232px;
+	border-top-right-radius:0;
+	border-bottom-right-radius:0;
+	border-right:none;
+	}
+.yan{
+	text-align:center;
+	color:#fff;
+	float:right;
+	background: #40abf3;
+	line-height: 40px;
+    height: 40px;
+	padding:0;
+	border:0;
+	width:86px;
+	}
+.reg_xx{
+	width:260px;
+	margin:0 auto;
+	margin-bottom:15px;
+	    overflow: hidden;
+	}
+.reg_xx p{
+	font-size:14px;
+	color:#666;
+	float:right;
+	}
+.reg_xx span{
+	width:16px;
+	height:16px;
+	display:inline-block;
+	float:left;
+	border-radius:50%;
+	border:1px solid #666;
+	margin-top: 2.5px;
+	}
+.btn_main{
+	padding-left:25px;
+	overflow:hidden;
+	height:145px;
+	}
+.btn1{
+	border-radius:3px;
+	background:#e60012;
+	color:#fff;
+	text-align:center;
+	font-size:16px;
+	width:100%;
+	display:block;
+	margin-bottom:16px;
+	    height: 46px;
+		line-height:46px;
+	padding:0;
+	border:none;
+	cursor:pointer;
+	}	
+.btn2{
+	border-radius:3px;
+	background:#fff;
+	color:#e60012;
+	text-align:center;
+	font-size:16px;
+	border:1px solid #e60012;
+	width:100%;
+	display:block;
+	height: 46px;
+		line-height:46px;
+	}	
+.btn2:hover{
+	background:red;
+	color:#fff;
+	}
+/*登录*/	
+.login_img{
+	height:99px;
+	text-align:center;
+	padding-top:52px;
+	}
+.user {
+    border: 1px solid #d8d8d8;
+    border-radius: 3px;
+    font-size: 14px;
+    width: calc(100% - 25px);
+    line-height: 40px;
+    height: 40px;
+    padding-left:54px;
+    float: right;
+	background:url(/../images/pay/user.png) no-repeat left;
+	background-position-x:14px;
+}
+.mima {
+    border: 1px solid #d8d8d8;
+    border-radius: 3px;
+    font-size: 14px;
+    width: calc(100% - 25px);
+    line-height: 40px;
+    height: 40px;
+    padding-left: 54px;
+    float: right;
+	background:url(/../images/pay/mi.png) no-repeat left;
+	background-position-x:14px;
+	margin:0 !important;
+}	
+#yan {
+    border: 1px solid #d8d8d8;
+    border-radius: 3px;
+    font-size: 14px;
+    width: calc(100% - 25px);
+    line-height: 40px;
+    height: 40px;
+    padding-left: 54px;
+    float: right;
+	background:url(/../images/pay/yan.png) no-repeat left;
+	background-position-x:14px;
+}
+.yzm{
+	    position: absolute;
+    right: 0;
+    top: 0;
+	}
+.i_dui{
+	    position: absolute;
+    right: 20px;
+    top: 14px;
+	}	
+.mi_{
+	position: absolute;
+    right: 20px;
+    top: 15px;
+	cursor:pointer;
+	}
+.r input:hover{
+	border:1px solid #F00 !important;
+	}	
+.tishi{
+	text-align: center;
+    clear: none;
+    padding-left: 28px;
+    color: #e60012;
+    line-height: 40px;
+    height: 40px;
+    margin-top: -16px;
+	}
+.login_{
+	line-height:45px;
+	height:160px;
+	padding-left:25px;
+	overflow:hidden;
+	}
+.login_3{
+	height:75px;
+	background:#fff;
+	line-height:75px;
+	width: 1200px;
+    margin: 0 auto;
+	}
+.login_3 .img{
+	float: left;
+    margin-top: 15px;
+    height: 40px;
+	}
+.login_3 .h {
+    font-size: 18px;
+    float: left;
+    margin-left: 20px;
+	 margin-right: 5px;
+	 color:#666;
+}
+.login_3 .h2 {
+    font-size: 14px;
+    float: left;
+	color:#666;
+}
+.login_ a{
+	color:#999;
+	}	
+.login_btn{
+	border-radius:3px;
+	background:#e60012;
+	color:#fff !important;
+	text-align:center;
+	font-size:16px;
+	width:100%;
+	display:block;
+	height: 46px;
+	line-height:46px;
+	border:none;
+	cursor:pointer;
+	}	
+.login_wang{
+	float:left;
+	margin-left:5px;
+	}
+.login_reg{
+	float:right;
+	margin-right:5px;
+	}	
+/*忘记密码*/
+.top135{
+	    padding-top: 135px;
+	}	
+.wang_bot{
+	margin-bottom:30px;
+	margin-top:28px;
+	}
+/*密码重置*/
+.mi_title{
+	color:#666;
+	line-height:75px;
+	height:47px;
+	text-align:center;
+	font-size:16px;
+	}
+.mi_bot{
+	margin-bottom:90px;
+	margin-top:28px;
+	}	
+/*提示*/
+.alert_{
+	position: absolute;
+    right: -262px;
+    top: 5px;
+    width: 250px;
+    background: #FF0000;
+    color: #fff;
+    border: 1px solid #D04242;
+    padding: 6px;
+    border-radius: 3px;
+	}	
+.alert_ i{
+	    width: 0px;
+    height: 0px;
+    position: absolute;
+    border-width: 9px;
+    border-style: solid;
+    margin-left: -25px;
+    border-color: transparent rgb(208, 66, 66) transparent transparent;
+	}
+.alert_ span{
+	color:#fff;
+	}
+/*第三方支付*/
+.back_none1{
+	margin:0 !important;
+	background:#f8f8f8;
+	}	
+.login_3_main{
+	padding:16px 16px 0 16px;
+	margin:0 auto;
+	width:1200px;
+	overflow:hidden;
+	background:#fff;
+	margin-top:16px;  
+	border-radius: 5px;
+	}
+.login_3_title{
+	overflow:hidden;
+	border-radius:5px;
+	background:#f8f8f8;
+	line-height:50px;
+	margin-bottom:16px;
+	padding:0 16px;
+	}
+.title_name{
+	float:left;
+	font-size:16px;
+	color:#666;
+	margin-right: 16px;
+	}
+.title_rmb{
+	color:#f23e47;
+	float:left;
+	font-size:22px;
+	}
+.title_xq{
+	float:right;
+	color:#40abf3;
+	font-size:14px;
+	cursor:pointer;
+	}
+.title_xq1{
+	    float: right;
+    border-left: 1px solid #666;
+    border-bottom: 1px solid #666;
+    height: 9px;
+    width: 9px;
+    transform: rotate(-45deg);
+    margin-top: 19px;
+    margin-left: 15px;
+	margin-right:2px;
+	}
+.title_hao{
+	float:right;
+	color:#666;
+	font-size:14px;
+	margin-right:28px;
+	}
+.title_hidden{
+	padding: 5px 16px;
+    overflow: hidden;
+    width: 100%;
+	display:none;
+	}
+.title_hidden p{
+	color: #666;
+    font-size: 14px;
+    margin-bottom: 10px;
+    float: left;
+    width: 100%;
+    line-height: 18px;
+	}
+.login_3_ma  {
+    height: 490px;
+    margin-bottom: 36px;
+    float: left;
+    width: 100%;
+    padding-top: 60px;
+}
+.ma_3{
+    padding: 35px 35px 22px 35px;
+    background: #f8f8f8;
+    width: 324px;
+	border-radius:5px;
+	margin: 0 auto;
+overflow: hidden;
+	}
+.ma_3 img{float:left;margin-bottom:26px;width:100%;}
+.ma_3 .div{
+	height:32px;
+	background:url(/../images/pay/saosao.png) no-repeat left;
+	background-position-x:55px;
+	float:left;
+	width:100%;
+	text-indent:99px;
+	}
+.ma_3 .div h3{
+	color:#999;
+	font-size: 14px;
+	    line-height: 16px;
+		}
+.ma_3 .div h4{
+	color:#666;
+	 font-size: 14px;
+	    line-height: 17px;
+		}
+.login_3_fu{
+	float:left;
+	margin:0px 66px 0 80px;
+	padding-top:30px;
+	}	
+.login_3_fu1{
+	float:left;
+	padding-top: 30px;
+	}
+.login_fu_back{
+	background:url(/../images/pay/diandian.png) no-repeat top;
+	background-position-y: -10px;
+	}
+.fu{
+	overflow: hidden;
+	margin: 0 auto;
+	width: 280px;
+	}
+.fu1{
+	height:200px;
+	width:280px;
+	border:1px solid #d8d8d8;
+	border-radius:7px;
+	text-align:center;
+	float:left;
+	cursor:pointer;
+	margin-bottom:15px;
+	margin-top: 60px;
+	}
+.fu2{
+	height:200px;
+	width:282px;
+	border:1px solid #d8d8d8;
+	border-radius:7px;
+	text-align:center;
+	float:left;
+	cursor:pointer;
+	}
+.fu .h1{
+	font-size: 32px;
+    background: url(/../images/pay/login33.png) no-repeat center;
+    background-position-y: 40px;
+    padding-top: 110px;
+	}
+.fu .h2{
+	font-size: 32px;
+    background: url(/../images/pay/login33333.png) no-repeat center;
+    background-position-y: 40px;
+    padding-top: 110px;
+	}
+.fu .h3{
+	font-size: 32px;
+    background: url(/../images/pay/xxxxrmb.png) no-repeat center;
+    background-position-y: 40px;
+    padding-top: 110px;
+	}
+.fu span{
+	font-size:20px;
+	}
+.fu_dui{
+	border:1px solid #5990f4;
+	background:url(/../images/pay/login_3_dui.png) no-repeat right top;
+	}
+.fu_btn{
+	width:100%;
+	font-size:18px;
+	color:#fff;
+	line-height:42px;
+	height:42px;
+	margin-top:25px;
+	    background: #5990f4;
+    float: left;
+    text-align: center;
+	border-radius:3px;
+	cursor:pointer;
+	}
+.fu_bank{
+    overflow: hidden;
+    border-radius: 5px;
+    background: #f8f8f8 url(/../images/pay/bank_.png) no-repeat left;
+    line-height: 50px;
+    margin-bottom: 36px;
+    padding: 0px 60px;
+    background-position-x: 16px;
+    width: 100%;
+}
+.fu_bank span{
+	font-size:16px;
+	color:#5990f4;
+	padding-right:16px;
+	background:url(/../images/pay/tttt1.png) no-repeat right;
+	}
+.fu_bank .back{
+	background:url(/../images/pay/tttt.png) no-repeat right;
+	}
+.fu_logo_main img{
+	    width: 24px;
+    float: left;
+    margin-top: 12.5px;
+    margin-right: 15px;
+	}
+.fu_logo_main li{
+    border-radius: 3px;
+    border: 1px solid #d8d8d8;
+    padding-left: 38px;
+    color: #666;
+    font-size: 14px;
+    margin-right: 26px;
+    float: left;
+    line-height: 50px;
+    height: 50px;
+    width: 180px;
+    margin-bottom: 20px;
+}
+.fu_btn_{
+	float: left;
+    width: 100%;
+	padding-left:16px;
+	}
+.fu_btn_ .fu_btn{
+    margin-top: 30px;
+	margin-bottom: 25px;
+	width: 180px;
+	}
+.fu_logo_main{
+	    padding: 0 16px;
+		}
+.fu__{
+	overflow: hidden;
+	padding: 55px;
+}
+.fu__title{
+    color: #666;
+    font-size: 16px;
+    height: 18px;
+    line-height: 18px;
+    border-left: 3px solid red;
+    margin-bottom: 30px;
+    text-indent: 16px;
+    float: left;
+    width: 100%;
+    margin-left: 16px;
+}
+.fu_logo_main .fu_dui {
+    border: 1px solid #5990f4;
+    background: url(/../images/pay/login_3_dui.png) no-repeat right top;
+	background-size:22px;
+}
+.fu_bot{
+	position:relative !important;
+	margin-top:16px;
+	}
+.title_3{
+	height: 50px;
+    overflow: hidden;
+	}
+	
+/*第三支付-支付*/
+.fu_bor{
+	overflow: hidden;
+margin-bottom: 8px;
+width: 100%;
+	}
+.fu_bor .s{
+	float:left;
+	width:85px;
+	margin-right:10px;
+	color:#666;
+	font-size:14px;
+	text-align:right;
+	height: 20px;
+    line-height: 20px;
+	}
+.fu_bor .s2{
+	float:left;
+	width:85px;
+	margin-right:10px;
+	color:#666;
+	font-size:14px;
+	text-align:right;
+	height: 42px;
+    line-height: 42px;
+	}
+.fu_bor .s img{
+	    margin-right: 5px;
+		}
+.fu_bor .h{
+	float:left;
+	color:#666;
+	font-size:14px;
+	text-align:right;
+	height: 20px;
+    line-height: 20px;
+	}
+.fu_bor .input{
+	    float: left;
+    color: #666;
+    font-size: 14px;
+    height: 42px;
+    line-height: 42px;
+    border-radius: 5px;
+    border: 1px solid #d8d8d8;
+    margin-bottom: 12px;
+    width: 185px;
+    text-indent: 16px;
+	background:#fff;
+	}
+.fu_bor1{
+	margin-bottom: 0;
+    margin-top: 5px;
+    float: left;
+    width: 100%;
+	overflow:hidden;
+}
+.fu_bor .red1{
+	margin-top: -5px;
+width: 100%;
+font-size: 12px;
+}
+.fu_bor .fu_btn{margin-top:25px;    margin-bottom: 360px;}
+
+.login_right.s{color:#666;}
+.fu_no{
+	text-align: center;
+    margin: 70px 0 430px 0;
+	}
+.fu_no h3{
+	font-size:16px;
+	color:#ff4141;
+	margin:25px 0;
+	}
+.fu_no .btn_1{
+	width:100px;
+	}
+.fu_no .s{
+    font-size: 16px;
+    line-height: 22px;
+    margin: 8px 0 10px 0;
+    color: #666;
+}
+.fu_no .s span{
+    font-size:16px;
+}
+.fu_no .s1{
+    font-size: 16px;
+    line-height: 20px;
+    margin: 3px 0 20px 0;
+    color: #666;
+}
+.fu_no .lan1{
+	font-size: 16px;
+    margin-right: 4px;
+    margin-left: 7px;
+	}
+
+.top135.f{
+	position: fixed;
+    z-index: 99;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(0,0,0,0.5);
+    height: 100%;
+	display:none;
+	}
+.left_3{
+	border-radius:4px;
+	background:#f8f8f8;
+	min-height:800px;
+	line-height:60px;
+	overflow:hidden;
+	float: left;
+	width: 200px;
+	text-align: left;
+	}
+.left_3 li{
+	height:60px;
+	position:relative;
+	}
+.left_3 li a{
+	height: 60px;
+	color: #999;
+	font-size: 16px;
+	display: inline-block;
+	width: 100%;
+	padding-left: 53px;
+	}
+.left_3 .a,.left_3 li:hover{
+	background:#e8e8e8 url(/../images/pay/33jiao.png) no-repeat right;
+	border-radius:3px;
+	color:#666;
+	}
+.left_3 li i{
+    background: url(/../images/pay/3jiao.png) no-repeat !important;
+    border-radius: 3px;
+    color: #fff;
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-size: 10px;
+    width: 38px;
+    line-height: 17px;
+    height: 60px;
+    text-indent: -13px;
+}
+.left_3 li:hover a{
+	color:#666;
+	}
+.left_3 .s{
+	background:url(/../images/pay/31.png) no-repeat left;
+	background-position-x: 30px;
+	}
+.left_3 .s1{
+	background:url(/../images/pay/32.png) no-repeat left;
+	background-position-x: 30px;
+	}
+.left_3 .s2{
+	background:url(/../images/pay/33.png) no-repeat left;
+	background-position-x: 30px;
+	}
+.left_3 .s3{
+	background:url(/../images/pay/34.png) no-repeat left;
+	background-position-x: 30px;
+	}
+.left_3 .s4{
+	background:url(/../images/pay/35.png) no-repeat left;
+	background-position-x: 30px;
+	}
+.left_3 .s5{
+	background:url(/../images/pay/36.png) no-repeat left;
+	background-position-x: 30px;
+	}
+.main_s{
+	margin: auto;
+float: left;
+width: calc(100% - 200px);
+display:none;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+footer{
+	text-align:center;
+	font-size:14px;
+	color:#666;
+	position:fixed;
+	bottom:0;
+	left:0;
+	background:#eee;
+	height:36px;
+	line-height:36px;
+	width:100%;
+	}

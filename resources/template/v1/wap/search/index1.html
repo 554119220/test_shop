@@ -1,0 +1,36 @@
+{extend name="public:base" /}
+
+{block name="page"}
+<!-- 顶部标题栏 -->
+<header class="bar bar-nav bg_white">
+    <!-- <a class="icon icon-me pull-left open-panel"></a> -->
+    <a class="icon icon_common pull-left r12 icon_back back" style="margin-top:.6rem"></a>
+    <h1 class="title home_title">
+        <div class="search-input">
+            <label class="icon icon-search" for="search"></label>
+            <input class="bg_f8" type="search" id='search' placeholder='输入关键字搜索产品'/>
+        </div>
+    </h1>
+    <a href="javascript:;" class="pull-right rfs14 text_55 btn-search" style="margin-top:.5rem">搜索</a>
+</header>
+<!-- 这里是页面内容区 -->
+<div class="content bg_f8">
+    <div class="rpd10">
+        <p class="mg0">
+            <span class="rfs14 text_99">历史搜索记录清除</span>
+            <a class="icon icon-remove pull-right text_99 btn-flush-history"></a>
+        </p>
+        <div class="clearfix rmt10">
+            {eq name="data.code" value="20000"}
+                {volist name="data.data" id="vo"}
+                    <a class="pull-left rmr10 search_record mb10" data-url="/search/goods?q={$vo}">{$vo}</a>
+                {/volist}
+            {/eq}
+        </div>
+    </div>
+
+    {:widget('like/index')}
+
+</div>
+<!-- 页面内容区到此为止 -->
+{/block}

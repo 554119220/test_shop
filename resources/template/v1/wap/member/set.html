@@ -1,0 +1,38 @@
+{extend name="public:base" /}
+
+{block name="page"}
+<!-- 标题栏 -->
+<header class="bar bar-nav bbai">
+    <a class="l_return back"><img class="main100" src="/static/wap/images/reg/l_return1.png"></a>
+    <h1 class="title">设置</h1>
+</header>
+
+<!-- 这里是页面内容区 -->
+<div class="content qiye">
+    <ul class="main100 bbai qiye_ul m5px">
+        <li>
+            <a data-no-cache="true" href="/member/detail">
+            <span class="lleft">个人资料</span>
+            <span class="s hot"></span>
+            </a>
+        </li>
+        <li>
+            <a data-no-cache="true" href="/address">
+            <span class="lleft">收货地址</span>
+            <span class="s hot"></span>
+            </a>
+        </li>
+    </ul>
+    <ul class="main100 bbai qiye_ul m5px">
+        <li>
+            <a data-no-cache="true" href="/help">
+            <span class="lleft">帮助中心</span>
+            <span class="s hot"></span>
+            </a>
+        </li>
+    </ul>
+    {php}if(empty(session('is_app'))){{/php}
+        <a class="main100 red-b tt25" href="/user/logout">退出登录</a>
+    {php}}{/php}
+</div>
+{/block}

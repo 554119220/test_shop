@@ -1,0 +1,107 @@
+{extend name="public:base" /}
+{block name="page"}
+<!-- 顶部标题栏 -->
+<header class="bar bar-nav bg_white">
+    <a class="icon icon_common pull-left r12 icon_back back" style="margin-top:.6rem"></a>
+    <h1 class="title">  领券中心 </h1>
+</header>
+<div class="content bg_f8">
+    <div class="db text-center">
+        <img style="width:5rem;margin: 2rem 0 1rem" src="/static/wap/images/shop_no.png">
+        <p class="mg0 text_77 rfs16">即将开放</p>
+        <p class="mg0 text_99 rfs14">客官，<a class="text_red" href="/">去商城看看吧~</a></p>
+    </div>
+</div>
+<div class="content bg_f8" style="display: none">
+    <div class="bg_white rpd10 rfs14 text_over" style="display: none">
+        <span class="vertical_red"></span>
+        <span class="text_77">10元商品礼金券</span>
+    </div>
+    <div class="rpd10 active" style="display: none;"><!-- 不添加类active 表示有券可抢 -->
+        <div class="bg_white get_coupons clearfix">
+            <img src="/static/wap/images/shop_14.png">
+            <div class="pull-left coupons_msg">
+                <div class="text_over mt5">适用于：指定商品</div>
+                <div class="text_over">有效期至：2017-10-10</div>
+                <div class="ab"><span class="rfs20 mr5 text_red">45</span><small>满120元可用</small></div>
+            </div>
+
+            <div class="pull-right get_coupons_right">
+                <svg class="pull-right" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 5 60 60">
+                    <path d="M18 55 A25 25, 0, 1, 1, 42 55" fill="none" stroke-width="4" stroke-linecap="round" style="stroke: #ffb4b9;"></path>
+                    <path d="M18 55 A25 25, 0, 1, 1, 42 55" fill="none" stroke-width="4" stroke-linecap="round" class="svg_path" style="stroke-dashoffset: 70;"></path>
+                    <!-- stroke-dashoffset的值在133-2之间  （注：134=0%，105=25%, 70=50%, 35=25%）-->
+                </svg>
+                <div class="ab text-center rfs10">
+                    <small>已抢</small>
+                    <p class="mg0 mt-3">50%</p>
+                </div>
+                <a href="#" class="button button-round button-fill button-danger">立刻领取</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg_white rpd10 rfs14 text_over">
+        <span class="vertical_red"></span>
+        <span class="text_77">50元商品礼金券</span>
+    </div>
+    <div class="rpd10 active_no"><!-- 添加类active_no 已抢完 -->
+        <div class="bg_white get_coupons clearfix">
+            <img src="/static/wap/images/shop_14.png">
+            <div class="pull-left coupons_msg">
+                <div class="text_over mt5">适用于：指定商品</div>
+                <div class="text_over">有效期至：2017-10-10</div>
+                <div class="ab"><span class="rfs20 mr5 text_red">45</span><small>满120元可用</small></div>
+            </div>
+
+            <div class="pull-right get_coupons_right">
+                <svg class="pull-right" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 5 60 60">
+                    <path d="M18 55 A25 25, 0, 1, 1, 42 55" fill="none" stroke-width="4" stroke-linecap="round" style="stroke: #ffb4b9;"></path>
+                    <path d="M18 55 A25 25, 0, 1, 1, 42 55" fill="none" stroke-width="4" stroke-linecap="round" class="svg_path" style="stroke-dashoffset: 70;"></path>
+                    <!-- stroke-dashoffset的值在133-2之间  （注：134=0%，105=25%, 70=50%, 35=25%）-->
+                </svg>
+                <div class="ab text-center rfs10">
+                    <small>已抢</small>
+                    <p class="mg0 mt-3">50%</p>
+                </div>
+                <a href="#" class="button button-round button-fill button-danger">查看详情</a>
+            </div>
+
+        </div>
+    </div>
+    <div class="bg_white rpd10 rfs14 text_over">
+        <span class="vertical_red"></span>
+        <span class="text_77">100元商品礼金券</span>
+    </div>
+    <div class="rpd10 active_go"><!-- 添加类active_go 已领 -->
+        <div class="bg_white get_coupons clearfix">
+            <img src="/static/wap/images/shop_14.png">
+            <div class="pull-left coupons_msg">
+                <div class="text_over mt5">适用于：指定商品</div>
+                <div class="text_over">有效期至：2017-10-10</div>
+                <div class="ab"><span class="rfs20 mr5 text_red">45</span><small>满120元可用</small></div>
+            </div>
+
+            <div class="pull-right get_coupons_right">
+                <svg class="pull-right" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 5 60 60">
+                    <path d="M18 55 A25 25, 0, 1, 1, 42 55" fill="none" stroke-width="4" stroke-linecap="round" style="stroke: #ffb4b9;"></path>
+                    <path d="M18 55 A25 25, 0, 1, 1, 42 55" fill="none" stroke-width="4" stroke-linecap="round" class="svg_path" style="stroke-dashoffset: 70;"></path>
+                    <!-- stroke-dashoffset的值在133-2之间  （注：134=0%，105=25%, 70=50%, 35=25%）-->
+                </svg>
+                <div class="ab text-center rfs10">
+                    <small>已抢</small>
+                    <p class="mg0 mt-3">50%</p>
+                </div>
+                <a href="#" class="button button-round button-fill button-danger">立即使用</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="mask_page"></div><!-- 遮罩 -->
+<div class="mask_page_center"><!-- 弹窗居中 -->
+    <div class="text-center">
+        <img style="width:7rem" src="/static/wap/images/icon/get_coupons.png">
+    </div>
+    <a href="#" class="button button_sm button-fill button-danger close-panel">知道了</a>
+</div>
+{/block}

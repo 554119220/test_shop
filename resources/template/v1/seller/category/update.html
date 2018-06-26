@@ -1,0 +1,95 @@
+{extend name="public:base" /}
+{block name="page"}
+<div class='tab_row mb10'>
+<div class="tab_col pd10 pb0">
+	<div class="main100 over pd20 bg_white m20">
+		{notempty name="detail"}
+		<form id="form-category">
+
+			<input type="hidden" value="{:input('category_id',0,'int')}" name="category_id">
+
+			<!-- 名称 -->
+		    <div class="main100 mb10 fs12 pt15">分类名称<span class="color-red1">*</span></div>
+		    <div class="main100 mb10">
+		        <input name="goods_category_name" placeholder="请输入分类名称" class="main100 radius4px container-fluid line32 bor_img mb10" value="{$detail.goods_category_name}"/>
+		    </div>
+		    <!-- 父级分类 -->
+		    <div class="main100 mb10 fs12 pt15">父级分类<span class="color-red1">*</span></div>
+			<div class="main100  mb20">
+				{eq name="detail.goods_category_sid" value="0"}
+					<!-- 顶级分类不可更改 -->
+					<select disabled="true" name="goods_category_sid" class="bs-select form-control main100 fs12">
+						<option value="0">顶级分类</option>
+	                </select>
+	                <input type="hidden" value="0" name="goods_category_sid">
+	            {else/}
+		            <select name="goods_category_sid" class="bs-select form-control main100 fs12">
+						{foreach name="list" item="value"}
+							{if condition="$value['goods_category_id'] eq $detail['goods_category_sid']"}
+	                    		<option value="{$value.goods_category_id}" selected>{$value.goods_category_name}</option>
+	                    	{else/}
+	                    		<option value="{$value.goods_category_id}">{$value.goods_category_name}</option>
+							{/if}
+	                    {/foreach}
+	                </select>
+				{/eq}
+			</div>
+		    <!--img-->
+		    <div class="main100 mb10 fs12 ">分类图标<span class="color-red1"></span></div>
+			<a class="btn text_white bg-red-thunderbird radius4px pd6 pl25 pr25 mb10" onclick="triggerUploadImages('#category-images','.category-images');">选择图片</a>
+			<input type="hidden" name="goods_category_icon" value="{$detail.goods_category_icon}" id="category-images">
+			<div class="main100 mb20 over">
+				<img class="pull-left bor_img radius4px category-images" style="max-width: 300px;max-height: 300px;" src="{$detail.goods_category_icon_url}">
+			</div>
+			<!-- 排序 -->
+			<div class="main100 mb10 fs12 pt15">排序<span class="color-red1">*</span></div>
+		    <div class="main100 mb20">
+		        <input name="goods_category_sort" placeholder="请输入分类排序" class="main100 radius4px container-fluid line32 bor_img mb10" value="{$detail.goods_category_sort}"/>
+		    </div>
+		    <!-- 状态 -->
+		    <div class="main100  fs14 color666">状态<span class="color-red1">*</span></div>
+			<div class="main100 over">
+				<div class="form-group">
+					<div class="pull-left">
+						<p class="pull-left mr15">
+							<label class="radius"><input type="radio" name="goods_category_state" value="1" {eq name="detail.goods_category_state" value="1"}checked{/eq}><em class="fl"></em>
+							<span class="small_xs ml10">正常</span>
+						</label></p>
+						<p class="pull-left mr15">
+							<label class="radius"><input type="radio" name="goods_category_state" value="0" {eq name="detail.goods_category_state" value="0"}checked{/eq}><em class="fl"></em>
+							<span class="small_xs ml10">禁用</span>
+						</label></p>
+					</div>
+				</div>
+			</div>
+			<a class="btn text_white bg-red-thunderbird radius4px pd7 pl25 pr25 mt13  fl mr15 fs12" id="post-data">确定修改</a>
+		</form>
+		<input class="upload-file" style="display: none;" id="upload-images-base" type="file" onchange="uploadImagesBase();">
+		{else/}
+			<h4>分类不存在。</h4>
+		{/notempty}
+	</div>
+</div>
+</div>
+{/block}
+{block name="script"}
+<script type="text/javascript">
+    $('#post-data').on('click',function(){
+        apiPost({
+            data:getFormJson('#form-category'),
+            header:getHeader('headers0'),
+            log:true,
+            success:function(ret){
+                if ( ret.code == 20000 ) {
+                    success('添加成功');
+                    setTimeout(function(){
+                    	window.location.href = '/category';
+                    },1000);
+                } else {
+                    error(ret.msg);
+                }
+            },
+        });
+    });
+</script>
+{/block}

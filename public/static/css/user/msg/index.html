@@ -1,0 +1,71 @@
+
+<!doctype html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>强大的响应式jQuery消息通知框和信息提示框插件|DEMO_jQuery之家-自由分享jQuery、html5、css3的插件库</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="bootstrap-3.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="demo/demo.css"/>
+    <link rel="stylesheet" type="text/css" href="css/default.css">
+    <link rel="stylesheet" href="dist/css/Lobibox.min.css"/>
+    <!--[if IE]>
+        <script src="http://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+    <div class="htmleaf-container">
+
+        <div class="htmleaf-content bgcolor-3">
+
+        <div class="container-fluid">
+            <div class="container-content">
+                
+                <!--Notifications-->
+                <div id="notifications">
+                    <!--Examples-->
+                    <div id="lobibox-notification-examples">
+                        <h3>Examples</h3>
+                        <!--Basic notifications-->
+                        <fieldset>
+                            <legend>Basic notifications <small class="text-muted"><small>Can be closed by clicking on it</small></small></legend>
+                            <div class="bs-example">
+                                <button id="basicInfo" class="btn btn-info">Info</button>
+                                <button id="basicWarning" class="btn btn-warning">Warning</button>
+                                <button id="basicError" class="btn btn-danger">Error</button>
+                                <button id="basicSuccess" class="btn btn-success">Success</button>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    <a onclick="asd();">测试</a>
+    
+    <script src="lib/jquery.1.11.min.js"></script>
+    <script src="bootstrap.min.js"></script>
+    <script src="dist/js/lobibox.min.js"></script>
+    <script src="demo/demo.js"></script>
+    <script type="text/javascript">
+        function asd(){
+            var oDiv = document.getElementById('basicError');   //获取元素div
+            oDiv.onclick = function(){   //给元素增加点击事件
+            };
+            Lobibox.notify(
+              // 'warning', 'info', 'success', 'error'
+              'error',
+              {
+                msg:'错误',
+                position: "bottom left",
+                delay: 5000,
+                width: 1024,
+              }
+            );   
+        }
+    </script>
+</body>
+</html>

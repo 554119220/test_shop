@@ -1,0 +1,82 @@
+{extend name="public:base" /}
+{block name="page"}
+<!-- 标题栏 -->
+<header class="bar bar-nav bbai ">
+    <a class="l_return back"><img class="main100" src="/static/wap/images/reg/l_return1.png"></a>
+    <h1 class="title">可退款商品</h1>
+</header>
+
+<!-- 这里是页面内容区 -->
+<div class="content pull-to-refresh-content" data-ptr-distance="55">
+    <!-- 默认的下拉刷新层 -->
+    {include file="public:refresh" /}
+    {eq name="data.code" value="20000"}
+    <!--购物车内容-->
+        <div class="main100">
+            <!--购物车产品-->
+            <div class="cart_cp">
+                <!---->
+                <div class="main100 cart_newcp">
+                    <div class="tabs">
+                        <!--列表1-->
+                        <div class="tab active">
+                            <!--产品-->
+                            <div class="main100 bor5px">
+                                <div class="shou_title">{$data.data.orders_shop_no}</div>
+                                {volist name="data.data.goods" id="goods"}
+                                    <div class="li_main">
+                                        <img class="img" src="{$goods.goods_images}">
+                                        <div class="cart_cpx">
+                                            <p class="title_ text_line_2">{$goods.goods_name}</p>
+                                            <span class="rmb">￥ {$goods.goods_refund_amount}</span>
+                                            <div class="color">{$goods.goods_sku_name} <span>x{$goods.goods_refund_num}</span></div>
+                                        </div>
+                                    </div>
+                                    <div class="order_shop main100  bbai m5px" style="border-bottom: solid #fafafa 0.3rem;padding-bottom: 0.4rem">
+                                        <a data-no-cache="true" href="/refund/apply?shop_no={$data.data.orders_shop_no}&goods_id={$goods.orders_goods_id}" class="rright h999 marr">申请退款</a>
+                                    </div>
+                                {/volist}
+                                <!--商品总金额2-->
+                                <ul class="main100 order_rmb2">
+                                    <li class="main100">
+                                        <span class="lleft h999">商品总金额：</span>
+                                        <span class="rright h999">￥ {$data.data.orders_shop_goods_edit_amount}</span>
+                                    </li>
+                                    <li class="main100">
+                                        <span class="lleft h999">运费：</span>
+                                        <span class="rright h999">￥ {$data.data.orders_shop_express_edit_amount}</span>
+                                    </li>
+                                    <li class="main100">
+                                        <span class="lleft h666">合计：</span>
+                                        <span class="rright cred">￥ {$data.data.orders_shop_pay_amount}</span>
+                                    </li>
+                                </ul>
+                                <!---->
+                                <div class="main100 bbai order_hot list2m">
+                                    <span class="lleft f7 h666">下单时间</span>
+                                    <span class="rright f65 h666">{$data.data.orders_shop_create_time}</span>
+                                </div>
+                            </div>
+                            <!--产品end-->
+                        </div>
+                    </div>
+                    <!---->
+                </div>
+            </div>
+            <!--联系商家-->
+            <!--<div class="order_shop main100  bbai m5px ">-->
+                <!--<span class="lleft">联系商家</span>-->
+                <!--<a class="rright h999 marr">取消售后</a>-->
+            <!--</div>-->
+        </div>
+    {else/}
+    <div class="db text-center">
+        <img style="width:5rem;margin: 2rem 0 1rem" src="/static/wap/images/shop_no.png">
+        <p class="mg0 text_77 rfs16">暂无可退商品</p>
+        <p class="mg0 text_99 rfs14">客官，<a class="text_red" href="/">去商城看看吧~</a></p>
+    </div>
+    {/eq}
+    <!--购物车内容end-->
+</div>
+<!-- 这里是页面内容区end -->
+{/block}

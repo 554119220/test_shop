@@ -1,0 +1,423 @@
+{extend name="public:base" /}
+{block name="page"}
+<div class="tab_col pd10 pb0">
+	<div class="container-fluid line55 bg-white radius4px">
+		<p><i class="redicon"></i>
+		<span class="fs14 color333">编辑运费模版</span></p>
+		<!-- <a href="/express/create" class="btn text_white bg-red-thunderbird radius4px pd8 pl35 pr35 mt8 fl mb20">创建运费模版</a> -->
+	</div>
+	<div class="main100  bg-white radius4px pl15 pr15 minh595">
+        <form id="form">
+    		<div class="main100 radius4px over">
+                <!-- 模板名称 -->
+                <div class="main100 mb10 fs12 pt15">模板名称<span class="color-red1">*</span></div>
+                <div class="main100 mb10">
+                    <input name="express_name" placeholder="请输入模板名称" class="main100 radius4px container-fluid line32 bor_img mb10" value="{$detail.express_name}"/>
+                </div>
+                <!-- 铭板备注 -->
+                <div class="main100 mb10 fs12 pt15">模板备注<span class="color-red1">*</span></div>
+                <div class="main100 mb10">
+                    <textarea name="express_remark" placeholder="请输入模板备注" class="main100 radius4px container-fluid line32 bor_img mb10 h70">{$detail.express_remark}</textarea>
+                </div>
+                <!-- 发货地址设置 -->
+                <div class="main100 mb10 fs12 pt15">发货地址设置<span class="color-red1">*</span></div>
+                <div class="main100 mb10 clearfix">
+                    <div class="form-group fl">
+                        <!-- <label>发货省份</label> -->
+                        <select name="express_ship_province_id" class="form-control input-small">
+                            <option value="">选择省份</option>
+                            {foreach name="ProvinceList" item="value"}
+                                {if condition="$value['id'] eq $detail['express_ship_province_id']"}
+                                    <option value="{$value.id}" selected="selected">{$value.a_name}</option>
+                                {else/}
+                                    <option value="{$value.id}">{$value.a_name}</option>
+                                {/if}
+                            {/foreach}
+                        </select>
+                    </div>
+                    <div class="form-group fl ml15">
+                        <!-- <label>Medium Select</label> -->
+                        <select name="express_ship_city_id" class="form-control input-small">
+                            <option value="">选择城市</option>
+                            {foreach name="CityList" item="value"}
+                                {if condition="$value['id'] eq $detail['express_ship_city_id']"}
+                                    <option value="{$value.id}" selected="selected">{$value.a_name}</option>
+                                {else/}
+                                    <option value="{$value.id}">{$value.a_name}</option>
+                                {/if}
+                            {/foreach}
+                        </select>
+                    </div>
+                </div>
+                <!-- 发货时间 -->
+                <div class="main100 mb10 fs12 pt15">发货时间 (小时)<span class="color-red1">*</span></div>
+                <div class="main100 mb10">
+                    <input name="express_ship_time" placeholder="请输入发货时间，默认48小时" class="main100 radius4px container-fluid line32 bor_img mb10" value="{$detail.express_ship_time}"/>
+                </div>
+                <!-- 包邮 -->
+                <div class="main100 fs14 color666">是否包邮<span class="color-red1">*</span></div>
+                <div class="main100 over">
+                    <div class="form-group ">
+                        <div class="pull-left mt10 mb10">
+                            {foreach name="FreeArray" key="key" item="value"}
+                                {if condition="$key eq $detail['express_is_free']"}
+                                    <p class="pull-left mr15">
+                                        <label class="radius"><input type="radio" name="express_is_free" value="{$key}" checked><em class="fl"></em>
+                                            <span class="small_xs ml10">{$value}</span>
+                                        </label>
+                                    </p>
+                                {else/}
+                                    <p class="pull-left mr15">
+                                        <label class="radius"><input type="radio" name="express_is_free" value="{$key}"><em class="fl"></em>
+                                            <span class="small_xs ml10">{$value}</span>
+                                        </label>
+                                    </p>
+                                {/if}
+                            {/foreach}
+                        </div>
+                    </div>
+                </div>
+                <div class="is-free-no {eq name="detail.express_is_free" value="1"} hide{/eq}">
+                    <!-- 计费方式 -->
+                    <div class="main100 fs14 color666">计费方式<span class="color-red1">*</span></div>
+                    <div class="main100 over">
+                        <div class="form-group">
+                            <div class="pull-left mt10 mb10">
+                                {foreach name="TypeArray" key="key" item="value"}
+                                    {if condition="$key eq $detail['express_type']"}
+                                        <p class="pull-left mr15">
+                                            <label class="radius"><input type="radio" name="express_type" value="{$key}" checked><em class="fl"></em>
+                                                <span class="small_xs ml10">{$value}</span>
+                                            </label>
+                                        </p>
+                                    {else/}
+                                        <p class="pull-left mr15">
+                                            <label class="radius"><input type="radio" name="express_type" value="{$key}"><em class="fl"></em>
+                                                <span class="small_xs ml10">{$value}</span>
+                                            </label>
+                                        </p>
+                                    {/if}
+                                {/foreach}
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 首件|首重 价格 -->
+                    <div class="main100 mb10 fs12 pt15">首件|首重 价格<span class="color-red1">*</span></div>
+                    <div class="main100 mb10">
+                        <input name="express_first_price" placeholder="请输入 价格" class="radius4px container-fluid line32 bor_img mb10" value="{$detail.express_first_price}"/>
+                    </div>
+                    <!-- 续件|续重 价格 -->
+                    <div class="main100 mb10 fs12 pt15">续件|续重 价格<span class="color-red1">*</span></div>
+                    <div class="main100 mb10">
+                        <input name="express_continue_price" placeholder="请输入 价格" class="radius4px container-fluid line32 bor_img mb10" value="{$detail.express_continue_price}"/>
+                    </div>
+                    <!-- 设置快递和EMS -->
+                    <div class="main100 bg_white radius4px">
+                        <div class="main100 mb10">设置快递和EMS</div>
+                        <div class="main100 h32 line32 bor-bot-f5">
+                            <span class="fl pl15 pr15 set-normal-ems lei-action">快递</span>
+                            <span class="fl pl15 pr15 set-normal-ems ">EMS</span>
+                        </div>
+                        <div class="main100 over color666 mt10 mb30">
+                            {php}$expressContentI = 0;{/php}
+                            <!--  -->
+                            <div class="pd10 main100 set-normal-ems-item">
+                                <button type="button" class="btn btn-sm red add-area-price" data-title="快递" data-ways="0">添加 快递 特殊地区运费</button>
+                                {notempty name="detail.express_content.0"}
+                                    {foreach name="detail.express_content.0" key="key" item="value"}
+                                        <div class="main100 mt20 radius4px bor_img add-area-price-item" style="word-wrap:break-word;word-break:break-all;">
+                                            <div class="main100 plr10  over bor-bot-f5">
+                                                <p class="fl mt10 mb10 w210">首件|首重:<span class="ml10 color-red1">{$value.express_first_price}</span></p>
+                                                <p class="fl mt10 mb10 w210 ml5">续件|续重:<span class="ml10 color-red1">{$value.express_continue_price}</span></p>
+                                                <a class="fr color-red1 mr10 mt10 add-area-price-item-a" data-i="{$expressContentI++}" data-ways="0" href="javascript:;">删除</a>
+                                            </div>
+                                            <p class="mg0 mt10 ml20 mb5 mr10"><span>{$value.express_city_name|implode=",",###}</span></p>
+                                        </div>
+                                    {/foreach}
+                                {/notempty}
+                            </div>
+                            <!--  -->
+                            <div class="pd10 main100 set-normal-ems-item hide">
+                                <button type="button" class="btn btn-sm red add-area-price" data-title="EMS"  data-ways="1">添加 EMS 特殊地区运费</button>
+                                {notempty name="detail.express_content.1"}
+                                    {foreach name="detail.express_content.1" key="key" item="value"}
+                                        <div class="main100 mt20 radius4px bor_img add-area-price-item" style="word-wrap:break-word;word-break:break-all;">
+                                            <div class="main100 plr10  over bor-bot-f5">
+                                                <p class="fl mt10 mb10 w210">首件|首重:<span class="ml10 color-red1">{$value.express_first_price}</span></p>
+                                                <p class="fl mt10 mb10 w210 ml5">续件|续重:<span class="ml10 color-red1">{$value.express_continue_price}</span></p>
+                                                <a class="fr color-red1 mr10 mt10 add-area-price-item-a" data-i="{$expressContentI++}" data-ways="1" href="javascript:;">删除</a>
+                                            </div>
+                                            <p class="mg0 mt10 ml20 mb5 mr10"><span>{$value.express_city_name|implode=",",###}</span></p>
+                                        </div>
+                                    {/foreach}
+                                {/notempty}
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+                <a class="btn text_white bg-red-thunderbird radius4px pd7 pl25 pr25 mt13 mb20 mt20 fl mr15 fs12" id="post-data">确定编辑模板</a>
+    		</div>
+            <!--  -->
+            <input type="hidden" name="express_id" value="{$detail.express_id}">
+        </form>
+	</div>
+</div>
+{/block}
+{block name="script"}
+<script type="text/javascript">
+    // 选择城市
+    $('select[name="express_ship_province_id"]').on('change',function(){
+        var p_id = $(this).val();
+        $('select[name="express_ship_city_id"]').html('<option value="">选择城市</option>');
+        if (p_id != undefined && p_id != '' ) {
+            apiPost({
+                data:{
+                    id:p_id,
+                },
+                header:getHeader('area_index'),
+                log:true,
+                success:function(ret){
+                    if ( ret.code == 20000 ) {
+                        var html = '';
+                        $.each(ret.data, function(k,v){
+                            html += '<option value="' + v.id + '">' + v.a_name + '</option>';
+                        });
+                        $('select[name="express_ship_city_id"]').append(html);
+                    }
+                },
+            });
+        }
+    });
+    // tab
+    $(document).on('click','.set-normal-ems',function(){
+        var index = $(this).index();
+        $(this).addClass('lei-action').siblings().removeClass('lei-action');
+        $('.set-normal-ems-item').eq(index).removeClass('hide').siblings().addClass('hide');
+    });
+    // 包邮隐藏
+    $(document).on('click','input[name="express_is_free"]',function(){
+        if ( $(this).val() == 1 ) {
+            $('.is-free-no').addClass('hide');
+        } else {
+            $('.is-free-no').removeClass('hide');
+        }
+    });
+    // 快递和ems设置 默认值
+    var expressContent  = new Object;
+    var expressContentI = 0;
+    {notempty name="detail.express_content.0"}
+        {foreach name="detail.express_content.0" key="key" item="value"}
+            var tempArr  = new Object;
+            var tempArrI = 0;
+            {foreach name="value.express_city_id" key="ko" item="vo"}
+                tempArr[tempArrI++] = parseInt({$vo});
+            {/foreach}
+            // 装起来
+            var obj = new Object;
+            obj.express_first_price      = {$value.express_first_price};
+            obj.express_continue_price   = {$value.express_continue_price};
+            obj.express_city_id          = tempArr;
+            var waysArr = new Object;
+            if ( expressContent.hasOwnProperty(0) ) {
+                var waysArr = expressContent[0];
+            }
+            waysArr[expressContentI++] = obj;
+            expressContent[0] = waysArr;
+        {/foreach}
+    {/notempty}
+    {notempty name="detail.express_content.1"}
+        {foreach name="detail.express_content.1" key="key" item="value"}
+            var tempArr  = new Object;
+            var tempArrI = 0;
+            {foreach name="value.express_city_id" key="ko" item="vo"}
+                tempArr[tempArrI++] = parseInt({$vo});
+            {/foreach}
+            // 装起来
+            var obj = new Object;
+            obj.express_first_price      = {$value.express_first_price};
+            obj.express_continue_price   = {$value.express_continue_price};
+            obj.express_city_id          = tempArr;
+            var waysArr = new Object;
+            if ( expressContent.hasOwnProperty(1) ) {
+                var waysArr = expressContent[1];
+            }
+            waysArr[expressContentI++] = obj;
+            expressContent[1] = waysArr;
+        {/foreach}
+    {/notempty}
+    // ...
+    
+    var express         = [];
+    express[0]          = [];
+    // ...
+    {notempty name="detail.express_content.0"}
+        {foreach name="detail.express_content.0" key="key" item="value"}
+            {foreach name="value.express_city_id" key="ko" item="vo"}
+                express[0].push(parseInt({$vo}));
+            {/foreach}
+        {/foreach}
+    {/notempty}
+    express[1]          = [];
+    {notempty name="detail.express_content.1"}
+        {foreach name="detail.express_content.1" key="key" item="value"}
+            {foreach name="value.express_city_id" key="ko" item="vo"}
+                express[1].push(parseInt({$vo}));
+            {/foreach}
+        {/foreach}
+    {/notempty}
+    // console.log(express);
+    // console.log(expressContent);
+    $(function(){
+        $('.add-area-price').on('click',function(){
+            var that    = $(this);
+            var title   = $(this).data('title');
+            var ways    = parseInt($(this).data('ways'));
+            MyModal({
+                title:title + ' - 特殊地区运费',
+                url:'/express/choose_distinct/ways/' + ways + '/express_id/{:input("express_id")}',
+                loadcallback:function(){
+                    // 设置不可选
+                    $('#province-city .city').each(function(){
+                        // alert(express);
+                        if ( $.inArray(parseInt($(this).data('id')),express[ways]) != -1 ) {
+                            $(this).attr('disabled','disabled');
+                            $(this).parent().addClass('color-red1');
+                        }
+                    });
+                },
+            },function(){
+                // 选择城市 影响全选
+                $(document).on('click.modal','#province-city .city',function(){
+                    var parent1 = $(this).parents('.province-child');
+                    var is = 1;
+                    parent1.find('.city').each(function(){
+                        if ($(this).prop('checked') == false) {
+                            is = 0;
+                        }
+                    });
+                    $(this).parents('.province-child').siblings('.province').eq(0).data('is',is);
+                });
+                // 点击全选
+                $(document).on('click.modal','#province-city .province',function(){
+                    if ( $(this).data('is') == 0 ) {
+                        $(this).siblings('.province-child').eq(0).find('.city').each(function(){
+                            if ( $(this).attr('disabled') != 'disabled' ) {
+                                $(this).prop('checked',true);
+                            }
+                        });
+                        $(this).data('is',1);
+                    } else {
+                        $(this).siblings('.province-child').eq(0).find('.city').each(function(){
+                            $(this).prop('checked',false);
+                        });
+                        $(this).data('is',0);
+                    }
+                });
+                // 确定选择
+                $(document).on('click.modal','#modal .modal-ok',function(){
+                    var tempArr         = new Object;
+                    var tempArrI        = 0;
+                    var isSelect        = false;
+                    var first_price     = $('#province-city .express_first_price').val();
+                    var continue_price  = $('#province-city .express_continue_price').val();
+                    var cityList        = new Array;
+                    if ( first_price == '' ) {
+                        error('请输入 首件|首重 价格');return;
+                    }
+                    if ( continue_price == '' ) {
+                        error('请输入 续件|续重 价格');return;
+                    }
+                    $('#province-city .city').each(function(){
+                        if ( $(this).prop('checked') == true ) {
+                            isSelect = true;
+                            // 保存选择的 城市
+                            var city_id = parseInt($(this).data('id'));
+                            if ( $.inArray(city_id,express[ways]) == -1 ) {
+                                express[ways].push(city_id);
+                            }
+                            tempArr[tempArrI++] = city_id;
+                            // 保存选择名字
+                            cityList.push($(this).data('name'));
+                        }
+                    });
+                    if ( isSelect == false ) {
+                        error('请选择一个城市');
+                        return;
+                    }
+                    // 关闭modal
+                    $('#modal .modal-cancel').click();
+                    // 装起来
+                    var obj = new Object;
+                    obj.express_first_price      = first_price;
+                    obj.express_continue_price   = continue_price;
+                    obj.express_city_id          = tempArr;
+                    var waysArr = new Object;
+                    if ( expressContent.hasOwnProperty(ways) ) {
+                        var waysArr = expressContent[ways];
+                    }
+                    waysArr[expressContentI++] = obj;
+                    expressContent[ways] = waysArr;
+                    console.log(expressContent);
+                    console.log(express);
+                    // 显示html
+                    var html = '';
+                    html += '<div class="main100 mt20 radius4px bor_img add-area-price-item" style="word-wrap:break-word;word-break:break-all;">';
+                    html += '<div class="main100 mt5 ml5 mb5">';
+                    html += '<p class="fl mt10 mb10 w210">首件|首重:<span class="ml10 color-red1">' + first_price + '</span></p>';
+                    html += '<p class="fl mt10 mb10 w210 ml5">续件|续重:<span class="ml10 color-red1">' + continue_price + '</span></p>';
+                    html += '<a class="fr color-red1 mr10 add-area-price-item-a" data-i="' + (expressContentI - 1) + '" data-ways="' + ways + '" href="javascript:;">删除</a>';
+                    html += '</div>';
+                    html += '<hr class="main100">';
+                    html += '<p class="mg0 mt10 ml20 mb5 mr10"><span>' + cityList.join() + '</span></p>';
+                    html += '</div>';
+                    $(that).parent().append(html);
+                });
+                // 检测选择
+            });
+        });
+        // 删除特殊地区运费
+        $(document).on('click','.add-area-price-item-a',function(){
+            if ( confirm('确定删除吗？') ) {
+                var p       = $(this).parents('.add-area-price-item');
+                var ways    = parseInt($(this).data('ways'));
+                var i       = parseInt($(this).data('i'));
+                // 删除存储的city
+                var tempCity = expressContent[ways][i].express_city_id;
+                console.log(tempCity);
+                $.each(tempCity,function(k,v){
+                    var city    = parseInt(v);
+                    var index   = $.inArray(city, express[ways]);
+                    express[ways].splice(index,1);
+                });
+                delete expressContent[ways][i];
+                console.log(expressContent);
+                console.log(express);
+                // remove
+                p.remove();
+            }
+        });
+        // 提交
+        $('#post-data').on('click',function(){
+            var data = getFormJson('#form');
+            data.express_content = expressContent;
+            apiPost({
+                data:data,
+                header:getHeader('headers0'),
+                log:true,
+                success:function(ret){
+                    if ( ret.code == 20000 ) {
+                        success('编辑成功');
+                        setTimeout(function(){
+                            window.location.href = '/express';
+                        },1000);
+                    } else {
+                        error(ret.msg);
+                    }
+                },
+            });
+        });
+    });
+    
+</script>
+{/block}
